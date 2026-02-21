@@ -37,7 +37,7 @@ export function PhotoBoard({ photos, onAddPhoto, onRemovePhoto }: PhotoBoardProp
   const allTags = ["all", ...TAGS];
 
   return (
-    <div className="rounded-xl bg-white/5 p-4 shadow">
+    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <h2 className="mb-2 text-base font-bold">📸 Mood Board &amp; Ảnh Cưới</h2>
       <p className="mb-3 text-xs text-muted-foreground">
         Lưu ảnh yêu thích: váy, vest, hoa, trang trí... để so sánh và chọn lựa

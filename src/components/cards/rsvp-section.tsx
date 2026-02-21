@@ -51,7 +51,7 @@ Xin vui lòng xác nhận tham dự. Xin cảm ơn! 🙏`;
   };
 
   return (
-    <div className="rounded-xl bg-white/5 p-4 shadow">
+    <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <h2 className="mb-2 text-base font-bold">📱 RSVP — Gửi cho khách</h2>
       <p className="mb-3 text-xs text-muted-foreground">
         Copy tin nhắn bên dưới gửi qua Zalo, SMS, Messenger để mời khách

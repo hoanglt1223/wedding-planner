@@ -8,14 +8,19 @@ interface ThemePickerProps {
 
 export function ThemePicker({ activeTheme, onSelectTheme }: ThemePickerProps) {
   const [open, setOpen] = useState(false);
+  const currentTheme = THEMES.find((t) => t.id === activeTheme);
 
   return (
     <div className="relative inline-block">
       <button
         onClick={() => setOpen(!open)}
-        className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+        className="flex items-center gap-1.5 h-8 px-3 rounded-lg bg-muted text-sm hover:bg-muted/80 transition-colors"
       >
-        🎨 Theme
+        <span
+          className="w-3 h-3 rounded-full border border-border shrink-0"
+          style={{ background: currentTheme?.primary ?? "#b91c1c" }}
+        />
+        <span>Giao diện</span>
       </button>
       {open && (
         <>

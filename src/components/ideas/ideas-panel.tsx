@@ -11,9 +11,9 @@ interface IdeasPanelProps {
 }
 
 const STATUS_BADGE: Record<IdeaItemExt["status"], { label: string; cls: string }> = {
-  done: { label: "Đã xong", cls: "bg-green-500/20 text-green-300 border-green-500/30" },
-  planned: { label: "Sắp tới", cls: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-  future: { label: "Tương lai", cls: "bg-gray-500/20 text-gray-400 border-gray-500/30" },
+  done: { label: "Đã xong", cls: "bg-green-100 text-green-700 border-green-200" },
+  planned: { label: "Sắp tới", cls: "bg-amber-100 text-amber-700 border-amber-200" },
+  future: { label: "Tương lai", cls: "bg-gray-100 text-gray-600 border-gray-200" },
 };
 
 export function IdeasPanel({ state, onSetState, onNavigate }: IdeasPanelProps) {
@@ -40,11 +40,11 @@ export function IdeasPanel({ state, onSetState, onNavigate }: IdeasPanelProps) {
   };
 
   return (
-    <div className="min-h-[60vh] bg-gradient-to-b from-purple-950 to-slate-900 p-3 sm:p-4 rounded-xl">
+    <div className="space-y-4 p-3 sm:p-4">
       <div className="mx-auto max-w-3xl space-y-4">
         {/* Export/Import Section */}
-        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-          <h2 className="mb-3 text-base font-bold text-white">📜 Lưu Trữ Dữ Liệu</h2>
+        <div className="rounded-xl border border-border bg-card p-4">
+          <h2 className="mb-3 text-base font-bold text-foreground">📜 Lưu Trữ Dữ Liệu</h2>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={handleExport}
@@ -69,14 +69,14 @@ export function IdeasPanel({ state, onSetState, onNavigate }: IdeasPanelProps) {
         </div>
 
         {/* Ideas List */}
-        <h2 className="text-xl font-bold text-white">
-          💡 Tính Năng & Ý Tưởng
+        <h2 className="text-xl font-bold text-foreground">
+          💡 Tính Năng &amp; Ý Tưởng
         </h2>
 
         {/* Done section */}
         {grouped.done.length > 0 && (
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-green-400">✅ Đã hoàn thành</h3>
+            <h3 className="text-sm font-semibold text-green-600">✅ Đã hoàn thành</h3>
             {grouped.done.map((idea, i) => (
               <IdeaCard key={i} idea={idea} onNavigate={onNavigate} />
             ))}
@@ -86,7 +86,7 @@ export function IdeasPanel({ state, onSetState, onNavigate }: IdeasPanelProps) {
         {/* Planned section */}
         {grouped.planned.length > 0 && (
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-amber-400">🔜 Sắp tới</h3>
+            <h3 className="text-sm font-semibold text-amber-600">🔜 Sắp tới</h3>
             {grouped.planned.map((idea, i) => (
               <IdeaCard key={i} idea={idea} />
             ))}
@@ -96,7 +96,7 @@ export function IdeasPanel({ state, onSetState, onNavigate }: IdeasPanelProps) {
         {/* Future section */}
         {grouped.future.length > 0 && (
           <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-gray-400">🔮 Tương lai</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground">🔮 Tương lai</h3>
             {grouped.future.map((idea, i) => (
               <IdeaCard key={i} idea={idea} />
             ))}
@@ -104,10 +104,10 @@ export function IdeasPanel({ state, onSetState, onNavigate }: IdeasPanelProps) {
         )}
 
         {/* CTA */}
-        <div className="mt-4 rounded-xl bg-white/5 p-4">
-          <h2 className="mb-1 text-base font-bold text-white">🚀 Muốn tính năng nào?</h2>
-          <p className="text-sm text-white/65">
-            Hãy dùng tab <b className="text-white/85">🤖 AI</b> để hỏi chi tiết về bất kỳ ý tưởng nào ở trên!
+        <div className="mt-4 rounded-xl bg-muted/50 p-4">
+          <h2 className="mb-1 text-base font-bold text-foreground">🚀 Muốn tính năng nào?</h2>
+          <p className="text-sm text-muted-foreground">
+            Hãy dùng tab <b className="text-foreground">🤖 AI</b> để hỏi chi tiết về bất kỳ ý tưởng nào ở trên!
           </p>
         </div>
       </div>
@@ -125,24 +125,24 @@ function IdeaCard({ idea, onNavigate }: IdeaCardProps) {
   const hasLink = idea.status === "done" && idea.link && onNavigate;
 
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+    <div className="flex items-start gap-3 rounded-lg border border-border bg-card px-4 py-3">
       <span className="text-lg">{idea.icon}</span>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-semibold text-white">{idea.title}</span>
+          <span className="font-semibold text-foreground">{idea.title}</span>
           <span className={`rounded-full border px-2 py-0.5 text-[0.65rem] font-medium ${badge.cls}`}>
             {badge.label}
           </span>
           {hasLink && (
             <button
               onClick={() => onNavigate(idea.link!.page, idea.link!.tab)}
-              className="ml-auto rounded-full bg-white/10 px-2.5 py-0.5 text-[0.65rem] font-medium text-blue-300 hover:bg-white/20 hover:text-blue-200 transition-colors"
+              className="ml-auto rounded-full bg-muted px-2.5 py-0.5 text-[0.65rem] font-medium text-blue-600 hover:bg-muted/80 hover:text-blue-500 transition-colors"
             >
               {idea.link!.hint} →
             </button>
           )}
         </div>
-        <p className="mt-0.5 text-sm text-white/60">{idea.description}</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">{idea.description}</p>
       </div>
     </div>
   );

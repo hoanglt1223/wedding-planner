@@ -55,20 +55,20 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
   };
 
   return (
-    <div className="min-h-[60vh] bg-gradient-to-b from-slate-900 to-slate-800 p-3 sm:p-4 rounded-xl">
+    <div className="space-y-4 p-3 sm:p-4">
       <div className="mx-auto max-w-3xl space-y-4">
-        <h2 className="text-xl font-bold text-white">
+        <h2 className="text-xl font-bold text-foreground">
           🤖 AI Hỗ Trợ (Z.AI) — {AI_PROMPTS.length} Prompts
         </h2>
 
         {/* Model info */}
-        <div className="text-[0.7rem] text-white/40">
+        <div className="text-[0.7rem] text-muted-foreground/60">
           Model: glm-5 | API key configured server-side (Z_AI_KEY)
         </div>
 
         {/* Quick prompts */}
         <div>
-          <h3 className="mb-2 text-sm font-semibold text-white/80">
+          <h3 className="mb-2 text-sm font-semibold text-foreground">
             ⚡ {AI_PROMPTS.length} Gợi Ý Nhanh
           </h3>
           <AiPromptButtons prompts={AI_PROMPTS} onSelect={handlePromptSelect} />
@@ -76,13 +76,13 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
 
         {/* Custom prompt */}
         <div>
-          <h3 className="mb-1 text-sm font-semibold text-white/80">✍️ Hỏi Tùy Chỉnh</h3>
+          <h3 className="mb-1 text-sm font-semibold text-foreground">✍️ Hỏi Tùy Chỉnh</h3>
           <textarea
             value={customPrompt}
             onChange={(e) => setCustomPrompt(e.target.value)}
             placeholder="Nhập câu hỏi..."
             rows={3}
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/30 outline-none focus:border-white/30"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-ring"
           />
           <div className="mt-2 flex gap-2">
             <button
@@ -94,7 +94,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
             </button>
             <button
               onClick={handleClear}
-              className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70 hover:bg-white/10"
+              className="rounded-lg border border-border bg-muted px-3 py-1.5 text-sm text-foreground hover:bg-muted/80"
             >
               🗑️
             </button>
@@ -103,14 +103,14 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
 
         {/* Error */}
         {error && (
-          <div className="rounded-lg bg-red-900/40 p-3 text-sm text-red-300">
+          <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
             ❌ {error}
           </div>
         )}
 
         {/* Response */}
         {aiResponse && (
-          <div className="rounded-lg border border-white/10 bg-white/5 p-4 text-sm text-white/85">
+          <div className="rounded-lg border border-border bg-card p-4 text-sm text-foreground">
             <div
               dangerouslySetInnerHTML={{ __html: renderMarkdown(aiResponse) }}
             />

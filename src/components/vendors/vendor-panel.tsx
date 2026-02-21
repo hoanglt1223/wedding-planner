@@ -117,7 +117,15 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor }: VendorPane
         )}
 
         {vendors.length === 0 && (
-          <div className="text-center text-sm text-gray-400 py-4">Chưa có vendor nào.</div>
+          <div className="flex flex-col items-center py-10 text-center">
+            <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center mb-3">
+              <span className="text-3xl">🗺️</span>
+            </div>
+            <h3 className="text-base font-semibold mb-1">Thêm nhà cung cấp đầu tiên</h3>
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Lưu thông tin nhà hàng, studio, trang trí để so sánh và liên hệ
+            </p>
+          </div>
         )}
       </CardContent>
     </Card>

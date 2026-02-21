@@ -49,7 +49,7 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
   return (
     <div className="space-y-4 p-4">
       {/* Header + couple form */}
-      <div className="rounded-xl bg-white/5 p-4 shadow">
+      <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
         <h2 className="mb-1 text-lg font-bold">🖼️ Background &amp; 💌 Thiệp Mời</h2>
         <p className="mb-3 text-xs text-muted-foreground">
           10 mẫu cho mỗi lễ — xu hướng 2025: minimalist, pastel, ép kim, font thanh mảnh
@@ -61,7 +61,7 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
       {events.map((ev) => (
         <div key={ev.n} className="space-y-3">
           {/* Background cards */}
-          <div className="rounded-xl bg-white/5 p-4 shadow">
+          <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
             <h2 className="mb-3 text-base font-bold">🖼️ Background — {ev.n}</h2>
             <BackgroundGrid
               eventName={ev.n}
@@ -75,7 +75,7 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
           </div>
 
           {/* Invitation cards */}
-          <div className="rounded-xl bg-white/5 p-4 shadow">
+          <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
             <h2 className="mb-3 text-base font-bold">💌 Thiệp — {ev.n}</h2>
             <InvitationGrid
               eventName={ev.n}

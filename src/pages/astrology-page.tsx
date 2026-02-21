@@ -72,11 +72,24 @@ export function AstrologyPage({ info, onUpdateInfo }: AstrologyPageProps) {
       </div>
 
       {!hasData ? (
-        <div className="text-center py-12 text-gray-400 text-sm">
-          Nhập năm sinh của cô dâu và chú rể để xem phân tích tử vi
+        <div className="flex flex-col items-center py-12 text-center">
+          <div className="w-24 h-24 rounded-2xl bg-muted flex items-center justify-center mb-4">
+            <span className="text-4xl">🔮</span>
+          </div>
+          <h3 className="text-base font-semibold mb-1">Khám phá tử vi đôi bạn</h3>
+          <p className="text-sm text-muted-foreground max-w-xs">
+            Nhập năm sinh của cô dâu và chú rể để xem phân tích ngũ hành, hợp tuổi, và phong thủy
+          </p>
         </div>
       ) : (
         <>
+          {/* Decorative divider */}
+          <div className="flex items-center gap-2 text-muted-foreground/40">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-xs">☯</span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+
           {/* Tab navigation */}
           <div className="flex gap-1 overflow-x-auto no-scrollbar scrollbar-hide pb-1">
             {TABS.map((tab) => (
@@ -85,8 +98,8 @@ export function AstrologyPage({ info, onUpdateInfo }: AstrologyPageProps) {
                 onClick={() => setActiveTab(tab.id)}
                 className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
                   tab.id === activeTab
-                    ? "bg-purple-700 text-white shadow-sm"
-                    : "bg-gray-100 text-gray-600 hover:bg-purple-50 hover:text-purple-700"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                 }`}
               >
                 {tab.label}

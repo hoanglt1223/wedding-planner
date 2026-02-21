@@ -11,17 +11,17 @@ interface FooterProps {
 export function Footer({ activeTheme, onSelectTheme, lang, onSetLang }: FooterProps) {
   return (
     <footer className="mt-4 border-t border-amber-100">
-      <div className="container mx-auto flex h-12 items-center justify-between px-4">
+      <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <p className="text-xs text-muted-foreground">
           Wedding Planner &copy; {new Date().getFullYear()}
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {onSetLang && (
             <button
               onClick={() => onSetLang(lang === "vi" ? "en" : "vi")}
-              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+              className="flex items-center gap-1.5 h-8 px-3 rounded-lg bg-muted text-sm hover:bg-muted/80 transition-colors"
             >
-              {getLangLabel(lang || "vi")}
+              🌐 {getLangLabel(lang || "vi")}
             </button>
           )}
           <ThemePicker activeTheme={activeTheme} onSelectTheme={onSelectTheme} />
