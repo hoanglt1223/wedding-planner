@@ -168,4 +168,8 @@
     border: 1px solid #ddd !important;
     break-inside: avoid;
   }
+  /* Ensure checkbox squares print clearly */
+  .print\:border-gray-600 {
+    border-color: #4b5563 !important;
+  }
 }

@@ -40,10 +40,10 @@ export function Checklist({ items, stepId, ceremonyIndex, checkedKeys, onToggle 
                   </svg>
                 )}
               </span>
-              <span className="flex-1">{item.t}</span>
-              {item.c > 0 && (
+              <span className="flex-1">{item.text}</span>
+              {item.cost > 0 && (
                 <span className="text-[0.65rem] font-semibold bg-amber-100 text-amber-700 rounded px-1.5 py-0.5 ml-1">
-                  {formatShort(item.c)}
+                  {formatShort(item.cost)}
                 </span>
               )}
             </li>

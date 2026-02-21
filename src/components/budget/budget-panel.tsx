@@ -35,14 +35,14 @@ export function BudgetPanel({
   };
 
   const totalPct = BUDGET_CATEGORIES.reduce(
-    (sum, c) => sum + (categoryOverrides[c.k] ?? c.p),
+    (sum, c) => sum + (categoryOverrides[c.key] ?? c.percentage),
     0
   );
   const totalAllocated = budget * totalPct / 100;
   const remaining = budget - totalAllocated;
   const overBudget = totalPct > 100;
   const totalExpenses = BUDGET_CATEGORIES.reduce(
-    (sum, c) => sum + (expenses[c.k] || 0),
+    (sum, c) => sum + (expenses[c.key] || 0),
     0
   );
 
@@ -59,31 +59,29 @@ export function BudgetPanel({
           onFocus={(e) => e.target.select()}
         />
 
-        <div className="text-center text-[0.75rem] text-gray-400 my-1 space-x-1">
-          {PRESETS.map(([label, value], i) => (
-            <span key={label}>
-              {i > 0 && <span className="text-gray-300">|</span>}
-              <span
-                className="cursor-pointer text-blue-500 font-semibold hover:underline ml-1"
-                onClick={() => onSetBudget(value)}
-              >
-                {label}
-              </span>
+        <div className="flex flex-wrap justify-center gap-1 my-1">
+          {PRESETS.map(([label, value]) => (
+            <span
+              key={label}
+              className="cursor-pointer text-blue-500 font-semibold hover:underline text-[0.75rem] px-1.5 py-0.5 rounded hover:bg-blue-50"
+              onClick={() => onSetBudget(value)}
+            >
+              {label}
             </span>
           ))}
         </div>
 
         <div>
           {BUDGET_CATEGORIES.map((cat) => {
-            const pct = categoryOverrides[cat.k] ?? cat.p;
+            const pct = categoryOverrides[cat.key] ?? cat.percentage;
             const amount = budget * pct / 100;
             return (
               <BudgetCategoryRow
-                key={cat.k}
+                key={cat.key}
                 category={cat}
                 percentage={pct}
                 amount={amount}
-                expense={expenses[cat.k] || 0}
+                expense={expenses[cat.key] || 0}
                 onChange={onSetCategoryPercent}
                 onExpenseChange={onSetExpense}
               />
@@ -91,25 +89,28 @@ export function BudgetPanel({
           })}
         </div>
 
-        <div className="mt-2 p-[10px] bg-gray-50 rounded-lg text-center text-[0.82rem]">
+        <div className="mt-2 p-2.5 bg-gray-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem] leading-relaxed">
           Tổng:{" "}
           <b className={overBudget ? "text-red-500" : ""}>{totalPct}%</b>
           {" = "}
           <b className="text-[#c0392b]">{formatMoney(totalAllocated)}đ</b>
-          {" | Còn: "}
+          <br className="sm:hidden" />
+          <span className="hidden sm:inline">{" | "}</span>
+          <span className="sm:hidden"> </span>
+          Còn:{" "}
           <b className={remaining >= 0 ? "text-green-600" : "text-red-500"}>
             {formatMoney(remaining)}đ
           </b>
         </div>
-        <div className="mt-1 p-[10px] bg-amber-50 rounded-lg text-center text-[0.82rem]">
-          Tong da chi:{" "}
+        <div className="mt-1 p-2.5 bg-amber-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem]">
+          Đã chi:{" "}
           <b className={totalExpenses > budget ? "text-red-500" : "text-amber-600"}>
-            {formatMoney(totalExpenses)}d
+            {formatMoney(totalExpenses)}đ
           </b>
           {" / "}
-          <b>{formatMoney(budget)}d</b>
-          {totalExpenses > 0 && (
-            <span className="ml-2 text-[0.75rem]">
+          <b>{formatMoney(budget)}đ</b>
+          {totalExpenses > 0 && budget > 0 && (
+            <span className="ml-1 text-[0.72rem]">
               ({Math.round((totalExpenses / budget) * 100)}%)
             </span>
           )}

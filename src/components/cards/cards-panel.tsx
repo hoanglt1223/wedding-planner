@@ -1,8 +1,10 @@
-import type { CoupleInfo } from "@/types/wedding";
+import type { CoupleInfo, PhotoItem } from "@/types/wedding";
 import { BACKGROUNDS } from "@/data/backgrounds";
 import { CoupleInfoForm } from "./couple-info-form";
 import { BackgroundGrid } from "./background-grid";
 import { InvitationGrid } from "./invitation-grid";
+import { RsvpSection } from "./rsvp-section";
+import { PhotoBoard } from "./photo-board";
 
 const fmDs = (d: string) =>
   d
@@ -32,12 +34,15 @@ const getInviteMsg = (eventName: string) => {
 interface CardsPanelProps {
   info: CoupleInfo;
   onUpdateInfo: (field: string, value: string) => void;
+  photos: PhotoItem[];
+  onAddPhoto: (photo: Omit<PhotoItem, "id">) => void;
+  onRemovePhoto: (id: number) => void;
 }
 
-export function CardsPanel({ info, onUpdateInfo }: CardsPanelProps) {
+export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePhoto }: CardsPanelProps) {
   const events = [
-    { n: "Dạm Ngõ", d: info.dDN },
-    { n: "Đám Hỏi", d: info.dDH },
+    { n: "Dạm Ngõ", d: info.engagementDate },
+    { n: "Đám Hỏi", d: info.betrothalDate },
     { n: "Tiệc Cưới", d: info.date },
   ];
 
@@ -63,8 +68,8 @@ export function CardsPanel({ info, onUpdateInfo }: CardsPanelProps) {
               date={fmDs(ev.d)}
               groom={info.groom}
               bride={info.bride}
-              groomFamily={info.gf}
-              brideFamily={info.bf}
+              groomFamily={info.groomFamilyName}
+              brideFamily={info.brideFamilyName}
               backgrounds={BACKGROUNDS}
             />
           </div>
@@ -73,17 +78,24 @@ export function CardsPanel({ info, onUpdateInfo }: CardsPanelProps) {
           <div className="rounded-xl bg-white/5 p-4 shadow">
             <h2 className="mb-3 text-base font-bold">💌 Thiệp — {ev.n}</h2>
             <InvitationGrid
+              eventName={ev.n}
               dateFull={fmD(ev.d)}
               groom={info.groom}
               bride={info.bride}
-              groomFamily={info.gf}
-              brideFamily={info.bf}
+              groomFamily={info.groomFamilyName}
+              brideFamily={info.brideFamilyName}
               invitationMessage={getInviteMsg(ev.n)}
               backgrounds={BACKGROUNDS}
             />
           </div>
         </div>
       ))}
+
+      {/* RSVP Section */}
+      <RsvpSection info={info} />
+
+      {/* Photo/Mood Board */}
+      <PhotoBoard photos={photos} onAddPhoto={onAddPhoto} onRemovePhoto={onRemovePhoto} />
     </div>
   );
 }

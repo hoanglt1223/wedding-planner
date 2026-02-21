@@ -21,11 +21,30 @@ api/                     # Vercel serverless handlers
 
 | Category | Convention | Example |
 |----------|-----------|---------|
-| Files | kebab-case | `user-profile.tsx`, `create-db.ts` |
+| Files | kebab-case, English only | `user-profile.tsx`, `create-db.ts` |
 | Exports | PascalCase (components), camelCase (functions) | `UserCard`, `fetchUser()` |
-| Types | PascalCase | `User`, `WeddingEvent` |
-| Constants | UPPER_SNAKE_CASE | `MAX_GUESTS`, `DEFAULT_TIMEOUT` |
-| Private variables | camelCase | `tempCache`, `isLoading` |
+| Types | PascalCase, English only | `User`, `WeddingEvent` |
+| Constants | UPPER_SNAKE_CASE, English only | `MAX_GUESTS`, `DEFAULT_TIMEOUT` |
+| Private variables | camelCase, English only | `tempCache`, `isLoading` |
+
+### Naming Rules (MANDATORY)
+
+1. **English only** — All file names, variable names, function names, type names, and constant names MUST be in English. No Vietnamese variable names.
+2. **No abbreviations** — Use descriptive, self-documenting names. `checklist` not `cl`, `name` not `nm`, `budget` not `bud`. Single-letter names only allowed for loop counters (`i`, `j`).
+3. **No unaccented Vietnamese** — Vietnamese text in UI strings MUST use proper diacritics (`Đã hoàn thành` not `Da hoan thanh`). If a string is meant for display, use correct Vietnamese. If it's a variable name, use English.
+4. **Property names** — Type/interface properties must be full English words: `text` not `t`, `cost` not `c`, `ritualSteps` not `ri`.
+
+**Bad:**
+```typescript
+interface Guest { n: string; p: string; s: string; g: string; }
+const STATUS = { label: "Da xong", cls: "bg-green-500" };
+```
+
+**Good:**
+```typescript
+interface Guest { name: string; phone: string; side: string; tableGroup: string; }
+const STATUS = { label: "Đã xong", cls: "bg-green-500" };
+```
 
 ## File Size Limits
 

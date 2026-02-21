@@ -11,10 +11,10 @@ export function AiPromptButtons({ prompts, onSelect }: AiPromptButtonsProps) {
       {prompts.map((p, i) => (
         <button
           key={i}
-          onClick={() => onSelect(p.p)}
+          onClick={() => onSelect(p.prompt)}
           className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/80 transition-colors hover:bg-white/15 hover:text-white"
         >
-          {p.l}
+          {p.label}
         </button>
       ))}
     </div>

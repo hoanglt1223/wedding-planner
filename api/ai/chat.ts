@@ -1,3 +1,8 @@
+export const config = { maxDuration: 30 };
+
+const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
+const FETCH_TIMEOUT_MS = 25_000;
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
@@ -19,16 +24,20 @@ export default async function handler(req: Request): Promise<Response> {
       return Response.json({ error: "Missing prompt" }, { status: 400 });
     }
 
-    const res = await fetch(
-      "https://open.bigmodel.cn/api/paas/v4/chat/completions",
-      {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    let res: Response;
+    try {
+      res = await fetch(ZHIPU_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${apiKey}`,
+          "Accept-Language": "en-US,en",
         },
         body: JSON.stringify({
-          model: "glm-5.0",
+          model: "glm-5",
           messages: [
             {
               role: "system",
@@ -37,10 +46,21 @@ export default async function handler(req: Request): Promise<Response> {
             { role: "user", content: prompt },
           ],
           max_tokens: 2000,
-          temperature: 0.7,
+          temperature: 1.0,
         }),
-      },
-    );
+        signal: controller.signal,
+      });
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        return Response.json(
+          { error: "ZhipuAI timeout sau 25s. Thử lại sau." },
+          { status: 504 },
+        );
+      }
+      throw err;
+    } finally {
+      clearTimeout(timer);
+    }
 
     if (!res.ok) {
       const text = await res.text();

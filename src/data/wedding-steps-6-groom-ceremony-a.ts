@@ -1,0 +1,86 @@
+import type { Ceremony } from "@/types/wedding";
+
+// Ceremonies 1-2 for Step 6: Cưới Trai
+export const GROOM_CEREMONIES_A: Ceremony[] = [
+  {
+    name: "🙏 Gia Tiên Nhà Trai",
+    required: 1,
+    description: "Cô dâu thắp hương nhà chồng.",
+    checklist: [{ text: "Bàn thờ + mâm cúng", cost: 1000000, categoryKey: "food" }],
+    people: [
+      { name: "Cô dâu & chú rể", role: "", avatar: "💑" },
+      { name: "Bố mẹ chú rể", role: "Hướng dẫn", avatar: "👫" },
+    ],
+    ritualSteps: ["Đón cô dâu ở cửa", "Dẫn đến bàn thờ", "Lạy 3 lạy", "Rót trà, nhận lì xì"],
+    tips: ["Bước vào chân PHẢI"],
+  },
+  {
+    name: "🎊 Tiệc Chính",
+    required: 1,
+    description: "Tiệc linh đình nhất.",
+    checklist: [
+      { text: "Nhà hàng (+10% dự phòng)", cost: 25000000, categoryKey: "venue" },
+      { text: "Thiệp mời", cost: 2000000, categoryKey: "other" },
+      { text: "Menu + rượu bia", cost: 30000000, categoryKey: "food" },
+      { text: "MC + nhạc + âm thanh", cost: 11000000, categoryKey: "mc" },
+      { text: "Trang trí toàn bộ", cost: 8000000, categoryKey: "decor" },
+      { text: "Ảnh + video trọn gói", cost: 10000000, categoryKey: "photo" },
+      { text: "Váy cưới + after party", cost: 8000000, categoryKey: "clothes" },
+      { text: "Vest chú rể", cost: 3000000, categoryKey: "clothes" },
+      { text: "Makeup cả ngày", cost: 5000000, categoryKey: "makeup" },
+      { text: "Nhẫn cưới cặp", cost: 5000000, categoryKey: "ring" },
+      { text: "Quà cho khách", cost: 3000000, categoryKey: "other" },
+      { text: "Bánh cưới", cost: 3000000, categoryKey: "food" },
+      { text: "Phòng tân hôn", cost: 2000000, categoryKey: "other" },
+    ],
+    people: [
+      { name: "MC", role: "", avatar: "🎤" },
+      { name: "Nhiếp ảnh", role: "", avatar: "📷" },
+      { name: "Phù dâu phù rể", role: "", avatar: "👫" },
+      { name: "Lễ tân", role: "Phong bì", avatar: "📋" },
+    ],
+    ritualSteps: [
+      "Đón khách",
+      "MC khai tiệc",
+      "Bố mẹ phát biểu",
+      "Cô dâu chú rể lên sân khấu",
+      "TRAO NHẪN 💍",
+      "Nâng ly, CẮT BÁNH 🎂",
+      "Văn nghệ, Games",
+      "First dance 💃",
+      "Đi bàn chúc rượu",
+      "TUNG HOA 💐",
+      "Tiễn khách",
+      "Phòng tân hôn 🌙",
+    ],
+    tips: [
+      "2-3 người ghi phong bì TIN CẬY",
+      "Kịch bản MC từng phút",
+      "Kiểm tra âm thanh trước 3h",
+    ],
+  },
+  {
+    name: "💍 Trao Nhẫn",
+    required: 1,
+    description: "Trao nhẫn cưới.",
+    checklist: [
+      { text: "Nhẫn sẵn sàng", cost: 0, categoryKey: "ring" },
+      { text: "Gối/hộp nhẫn đẹp", cost: 200000, categoryKey: "other" },
+    ],
+    people: [{ name: "Cô dâu & chú rể", role: "", avatar: "💑" }],
+    ritualSteps: ["MC mời lên", "Trao nhẫn lẫn nhau", "Hôn 💋"],
+    tips: ["Thử nhẫn trước!"],
+  },
+  {
+    name: "🥂 Cắt Bánh & Rượu",
+    required: 0,
+    description: "Nâng ly champagne, cắt bánh.",
+    checklist: [
+      { text: "Champagne ướp lạnh", cost: 500000, categoryKey: "food" },
+      { text: "Tháp ly (nếu có)", cost: 300000, categoryKey: "decor" },
+    ],
+    people: [{ name: "Cô dâu & chú rể", role: "", avatar: "💑" }],
+    ritualSteps: ["Cắt bánh", "Cho nhau ăn 🥰", "Nâng ly"],
+    tips: ["Tập cắt trước nếu bánh nhiều tầng"],
+  },
+];

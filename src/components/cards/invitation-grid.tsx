@@ -1,6 +1,7 @@
 import type { BackgroundStyle } from "@/types/wedding";
 
 interface InvitationGridProps {
+  eventName: string;
   dateFull: string;
   groom: string;
   bride: string;
@@ -11,6 +12,7 @@ interface InvitationGridProps {
 }
 
 export function InvitationGrid({
+  eventName,
   dateFull,
   groom,
   bride,
@@ -19,6 +21,9 @@ export function InvitationGrid({
   invitationMessage,
   backgrounds,
 }: InvitationGridProps) {
+  const qrText = encodeURIComponent(`${eventName}\n${groom} & ${bride}\n${dateFull}`);
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=${qrText}`;
+
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
       {backgrounds.map((bg, i) => (
@@ -26,33 +31,33 @@ export function InvitationGrid({
           key={i}
           className="rounded-lg p-3 text-center"
           style={{
-            background: bg.bg,
-            fontFamily: bg.f,
+            background: bg.background,
+            fontFamily: bg.fontFamily,
             minHeight: "180px",
-            border: `2px solid ${bg.sub}22`,
+            border: `2px solid ${bg.accentColor}22`,
           }}
         >
           <div
             className="text-[0.55rem] uppercase tracking-[4px] opacity-70"
-            style={{ color: bg.sub }}
+            style={{ color: bg.accentColor }}
           >
             ✦ THIỆP MỜI ✦
           </div>
           <div
             className="my-1.5 text-[0.65rem] opacity-60"
-            style={{ color: bg.t }}
+            style={{ color: bg.textColor }}
           >
             {groomFamily} &amp; {brideFamily}
           </div>
           <div
             className="my-1 text-[0.7rem] opacity-75"
-            style={{ color: bg.t }}
+            style={{ color: bg.textColor }}
           >
             {invitationMessage}
           </div>
           <div
             className="my-2 text-[1.4rem] font-bold leading-tight"
-            style={{ color: bg.t }}
+            style={{ color: bg.textColor }}
           >
             {groom}{" "}
             <span className="text-base font-normal opacity-40">&</span>{" "}
@@ -60,18 +65,29 @@ export function InvitationGrid({
           </div>
           <div
             className="mx-auto my-1.5 h-px w-10 opacity-50"
-            style={{ background: bg.sub }}
+            style={{ background: bg.accentColor }}
           />
-          <div className="my-1 text-[0.72rem]" style={{ color: bg.sub }}>
+          <div className="my-1 text-[0.72rem]" style={{ color: bg.accentColor }}>
             📅 {dateFull}
           </div>
           <div
             className="mt-2 text-[0.58rem] leading-relaxed opacity-45"
-            style={{ color: bg.t }}
+            style={{ color: bg.textColor }}
           >
             Sự hiện diện của quý khách
             <br />
             là niềm vinh hạnh cho gia đình
+          </div>
+          <div className="mt-2 flex justify-center">
+            <img
+              src={qrUrl}
+              alt="QR"
+              width={40}
+              height={40}
+              className="rounded opacity-70"
+              loading="lazy"
+              onError={(e) => { (e.target as HTMLElement).style.display = "none"; }}
+            />
           </div>
         </div>
       ))}

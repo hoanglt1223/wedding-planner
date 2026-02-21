@@ -25,8 +25,8 @@ export function CeremonySection({
       {/* Header card */}
       <div className="bg-white rounded-xl p-3 shadow-sm">
         <div className="flex items-center gap-2 mb-1">
-          <h2 className="text-base font-bold text-gray-900 flex-1">{ceremony.nm}</h2>
-          {ceremony.req ? (
+          <h2 className="text-base font-bold text-gray-900 flex-1">{ceremony.name}</h2>
+          {ceremony.required ? (
             <Badge className="bg-red-600 text-white text-[0.6rem] px-1.5 py-0.5 h-auto">
               BẮT BUỘC
             </Badge>
@@ -36,16 +36,16 @@ export function CeremonySection({
             </Badge>
           )}
         </div>
-        <p className="text-xs text-gray-500 leading-relaxed">{ceremony.desc}</p>
+        <p className="text-xs text-gray-500 leading-relaxed">{ceremony.description}</p>
       </div>
 
       {/* People grid */}
-      {ceremony.pp.length > 0 && <PeopleGrid people={ceremony.pp} />}
+      {ceremony.people.length > 0 && <PeopleGrid people={ceremony.people} />}
 
       {/* Checklist */}
-      {ceremony.cl.length > 0 && (
+      {ceremony.checklist.length > 0 && (
         <Checklist
-          items={ceremony.cl}
+          items={ceremony.checklist}
           stepId={stepId}
           ceremonyIndex={ceremonyIndex}
           checkedKeys={checkedKeys}
@@ -54,17 +54,17 @@ export function CeremonySection({
       )}
 
       {/* Gifts table */}
-      {ceremony.lv && ceremony.lv.length > 0 && <GiftsTable gifts={ceremony.lv} />}
+      {ceremony.gifts && ceremony.gifts.length > 0 && <GiftsTable gifts={ceremony.gifts} />}
 
       {/* Ritual timeline */}
-      {ceremony.ri.length > 0 && <RitualTimeline steps={ceremony.ri} />}
+      {ceremony.ritualSteps.length > 0 && <RitualTimeline steps={ceremony.ritualSteps} />}
 
       {/* Tips */}
-      {ceremony.tp.length > 0 && (
+      {ceremony.tips.length > 0 && (
         <div className="bg-white rounded-xl p-3 shadow-sm">
           <h2 className="text-sm font-bold text-red-800 mb-2">💡 Lưu Ý</h2>
           <div className="space-y-1.5">
-            {ceremony.tp.map((tip, i) => (
+            {ceremony.tips.map((tip, i) => (
               <div
                 key={i}
                 className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-xs text-green-800"

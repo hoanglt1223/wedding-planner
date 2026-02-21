@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { getCountdown, type CountdownResult } from "@/lib/countdown";
+import type { CoupleInfo } from "@/types/wedding";
+import { Reminders } from "./reminders";
 
 interface HeaderProps {
   progressPct: number;
   done: number;
   total: number;
   weddingDate: string;
+  themePrimary: string;
+  themeDark: string;
+  info: CoupleInfo;
 }
 
-export function Header({ progressPct, done, total, weddingDate }: HeaderProps) {
+export function Header({ progressPct, done, total, weddingDate, themePrimary, themeDark, info }: HeaderProps) {
   const [countdown, setCountdown] = useState<CountdownResult | null>(() =>
     getCountdown(weddingDate)
   );
@@ -23,7 +28,10 @@ export function Header({ progressPct, done, total, weddingDate }: HeaderProps) {
   }, [weddingDate]);
 
   return (
-    <header className="text-center px-3 py-5 pb-4 bg-gradient-to-br from-[#8b1a2b] to-[#c0392b] text-white rounded-b-2xl mb-3">
+    <header
+      className="text-center px-3 py-5 pb-4 text-white rounded-b-2xl mb-3"
+      style={{ background: `linear-gradient(to bottom right, ${themeDark}, ${themePrimary})` }}
+    >
       <h1 className="text-[clamp(1.3rem,4vw,1.9rem)] font-bold">
         Vietnamese Wedding Planner
       </h1>
@@ -36,10 +44,11 @@ export function Header({ progressPct, done, total, weddingDate }: HeaderProps) {
       {countdown && (
         <div className="text-[0.78rem] text-white/85 mt-1 text-center">
           {countdown.passed
-            ? "Chuc mung ngay cuoi!"
-            : `Con ${countdown.days} ngay ${countdown.hours} gio ${countdown.minutes} phut nua`}
+            ? "Chúc mừng ngày cưới!"
+            : `Còn ${countdown.days} ngày ${countdown.hours} giờ ${countdown.minutes} phút nữa`}
         </div>
       )}
+      <Reminders info={info} />
     </header>
   );
 }

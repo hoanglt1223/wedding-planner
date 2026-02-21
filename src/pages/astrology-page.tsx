@@ -1,30 +1,30 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TabHopTuoi } from "@/components/tu-vi/tab-hop-tuoi";
-import { TabNguHanh } from "@/components/tu-vi/tab-ngu-hanh";
-import { TabNamCuoi } from "@/components/tu-vi/tab-nam-cuoi";
-import { TabTuoiHop } from "@/components/tu-vi/tab-tuoi-hop";
-import { TabPhongThuy } from "@/components/tu-vi/tab-phong-thuy";
+import { TabCompatibility } from "@/components/astrology/tab-compatibility";
+import { TabFiveElements } from "@/components/astrology/tab-five-elements";
+import { TabWeddingYear } from "@/components/astrology/tab-wedding-year";
+import { TabCompatibleAges } from "@/components/astrology/tab-compatible-ages";
+import { TabFengShui } from "@/components/astrology/tab-feng-shui";
 import type { CoupleInfo } from "@/types/wedding";
 
-interface TuViPageProps {
+interface AstrologyPageProps {
   info: CoupleInfo;
   onUpdateInfo: (field: string, value: string) => void;
 }
 
 const TABS = [
-  { id: "hoptuoi", label: "💑 Hợp Tuổi" },
-  { id: "nguhanh", label: "🔥 Ngũ Hành" },
-  { id: "namcuoi", label: "📅 Năm Cưới" },
-  { id: "tuoihop", label: "🔍 Tuổi Hợp" },
-  { id: "phongthuy", label: "🧭 Phong Thủy" },
+  { id: "compatibility", label: "💑 Hợp Tuổi" },
+  { id: "five-elements", label: "🔥 Ngũ Hành" },
+  { id: "wedding-year", label: "📅 Năm Cưới" },
+  { id: "compatible-ages", label: "🔍 Tuổi Hợp" },
+  { id: "feng-shui", label: "🧭 Phong Thủy" },
 ];
 
-export function TuViPage({ info, onUpdateInfo }: TuViPageProps) {
-  const [activeTab, setActiveTab] = useState("hoptuoi");
-  const brideYear = parseInt(info.bby) || 0;
-  const groomYear = parseInt(info.gby) || 0;
+export function AstrologyPage({ info, onUpdateInfo }: AstrologyPageProps) {
+  const [activeTab, setActiveTab] = useState("compatibility");
+  const brideYear = parseInt(info.brideBirthYear) || 0;
+  const groomYear = parseInt(info.groomBirthYear) || 0;
   const weddingYear = info.date ? parseInt(info.date.slice(0, 4)) : new Date().getFullYear();
   const hasData = brideYear > 1900 && groomYear > 1900;
 
@@ -51,8 +51,8 @@ export function TuViPage({ info, onUpdateInfo }: TuViPageProps) {
             type="number"
             placeholder="VD: 1998"
             min={1940} max={2010}
-            value={info.bby || ""}
-            onChange={(e) => onUpdateInfo("bby", e.target.value)}
+            value={info.brideBirthYear || ""}
+            onChange={(e) => onUpdateInfo("brideBirthYear", e.target.value)}
             className="mt-0.5 text-center font-bold text-lg"
           />
           {info.bride && <div className="text-xs text-gray-400 mt-0.5 text-center">{info.bride}</div>}
@@ -63,8 +63,8 @@ export function TuViPage({ info, onUpdateInfo }: TuViPageProps) {
             type="number"
             placeholder="VD: 1996"
             min={1940} max={2010}
-            value={info.gby || ""}
-            onChange={(e) => onUpdateInfo("gby", e.target.value)}
+            value={info.groomBirthYear || ""}
+            onChange={(e) => onUpdateInfo("groomBirthYear", e.target.value)}
             className="mt-0.5 text-center font-bold text-lg"
           />
           {info.groom && <div className="text-xs text-gray-400 mt-0.5 text-center">{info.groom}</div>}
@@ -95,11 +95,11 @@ export function TuViPage({ info, onUpdateInfo }: TuViPageProps) {
           </div>
 
           {/* Tab content */}
-          {activeTab === "hoptuoi" && <TabHopTuoi {...tabProps} />}
-          {activeTab === "nguhanh" && <TabNguHanh {...tabProps} />}
-          {activeTab === "namcuoi" && <TabNamCuoi {...tabProps} />}
-          {activeTab === "tuoihop" && <TabTuoiHop {...tabProps} />}
-          {activeTab === "phongthuy" && <TabPhongThuy {...tabProps} />}
+          {activeTab === "compatibility" && <TabCompatibility {...tabProps} />}
+          {activeTab === "five-elements" && <TabFiveElements {...tabProps} />}
+          {activeTab === "wedding-year" && <TabWeddingYear {...tabProps} />}
+          {activeTab === "compatible-ages" && <TabCompatibleAges {...tabProps} />}
+          {activeTab === "feng-shui" && <TabFengShui {...tabProps} />}
 
           <div className="text-center text-xs text-gray-400 pt-2">
             Dữ liệu tham khảo từ phong tục truyền thống Việt Nam.

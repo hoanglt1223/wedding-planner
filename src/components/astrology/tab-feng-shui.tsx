@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { getNapAm, HANH_EMOJI, HANH_BG } from "@/lib/tu-vi";
+import { getSoundElement, ELEMENT_EMOJI, ELEMENT_BG_CLASS, ELEMENT_LABEL } from "@/lib/astrology";
 import {
-  getCungMenh, getLuckyDirections, getUnluckyDirections, isCungHop,
-  HANH_COLORS, HANH_SINH_ME,
-} from "@/lib/tu-vi-phong-thuy";
+  getCungMenh, getLuckyDirections, getUnluckyDirections, isPalaceCompatible,
+  ELEMENT_COLORS, ELEMENT_GENERATING_ME, GROUP_LABEL,
+} from "@/lib/astrology-feng-shui";
 
-interface TabPhongThuyProps {
+interface TabFengShuiProps {
   brideYear: number;
   groomYear: number;
   brideName: string;
@@ -17,14 +17,14 @@ const DIR_EMOJI: Record<string, string> = {
   "Đông Bắc": "↗️", "Đông Nam": "↘️", "Tây Bắc": "↖️", "Tây Nam": "↙️",
 };
 
-export function TabPhongThuy({ brideYear, groomYear, brideName, groomName }: TabPhongThuyProps) {
-  const brideCung = getCungMenh(brideYear, "nu");
-  const groomCung = getCungMenh(groomYear, "nam");
-  const cungHop = isCungHop(brideCung, groomCung);
-  const brideLucky = getLuckyDirections(brideCung);
-  const groomLucky = getLuckyDirections(groomCung);
-  const brideNa = getNapAm(brideYear);
-  const groomNa = getNapAm(groomYear);
+export function TabFengShui({ brideYear, groomYear, brideName, groomName }: TabFengShuiProps) {
+  const bridePalace = getCungMenh(brideYear, "female");
+  const groomPalace = getCungMenh(groomYear, "male");
+  const palaceCompatible = isPalaceCompatible(bridePalace, groomPalace);
+  const brideLucky = getLuckyDirections(bridePalace);
+  const groomLucky = getLuckyDirections(groomPalace);
+  const brideSoundElement = getSoundElement(brideYear);
+  const groomSoundElement = getSoundElement(groomYear);
 
   // Find shared lucky directions
   const sharedLucky = brideLucky.filter((d) => groomLucky.includes(d));
@@ -33,20 +33,20 @@ export function TabPhongThuy({ brideYear, groomYear, brideName, groomName }: Tab
     <div className="space-y-3">
       {/* Cung Mệnh cards */}
       <div className="grid grid-cols-2 gap-3">
-        <CungMenhCard label={brideName || "Cô dâu"} year={brideYear} gender="nu" />
-        <CungMenhCard label={groomName || "Chú rể"} year={groomYear} gender="nam" />
+        <PalaceCard label={brideName || "Cô dâu"} year={brideYear} gender="female" />
+        <PalaceCard label={groomName || "Chú rể"} year={groomYear} gender="male" />
       </div>
 
       {/* Cung compatibility */}
       <Card>
         <CardContent className="pt-4 pb-3">
           <h3 className="text-sm font-bold mb-2">🏠 Tương hợp Cung Mệnh (Bát Trạch)</h3>
-          <div className={`rounded-lg p-3 border text-center ${cungHop ? "bg-green-50 border-green-200" : "bg-amber-50 border-amber-200"}`}>
+          <div className={`rounded-lg p-3 border text-center ${palaceCompatible ? "bg-green-50 border-green-200" : "bg-amber-50 border-amber-200"}`}>
             <div className="text-lg font-bold mb-1">
-              {brideCung.group} × {groomCung.group}
+              {GROUP_LABEL[bridePalace.group]} × {GROUP_LABEL[groomPalace.group]}
             </div>
-            <div className={`text-sm ${cungHop ? "text-green-700" : "text-amber-700"}`}>
-              {cungHop
+            <div className={`text-sm ${palaceCompatible ? "text-green-700" : "text-amber-700"}`}>
+              {palaceCompatible
                 ? "✅ Cùng nhóm trạch — Rất hợp! Dễ chọn hướng nhà chung."
                 : "⚠️ Khác nhóm trạch — Cần cân nhắc khi chọn hướng nhà. Ưu tiên hướng của gia chủ (chồng)."}
             </div>
@@ -59,8 +59,8 @@ export function TabPhongThuy({ brideYear, groomYear, brideName, groomName }: Tab
         <CardContent className="pt-4 pb-3">
           <h3 className="text-sm font-bold mb-2">🧭 Hướng tốt — Hướng xấu</h3>
           <div className="grid grid-cols-2 gap-3 mb-3">
-            <DirectionList label={brideName || "Cô dâu"} lucky={brideLucky} unlucky={getUnluckyDirections(brideCung)} />
-            <DirectionList label={groomName || "Chú rể"} lucky={groomLucky} unlucky={getUnluckyDirections(groomCung)} />
+            <DirectionList label={brideName || "Cô dâu"} lucky={brideLucky} unlucky={getUnluckyDirections(bridePalace)} />
+            <DirectionList label={groomName || "Chú rể"} lucky={groomLucky} unlucky={getUnluckyDirections(groomPalace)} />
           </div>
           {sharedLucky.length > 0 && (
             <div className="rounded-lg bg-green-50 border border-green-200 p-3 text-sm">
@@ -82,13 +82,13 @@ export function TabPhongThuy({ brideYear, groomYear, brideName, groomName }: Tab
         <CardContent className="pt-4 pb-3">
           <h3 className="text-sm font-bold mb-2">🎨 Màu sắc phong thủy cho đám cưới</h3>
           <div className="space-y-3">
-            <ColorSection label={brideName || "Cô dâu"} hanh={brideNa.hanh} />
-            <ColorSection label={groomName || "Chú rể"} hanh={groomNa.hanh} />
+            <ColorSection label={brideName || "Cô dâu"} element={brideSoundElement.element} />
+            <ColorSection label={groomName || "Chú rể"} element={groomSoundElement.element} />
           </div>
           <div className="mt-3 text-xs text-gray-500">
             Nên chọn màu sắc trang trí, thiệp cưới, trang phục phù hợp với mệnh của cả hai.
-            Ưu tiên màu của hành sinh ra mệnh ({HANH_EMOJI[HANH_SINH_ME[brideNa.hanh]]} {HANH_SINH_ME[brideNa.hanh]} cho cô dâu,
-            {" "}{HANH_EMOJI[HANH_SINH_ME[groomNa.hanh]]} {HANH_SINH_ME[groomNa.hanh]} cho chú rể).
+            Ưu tiên màu của hành sinh ra mệnh ({ELEMENT_EMOJI[ELEMENT_GENERATING_ME[brideSoundElement.element]]} {ELEMENT_LABEL[ELEMENT_GENERATING_ME[brideSoundElement.element]]} cho cô dâu,
+            {" "}{ELEMENT_EMOJI[ELEMENT_GENERATING_ME[groomSoundElement.element]]} {ELEMENT_LABEL[ELEMENT_GENERATING_ME[groomSoundElement.element]]} cho chú rể).
           </div>
         </CardContent>
       </Card>
@@ -111,15 +111,15 @@ export function TabPhongThuy({ brideYear, groomYear, brideName, groomName }: Tab
   );
 }
 
-function CungMenhCard({ label, year, gender }: { label: string; year: number; gender: "nam" | "nu" }) {
+function PalaceCard({ label, year, gender }: { label: string; year: number; gender: "male" | "female" }) {
   const cung = getCungMenh(year, gender);
   return (
     <Card>
-      <CardContent className={`pt-3 pb-2 px-3 text-center ${HANH_BG[cung.hanh]}`}>
+      <CardContent className={`pt-3 pb-2 px-3 text-center ${ELEMENT_BG_CLASS[cung.element]}`}>
         <div className="text-xs text-gray-500">{label}</div>
         <div className="text-lg font-bold mt-1">Cung {cung.name}</div>
-        <div className="text-sm text-gray-600">{HANH_EMOJI[cung.hanh]} {cung.hanh} · {cung.huong}</div>
-        <div className="text-xs mt-1 text-gray-500">{cung.group}</div>
+        <div className="text-sm text-gray-600">{ELEMENT_EMOJI[cung.element]} {ELEMENT_LABEL[cung.element]} · {cung.direction}</div>
+        <div className="text-xs mt-1 text-gray-500">{GROUP_LABEL[cung.group]}</div>
       </CardContent>
     </Card>
   );
@@ -137,13 +137,13 @@ function DirectionList({ label, lucky, unlucky }: { label: string; lucky: string
   );
 }
 
-function ColorSection({ label, hanh }: { label: string; hanh: string }) {
-  const colors = HANH_COLORS[hanh];
-  const sinhMe = HANH_SINH_ME[hanh];
-  const sinhColors = HANH_COLORS[sinhMe];
+function ColorSection({ label, element }: { label: string; element: string }) {
+  const colors = ELEMENT_COLORS[element];
+  const generatingElement = ELEMENT_GENERATING_ME[element];
+  const sinhColors = ELEMENT_COLORS[generatingElement];
   return (
     <div className="text-xs">
-      <span className="font-medium">{label} ({HANH_EMOJI[hanh]} {hanh}): </span>
+      <span className="font-medium">{label} ({ELEMENT_EMOJI[element]} {ELEMENT_LABEL[element]}): </span>
       <span className="inline-flex gap-1.5 flex-wrap mt-1">
         {colors.hex.map((hex, i) => (
           <span key={hex} className="inline-flex items-center gap-0.5">

@@ -1,0 +1,30 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface NotesPanelProps {
+  notes: string;
+  onSetNotes: (notes: string) => void;
+}
+
+export function NotesPanel({ notes, onSetNotes }: NotesPanelProps) {
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">📝 Ghi Chú Chung</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <p className="text-xs text-gray-500">
+          Ghi chú, ý tưởng, việc cần làm cho cả hai. Tự động lưu.
+        </p>
+        <textarea
+          className="w-full min-h-[300px] border border-gray-300 rounded-lg p-3 text-sm resize-y focus:outline-none focus:ring-2 focus:ring-red-200"
+          placeholder={"Viết ghi chú ở đây...\n\nVí dụ:\n- Gọi nhà hàng ABC hỏi giá\n- Thử váy thứ 7 tuần sau\n- Xác nhận MC trước 15/11"}
+          value={notes}
+          onChange={(e) => onSetNotes(e.target.value)}
+        />
+        <div className="text-right text-[0.65rem] text-gray-400">
+          {notes.length} ký tự
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

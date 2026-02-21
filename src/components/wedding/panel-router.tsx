@@ -2,6 +2,8 @@ import { WEDDING_STEPS } from "@/data/wedding-steps";
 import { StepPanel } from "@/components/wedding/step-panel";
 import { BudgetPanel } from "@/components/budget/budget-panel";
 import { GuestPanel } from "@/components/guests/guest-panel";
+import { NotesPanel } from "@/components/notes/notes-panel";
+import { VendorPanel } from "@/components/vendors/vendor-panel";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 
@@ -23,8 +25,8 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
       <StepPanel
         key={step.id}
         step={step}
-        activeSubTab={state.st[step.id] ?? 0}
-        checkedKeys={state.ck}
+        activeSubTab={state.subTabs[step.id] ?? 0}
+        checkedKeys={state.checkedItems}
         onSubTabChange={store.setSubTab}
         onToggleCheck={store.toggleCheck}
         onGoAI={onGoAI}
@@ -36,9 +38,9 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
     // tab 7 — Budget
     return (
       <BudgetPanel
-        budget={state.bud}
-        categoryOverrides={state.bo}
-        expenses={state.exp || {}}
+        budget={state.budget}
+        categoryOverrides={state.budgetOverrides}
+        expenses={state.expenses || {}}
         onSetBudget={store.setBudget}
         onSetCategoryPercent={store.setCategoryPercent}
         onSetExpense={store.setExpense}
@@ -55,6 +57,27 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onRemoveGuest={store.removeGuest}
         onClearGuests={store.clearGuests}
         onImportGuests={store.importGuests}
+      />
+    );
+  }
+
+  if (tab === STEP_COUNT + 2) {
+    // tab 9 — Notes
+    return (
+      <NotesPanel
+        notes={state.notes || ""}
+        onSetNotes={store.setNotes}
+      />
+    );
+  }
+
+  if (tab === STEP_COUNT + 3) {
+    // tab 10 — Vendors
+    return (
+      <VendorPanel
+        vendors={state.vendors || []}
+        onAddVendor={store.addVendor}
+        onRemoveVendor={store.removeVendor}
       />
     );
   }

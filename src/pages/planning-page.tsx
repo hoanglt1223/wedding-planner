@@ -5,21 +5,21 @@ import { PanelRouter } from "@/components/wedding/panel-router";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 
-interface KeHoachPageProps {
+interface PlanningPageProps {
   state: WeddingState;
   store: WeddingStore;
   progress: { done: number; total: number; pct: number };
   onGoAI: (hint: string) => void;
 }
 
-export function KeHoachPage({ state, store, progress, onGoAI }: KeHoachPageProps) {
+export function PlanningPage({ state, store, progress, onGoAI }: PlanningPageProps) {
   return (
     <>
       <StatsGrid
         totalSteps={WEDDING_STEPS.length}
         done={progress.done}
         total={progress.total}
-        budget={state.bud}
+        budget={state.budget}
         progressPct={progress.pct}
       />
       <TabNavigation activeTab={state.tab} onTabChange={store.setTab} />

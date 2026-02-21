@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, WeddingStep } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { WEDDING_STEPS } from "@/data/wedding-steps";
 import { migrateState } from "@/lib/migrate-state";
@@ -8,7 +8,7 @@ import { migrateState } from "@/lib/migrate-state";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v8";
+const STORAGE_KEY = "wp_v10";
 
 export function useWeddingStore() {
   const [state, setState] = useLocalStorage<WeddingState>(
@@ -27,32 +27,32 @@ export function useWeddingStore() {
   const setSubTab = useCallback((stepId: string, index: number) => {
     setState((prev) => ({
       ...prev,
-      st: { ...prev.st, [stepId]: index },
+      subTabs: { ...prev.subTabs, [stepId]: index },
     }));
   }, [setState]);
 
   const toggleCheck = useCallback((key: string) => {
     setState((prev) => ({
       ...prev,
-      ck: { ...prev.ck, [key]: !prev.ck[key] },
+      checkedItems: { ...prev.checkedItems, [key]: !prev.checkedItems[key] },
     }));
   }, [setState]);
 
-  const setBudget = useCallback((bud: number) => {
-    setState((prev) => ({ ...prev, bud }));
+  const setBudget = useCallback((budget: number) => {
+    setState((prev) => ({ ...prev, budget }));
   }, [setState]);
 
   const setCategoryPercent = useCallback((key: string, pct: number) => {
     setState((prev) => ({
       ...prev,
-      bo: { ...prev.bo, [key]: pct },
+      budgetOverrides: { ...prev.budgetOverrides, [key]: pct },
     }));
   }, [setState]);
 
   const setExpense = useCallback((key: string, amount: number) => {
     setState((prev) => ({
       ...prev,
-      exp: { ...prev.exp, [key]: amount },
+      expenses: { ...prev.expenses, [key]: amount },
     }));
   }, [setState]);
 
@@ -69,8 +69,8 @@ export function useWeddingStore() {
   const addGuest = useCallback((guest: Omit<Guest, "id">) => {
     setState((prev) => ({
       ...prev,
-      gid: prev.gid + 1,
-      guests: [...prev.guests, { ...guest, id: prev.gid + 1 }],
+      guestIdCounter: prev.guestIdCounter + 1,
+      guests: [...prev.guests, { ...guest, id: prev.guestIdCounter + 1 }],
     }));
   }, [setState]);
 
@@ -87,36 +87,78 @@ export function useWeddingStore() {
 
   const importGuests = useCallback((newGuests: Omit<Guest, "id">[]) => {
     setState((prev) => {
-      let gid = prev.gid;
+      let counter = prev.guestIdCounter;
       const guests = [
         ...prev.guests,
-        ...newGuests.map((g) => ({ ...g, id: ++gid })),
+        ...newGuests.map((g) => ({ ...g, id: ++counter })),
       ];
-      return { ...prev, guests, gid };
+      return { ...prev, guests, guestIdCounter: counter };
     });
   }, [setState]);
 
-  const setApiKey = useCallback((zk: string) => {
-    setState((prev) => ({ ...prev, zk }));
+  const setApiKey = useCallback((apiKey: string) => {
+    setState((prev) => ({ ...prev, apiKey }));
   }, [setState]);
 
-  const setAiResponse = useCallback((ar: string) => {
-    setState((prev) => ({ ...prev, ar }));
+  const setAiResponse = useCallback((aiResponse: string) => {
+    setState((prev) => ({ ...prev, aiResponse }));
+  }, [setState]);
+
+  const setTheme = useCallback((themeId: string) => {
+    setState((prev) => ({ ...prev, themeId }));
+  }, [setState]);
+
+  const setNotes = useCallback((notes: string) => {
+    setState((prev) => ({ ...prev, notes }));
+  }, [setState]);
+
+  const addVendor = useCallback((vendor: Omit<Vendor, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      vendorIdCounter: prev.vendorIdCounter + 1,
+      vendors: [...(prev.vendors || []), { ...vendor, id: prev.vendorIdCounter + 1 }],
+    }));
+  }, [setState]);
+
+  const removeVendor = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      vendors: (prev.vendors || []).filter((v) => v.id !== id),
+    }));
+  }, [setState]);
+
+  const addPhoto = useCallback((photo: Omit<PhotoItem, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      photoIdCounter: prev.photoIdCounter + 1,
+      photos: [...(prev.photos || []), { ...photo, id: prev.photoIdCounter + 1 }],
+    }));
+  }, [setState]);
+
+  const removePhoto = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      photos: (prev.photos || []).filter((p) => p.id !== id),
+    }));
+  }, [setState]);
+
+  const setLang = useCallback((lang: string) => {
+    setState((prev) => ({ ...prev, lang }));
   }, [setState]);
 
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
-    (WEDDING_STEPS as WeddingStep[]).forEach((s) =>
-      s.cers.forEach((c, ci: number) =>
-        c.cl.forEach((_item, i: number) => {
+    (WEDDING_STEPS as WeddingStep[]).forEach((step) =>
+      step.ceremonies.forEach((ceremony, ci: number) =>
+        ceremony.checklist.forEach((_item, i: number) => {
           total++;
-          if (state.ck[`${s.id}_${ci}_${i}`]) done++;
+          if (state.checkedItems[`${step.id}_${ci}_${i}`]) done++;
         }),
       ),
     );
     return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
-  }, [state.ck]);
+  }, [state.checkedItems]);
 
   return {
     state,
@@ -135,6 +177,13 @@ export function useWeddingStore() {
     importGuests,
     setApiKey,
     setAiResponse,
+    setTheme,
+    setNotes,
+    addVendor,
+    removeVendor,
+    addPhoto,
+    removePhoto,
+    setLang,
     getProgress,
   };
 }

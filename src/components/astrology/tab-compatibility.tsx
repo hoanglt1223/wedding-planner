@@ -1,11 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  getCanChi, getZodiac, getNapAm, getHanhRelation,
-  isLucHop, isLucXung, isLucHai, isTamHop, getTamHopGroup,
+  getStemBranch, getZodiac, getSoundElement, getElementRelation,
+  isSixHarmony, isSixConflict, isSixHarm, isThreeHarmony, getThreeHarmonyGroup,
+  ELEMENT_LABEL,
   type CompatType,
-} from "@/lib/tu-vi";
+} from "@/lib/astrology";
 
-interface TabHopTuoiProps {
+interface TabCompatibilityProps {
   brideYear: number;
   groomYear: number;
   brideName: string;
@@ -13,33 +14,33 @@ interface TabHopTuoiProps {
 }
 
 const COMPAT_STYLE: Record<CompatType, { bg: string; border: string; text: string; icon: string }> = {
-  "tuong-sinh": { bg: "bg-green-50", border: "border-green-200", text: "text-green-700", icon: "💚" },
-  "binh-hoa": { bg: "bg-blue-50", border: "border-blue-200", text: "text-blue-700", icon: "💙" },
-  "tuong-khac": { bg: "bg-red-50", border: "border-red-200", text: "text-red-700", icon: "💔" },
+  "generating": { bg: "bg-green-50", border: "border-green-200", text: "text-green-700", icon: "💚" },
+  "neutral": { bg: "bg-blue-50", border: "border-blue-200", text: "text-blue-700", icon: "💙" },
+  "overcoming": { bg: "bg-red-50", border: "border-red-200", text: "text-red-700", icon: "💔" },
 };
 
-export function TabHopTuoi({ brideYear, groomYear, brideName, groomName }: TabHopTuoiProps) {
-  const brideNa = getNapAm(brideYear);
-  const groomNa = getNapAm(groomYear);
+export function TabCompatibility({ brideYear, groomYear, brideName, groomName }: TabCompatibilityProps) {
+  const brideSoundElement = getSoundElement(brideYear);
+  const groomSoundElement = getSoundElement(groomYear);
   const brideZ = getZodiac(brideYear);
   const groomZ = getZodiac(groomYear);
-  const rel = getHanhRelation(brideNa.hanh, groomNa.hanh);
+  const rel = getElementRelation(brideSoundElement.element, groomSoundElement.element);
   const style = COMPAT_STYLE[rel.type];
 
-  const lucHop = isLucHop(brideYear, groomYear);
-  const lucXung = isLucXung(brideYear, groomYear);
-  const lucHai = isLucHai(brideYear, groomYear);
-  const tamHop = isTamHop(brideYear, groomYear);
+  const sixHarmony = isSixHarmony(brideYear, groomYear);
+  const sixConflict = isSixConflict(brideYear, groomYear);
+  const sixHarm = isSixHarm(brideYear, groomYear);
+  const threeHarmony = isThreeHarmony(brideYear, groomYear);
 
   // Score calculation (0-100)
   let score = 50;
-  if (rel.type === "tuong-sinh") score += 25;
-  if (rel.type === "binh-hoa") score += 15;
-  if (rel.type === "tuong-khac") score -= 20;
-  if (tamHop) score += 15;
-  if (lucHop) score += 20;
-  if (lucXung) score -= 25;
-  if (lucHai) score -= 15;
+  if (rel.type === "generating") score += 25;
+  if (rel.type === "neutral") score += 15;
+  if (rel.type === "overcoming") score -= 20;
+  if (threeHarmony) score += 15;
+  if (sixHarmony) score += 20;
+  if (sixConflict) score -= 25;
+  if (sixHarm) score -= 15;
   score = Math.max(0, Math.min(100, score));
 
   return (
@@ -58,9 +59,9 @@ export function TabHopTuoi({ brideYear, groomYear, brideName, groomName }: TabHo
             <div className={`text-xl font-bold ${style.text}`}>{rel.label}</div>
             <div className="text-sm text-gray-600">{rel.desc}</div>
             <div className="flex justify-center gap-4 text-sm">
-              <span>{brideNa.emoji} {brideNa.hanh}</span>
+              <span>{brideSoundElement.emoji} {ELEMENT_LABEL[brideSoundElement.element]}</span>
               <span className="text-gray-400">×</span>
-              <span>{groomNa.emoji} {groomNa.hanh}</span>
+              <span>{groomSoundElement.emoji} {ELEMENT_LABEL[groomSoundElement.element]}</span>
             </div>
           </div>
 
@@ -87,10 +88,10 @@ export function TabHopTuoi({ brideYear, groomYear, brideName, groomName }: TabHo
         <CardContent className="pt-4 pb-3 space-y-2">
           <h3 className="text-sm font-bold">Quan hệ địa chi ({brideZ.chi} — {groomZ.chi})</h3>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <ChiTag label="Tam Hợp" active={tamHop} good desc="Bộ ba tương hợp" />
-            <ChiTag label="Lục Hợp" active={lucHop} good desc="Cặp tương hợp hoàn hảo" />
-            <ChiTag label="Lục Xung" active={lucXung} good={false} desc="Đối xung, bất hòa" />
-            <ChiTag label="Lục Hại" active={lucHai} good={false} desc="Tương hại, gây bất lợi" />
+            <ChiTag label="Tam Hợp" active={threeHarmony} good desc="Bộ ba tương hợp" />
+            <ChiTag label="Lục Hợp" active={sixHarmony} good desc="Cặp tương hợp hoàn hảo" />
+            <ChiTag label="Lục Xung" active={sixConflict} good={false} desc="Đối xung, bất hòa" />
+            <ChiTag label="Lục Hại" active={sixHarm} good={false} desc="Tương hại, gây bất lợi" />
           </div>
         </CardContent>
       </Card>
@@ -102,11 +103,11 @@ export function TabHopTuoi({ brideYear, groomYear, brideName, groomName }: TabHo
           <div className="grid grid-cols-2 gap-2 text-xs">
             <div className="bg-pink-50 rounded-lg p-2">
               <div className="text-gray-500 mb-1">{brideName || "Cô dâu"} ({brideZ.chi})</div>
-              {getTamHopGroup(brideYear).map((s) => <div key={s}>{s}</div>)}
+              {getThreeHarmonyGroup(brideYear).map((s) => <div key={s}>{s}</div>)}
             </div>
             <div className="bg-sky-50 rounded-lg p-2">
               <div className="text-gray-500 mb-1">{groomName || "Chú rể"} ({groomZ.chi})</div>
-              {getTamHopGroup(groomYear).map((s) => <div key={s}>{s}</div>)}
+              {getThreeHarmonyGroup(groomYear).map((s) => <div key={s}>{s}</div>)}
             </div>
           </div>
         </CardContent>
@@ -116,19 +117,19 @@ export function TabHopTuoi({ brideYear, groomYear, brideName, groomName }: TabHo
 }
 
 function PersonMini({ label, name, year }: { label: string; name: string; year: number }) {
-  const canChi = getCanChi(year);
+  const stemBranch = getStemBranch(year);
   const z = getZodiac(year);
-  const na = getNapAm(year);
+  const soundElement = getSoundElement(year);
   return (
     <Card>
       <CardContent className="pt-3 pb-2 px-3 text-center space-y-1">
         <div className="text-xs text-gray-500 font-semibold">{label}</div>
         <div className="text-sm font-bold">{name || "—"}</div>
         <div className="text-3xl">{z.emoji}</div>
-        <div className="text-xs">{canChi}</div>
+        <div className="text-xs">{stemBranch}</div>
         <div className="text-xs text-gray-500">{z.name} ({z.chi})</div>
-        <div className="text-xs">{na.name}</div>
-        <div className={`text-sm font-bold ${na.color}`}>{na.emoji} {na.hanh}</div>
+        <div className="text-xs">{soundElement.name}</div>
+        <div className={`text-sm font-bold ${soundElement.color}`}>{soundElement.emoji} {ELEMENT_LABEL[soundElement.element]}</div>
       </CardContent>
     </Card>
   );

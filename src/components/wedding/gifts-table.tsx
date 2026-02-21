@@ -14,7 +14,7 @@ interface GiftsTableProps {
 }
 
 export function GiftsTable({ gifts }: GiftsTableProps) {
-  const total = gifts.reduce((sum, g) => sum + g.c, 0);
+  const total = gifts.reduce((sum, g) => sum + g.cost, 0);
 
   return (
     <div className="bg-white rounded-xl p-3 shadow-sm mb-2">
@@ -33,10 +33,10 @@ export function GiftsTable({ gifts }: GiftsTableProps) {
         <TableBody>
           {gifts.map((gift, i) => (
             <TableRow key={i} className="text-xs">
-              <TableCell className="font-semibold text-gray-800">{gift.n}</TableCell>
-              <TableCell className="text-center text-gray-600">{gift.q}</TableCell>
+              <TableCell className="font-semibold text-gray-800">{gift.name}</TableCell>
+              <TableCell className="text-center text-gray-600">{gift.quantity}</TableCell>
               <TableCell className="text-right text-red-700 font-semibold">
-                {gift.c ? `${formatMoney(gift.c)}đ` : "—"}
+                {gift.cost ? `${formatMoney(gift.cost)}đ` : "—"}
               </TableCell>
             </TableRow>
           ))}

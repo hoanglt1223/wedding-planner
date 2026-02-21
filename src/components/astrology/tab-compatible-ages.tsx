@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getCompatibleYears, getCanChi, getNapAm, getZodiac, HANH_COLOR } from "@/lib/tu-vi";
+import { getCompatibleYears, getStemBranch, getSoundElement, getZodiac, ELEMENT_TEXT_CLASS, ELEMENT_LABEL } from "@/lib/astrology";
 
-interface TabTuoiHopProps {
+interface TabCompatibleAgesProps {
   brideYear: number;
   groomYear: number;
   brideName: string;
   groomName: string;
 }
 
-export function TabTuoiHop({ brideYear, groomYear, brideName, groomName }: TabTuoiHopProps) {
+export function TabCompatibleAges({ brideYear, groomYear, brideName, groomName }: TabCompatibleAgesProps) {
   const [activeTab, setActiveTab] = useState<"bride" | "groom">("bride");
   const year = activeTab === "bride" ? brideYear : groomYear;
   const name = activeTab === "bride" ? (brideName || "Cô dâu") : (groomName || "Chú rể");
   const years = getCompatibleYears(year, 15);
-  const na = getNapAm(year);
+  const soundElement = getSoundElement(year);
   const z = getZodiac(year);
 
   return (
@@ -46,8 +46,8 @@ export function TabTuoiHop({ brideYear, groomYear, brideName, groomName }: TabTu
           <div className="flex items-center gap-3">
             <span className="text-3xl">{z.emoji}</span>
             <div>
-              <div className="font-bold">{name} — {getCanChi(year)}</div>
-              <div className="text-sm text-gray-500">{na.name} ({na.emoji} {na.hanh})</div>
+              <div className="font-bold">{name} — {getStemBranch(year)}</div>
+              <div className="text-sm text-gray-500">{soundElement.name} ({soundElement.emoji} {ELEMENT_LABEL[soundElement.element]})</div>
             </div>
           </div>
         </CardContent>
@@ -83,9 +83,9 @@ export function TabTuoiHop({ brideYear, groomYear, brideName, groomName }: TabTu
                         {y.year}
                         {isPartner && <span className="ml-1 text-red-500">★</span>}
                       </td>
-                      <td className="py-1.5">{y.canChi}</td>
+                      <td className="py-1.5">{y.stemBranch}</td>
                       <td className="py-1.5">{yz.emoji} {yz.name}</td>
-                      <td className={`py-1.5 ${HANH_COLOR[y.hanh]}`}>{y.emoji} {y.hanh}</td>
+                      <td className={`py-1.5 ${ELEMENT_TEXT_CLASS[y.element]}`}>{y.emoji} {ELEMENT_LABEL[y.element]}</td>
                       <td className="py-1.5 text-right">
                         <Badge
                           variant={y.relation === "Tương Sinh" ? "default" : "secondary"}

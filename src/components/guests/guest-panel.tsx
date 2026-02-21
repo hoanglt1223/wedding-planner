@@ -10,6 +10,7 @@ import {
 } from "@/lib/csv";
 import type { Guest } from "@/types/wedding";
 import { GuestTable } from "./guest-table";
+import { SeatingChart } from "./seating-chart";
 
 interface GuestPanelProps {
   guests: Guest[];
@@ -31,15 +32,16 @@ export function GuestPanel({
   const [side, setSide] = useState<"trai" | "gai">("trai");
   const [group, setGroup] = useState("");
   const [search, setSearch] = useState("");
+  const [view, setView] = useState<"list" | "chart">("list");
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const traiCount = guests.filter((g) => g.s === "trai").length;
-  const gaiCount = guests.filter((g) => g.s === "gai").length;
+  const traiCount = guests.filter((g) => g.side === "trai").length;
+  const gaiCount = guests.filter((g) => g.side === "gai").length;
   const tableCount = Math.ceil(guests.length / 10);
 
   const handleAdd = () => {
     if (!name.trim()) return;
-    onAddGuest({ n: name.trim(), p: phone.trim(), s: side, g: group.trim() });
+    onAddGuest({ name: name.trim(), phone: phone.trim(), side: side, tableGroup: group.trim() });
     setName("");
     setPhone("");
     setSide("trai");
@@ -60,7 +62,7 @@ export function GuestPanel({
   };
 
   const filteredGuests = search
-    ? guests.filter((g) => g.n.toLowerCase().includes(search.toLowerCase()))
+    ? guests.filter((g) => g.name.toLowerCase().includes(search.toLowerCase()))
     : guests;
 
   return (
@@ -73,22 +75,22 @@ export function GuestPanel({
           Trai: <b>{traiCount}</b> | Gái: <b>{gaiCount}</b> | Bàn ≈ <b>{tableCount}</b>
         </div>
 
-        <div className="flex gap-1">
+        <div className="grid grid-cols-2 gap-1 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
           <Input
-            className="flex-[2] min-w-[100px] h-8 text-sm"
+            className="col-span-2 sm:col-span-1 h-8 text-sm"
             placeholder="Họ tên"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           />
           <Input
-            className="flex-1 min-w-[80px] h-8 text-sm"
+            className="h-8 text-sm"
             placeholder="SĐT"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
           <select
-            className="flex-1 min-w-[70px] h-8 text-sm border border-gray-300 rounded px-1"
+            className="h-8 text-sm border border-gray-300 rounded px-1"
             value={side}
             onChange={(e) => setSide(e.target.value as "trai" | "gai")}
           >
@@ -96,12 +98,12 @@ export function GuestPanel({
             <option value="gai">Gái</option>
           </select>
           <Input
-            className="flex-1 min-w-[70px] h-8 text-sm"
+            className="h-8 text-sm"
             placeholder="Nhóm/Bàn"
             value={group}
             onChange={(e) => setGroup(e.target.value)}
           />
-          <Button size="sm" className="h-8 px-3" onClick={handleAdd}>+</Button>
+          <Button size="sm" className="h-8 px-3 col-span-2 sm:col-span-1" onClick={handleAdd}>+ Thêm</Button>
         </div>
 
         <div className="flex gap-1 flex-wrap">
@@ -133,6 +135,31 @@ export function GuestPanel({
         </div>
 
         {guests.length > 0 && (
+          <div className="flex gap-1 border-b border-gray-100 pb-1">
+            <button
+              className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
+                view === "list"
+                  ? "bg-red-700 text-white"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+              onClick={() => setView("list")}
+            >
+              📋 Danh sách
+            </button>
+            <button
+              className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
+                view === "chart"
+                  ? "bg-red-700 text-white"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+              onClick={() => setView("chart")}
+            >
+              🪑 Sơ đồ bàn
+            </button>
+          </div>
+        )}
+
+        {guests.length > 0 && view === "list" && (
           <>
             <Input
               className="h-8 text-sm"
@@ -142,6 +169,9 @@ export function GuestPanel({
             />
             <GuestTable guests={filteredGuests} onDelete={onRemoveGuest} />
           </>
+        )}
+        {guests.length > 0 && view === "chart" && (
+          <SeatingChart guests={guests} />
         )}
       </CardContent>
     </Card>

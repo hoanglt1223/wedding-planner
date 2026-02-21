@@ -12,8 +12,8 @@ export function downloadSampleCsv(): void {
 /** Export current guest list to CSV */
 export function exportGuestsCsv(guests: Guest[]): void {
   let csv = CSV_HEADER + "\n";
-  guests.forEach((g) => {
-    csv += `${g.n},${g.p || ""},${g.s},${g.g || ""}\n`;
+  guests.forEach((guest) => {
+    csv += `${guest.name},${guest.phone || ""},${guest.side},${guest.tableGroup || ""}\n`;
   });
   downloadBlob(BOM + csv, "khach_moi.csv");
 }
@@ -27,13 +27,13 @@ export function parseCsvToGuests(text: string): Omit<Guest, "id">[] {
     .map((line) => {
       const parts = line.split(",").map((s) => s.trim());
       return {
-        n: parts[0] || "",
-        p: parts[1] || "",
-        s: parts[2] || "trai",
-        g: parts[3] || "",
+        name: parts[0] || "",
+        phone: parts[1] || "",
+        side: parts[2] || "trai",
+        tableGroup: parts[3] || "",
       };
     })
-    .filter((g) => g.n);
+    .filter((guest) => guest.name);
 }
 
 /** Read a File as UTF-8 text */
@@ -48,9 +48,9 @@ export function readFileAsText(file: File): Promise<string> {
 
 function downloadBlob(content: string, filename: string): void {
   const blob = new Blob([content], { type: "text/csv" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(a.href);
+  const anchor = document.createElement("a");
+  anchor.href = URL.createObjectURL(blob);
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(anchor.href);
 }

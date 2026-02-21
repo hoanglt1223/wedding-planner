@@ -4,12 +4,12 @@ export interface PageDef {
 }
 
 export const PAGES: PageDef[] = [
-  { id: "kehoach", label: "💒 Kế Hoạch" },
-  { id: "tuvi", label: "🔮 Tử Vi" },
-  { id: "thiep", label: "🖼️ Thiệp" },
+  { id: "planning", label: "💒 Kế Hoạch" },
+  { id: "astrology", label: "🔮 Tử Vi" },
+  { id: "cards", label: "🖼️ Thiệp" },
   { id: "ai", label: "🤖 AI" },
-  { id: "sotay", label: "📖 Sổ Tay" },
-  { id: "ytuong", label: "💡 Ý Tưởng" },
+  { id: "handbook", label: "📖 Sổ Tay" },
+  { id: "ideas", label: "💡 Ý Tưởng" },
 ];
 
-export const DEFAULT_PAGE = "kehoach";
+export const DEFAULT_PAGE = "planning";

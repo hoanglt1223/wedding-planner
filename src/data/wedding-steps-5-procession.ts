@@ -1,0 +1,71 @@
+import type { WeddingStep } from "@/types/wedding";
+
+export const STEP_PROCESSION: WeddingStep = {
+  id: "procession",
+  tab: "🚗 Rước Dâu",
+  title: "Bước 5: Rước Dâu",
+  formalName: "Lễ Rước Dâu (Lễ Vu Quy / Lễ Đưa Dâu)",
+  icon: "🚗",
+  description: "Nghi lễ long trọng nhất trong ngày cưới — chú rể đón cô dâu về nhà chồng, đánh dấu sự chuyển giao thiêng liêng.",
+  meaning: "Lễ rước dâu tượng trưng cho sự chuyển giao — cô dâu rời gia đình mình để bắt đầu cuộc sống mới bên nhà chồng. Đây là nghi thức cổ xưa nhất trong hôn nhân Việt Nam, mang đậm triết lý 'xuất giá tòng phu'. Khoảnh khắc cô dâu lạy tạ cha mẹ, bước lên xe hoa — giây phút thiêng liêng, xúc động, đánh dấu một chương mới trong đời.",
+  notes: [
+    "PHẢI đi đúng giờ hoàng đạo — không được trễ dù chỉ 1 phút",
+    "Đoàn xe phải SỐ CHẴN (4, 6, 8 xe), trang trí hoa",
+    "Cô dâu KHÔNG quay đầu nhìn lại khi bước lên xe hoa",
+    "Đi đường KHÁC lúc đến — tránh 'đi lại đường cũ'",
+    "Chuẩn bị dù đỏ che nắng/mưa cho cô dâu suốt đường đi",
+    "Chuẩn bị NHIỀU phong bì lẻ cho chặn cổng",
+    "Chặn cổng: vui nhộn nhưng KHÔNG quá 15-20 phút, tránh trễ giờ",
+    "Cô dâu nên makeup từ 4-5 giờ sáng nếu rước dâu buổi sáng",
+  ],
+  timeline: "Sáng ngày cưới",
+  aiHint: "Hướng dẫn chi tiết lễ rước dâu, chặn cổng, giờ hoàng đạo, phong bì mở cổng.",
+  ceremonies: [
+    {
+      name: "🚗 Rước Dâu",
+      required: 1,
+      description: "Chú rể đón cô dâu.",
+      checklist: [
+        { text: "Xem giờ hoàng đạo", cost: 200000, categoryKey: "other" },
+        { text: "Xe hoa + đoàn xe SỐ CHẴN", cost: 5000000, categoryKey: "transport" },
+        { text: "Bó hoa cưới", cost: 500000, categoryKey: "flower" },
+        { text: "Phong bì mở cổng", cost: 1500000, categoryKey: "other" },
+        { text: "Cô dâu makeup từ sớm", cost: 3000000, categoryKey: "makeup" },
+        { text: "Kiểm tra nhẫn!", cost: 0, categoryKey: "other" },
+        { text: "Dù đỏ", cost: 200000, categoryKey: "other" },
+        { text: "Nhiếp ảnh", cost: 5000000, categoryKey: "photo" },
+      ],
+      people: [
+        { name: "Chú rể", role: "Đón dâu", avatar: "🤵" },
+        { name: "Phù dâu", role: "Chặn cổng", avatar: "👧" },
+        { name: "Phù rể", role: "Hỗ trợ", avatar: "🤵" },
+      ],
+      ritualSteps: [
+        "Đoàn xe xuất phát ĐÚNG GIỜ",
+        "Chặn cổng vui nhộn",
+        "Trao hoa cho cô dâu",
+        "Lạy gia tiên nhà gái",
+        "Cô dâu lạy tạ cha mẹ 😢",
+        "Lên xe hoa (KHÔNG quay lại)",
+        "Đi đường KHÁC lúc đến",
+      ],
+      tips: ["KHÔNG TRỄ giờ hoàng đạo", "Nhiều phong bì lẻ"],
+    },
+    {
+      name: "🚪 Chặn Cổng",
+      required: 0,
+      description: "Phù dâu thử thách chú rể.",
+      checklist: [
+        { text: "Câu đố về cô dâu", cost: 0, categoryKey: "other" },
+        { text: "Thử thách (hát, nhảy)", cost: 0, categoryKey: "other" },
+        { text: "Không quá 15-20 phút", cost: 0, categoryKey: "other" },
+      ],
+      people: [
+        { name: "Phù dâu", role: "", avatar: "👧" },
+        { name: "Chú rể", role: "", avatar: "🤵" },
+      ],
+      ritualSteps: ["Đố → Thử thách → Phong bì", "Chú rể vượt qua"],
+      tips: ["Vui nhộn, không quá khó"],
+    },
+  ],
+};

@@ -55,7 +55,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 p-4">
+    <div className="min-h-[60vh] bg-gradient-to-b from-slate-900 to-slate-800 p-3 sm:p-4 rounded-xl">
       <div className="mx-auto max-w-3xl space-y-4">
         <h2 className="text-xl font-bold text-white">
           🤖 AI Hỗ Trợ (Z.AI) — {AI_PROMPTS.length} Prompts
@@ -63,7 +63,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
 
         {/* Model info */}
         <div className="text-[0.7rem] text-white/40">
-          Model: glm-5.0 | API key configured server-side (Z_AI_KEY)
+          Model: glm-5 | API key configured server-side (Z_AI_KEY)
         </div>
 
         {/* Quick prompts */}

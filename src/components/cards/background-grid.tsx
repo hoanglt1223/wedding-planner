@@ -25,34 +25,34 @@ export function BackgroundGrid({
         <div
           key={i}
           className="relative rounded-lg p-3 text-center"
-          style={{ background: bg.bg, fontFamily: bg.f, minHeight: "130px" }}
+          style={{ background: bg.background, fontFamily: bg.fontFamily, minHeight: "130px" }}
         >
           {i === 8 && (
             <div
               className="pointer-events-none absolute inset-2 rounded-lg opacity-30"
-              style={{ border: `1px solid ${bg.sub}` }}
+              style={{ border: `1px solid ${bg.accentColor}` }}
             />
           )}
           <div
             className="text-[0.6rem] uppercase tracking-widest opacity-80"
-            style={{ color: bg.sub }}
+            style={{ color: bg.accentColor }}
           >
             — {eventName} —
           </div>
           <div
             className="my-1.5 text-xl font-bold leading-tight"
-            style={{ color: bg.t }}
+            style={{ color: bg.textColor }}
           >
             {groom}{" "}
             <span className="text-base font-normal opacity-40">&</span>{" "}
             {bride}
           </div>
-          <div className="text-[0.75rem]" style={{ color: bg.sub }}>
+          <div className="text-[0.75rem]" style={{ color: bg.accentColor }}>
             📅 {date}
           </div>
           <div
             className="mt-1.5 text-[0.6rem] opacity-50"
-            style={{ color: bg.t }}
+            style={{ color: bg.textColor }}
           >
             {groomFamily} ♥ {brideFamily}
           </div>

@@ -1,19 +1,22 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { getNapAm, getHanhRelation, getSinhHanh, HANH_EMOJI, HANH_COLOR, HANH_BG, KHAC } from "@/lib/tu-vi";
-import { HANH_COLORS, HANH_NUMBERS, HANH_SEASONS, HANH_SINH_ME } from "@/lib/tu-vi-phong-thuy";
+import {
+  getSoundElement, getElementRelation, getGeneratingElement,
+  ELEMENT_EMOJI, ELEMENT_TEXT_CLASS, ELEMENT_BG_CLASS, ELEMENT_LABEL, OVERCOMING_CYCLE,
+} from "@/lib/astrology";
+import { ELEMENT_COLORS, ELEMENT_NUMBERS, ELEMENT_SEASONS, ELEMENT_GENERATING_ME } from "@/lib/astrology-feng-shui";
 
-interface TabNguHanhProps {
+interface TabFiveElementsProps {
   brideYear: number;
   groomYear: number;
   brideName: string;
   groomName: string;
 }
 
-const HANH_LIST = ["Kim", "Mộc", "Thủy", "Hỏa", "Thổ"];
+const ELEMENT_LIST = ["metal", "wood", "water", "fire", "earth"];
 
-export function TabNguHanh({ brideYear, groomYear, brideName, groomName }: TabNguHanhProps) {
-  const brideNa = getNapAm(brideYear);
-  const groomNa = getNapAm(groomYear);
+export function TabFiveElements({ brideYear, groomYear, brideName, groomName }: TabFiveElementsProps) {
+  const brideSoundElement = getSoundElement(brideYear);
+  const groomSoundElement = getSoundElement(groomYear);
 
   return (
     <div className="space-y-3">
@@ -22,10 +25,10 @@ export function TabNguHanh({ brideYear, groomYear, brideName, groomName }: TabNg
         <CardContent className="pt-4 pb-3">
           <h3 className="text-sm font-bold mb-3 text-center">Vòng Tương Sinh — Tương Khắc</h3>
           <div className="grid grid-cols-5 gap-1 text-center text-xs mb-3">
-            {HANH_LIST.map((h) => (
-              <div key={h} className={`rounded-lg p-2 ${HANH_BG[h]} ${brideNa.hanh === h || groomNa.hanh === h ? "ring-2 ring-red-400" : ""}`}>
-                <div className="text-2xl">{HANH_EMOJI[h]}</div>
-                <div className={`font-bold ${HANH_COLOR[h]}`}>{h}</div>
+            {ELEMENT_LIST.map((el) => (
+              <div key={el} className={`rounded-lg p-2 ${ELEMENT_BG_CLASS[el]} ${brideSoundElement.element === el || groomSoundElement.element === el ? "ring-2 ring-red-400" : ""}`}>
+                <div className="text-2xl">{ELEMENT_EMOJI[el]}</div>
+                <div className={`font-bold ${ELEMENT_TEXT_CLASS[el]}`}>{ELEMENT_LABEL[el]}</div>
               </div>
             ))}
           </div>
@@ -44,8 +47,8 @@ export function TabNguHanh({ brideYear, groomYear, brideName, groomName }: TabNg
 
       {/* Detailed element info for both */}
       <div className="grid grid-cols-1 gap-3">
-        <HanhDetail label={brideName || "Cô dâu"} year={brideYear} />
-        <HanhDetail label={groomName || "Chú rể"} year={groomYear} />
+        <ElementDetail label={brideName || "Cô dâu"} year={brideYear} />
+        <ElementDetail label={groomName || "Chú rể"} year={groomYear} />
       </div>
 
       {/* Full Ngũ Hành table */}
@@ -65,15 +68,15 @@ export function TabNguHanh({ brideYear, groomYear, brideName, groomName }: TabNg
                 </tr>
               </thead>
               <tbody>
-                {HANH_LIST.map((h) => {
-                  const brideRel = getHanhRelation(brideNa.hanh, h);
-                  const groomRel = getHanhRelation(groomNa.hanh, h);
+                {ELEMENT_LIST.map((el) => {
+                  const brideRel = getElementRelation(brideSoundElement.element, el);
+                  const groomRel = getElementRelation(groomSoundElement.element, el);
                   return (
-                    <tr key={h} className="border-b border-gray-100">
-                      <td className={`py-1.5 font-bold ${HANH_COLOR[h]}`}>{HANH_EMOJI[h]} {h}</td>
-                      <td className="py-1.5">{HANH_EMOJI[getSinhHanh(h)!]} {getSinhHanh(h)}</td>
-                      <td className="py-1.5">{HANH_EMOJI[KHAC[h]]} {KHAC[h]}</td>
-                      <td className="py-1.5">{HANH_EMOJI[HANH_SINH_ME[h]]} {HANH_SINH_ME[h]}</td>
+                    <tr key={el} className="border-b border-gray-100">
+                      <td className={`py-1.5 font-bold ${ELEMENT_TEXT_CLASS[el]}`}>{ELEMENT_EMOJI[el]} {ELEMENT_LABEL[el]}</td>
+                      <td className="py-1.5">{ELEMENT_EMOJI[getGeneratingElement(el)!]} {ELEMENT_LABEL[getGeneratingElement(el)!]}</td>
+                      <td className="py-1.5">{ELEMENT_EMOJI[OVERCOMING_CYCLE[el]]} {ELEMENT_LABEL[OVERCOMING_CYCLE[el]]}</td>
+                      <td className="py-1.5">{ELEMENT_EMOJI[ELEMENT_GENERATING_ME[el]]} {ELEMENT_LABEL[ELEMENT_GENERATING_ME[el]]}</td>
                       <td className="py-1.5 text-center">
                         <RelBadge type={brideRel.type} />
                       </td>
@@ -92,28 +95,28 @@ export function TabNguHanh({ brideYear, groomYear, brideName, groomName }: TabNg
   );
 }
 
-function HanhDetail({ label, year }: { label: string; year: number }) {
-  const na = getNapAm(year);
-  const h = na.hanh;
-  const colors = HANH_COLORS[h];
-  const nums = HANH_NUMBERS[h];
-  const season = HANH_SEASONS[h];
-  const sinhMe = HANH_SINH_ME[h]; // hành sinh ra mệnh
+function ElementDetail({ label, year }: { label: string; year: number }) {
+  const na = getSoundElement(year);
+  const el = na.element;
+  const colors = ELEMENT_COLORS[el];
+  const nums = ELEMENT_NUMBERS[el];
+  const season = ELEMENT_SEASONS[el];
+  const generatingElement = ELEMENT_GENERATING_ME[el]; // element that generates this destiny
 
   return (
     <Card>
-      <CardContent className={`pt-3 pb-2 ${HANH_BG[h]}`}>
+      <CardContent className={`pt-3 pb-2 ${ELEMENT_BG_CLASS[el]}`}>
         <div className="flex items-center gap-3 mb-2">
           <span className="text-3xl">{na.emoji}</span>
           <div>
             <div className="text-xs text-gray-500">{label}</div>
-            <div className={`font-bold ${na.color}`}>{na.hanh} — {na.name}</div>
+            <div className={`font-bold ${na.color}`}>{ELEMENT_LABEL[el]} — {na.name}</div>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-2 text-xs">
-          <InfoRow label="Hành sinh" value={`${HANH_EMOJI[getSinhHanh(h)!]} ${getSinhHanh(h)} (tốt cho ${label})`} />
-          <InfoRow label="Hành hỗ trợ" value={`${HANH_EMOJI[sinhMe]} ${sinhMe} (sinh ra ${h})`} />
-          <InfoRow label="Hành khắc" value={`${HANH_EMOJI[KHAC[h]]} ${KHAC[h]} (cần tránh)`} />
+          <InfoRow label="Hành sinh" value={`${ELEMENT_EMOJI[getGeneratingElement(el)!]} ${ELEMENT_LABEL[getGeneratingElement(el)!]} (tốt cho ${label})`} />
+          <InfoRow label="Hành hỗ trợ" value={`${ELEMENT_EMOJI[generatingElement!]} ${ELEMENT_LABEL[generatingElement!]} (sinh ra ${ELEMENT_LABEL[el]})`} />
+          <InfoRow label="Hành khắc" value={`${ELEMENT_EMOJI[OVERCOMING_CYCLE[el]]} ${ELEMENT_LABEL[OVERCOMING_CYCLE[el]]} (cần tránh)`} />
           <InfoRow label="Mùa vượng" value={season} />
           <InfoRow label="Số may mắn" value={nums.join(", ")} />
           <div className="col-span-2">
@@ -143,7 +146,7 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 }
 
 function RelBadge({ type }: { type: string }) {
-  if (type === "tuong-sinh") return <span className="text-green-600">✅</span>;
-  if (type === "binh-hoa") return <span className="text-blue-600">💙</span>;
+  if (type === "generating") return <span className="text-green-600">✅</span>;
+  if (type === "neutral") return <span className="text-blue-600">💙</span>;
   return <span className="text-red-500">⊗</span>;
 }

@@ -1,18 +1,18 @@
 import type { WeddingStep } from "@/types/wedding";
-import { STEP_GAP_MAT } from "./wedding-steps-0-gap";
-import { STEP_CAU_HON } from "./wedding-steps-1-cauhon";
-import { STEP_DAM_NGO } from "./wedding-steps-2-damngo";
-import { STEP_DAM_HOI } from "./wedding-steps-3-damhoi";
-import { STEP_CUOI_GAI } from "./wedding-steps-4-cuoigai";
-import { STEP_RUOC_DAU } from "./wedding-steps-5-ruocdau";
-import { STEP_CUOI_TRAI } from "./wedding-steps-6-cuoitrai";
+import { STEP_MEETING } from "./wedding-steps-0-meeting";
+import { STEP_PROPOSAL } from "./wedding-steps-1-proposal";
+import { STEP_ENGAGEMENT } from "./wedding-steps-2-engagement";
+import { STEP_BETROTHAL } from "./wedding-steps-3-betrothal";
+import { STEP_BRIDE_CEREMONY } from "./wedding-steps-4-bride-ceremony";
+import { STEP_PROCESSION } from "./wedding-steps-5-procession";
+import { STEP_GROOM_CEREMONY } from "./wedding-steps-6-groom-ceremony";
 
 export const WEDDING_STEPS: WeddingStep[] = [
-  STEP_GAP_MAT,
-  STEP_CAU_HON,
-  STEP_DAM_NGO,
-  STEP_DAM_HOI,
-  STEP_CUOI_GAI,
-  STEP_RUOC_DAU,
-  STEP_CUOI_TRAI,
+  STEP_MEETING,
+  STEP_PROPOSAL,
+  STEP_ENGAGEMENT,
+  STEP_BETROTHAL,
+  STEP_BRIDE_CEREMONY,
+  STEP_PROCESSION,
+  STEP_GROOM_CEREMONY,
 ];

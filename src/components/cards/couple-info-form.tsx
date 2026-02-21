@@ -35,42 +35,42 @@ export function CoupleInfoForm({ info, onUpdateInfo }: CoupleInfoFormProps) {
         <div className="flex-1">
           <Label className="text-xs font-semibold">Họ nhà gái</Label>
           <Input
-            value={info.bf}
-            onChange={(e) => onUpdateInfo("bf", e.target.value)}
+            value={info.brideFamilyName}
+            onChange={(e) => onUpdateInfo("brideFamilyName", e.target.value)}
             className="mt-0.5"
           />
         </div>
         <div className="flex-1">
           <Label className="text-xs font-semibold">Họ nhà trai</Label>
           <Input
-            value={info.gf}
-            onChange={(e) => onUpdateInfo("gf", e.target.value)}
+            value={info.groomFamilyName}
+            onChange={(e) => onUpdateInfo("groomFamilyName", e.target.value)}
             className="mt-0.5"
           />
         </div>
       </div>
 
       {/* Row 3: Dates */}
-      <div className="flex gap-2">
-        <div className="flex-1">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div>
           <Label className="text-xs font-semibold">Ngày dạm ngõ</Label>
           <Input
             type="date"
-            value={info.dDN}
-            onChange={(e) => onUpdateInfo("dDN", e.target.value)}
+            value={info.engagementDate}
+            onChange={(e) => onUpdateInfo("engagementDate", e.target.value)}
             className="mt-0.5"
           />
         </div>
-        <div className="flex-1">
+        <div>
           <Label className="text-xs font-semibold">Ngày hỏi</Label>
           <Input
             type="date"
-            value={info.dDH}
-            onChange={(e) => onUpdateInfo("dDH", e.target.value)}
+            value={info.betrothalDate}
+            onChange={(e) => onUpdateInfo("betrothalDate", e.target.value)}
             className="mt-0.5"
           />
         </div>
-        <div className="flex-1">
+        <div className="col-span-2 sm:col-span-1">
           <Label className="text-xs font-semibold">Ngày cưới</Label>
           <Input
             type="date"

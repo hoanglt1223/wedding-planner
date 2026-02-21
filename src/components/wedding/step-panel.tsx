@@ -19,8 +19,8 @@ function getStepProgress(
 ): { done: number; total: number; pct: number } {
   let total = 0;
   let done = 0;
-  step.cers.forEach((c, ci) =>
-    c.cl.forEach((_item, i) => {
+  step.ceremonies.forEach((c, ci) =>
+    c.checklist.forEach((_item, i) => {
       total++;
       if (checkedKeys[`${step.id}_${ci}_${i}`]) done++;
     }),
@@ -38,22 +38,48 @@ export function StepPanel({
 }: StepPanelProps) {
   const { done, total, pct } = getStepProgress(step, checkedKeys);
 
-  const ceremonyTabs = step.cers.map((cer) => ({
-    label: cer.nm,
-    suffix: !cer.req ? "(tùy chọn)" : undefined,
+  const ceremonyTabs = step.ceremonies.map((cer) => ({
+    label: cer.name,
+    suffix: !cer.required ? "(tùy chọn)" : undefined,
   }));
 
   return (
     <div className="space-y-2">
       {/* Overview card */}
       <div className="bg-white rounded-xl p-3 shadow-sm">
-        <h2 className="text-base font-bold text-gray-900 mb-1">
+        <h2 className="text-base font-bold text-gray-900 mb-0.5">
           {step.icon} {step.title}
         </h2>
-        <p className="text-xs text-gray-500 mb-2">{step.desc}</p>
+        {step.formalName && (
+          <div className="text-xs text-gray-400 italic mb-1.5">
+            Tên chính thức: {step.formalName}
+          </div>
+        )}
+        <p className="text-xs text-gray-500 mb-2 leading-relaxed">{step.description}</p>
+
+        {/* Meaning section */}
+        {step.meaning && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 mb-2">
+            <div className="text-xs font-semibold text-amber-800 mb-1">📖 Ý nghĩa</div>
+            <p className="text-xs text-amber-700 leading-relaxed">{step.meaning}</p>
+          </div>
+        )}
+
+        {/* Step-level notes */}
+        {step.notes && step.notes.length > 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-2.5 mb-2">
+            <div className="text-xs font-semibold text-blue-800 mb-1">📝 Lưu ý quan trọng</div>
+            <div className="space-y-0.5">
+              {step.notes.map((note, i) => (
+                <div key={i} className="text-xs text-blue-700 leading-relaxed">• {note}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex items-center gap-2 mb-2 flex-wrap">
           <span className="text-[0.68rem] font-semibold bg-amber-100 text-amber-800 rounded px-2 py-0.5">
-            ⏰ {step.tm}
+            ⏰ {step.timeline}
           </span>
           {step.aiHint && (
             <Button
@@ -81,9 +107,9 @@ export function StepPanel({
       />
 
       {/* Active ceremony section */}
-      {step.cers[activeSubTab] && (
+      {step.ceremonies[activeSubTab] && (
         <CeremonySection
-          ceremony={step.cers[activeSubTab]}
+          ceremony={step.ceremonies[activeSubTab]}
           stepId={step.id}
           ceremonyIndex={activeSubTab}
           checkedKeys={checkedKeys}
