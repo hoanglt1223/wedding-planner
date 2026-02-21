@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useWeddingStore } from "@/hooks/use-wedding-store";
-import { Header } from "@/components/layout/header";
+import { Navbar } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Topbar } from "@/components/layout/topbar";
 import { SaveToast } from "@/components/wedding/save-toast";
 import { PageRouter } from "@/pages/page-router";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
@@ -45,16 +44,16 @@ function App() {
         "--theme-accent": theme.accent,
       } as React.CSSProperties}
     >
-      <Header
+      <Navbar
+        activePage={state.page}
+        onPageChange={store.setPage}
+        lang={state.lang}
         progressPct={progress.pct}
         done={progress.done}
         total={progress.total}
         weddingDate={state.info.date}
-        themePrimary={theme.primary}
-        themeDark={theme.primaryDark}
         info={state.info}
       />
-      <Topbar activePage={state.page} onPageChange={store.setPage} lang={state.lang} />
       <div className="max-w-[920px] mx-auto px-2 pt-2">
         <PageRouter
           state={state}

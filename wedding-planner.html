@@ -2,303 +2,857 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <title>Kế Hoạch Đám Cưới Việt Nam</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--p:#c0392b;--p2:#e74c3c;--g:#d4a843;--g2:#f0d78c;--bg:#fdf6f0;--cd:#fff;--t:#2c1810;--t2:#5a3e2b;--gn:#27ae60;--bl:#2980b9;--pp:#8e44ad;--sh:0 4px 15px rgba(0,0,0,.07)}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--t);line-height:1.6}
-.ctn{max-width:920px;margin:0 auto;padding:8px}
-.hd{text-align:center;padding:22px 12px 16px;background:linear-gradient(135deg,#8b1a2b,var(--p));color:#fff;border-radius:0 0 18px 18px;margin-bottom:12px}
-.hd h1{font-size:clamp(1.3rem,4vw,1.9rem)}.hd p{opacity:.8;font-size:.82rem;margin-top:3px}
-.pb{height:7px;background:rgba(255,255,255,.2);border-radius:4px;margin:8px 0 2px;overflow:hidden}
-.pf{height:100%;background:linear-gradient(90deg,var(--g2),var(--gn));border-radius:4px;transition:width .5s}
-.pt{font-size:.72rem;opacity:.75;text-align:right}
-.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
-.si{text-align:center;padding:10px 4px;background:#fff;border-radius:10px;box-shadow:var(--sh)}
-.si .n{font-size:clamp(1rem,3vw,1.3rem);font-weight:800;color:var(--p)}.si .l{font-size:.65rem;color:#888}
-.tabs{display:flex;gap:4px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
-.tb-i{flex-shrink:0;padding:8px 12px;border-radius:9px;border:2px solid #e0d0c0;background:#fff;cursor:pointer;font-size:.72rem;font-weight:600;transition:.2s;white-space:nowrap}
-.tb-i.a{background:var(--p);color:#fff;border-color:var(--p)}
-.pn{display:none;animation:fi .25s}.pn.a{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.c{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,.03)}
-.c h2{font-size:1rem;color:var(--p);display:flex;align-items:center;gap:6px;margin-bottom:2px;flex-wrap:wrap}
-.c h3{font-size:.88rem;color:var(--t2);margin:10px 0 5px;padding-bottom:3px;border-bottom:1px dashed #e0d0c0}
-.st{display:flex;gap:3px;overflow-x:auto;margin:8px 0 6px;scrollbar-width:none}.st::-webkit-scrollbar{display:none}
-.st-i{flex-shrink:0;padding:5px 10px;border-radius:7px;font-size:.7rem;font-weight:600;cursor:pointer;border:1.5px solid #e0d0c0;background:#fdf8f4;transition:.15s;white-space:nowrap}
-.st-i.a{background:var(--g);color:#fff;border-color:var(--g)}
-.st-i .op{font-size:.58rem;opacity:.65;display:block}
-.sp{display:none;animation:fi .2s}.sp.a{display:block}
-.bg-t{display:inline-block;padding:2px 6px;border-radius:4px;font-size:.64rem;font-weight:600;margin-left:3px}
-.bg-r{background:#fde;color:var(--p)}.bg-b{background:#e8f4fd;color:var(--bl)}.bg-g{background:#e8fde8;color:var(--gn)}.bg-gd{background:#fef8e8;color:#a07800}.bg-o{background:#fff3e0;color:#e65100}
-.cl{list-style:none}.cl li{padding:8px 9px;border-radius:7px;margin:2px 0;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:.12s;background:#fafafa;font-size:.82rem;border:1px solid transparent}
-.cl li:hover{background:#fff5f5;border-color:#f0d0c0}.cl li.d{opacity:.45;text-decoration:line-through}
-.ck{width:17px;height:17px;border-radius:4px;border:2px solid #ccc;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px}
-.cl li.d .ck{background:var(--gn);border-color:var(--gn)}.ck::after{content:'✓';font-size:10px;color:#fff;opacity:0}.cl li.d .ck::after{opacity:1}
-.tbl{width:100%;border-collapse:collapse;font-size:.78rem;margin:5px 0}
-.tbl th{background:var(--p);color:#fff;padding:6px 7px;text-align:left;font-size:.72rem}
-.tbl td{padding:6px 7px;border-bottom:1px solid #f0e0d0}.tbl tr:nth-child(even){background:#fdf8f4}.tbl .ct{color:var(--p);font-weight:600}
-.tl{position:relative;padding-left:22px}.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(var(--p),var(--g))}
-.ti{position:relative;margin-bottom:14px}.ti::before{content:'';position:absolute;left:-17px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--p);border:2px solid #fff;box-shadow:0 0 0 2px var(--p)}
-.ti .tt{font-size:.7rem;color:var(--g);font-weight:600}.ti .td{font-size:.8rem;color:var(--t2)}
-.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:5px;margin:5px 0}
-.pp{text-align:center;padding:8px 4px;background:#fdf8f4;border-radius:8px;font-size:.75rem;border:1px solid #f0e0d0}
-.pp .av{width:28px;height:28px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;font-size:.8rem}
-.pp .nm{font-weight:600;font-size:.72rem}.pp .rl{color:#888;font-size:.65rem}
-.nt{padding:8px 10px;border-radius:0 7px 7px 0;font-size:.8rem;margin:6px 0}
-.nt-y{background:#fef9e7;border-left:3px solid var(--g);color:#7d6608}
-.nt-r{background:#fdeded;border-left:3px solid var(--p);color:var(--p)}
-.nt-g{background:#e8f8f5;border-left:3px solid var(--gn);color:#1a7a52}
-.nt-b{background:#e8f0fd;border-left:3px solid var(--bl);color:#1a527a}
-.inp{width:100%;padding:10px 12px;border:2px solid #e0d0c0;border-radius:9px;font-size:.92rem;outline:none;margin:4px 0}
-.inp:focus{border-color:var(--p)}
-.btn{padding:8px 16px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.78rem;transition:.15s;display:inline-flex;align-items:center;gap:4px}
-.btn-p{background:var(--p);color:#fff}.btn-p:hover{opacity:.9}
-.btn-g{background:var(--gn);color:#fff}.btn-s{background:#eee;color:var(--t)}
-.btn-ai{background:linear-gradient(135deg,#1a1a2e,#16213e);color:var(--g2);font-size:.7rem;padding:5px 10px;border-radius:6px}
-.btn-ai:hover{opacity:.85}
-.ai{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:16px;color:#fff;margin-bottom:10px}
-.ai h2{color:var(--g2)}.ai h3{color:#fff;border-color:rgba(255,255,255,.12)}
-.ai-i{width:100%;padding:9px;border:1px solid rgba(255,255,255,.15);border-radius:7px;background:rgba(255,255,255,.06);color:#fff;font-size:.82rem;margin:3px 0}
-.ai-i::placeholder{color:rgba(255,255,255,.3)}
-.ai-t{resize:vertical;min-height:45px}
-.ai-bs{display:flex;gap:5px;flex-wrap:wrap;margin:5px 0}
-.ai-b{padding:7px 12px;border:none;border-radius:7px;font-weight:600;cursor:pointer;font-size:.73rem;transition:.15s}
-.ai-1{background:linear-gradient(135deg,var(--g),var(--g2));color:#1a1a2e}
-.ai-2{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.15)}
-.ai-r{margin-top:8px;padding:10px;background:rgba(255,255,255,.05);border-radius:7px;font-size:.8rem;line-height:1.6;max-height:300px;overflow-y:auto;white-space:pre-wrap}
-.sv{position:fixed;bottom:10px;right:10px;background:var(--gn);color:#fff;padding:5px 12px;border-radius:7px;font-size:.75rem;font-weight:600;opacity:0;transition:opacity .3s;z-index:99;pointer-events:none}.sv.sh{opacity:1}
-.gt-wrap{max-height:350px;overflow-y:auto;border:1px solid #e0d0c0;border-radius:8px}
-.gt{width:100%;border-collapse:collapse;font-size:.75rem}.gt th{background:var(--p);color:#fff;padding:5px 6px;text-align:left;position:sticky;top:0;font-size:.7rem}.gt td{padding:4px 6px;border-bottom:1px solid #f0e0d0}.gt tr:nth-child(even){background:#fdf8f4}
-.tp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;margin:8px 0}
-.tp-c{border-radius:16px;padding:24px 18px;text-align:center;position:relative;overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center}
-.tp-c .orn{position:absolute;inset:0;pointer-events:none;opacity:.15}
-.bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:8px 0}
-.bg-c{border-radius:14px;padding:20px 14px;text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center;color:#fff;position:relative;overflow:hidden}
-.bg-c::before{content:'';position:absolute;inset:0;opacity:.12;pointer-events:none}
-.flex-r{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-select.inp{padding:8px 10px}
-textarea.inp{resize:vertical;min-height:50px}
-.idea-c{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:14px;padding:16px;color:#fff;margin-bottom:10px}
-.idea-c h2{color:#fff}
-.idea-i{padding:10px;background:rgba(255,255,255,.1);border-radius:8px;margin:5px 0;font-size:.82rem}
-.idea-i b{color:var(--g2)}
-@media(max-width:640px){.ctn{padding:5px}.c{padding:11px}.sg{grid-template-columns:repeat(2,1fr)}.tb-i{padding:6px 9px;font-size:.68rem}.pg{grid-template-columns:repeat(auto-fill,minmax(85px,1fr))}.tp-grid{grid-template-columns:1fr}.bg-grid{grid-template-columns:1fr}}
-@media print{.tabs,.ai,.tb-i,.st,.sv,.btn,.no-print,.btn-ai{display:none!important}.pn,.sp{display:block!important}.c{break-inside:avoid;box-shadow:none;border:1px solid #ddd}body{background:#fff;font-size:11px}}
+:root{--pri:#c0392b;--pri2:#e74c3c;--gold:#d4a843;--gold2:#f0d78c;--bg:#fdf6f0;--card:#fff;--text:#2c1810;--text2:#5a3e2b;--green:#27ae60;--blue:#2980b9;--purple:#8e44ad;--shadow:0 4px 20px rgba(0,0,0,.08)}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px}
+.ctn{max-width:920px;margin:0 auto;padding:10px}
+.hdr{text-align:center;padding:28px 14px 18px;background:linear-gradient(135deg,#8b1a2b,var(--pri),#c0392b);color:#fff;border-radius:0 0 20px 20px;margin-bottom:14px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.08),transparent 60%)}
+.hdr h1{font-size:clamp(1.4rem,4.5vw,2rem);position:relative}
+.hdr p{opacity:.85;font-size:clamp(.8rem,2.5vw,.95rem);position:relative;margin-top:4px}
+.pbar{height:8px;background:rgba(255,255,255,.2);border-radius:4px;margin:10px 0 2px;overflow:hidden;position:relative}
+.pfill{height:100%;background:linear-gradient(90deg,#f0d78c,#27ae60);border-radius:4px;transition:width .6s}
+.ptxt{font-size:.75rem;opacity:.8;text-align:right;position:relative}
+
+/* Summary */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.sitem{text-align:center;padding:12px 6px;background:#fff;border-radius:12px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.04)}
+.sitem .n{font-size:clamp(1.1rem,3.5vw,1.4rem);font-weight:800;color:var(--pri)}
+.sitem .l{font-size:.68rem;color:#888;margin-top:1px}
+
+/* Tabs */
+.tabs{display:flex;gap:5px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:9px 14px;border-radius:10px;border:2px solid #e0d0c0;background:#fff;cursor:pointer;font-size:.75rem;font-weight:600;transition:.2s;white-space:nowrap}
+.tab.a{background:var(--pri);color:#fff;border-color:var(--pri);transform:scale(1.03)}
+.tab:hover:not(.a){border-color:var(--pri2);background:#fff5f5}
+
+/* Panel */
+.pnl{display:none;animation:fi .3s}.pnl.a{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Card */
+.cd{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow);border:1px solid rgba(0,0,0,.03)}
+.cd h2{font-size:1.05rem;color:var(--pri);display:flex;align-items:center;gap:7px;margin-bottom:2px}
+.cd h3{font-size:.92rem;color:var(--text2);margin:12px 0 6px;padding-bottom:4px;border-bottom:1px dashed #e0d0c0}
+
+/* Sub-ceremony tabs */
+.stabs{display:flex;gap:4px;overflow-x:auto;margin:10px 0 8px;padding-bottom:4px;scrollbar-width:none}
+.stabs::-webkit-scrollbar{display:none}
+.stab{flex-shrink:0;padding:6px 12px;border-radius:8px;font-size:.73rem;font-weight:600;cursor:pointer;border:1.5px solid #e0d0c0;background:#fdf8f4;transition:.2s;white-space:nowrap}
+.stab.a{background:var(--gold);color:#fff;border-color:var(--gold)}
+.stab .opt{font-size:.6rem;opacity:.7;display:block;text-align:center}
+.spnl{display:none;animation:fi .2s}.spnl.a{display:block}
+
+/* Badges */
+.bg{display:inline-block;padding:2px 7px;border-radius:5px;font-size:.67rem;font-weight:600;margin-left:4px}
+.bg-r{background:#fde;color:var(--pri)}.bg-b{background:#e8f4fd;color:var(--blue)}
+.bg-g{background:#e8fde8;color:var(--green)}.bg-gd{background:#fef8e8;color:#a07800}
+.bg-p{background:#f3e8fd;color:var(--purple)}.bg-o{background:#fff3e0;color:#e65100}
+
+/* Checklist */
+.cl{list-style:none}.cl li{padding:9px 10px;border-radius:8px;margin:3px 0;display:flex;align-items:flex-start;gap:9px;cursor:pointer;transition:.15s;background:#fafafa;font-size:.85rem;border:1px solid transparent}
+.cl li:hover{background:#fff5f5;border-color:#f0d0c0}
+.cl li.d{opacity:.5;text-decoration:line-through}
+.cb{width:18px;height:18px;border-radius:5px;border:2px solid #ccc;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.15s;margin-top:1px}
+.cl li.d .cb{background:var(--green);border-color:var(--green)}
+.cb::after{content:'✓';font-size:11px;color:#fff;opacity:0;transition:.15s}
+.cl li.d .cb::after{opacity:1}
+
+/* Table */
+.tb{width:100%;border-collapse:collapse;font-size:.82rem;margin:6px 0}
+.tb th{background:var(--pri);color:#fff;padding:7px 8px;text-align:left;font-size:.75rem}
+.tb td{padding:7px 8px;border-bottom:1px solid #f0e0d0}
+.tb tr:nth-child(even){background:#fdf8f4}
+.tb .c{color:var(--pri);font-weight:600;white-space:nowrap}
+
+/* Timeline */
+.tl{position:relative;padding-left:26px}.tl::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:linear-gradient(var(--pri),var(--gold))}
+.ti{position:relative;margin-bottom:16px}
+.ti::before{content:'';position:absolute;left:-20px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--pri);border:2px solid #fff;box-shadow:0 0 0 2px var(--pri)}
+.ti .tt{font-size:.73rem;color:var(--gold);font-weight:600}
+.ti .td{font-size:.83rem;color:var(--text2);margin-top:1px}
+
+/* People */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:6px;margin:6px 0}
+.pp{text-align:center;padding:10px 6px;background:#fdf8f4;border-radius:10px;font-size:.78rem;border:1px solid #f0e0d0}
+.pp .av{width:32px;height:32px;border-radius:50%;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;font-size:.9rem}
+.pp .nm{font-weight:600}.pp .rl{color:#888;font-size:.68rem}
+
+/* Notes */
+.nt{padding:9px 12px;border-radius:0 8px 8px 0;font-size:.82rem;margin:8px 0}
+.nt-y{background:#fef9e7;border-left:3px solid var(--gold);color:#7d6608}
+.nt-r{background:#fdeded;border-left:3px solid var(--pri);color:var(--pri)}
+.nt-g{background:#e8f8f5;border-left:3px solid var(--green);color:#1a7a52}
+.nt-b{background:#e8f0fd;border-left:3px solid var(--blue);color:#1a527a}
+
+/* Budget */
+.binp{width:100%;padding:12px 14px;border:2px solid #e0d0c0;border-radius:10px;font-size:1.05rem;text-align:center;font-weight:700;color:var(--pri);outline:none;margin:6px 0}
+.binp:focus{border-color:var(--pri)}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0e8e0;font-size:.84rem}
+.brow:last-child{border:none}
+.bcat{font-weight:600;font-size:.82rem}
+.bamt{color:var(--pri);font-weight:700;font-size:.9rem}
+.bpct{font-size:.72rem;color:#888;min-width:32px;text-align:right}
+.bedit{width:70px;padding:3px 6px;border:1px solid #ddd;border-radius:5px;text-align:right;font-size:.82rem}
+.bbar{height:7px;background:#eee;border-radius:4px;margin:3px 0;overflow:hidden}
+.bfill{height:100%;border-radius:4px;transition:width .5s}
+.bquick{text-align:center;font-size:.78rem;color:#888;margin:4px 0 10px}
+.bquick span{cursor:pointer;color:var(--blue);margin:0 3px;font-weight:600}
+.bquick span:hover{text-decoration:underline}
+
+/* AI */
+.ai{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:14px;padding:18px;color:#fff;margin-bottom:12px}
+.ai h2{color:var(--gold2)}.ai h3{color:#fff;border-color:rgba(255,255,255,.15)}
+.ai-inp{width:100%;padding:10px;border:1px solid rgba(255,255,255,.18);border-radius:8px;background:rgba(255,255,255,.07);color:#fff;font-size:.85rem;margin:4px 0;resize:vertical;min-height:50px}
+.ai-inp::placeholder{color:rgba(255,255,255,.35)}
+.ai-key{width:100%;padding:9px;border:1px solid rgba(255,255,255,.12);border-radius:7px;background:rgba(255,255,255,.05);color:#fff;font-size:.82rem;margin:3px 0}
+.ai-key::placeholder{color:rgba(255,255,255,.25)}
+.ai-btns{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.ai-btn{padding:8px 14px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.78rem;transition:.2s}
+.ai-pri{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1a2e}
+.ai-pri:hover{transform:scale(1.03)}
+.ai-sec{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.ai-sec:hover{background:rgba(255,255,255,.18)}
+.ai-res{margin-top:10px;padding:12px;background:rgba(255,255,255,.05);border-radius:8px;font-size:.84rem;line-height:1.7;max-height:350px;overflow-y:auto;white-space:pre-wrap}
+.ai-ld{text-align:center;padding:16px;color:var(--gold2)}
+.dots::after{content:'...';animation:dt 1.5s infinite}
+@keyframes dt{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
+
+/* Save indicator */
+.save-ind{position:fixed;bottom:12px;right:12px;background:var(--green);color:#fff;padding:6px 14px;border-radius:8px;font-size:.78rem;font-weight:600;opacity:0;transition:opacity .3s;z-index:99;pointer-events:none}
+.save-ind.show{opacity:1}
+
+@media(max-width:640px){
+ .ctn{padding:6px}
+ .cd{padding:12px;border-radius:10px}
+ .hdr{padding:18px 10px 14px;border-radius:0 0 14px 14px}
+ .tab{padding:7px 10px;font-size:.7rem}
+ .sgrid{grid-template-columns:repeat(2,1fr)}
+ .pgrid{grid-template-columns:repeat(auto-fill,minmax(95px,1fr))}
+ .brow{font-size:.78rem}.bedit{width:60px}
+ .stab{padding:5px 9px;font-size:.68rem}
+}
+@media print{.tabs,.ai,.tab,.stabs{display:none!important}.pnl,.spnl{display:block!important}.cd{break-inside:avoid;box-shadow:none;border:1px solid #ddd}}
 </style>
 </head>
 <body>
-<div class="hd"><h1>💒 Kế Hoạch Đám Cưới Việt Nam</h1><p>Ultimate Edition — Đầy đủ & Chi tiết nhất</p><div class="pb"><div class="pf" id="mp"></div></div><div class="pt" id="mpt"></div></div>
-<div class="ctn"><div class="sg" id="sg"></div><div class="tabs" id="tabs"></div><div id="pns"></div></div>
-<div class="sv" id="sv">💾 Đã lưu</div>
-<script>
-const D={steps:[
-{id:"gap",tab:"☕ Gặp Mặt",title:"Bước 0: Gặp Mặt Hai Gia Đình",icon:"☕",desc:"Buổi gặp không chính thức — hai nhà làm quen.",tm:"4-6 tháng trước",aiHint:"Gợi ý cách tổ chức buổi gặp mặt hai gia đình lần đầu, nên nói gì, tránh gì, địa điểm phù hợp, quà mang theo.",
-cers:[{nm:"☕ Gặp Mặt Thân Mật",req:1,desc:"Hai gia đình gặp lần đầu, không nghi lễ.",cl:[{t:"Chọn thời gian phù hợp cả hai",c:0,k:"other"},{t:"Chọn địa điểm (nhà hàng/café/nhà)",c:500000,k:"venue"},{t:"Quà nhỏ (trái cây, bánh)",c:300000,k:"levat"},{t:"Đặt bàn/chuẩn bị tiếp khách",c:1000000,k:"food"}],pp:[{n:"Bố mẹ 2 bên",r:"",a:"👫"},{n:"Cô dâu & Chú rể",r:"Cầu nối",a:"💑"}],ri:["Giới thiệu hai bên","Trò chuyện thân mật","Trao đổi sơ bộ ý định","Kết thúc vui vẻ — KHÔNG chốt gì"],tp:["Mục đích: làm quen","Không bàn tiền bạc sâu"]},
-{nm:"📝 Bàn Bạc Nội Bộ",req:1,desc:"2 bạn tổng hợp, lên kế hoạch.",cl:[{t:"Tổng hợp ý kiến bố mẹ",c:0,k:"other"},{t:"Thống nhất budget & timeline",c:0,k:"other"},{t:"Liên hệ thầy xem ngày",c:500000,k:"other"}],pp:[{n:"Cô dâu & Chú rể",r:"",a:"💑"}],ri:["List mong muốn","So sánh phong tục","Lập ngân sách","Phân công"],tp:["Bước CỰC KỲ quan trọng","Ghi chép tất cả"]}]},
-{id:"cauhon",tab:"💍 Cầu Hôn",title:"Bước 1: Cầu Hôn",icon:"💍",desc:"Khoảnh khắc lãng mạn nhất.",tm:"3-6 tháng trước",aiHint:"Gợi ý 10 ý tưởng cầu hôn lãng mạn, độc đáo tại Việt Nam. Kèm chi phí ước tính, checklist chuẩn bị.",
-cers:[{nm:"💍 Lễ Cầu Hôn",req:1,desc:"Chàng trai ngỏ lời.",cl:[{t:"Mua nhẫn cầu hôn",c:15000000,k:"ring"},{t:"Lên kế hoạch địa điểm",c:2000000,k:"venue"},{t:"Hoa tươi 99 bông",c:500000,k:"flower"},{t:"Nhiếp ảnh chụp lén",c:3000000,k:"photo"},{t:"Viết lời cầu hôn",c:0,k:"other"},{t:"Trang trí: nến, bóng bay, led",c:500000,k:"decor"},{t:"Nhạc nền / live violin",c:500000,k:"music"}],pp:[{n:"Chú rể",r:"Cầu hôn",a:"🤵"},{n:"Cô dâu",r:"",a:"👰"},{n:"Bạn thân",r:"Hỗ trợ",a:"📹"}],ri:["Dẫn cô dâu đến","Quỳ gối, mở nhẫn","Nói lời cầu hôn","Đeo nhẫn","Ăn mừng 🎉"],tp:["Lời cầu hôn: chân thành hơn dài","Luôn có plan B"]}]},
-{id:"damngo",tab:"🏠 Dạm Ngõ",title:"Bước 2: Lễ Dạm Ngõ",icon:"🏠",desc:"Nhà trai đến nhà gái xin phép.",tm:"2-3 tháng trước hỏi",aiHint:"Chi tiết lễ dạm ngõ theo vùng miền, lễ vật cần chuẩn bị, nghi thức, những điều nên tránh.",
-cers:[{nm:"🏠 Lễ Dạm Ngõ",req:1,desc:"Hai bên gặp chính thức, bàn cưới xin.",cl:[{t:"Xem ngày lành",c:200000,k:"other"},{t:"Lễ vật: trầu cau, trà, rượu, bánh, trái cây",c:1500000,k:"levat"},{t:"1-3 khay/mâm",c:300000,k:"levat"},{t:"Trang phục lịch sự",c:1000000,k:"clothes"},{t:"Nhà gái trang trí",c:500000,k:"decor"},{t:"Trà nước tiếp khách",c:300000,k:"food"}],lv:[{n:"Cau trầu",q:"1 buồng",c:200000},{n:"Trà",q:"1-2 hộp",c:200000},{n:"Rượu",q:"2 chai",c:300000},{n:"Bánh",q:"1-2 hộp",c:300000},{n:"Trái cây",q:"Ngũ quả",c:200000}],pp:[{n:"Bố mẹ 2 bên",r:"Đại diện",a:"👫"},{n:"Cô dâu & Chú rể",r:"",a:"💑"},{n:"Ông bà",r:"Trưởng bối",a:"👴"}],ri:["Nhà trai đến đúng giờ","Giới thiệu, trao lễ","Bàn bạc chi tiết","Thắp hương gia tiên","Cơm thân mật"],tp:["Không mặc cả gay gắt","Ghi chép thỏa thuận"]}]},
-{id:"damhoi",tab:"🎀 Đám Hỏi",title:"Bước 3: Lễ Ăn Hỏi",icon:"🎀",desc:"Trao sính lễ — công nhận hôn ước.",tm:"1-2 tháng trước cưới",aiHint:"Lễ vật đám hỏi 3 miền chi tiết, số mâm quả, tiền nạp tài, nữ trang theo phong tục.",
-cers:[{nm:"🎀 Lễ Ăn Hỏi",req:1,desc:"Trao mâm quả.",cl:[{t:"Xem giờ tốt",c:500000,k:"other"},{t:"Đặt mâm quả (5/7/9/11)",c:8000000,k:"levat"},{t:"Áo dài cô dâu đỏ/hồng",c:3000000,k:"clothes"},{t:"Vest chú rể",c:2000000,k:"clothes"},{t:"Đồng phục đội bê tráp",c:3000000,k:"clothes"},{t:"Trang trí nhà gái",c:5000000,k:"decor"},{t:"MC",c:1000000,k:"mc"},{t:"Tiệc nhà gái",c:8000000,k:"food"},{t:"Ảnh & video",c:5000000,k:"photo"},{t:"Xe hoa",c:2000000,k:"transport"}],lv:[{n:"Mâm trầu cau",q:"105 quả",c:800000},{n:"Trà rượu",q:"Trà sen + rượu",c:1500000},{n:"Bánh",q:"Phu thê",c:1000000},{n:"Trái cây",q:"Ngũ quả",c:600000},{n:"Xôi gấc",q:"1-2 mâm",c:500000},{n:"Heo quay",q:"1 con",c:3000000}],pp:[{n:"Đội bê tráp nam",r:"Số lẻ",a:"🧑"},{n:"Đội bê tráp nữ",r:"Số lẻ",a:"👧"},{n:"MC",r:"",a:"🎤"},{n:"Hai họ",r:"",a:"👥"}],ri:["Sắp đội bê tráp","Bê mâm quả đến","Đội nữ đón","Phát biểu, nhận lễ","Mở mâm quả","Cô dâu ra mắt","Rót trà, chúc phúc"],tp:["Đội bê tráp SỐ LẺ","Cô dâu trang điểm TRƯỚC"]},
-{nm:"💎 Nạp Tài",req:0,desc:"Trao tiền/vàng/nữ trang cho nhà gái.",cl:[{t:"Thống nhất tiền nạp tài",c:0,k:"jewelry"},{t:"Nữ trang: kiềng, nhẫn, bông tai, lắc",c:20000000,k:"jewelry"}],pp:[{n:"Bố mẹ chú rể",r:"Trao",a:"👫"},{n:"Cô dâu",r:"Nhận",a:"👰"}],ri:["Trình tiền nạp tài","Trao nữ trang","Cô dâu đeo, chụp ảnh"],tp:["Không phải 'mua' — là trân trọng","Nữ trang thử trước size"]},
-{nm:"🔄 Lại Quả",req:1,desc:"Nhà gái chia lại lễ vật.",cl:[{t:"Chia 50-50 hoặc 30-70",c:0,k:"other"}],pp:[{n:"Mẹ cô dâu",r:"Chia lễ",a:"👩"}],ri:["Mở mâm","Chia lại","Phủ giấy đỏ","Trao nhà trai"],tp:["KHÔNG trả mâm rỗng"]}]},
-{id:"cuoigai",tab:"🏡 Nhà Gái",title:"Bước 4: Tiệc Nhà Gái",icon:"🏡",desc:"Tiệc phía cô dâu.",tm:"1-2 ngày trước hoặc cùng ngày",aiHint:"Gợi ý trang trí tiệc cưới nhà gái đẹp, tiết kiệm. Menu tiệc phù hợp.",
-cers:[{nm:"🏡 Tiệc Nhà Gái",req:1,desc:"Tiệc chính phía cô dâu.",cl:[{t:"Nhà hàng/rạp",c:15000000,k:"venue"},{t:"Thiệp mời",c:1500000,k:"other"},{t:"Menu tiệc",c:20000000,k:"food"},{t:"MC + nhạc",c:7000000,k:"mc"},{t:"Trang trí",c:5000000,k:"decor"},{t:"Ảnh & video",c:8000000,k:"photo"},{t:"Váy/áo dài + makeup",c:8000000,k:"clothes"}],pp:[{n:"Bố mẹ cô dâu",r:"Chủ tiệc",a:"👫"},{n:"MC",r:"",a:"🎤"}],ri:["Trang điểm sớm","Đón khách","MC khai tiệc","Cắt bánh, nâng ly","Đi bàn cảm ơn"],tp:["Kiểm tra âm thanh trước 2h"]},
-{nm:"🙏 Gia Tiên Nhà Gái",req:1,desc:"Thắp hương tổ tiên nhà gái.",cl:[{t:"Bàn thờ: hoa, nhang, nến",c:300000,k:"decor"},{t:"Mâm cúng",c:500000,k:"food"}],pp:[{n:"Cô dâu & chú rể",r:"Thắp hương",a:"💑"}],ri:["Bày mâm cúng","Bố mẹ khấn","Lạy 3 lạy"],tp:["Trước tiệc, nghiêm trang"]}]},
-{id:"ruocdau",tab:"🚗 Rước Dâu",title:"Bước 5: Rước Dâu",icon:"🚗",desc:"Đón cô dâu về nhà chồng.",tm:"Sáng ngày cưới",aiHint:"Hướng dẫn chi tiết lễ rước dâu, chặn cổng, giờ hoàng đạo, phong bì mở cổng.",
-cers:[{nm:"🚗 Rước Dâu",req:1,desc:"Chú rể đón cô dâu.",cl:[{t:"Xem giờ hoàng đạo",c:200000,k:"other"},{t:"Xe hoa + đoàn xe SỐ CHẴN",c:5000000,k:"transport"},{t:"Bó hoa cưới",c:500000,k:"flower"},{t:"Phong bì mở cổng",c:1500000,k:"other"},{t:"Cô dâu makeup từ sớm",c:3000000,k:"makeup"},{t:"Kiểm tra nhẫn!",c:0,k:"other"},{t:"Dù đỏ",c:200000,k:"other"},{t:"Nhiếp ảnh",c:5000000,k:"photo"}],pp:[{n:"Chú rể",r:"Đón dâu",a:"🤵"},{n:"Phù dâu",r:"Chặn cổng",a:"👧"},{n:"Phù rể",r:"Hỗ trợ",a:"🤵"}],ri:["Đoàn xe xuất phát ĐÚNG GIỜ","Chặn cổng vui nhộn","Trao hoa cho cô dâu","Lạy gia tiên nhà gái","Cô dâu lạy tạ cha mẹ 😢","Lên xe hoa (KHÔNG quay lại)","Đi đường KHÁC lúc đến"],tp:["KHÔNG TRỄ giờ hoàng đạo","Nhiều phong bì lẻ"]},
-{nm:"🚪 Chặn Cổng",req:0,desc:"Phù dâu thử thách chú rể.",cl:[{t:"Câu đố về cô dâu",c:0,k:"other"},{t:"Thử thách (hát, nhảy)",c:0,k:"other"},{t:"Không quá 15-20 phút",c:0,k:"other"}],pp:[{n:"Phù dâu",r:"",a:"👧"},{n:"Chú rể",r:"",a:"🤵"}],ri:["Đố → Thử thách → Phong bì","Chú rể vượt qua"],tp:["Vui nhộn, không quá khó"]}]},
-{id:"cuoitrai",tab:"🎊 Nhà Trai",title:"Bước 6: Tiệc Nhà Trai",icon:"🎊",desc:"Tiệc cưới chính thức.",tm:"Ngày cưới",aiHint:"Kịch bản MC đám cưới từng phút, menu tiệc 3 mức giá, games vui cho tiệc cưới.",
-cers:[{nm:"🙏 Gia Tiên Nhà Trai",req:1,desc:"Cô dâu thắp hương nhà chồng.",cl:[{t:"Bàn thờ + mâm cúng",c:1000000,k:"food"}],pp:[{n:"Cô dâu & chú rể",r:"",a:"💑"},{n:"Bố mẹ chú rể",r:"Hướng dẫn",a:"👫"}],ri:["Đón cô dâu ở cửa","Dẫn đến bàn thờ","Lạy 3 lạy","Rót trà, nhận lì xì"],tp:["Bước vào chân PHẢI"]},
-{nm:"🎊 Tiệc Chính",req:1,desc:"Tiệc linh đình nhất.",cl:[{t:"Nhà hàng (+10% dự phòng)",c:25000000,k:"venue"},{t:"Thiệp mời",c:2000000,k:"other"},{t:"Menu + rượu bia",c:30000000,k:"food"},{t:"MC + nhạc + âm thanh",c:11000000,k:"mc"},{t:"Trang trí toàn bộ",c:8000000,k:"decor"},{t:"Ảnh + video trọn gói",c:10000000,k:"photo"},{t:"Váy cưới + after party",c:8000000,k:"clothes"},{t:"Vest chú rể",c:3000000,k:"clothes"},{t:"Makeup cả ngày",c:5000000,k:"makeup"},{t:"Nhẫn cưới cặp",c:5000000,k:"ring"},{t:"Quà cho khách",c:3000000,k:"other"},{t:"Bánh cưới",c:3000000,k:"food"},{t:"Phòng tân hôn",c:2000000,k:"other"}],pp:[{n:"MC",r:"",a:"🎤"},{n:"Nhiếp ảnh",r:"",a:"📷"},{n:"Phù dâu phù rể",r:"",a:"👫"},{n:"Lễ tân",r:"Phong bì",a:"📋"}],ri:["Đón khách","MC khai tiệc","Bố mẹ phát biểu","Cô dâu chú rể lên sân khấu","TRAO NHẪN 💍","Nâng ly, CẮT BÁNH 🎂","Văn nghệ, Games","First dance 💃","Đi bàn chúc rượu","TUNG HOA 💐","Tiễn khách","Phòng tân hôn 🌙"],tp:["2-3 người ghi phong bì TIN CẬY","Kịch bản MC từng phút","Kiểm tra âm thanh trước 3h"]},
-{nm:"💍 Trao Nhẫn",req:1,desc:"Trao nhẫn cưới.",cl:[{t:"Nhẫn sẵn sàng",c:0,k:"ring"},{t:"Gối/hộp nhẫn đẹp",c:200000,k:"other"}],pp:[{n:"Cô dâu & chú rể",r:"",a:"💑"}],ri:["MC mời lên","Trao nhẫn lẫn nhau","Hôn 💋"],tp:["Thử nhẫn trước!"]},
-{nm:"🥂 Cắt Bánh & Rượu",req:0,desc:"Nâng ly champagne, cắt bánh.",cl:[{t:"Champagne ướp lạnh",c:500000,k:"food"},{t:"Tháp ly (nếu có)",c:300000,k:"decor"}],pp:[{n:"Cô dâu & chú rể",r:"",a:"💑"}],ri:["Cắt bánh","Cho nhau ăn 🥰","Nâng ly"],tp:["Tập cắt trước nếu bánh nhiều tầng"]},
-{nm:"📜 Lễ Vow (Thề Nguyện)",req:0,desc:"Cô dâu chú rể trao nhau lời thề nguyện — xu hướng đám cưới hiện đại, lãng mạn & cảm xúc.",cl:[{t:"Viết lời thề nguyện (mỗi người 1-2 phút)",c:0,k:"other"},{t:"Chuẩn bị giấy/sổ đẹp ghi lời thề",c:100000,k:"other"},{t:"Người chứng hôn (MC hoặc bạn thân)",c:0,k:"other"},{t:"Setup không gian: cổng hoa, nến, ánh sáng nhẹ",c:3000000,k:"decor"},{t:"Nhạc nền acoustic/piano nhẹ nhàng",c:1000000,k:"music"},{t:"Khăn tay cho khách (giây phút xúc động)",c:200000,k:"other"},{t:"Nhiếp ảnh/quay phim close-up",c:0,k:"photo"}],pp:[{n:"Cô dâu",r:"Đọc lời thề",a:"👰"},{n:"Chú rể",r:"Đọc lời thề",a:"🤵"},{n:"Người chứng hôn",r:"Điều phối",a:"🎤"},{n:"Gia đình + bạn thân",r:"Chứng kiến",a:"👥"}],ri:["MC/người chứng hôn giới thiệu nghi thức Vow","Chú rể đọc lời thề nguyện trước","Cô dâu đọc lời thề nguyện","Trao nhẫn (nếu chưa trao)","Nụ hôn đầu tiên với tư cách vợ chồng","Khách mời vỗ tay, chúc phúc","Tung confetti / cánh hoa"],tp:["Viết lời thề TỪ TRÁI TIM — không cần hoàn hảo","Thống nhất độ dài lời thề 2 người","Nên tổ chức TRƯỚC tiệc hoặc ngoài trời lúc hoàng hôn","Lễ Vow quy mô nhỏ (30-50 người) sẽ cảm xúc hơn","Chi phí thêm khoảng 5-15 triệu tùy setup","Có thể kết hợp ngay trên sân khấu tiệc nếu ngân sách hạn chế"]},
-{nm:"🎵 First Dance",req:0,desc:"Cô dâu chú rể khiêu vũ bài đầu tiên.",cl:[{t:"Chọn bài nhạc ý nghĩa",c:0,k:"other"},{t:"Tập nhảy trước 2-4 tuần",c:1000000,k:"other"},{t:"Sân khấu đủ rộng + ánh sáng spotlight",c:0,k:"decor"}],pp:[{n:"Cô dâu & chú rể",r:"",a:"💑"}],ri:["MC giới thiệu","Nhạc nổi lên","Cô dâu chú rể bước ra","Khiêu vũ 2-3 phút","Mời bố mẹ / khách cùng nhảy"],tp:["Chọn bài nhạc cả 2 đều thích","Không cần quá phức tạp — đơn giản, ngọt ngào là đẹp"]},
-{nm:"✉️ Thư Cảm Ơn Bố Mẹ",req:0,desc:"Đọc thư cảm ơn bố mẹ hai bên.",cl:[{t:"Viết thư tay cho bố mẹ mình",c:0,k:"other"},{t:"Chuẩn bị quà kèm (hoa, khung ảnh...)",c:500000,k:"other"}],pp:[{n:"Cô dâu",r:"Đọc thư",a:"👰"},{n:"Chú rể",r:"Đọc thư",a:"🤵"},{n:"Bố mẹ 2 bên",r:"Nhận thư",a:"👫"}],ri:["MC mời lên sân khấu","Cô dâu đọc thư cho bố mẹ mình","Chú rể đọc thư cho bố mẹ mình","Trao quà, ôm bố mẹ 😢","Khách mời xúc động"],tp:["Chuẩn bị khăn giấy!","Khoảnh khắc cảm động nhất tiệc cưới"]}]}
-],
-bCats:[{k:"ring",l:"💍 Nhẫn",p:5,cl:"#e74c3c"},{k:"levat",l:"🎁 Lễ vật",p:8,cl:"#e67e22"},{k:"venue",l:"🏛️ Nhà hàng",p:15,cl:"#f39c12"},{k:"food",l:"🍽️ Tiệc",p:25,cl:"#27ae60"},{k:"clothes",l:"👗 Trang phục",p:7,cl:"#2980b9"},{k:"photo",l:"📸 Ảnh/Video",p:10,cl:"#8e44ad"},{k:"decor",l:"🌸 Trang trí",p:7,cl:"#e84393"},{k:"makeup",l:"💄 Makeup",p:4,cl:"#fd79a8"},{k:"music",l:"🎵 Nhạc/MC",p:5,cl:"#00b894"},{k:"transport",l:"🚗 Xe",p:3,cl:"#6c5ce7"},{k:"jewelry",l:"💎 Nữ trang",p:8,cl:"#fdcb6e"},{k:"flower",l:"💐 Hoa",p:1,cl:"#ff6b6b"},{k:"other",l:"📦 Khác",p:2,cl:"#636e72"}],
-aiP:[
-{l:"📋 Kịch bản MC đám cưới",p:"Viết kịch bản MC đám cưới VN chi tiết từng phút, từ khai tiệc đến kết thúc."},
-{l:"🍽️ Menu tiệc 3 mức giá",p:"Gợi ý 3 set menu tiệc cưới: cao cấp, trung bình, tiết kiệm. Mỗi set 8-10 món, giá/bàn 10 người."},
-{l:"🎀 Lễ vật 3 miền B-T-N",p:"Lễ vật đám hỏi chi tiết theo 3 miền Bắc-Trung-Nam, ý nghĩa từng món."},
-{l:"📅 Ngày cưới tốt 2025-2026",p:"Ngày tốt cưới 2025-2026 theo lịch âm, giờ hoàng đạo, cách chọn theo tuổi."},
-{l:"💰 20 cách tiết kiệm",p:"20 cách tiết kiệm chi phí đám cưới VN mà vẫn sang."},
-{l:"💬 Bài phát biểu bố mẹ",p:"3 mẫu phát biểu: bố cô dâu tiễn con, mẹ chú rể đón dâu, bố chú rể khai tiệc. Ngắn gọn, xúc động."},
-{l:"🎮 10 Games tiệc cưới",p:"10 games vui cho tiệc cưới VN, luật chơi chi tiết, đạo cụ cần."},
-{l:"📜 Mẫu lời thề Vow",p:"Viết 5 mẫu lời thề nguyện (Wedding Vow) bằng tiếng Việt: lãng mạn, hài hước, chân thành, truyền thống, hiện đại. Mỗi mẫu 1-2 phút đọc."},
-{l:"📝 Countdown 30 ngày",p:"Checklist theo từng tuần từ 30 ngày trước cưới đến ngày cưới. Việc cần làm, ai phụ trách."},
-{l:"🏨 Gợi ý nhà hàng HCM",p:"Top 10 nhà hàng tiệc cưới ở TP.HCM theo 3 mức giá (dưới 2tr, 2-4tr, trên 4tr/bàn). Kèm ưu nhược điểm."},
-{l:"🏨 Gợi ý nhà hàng Hà Nội",p:"Top 10 nhà hàng tiệc cưới ở Hà Nội theo 3 mức giá."},
-{l:"📸 Ý tưởng ảnh cưới",p:"20 ý tưởng chụp ảnh cưới độc đáo tại Việt Nam, địa điểm, concept, chi phí."},
-{l:"🎵 Playlist nhạc cưới",p:"Playlist 30 bài nhạc đám cưới VN & quốc tế hay nhất: nhạc khai tiệc, nhạc nền, nhạc first dance, nhạc sôi động."},
-{l:"✉️ Mẫu thiệp mời đẹp",p:"Viết nội dung thiệp mời đám cưới mẫu cho 3 lễ: dạm ngõ, đám hỏi, tiệc cưới. Chuẩn lễ nghi, trang trọng."},
-{l:"🌙 Honeymoon gợi ý",p:"Top 10 địa điểm trăng mật đẹp nhất cho cặp đôi Việt: trong nước & quốc tế, chi phí ước tính, thời điểm đẹp."},
-{l:"👗 Xu hướng váy cưới 2025",p:"Xu hướng váy cưới 2025: kiểu dáng, chất liệu, màu sắc hot. Gợi ý theo vóc dáng."}
-]};
-
-let S;const SK='wp_v7';
-function ld(){try{S=JSON.parse(localStorage.getItem(SK))}catch(e){}
-if(!S)S={tab:0,st:{},ck:{},bud:200000000,bo:{},zk:'',ar:'',info:{bride:'Nguyễn Thị A',groom:'Trần Văn B',bf:'Họ Nguyễn',gf:'Họ Trần',date:'2025-12-20',dDN:'2025-10-15',dDH:'2025-11-15'},guests:[],gid:0}}
-function sv(){try{localStorage.setItem(SK,JSON.stringify(S));const e=document.getElementById('sv');e.classList.add('sh');setTimeout(()=>e.classList.remove('sh'),800)}catch(e){}}
-const fm=n=>new Intl.NumberFormat('vi-VN').format(Math.round(n));
-const fs=n=>{if(n>=1e9)return(n/1e9).toFixed(1).replace('.0','')+'tỷ';if(n>=1e6)return(n/1e6).toFixed(1).replace('.0','')+'tr';if(n>=1e3)return(n/1e3).toFixed(0)+'k';return n+''};
-function gCk(){let t=0,d=0;D.steps.forEach(s=>s.cers.forEach((c,ci)=>c.cl.forEach((_,i)=>{t++;if(S.ck[s.id+'_'+ci+'_'+i])d++})));return{t,d}}
-const ET=['💰 Chi Phí','👥 Khách Mời','🖼️ BG & Thiệp','🤖 AI','📖 Sổ Tay','💡 Ý Tưởng'];
-
-function R(){
-const{t,d}=gCk();const p=t?Math.round(d/t*100):0;
-document.getElementById('sg').innerHTML=`<div class="si"><div class="n">${D.steps.length}</div><div class="l">Bước</div></div><div class="si"><div class="n">${d}/${t}</div><div class="l">Xong</div></div><div class="si"><div class="n">${fs(S.bud)}</div><div class="l">Budget</div></div><div class="si"><div class="n">${p}%</div><div class="l">Tiến độ</div></div>`;
-document.getElementById('mp').style.width=p+'%';document.getElementById('mpt').textContent=p+'% ('+d+'/'+t+')';
-let tabs='';D.steps.forEach((s,i)=>tabs+=`<div class="tb-i${i===S.tab?' a':''}" onclick="sT(${i})">${s.tab}</div>`);
-ET.forEach((_,i)=>{const idx=D.steps.length+i;tabs+=`<div class="tb-i${idx===S.tab?' a':''}" onclick="sT(${idx})">${ET[i]}</div>`});
-document.getElementById('tabs').innerHTML=tabs;
-let h='';D.steps.forEach((s,si)=>h+=rS(s,si));
-h+=rCost()+rGuest()+rBGThiep()+rAI()+rPrint()+rIdea();
-document.getElementById('pns').innerHTML=h}
-
-function rS(s,si){
-let h=`<div class="pn${si===S.tab?' a':''}">`;
-let sc=0,sd=0;s.cers.forEach((c,ci)=>c.cl.forEach((_,i)=>{sc++;if(S.ck[s.id+'_'+ci+'_'+i])sd++}));const sp=sc?Math.round(sd/sc*100):0;
-h+=`<div class="c"><h2>${s.icon} ${s.title}</h2><p style="font-size:.84rem;color:var(--t2)">${s.desc}</p><span class="bg-t bg-b">⏰ ${s.tm}</span>`;
-if(s.aiHint)h+=` <button class="btn btn-ai" onclick="goAI(\`${s.aiHint}\`)">🤖 Hỏi AI</button>`;
-h+=`<div class="pb" style="margin-top:8px"><div class="pf" style="width:${sp}%"></div></div><div style="font-size:.72rem;color:#888;text-align:right">${sd}/${sc} (${sp}%)</div></div>`;
-const cs=S.st[s.id]||0;
-h+=`<div class="st">${s.cers.map((c,ci)=>`<div class="st-i${ci===cs?' a':''}" onclick="sST('${s.id}',${ci})">${c.nm}${c.req?'':'<span class="op">(tùy chọn)</span>'}</div>`).join('')}</div>`;
-s.cers.forEach((cr,ci)=>{
-h+=`<div class="sp${ci===cs?' a':''}" data-sp="${s.id}_${ci}">`;
-h+=`<div class="c"><h2>${cr.nm} ${cr.req?'<span class="bg-t bg-r">BẮT BUỘC</span>':'<span class="bg-t bg-o">TÙY CHỌN</span>'}</h2><p style="font-size:.82rem;color:var(--t2)">${cr.desc}</p></div>`;
-if(cr.pp?.length)h+=`<div class="c"><h2>👥 Ai Có Mặt</h2><div class="pg">${cr.pp.map(p=>`<div class="pp"><div class="av">${p.a}</div><div class="nm">${p.n}</div><div class="rl">${p.r}</div></div>`).join('')}</div></div>`;
-if(cr.cl?.length)h+=`<div class="c"><h2>✅ Checklist</h2><ul class="cl">${cr.cl.map((c,i)=>`<li class="${S.ck[s.id+'_'+ci+'_'+i]?'d':''}" onclick="tC('${s.id+'_'+ci+'_'+i}',this)"><span class="ck"></span><span>${c.t}${c.c?` <span class="bg-t bg-gd">${fs(c.c)}</span>`:''}</span></li>`).join('')}</ul></div>`;
-if(cr.lv?.length){const tl=cr.lv.reduce((a,b)=>a+b.c,0);h+=`<div class="c"><h2>🎁 Lễ Vật</h2><div class="nt nt-y">Tổng: <b>${fm(tl)}đ</b></div><table class="tbl"><tr><th>Tên</th><th>SL</th><th>Giá</th></tr>${cr.lv.map(l=>`<tr><td><b>${l.n}</b></td><td>${l.q}</td><td class="ct">${l.c?fm(l.c)+'đ':'—'}</td></tr>`).join('')}</table></div>`}
-if(cr.ri?.length)h+=`<div class="c"><h2>🎎 Trình Tự</h2><div class="tl">${cr.ri.map((r,i)=>`<div class="ti"><div class="tt">Bước ${i+1}</div><div class="td">${r}</div></div>`).join('')}</div></div>`;
-if(cr.tp?.length)h+=`<div class="c"><h2>💡 Lưu Ý</h2>${cr.tp.map(t=>`<div class="nt nt-g">💡 ${t}</div>`).join('')}</div>`;
-h+=`</div>`});return h+'</div>'}
-
-function rCost(){const idx=D.steps.length;let h=`<div class="pn${idx===S.tab?' a':''}"><div class="c"><h2>💰 Ngân Sách</h2>
-<input class="inp" style="text-align:center;font-weight:700;color:var(--p);font-size:1rem" value="${fm(S.bud)}" oninput="uB(this)" onfocus="this.select()">
-<div style="text-align:center;font-size:.75rem;color:#888;margin:4px 0">${[100,150,200,300,500].map(v=>`<span style="cursor:pointer;color:var(--bl);font-weight:600" onclick="sB(${v}e6)">${v}tr</span>`).join(' | ')} | <span style="cursor:pointer;color:var(--bl);font-weight:600" onclick="sB(1e9)">1tỷ</span></div>`;
-D.bCats.forEach(c=>{const p=S.bo[c.k]??c.p,a=S.bud*p/100;h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f0e8e0;font-size:.8rem"><span style="font-weight:600">${c.l}</span><div style="display:flex;align-items:center;gap:4px"><input type="number" style="width:50px;padding:2px;border:1px solid #ddd;border-radius:3px;text-align:right;font-size:.78rem" value="${p}" min="0" max="100" onchange="uC('${c.k}',this.value)"><span style="font-size:.68rem;color:#888">%</span><span style="color:var(--p);font-weight:700;min-width:50px;text-align:right">${fs(a)}</span></div></div><div style="height:4px;background:#eee;border-radius:2px;margin:2px 0"><div style="height:100%;width:${p}%;background:${c.cl};border-radius:2px"></div></div>`});
-let up=D.bCats.reduce((a,c)=>a+(S.bo[c.k]??c.p),0);
-h+=`<div style="margin-top:8px;padding:10px;background:#f8f8f8;border-radius:8px;text-align:center;font-size:.82rem">Tổng: <b>${up}%</b> = <b style="color:var(--p)">${fm(S.bud*up/100)}đ</b> | Còn: <b style="color:${100-up>=0?'var(--gn)':'var(--p)'}"> ${fm(S.bud*(100-up)/100)}đ</b></div></div></div>`;return h}
-
-function rGuest(){const idx=D.steps.length+1;let h=`<div class="pn${idx===S.tab?' a':''}"><div class="c"><h2>👥 Khách Mời (${S.guests.length})</h2>
-<div class="nt nt-b">Trai: <b>${S.guests.filter(g=>g.s==='trai').length}</b> | Gái: <b>${S.guests.filter(g=>g.s==='gai').length}</b> | Bàn ≈ <b>${Math.ceil(S.guests.length/10)}</b></div>
-<div class="flex-r" style="margin:6px 0"><input id="gn" class="inp" style="flex:2;min-width:100px" placeholder="Họ tên"><input id="gp" class="inp" style="flex:1;min-width:80px" placeholder="SĐT"><select id="gs" class="inp" style="flex:1;min-width:70px"><option value="trai">Trai</option><option value="gai">Gái</option></select><input id="gg" class="inp" style="flex:1;min-width:70px" placeholder="Nhóm/Bàn"><button class="btn btn-p" onclick="aG()">+</button></div>
-<div class="flex-r" style="margin:4px 0"><button class="btn btn-s" onclick="dlC()">📥 CSV mẫu</button><label class="btn btn-g">📤 Import<input type="file" accept=".csv" style="display:none" onchange="iC(this)"></label>${S.guests.length?`<button class="btn btn-s" onclick="eC()">📤 Export</button><button class="btn btn-p" onclick="if(confirm('Xóa tất cả?')){S.guests=[];sv();R();sT(S.tab)}">🗑️</button>`:''}</div>`;
-if(S.guests.length){h+=`<input class="inp" placeholder="🔍 Tìm kiếm..." oninput="fG(this.value)"><div class="gt-wrap"><table class="gt" id="gT"><thead><tr><th>#</th><th>Tên</th><th>SĐT</th><th>Bên</th><th>Nhóm</th><th>✕</th></tr></thead><tbody>${S.guests.map((g,i)=>`<tr data-q="${(g.n||'').toLowerCase()}"><td>${i+1}</td><td>${g.n}</td><td>${g.p||''}</td><td>${g.s==='trai'?'Trai':'Gái'}</td><td>${g.g||''}</td><td><span style="cursor:pointer;color:var(--p)" onclick="dG(${i})">✕</span></td></tr>`).join('')}</tbody></table></div>`}
-return h+'</div></div>'}
-
-function rBGThiep(){const idx=D.steps.length+2;const I=S.info;
-const fmD=d=>d?new Date(d).toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'}):'...';
-const fmDs=d=>d?new Date(d).toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric'}):'__.__.____';
-let h=`<div class="pn${idx===S.tab?' a':''}"><div class="c"><h2>🖼️ Background & 💌 Thiệp Mời</h2>
-<p style="font-size:.82rem;color:var(--t2)">10 mẫu cho mỗi lễ — xu hướng 2025: minimalist, pastel, ép kim, font thanh mảnh</p>
-<div class="flex-r" style="gap:6px;margin:6px 0"><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Cô dâu</label><input class="inp" value="${I.bride}" onchange="S.info.bride=this.value;sv();R();sT(S.tab)"></div><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Chú rể</label><input class="inp" value="${I.groom}" onchange="S.info.groom=this.value;sv();R();sT(S.tab)"></div></div>
-<div class="flex-r" style="gap:6px;margin:4px 0"><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Họ nhà gái</label><input class="inp" value="${I.bf}" onchange="S.info.bf=this.value;sv();R();sT(S.tab)"></div><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Họ nhà trai</label><input class="inp" value="${I.gf}" onchange="S.info.gf=this.value;sv();R();sT(S.tab)"></div></div>
-<div class="flex-r" style="gap:6px;margin:4px 0"><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Ngày dạm ngõ</label><input class="inp" type="date" value="${I.dDN}" onchange="S.info.dDN=this.value;sv();R();sT(S.tab)"></div><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Ngày hỏi</label><input class="inp" type="date" value="${I.dDH}" onchange="S.info.dDH=this.value;sv();R();sT(S.tab)"></div><div style="flex:1"><label style="font-size:.72rem;font-weight:600">Ngày cưới</label><input class="inp" type="date" value="${I.date}" onchange="S.info.date=this.value;sv();R();sT(S.tab)"></div></div></div>`;
-
-const bgs=[
-{bg:'linear-gradient(135deg,#2c1810 0%,#5a3e2b 100%)',t:'#f0d78c',sub:'#d4a843',f:"'Playfair Display',serif"},
-{bg:'linear-gradient(135deg,#fdf6f0 0%,#f5e6d3 100%)',t:'#2c1810',sub:'#c0392b',f:"'Cormorant Garamond',serif"},
-{bg:'linear-gradient(135deg,#1a1a2e 0%,#16213e 100%)',t:'#f0d78c',sub:'#d4a843',f:"'Playfair Display',serif"},
-{bg:'linear-gradient(135deg,#f5e6d3 0%,#fce4ec 100%)',t:'#880e4f',sub:'#c2185b',f:"'Cormorant Garamond',serif"},
-{bg:'linear-gradient(135deg,#e8eaf6 0%,#c5cae9 100%)',t:'#1a237e',sub:'#3f51b5',f:"'Playfair Display',serif"},
-{bg:'linear-gradient(135deg,#fff8e1 0%,#ffecb3 100%)',t:'#5d4037',sub:'#d4a843',f:"'Cormorant Garamond',serif"},
-{bg:'linear-gradient(135deg,#efebe9 0%,#d7ccc8 100%)',t:'#3e2723',sub:'#8d6e63',f:"'Playfair Display',serif"},
-{bg:'linear-gradient(135deg,#e0f2f1 0%,#b2dfdb 100%)',t:'#004d40',sub:'#00897b',f:"'Cormorant Garamond',serif"},
-{bg:'linear-gradient(135deg,#fce4ec 0%,#f8bbd0 100%)',t:'#880e4f',sub:'#e91e63',f:"'Great Vibes',cursive"},
-{bg:'linear-gradient(135deg,#263238 0%,#37474f 100%)',t:'#eceff1',sub:'#b0bec5',f:"'Playfair Display',serif"}
-];
-const evts=[{n:'Dạm Ngõ',d:I.dDN},{n:'Đám Hỏi',d:I.dDH},{n:'Tiệc Cưới',d:I.date}];
-
-evts.forEach(ev=>{
-h+=`<div class="c"><h2>🖼️ Background — ${ev.n}</h2><div class="bg-grid">`;
-bgs.forEach((s,i)=>{
-h+=`<div class="bg-c" style="background:${s.bg};font-family:${s.f}">
-<div style="font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:${s.sub};opacity:.8">— ${ev.n} —</div>
-<div style="font-size:1.3rem;font-weight:700;color:${s.t};margin:6px 0;line-height:1.2">${I.groom} <span style="opacity:.4;font-weight:400">&</span> ${I.bride}</div>
-<div style="font-size:.75rem;color:${s.sub}">📅 ${fmDs(ev.d)}</div>
-<div style="font-size:.6rem;color:${s.t};opacity:.5;margin-top:6px">${I.gf} ♥ ${I.bf}</div>
-${i===8?`<div style="position:absolute;top:10px;right:10px;left:10px;bottom:10px;border:1px solid ${s.sub};border-radius:8px;opacity:.3;pointer-events:none"></div>`:''}</div>`});
-h+=`</div></div>`;
-
-h+=`<div class="c"><h2>💌 Thiệp — ${ev.n}</h2><div class="tp-grid">`;
-bgs.forEach((s,i)=>{
-const msg=ev.n==='Tiệc Cưới'?'Trân trọng kính mời quý khách đến chung vui':ev.n==='Đám Hỏi'?'Kính mời quý khách đến dự lễ đính hôn':'Kính mời quý khách đến dự buổi lễ';
-h+=`<div class="tp-c" style="background:${s.bg};font-family:${s.f};border:2px solid ${s.sub}22">
-<div style="font-size:.55rem;letter-spacing:4px;text-transform:uppercase;color:${s.sub};opacity:.7">✦ THIỆP MỜI ✦</div>
-<div style="font-size:.65rem;color:${s.t};opacity:.6;margin:6px 0">${I.gf} & ${I.bf}</div>
-<div style="font-size:.7rem;color:${s.t};opacity:.75;margin:4px 0">${msg}</div>
-<div style="font-size:1.4rem;font-weight:700;color:${s.t};margin:8px 0;line-height:1.2">${I.groom} <span style="font-weight:400;opacity:.4;font-size:1rem">&</span> ${I.bride}</div>
-<div style="width:40px;height:1px;background:${s.sub};margin:6px auto;opacity:.5"></div>
-<div style="font-size:.72rem;color:${s.sub};margin:4px 0">📅 ${fmD(ev.d)}</div>
-<div style="font-size:.58rem;color:${s.t};opacity:.45;margin-top:8px;line-height:1.4">Sự hiện diện của quý khách<br>là niềm vinh hạnh cho gia đình</div></div>`});
-h+=`</div></div>`});
-return h+'</div>'}
-
-function rAI(){const idx=D.steps.length+3;
-let h=`<div class="pn${idx===S.tab?' a':''}"><div class="ai"><h2>🤖 AI Hỗ Trợ (Z.AI) — ${D.aiP.length} Prompts</h2>
-<h3 style="font-size:.85rem;margin-top:8px">🔑 API Key</h3>
-<input type="password" class="ai-i" value="${S.zk}" onchange="S.zk=this.value.trim();sv()" placeholder="Nhập API Key (open.bigmodel.cn)...">
-<div style="font-size:.65rem;opacity:.35">Model: glm-4-flash | Endpoint: open.bigmodel.cn</div>
-<h3 style="font-size:.85rem;margin-top:8px">⚡ ${D.aiP.length} Gợi Ý Nhanh</h3>
-<div class="ai-bs">${D.aiP.map((_,i)=>`<button class="ai-b ai-2" onclick="rAP(${i})">${D.aiP[i].l}</button>`).join('')}</div>
-<h3 style="font-size:.85rem;margin-top:8px">✍️ Hỏi Tùy Chỉnh</h3>
-<textarea class="ai-i ai-t" id="aip" placeholder="Nhập câu hỏi..."></textarea>
-<div class="ai-bs"><button class="ai-b ai-1" onclick="rAC()">🚀 Gửi</button><button class="ai-b ai-2" onclick="S.ar='';sv();document.getElementById('air').style.display='none'">🗑️</button></div>
-<div class="ai-r" id="air" style="display:${S.ar?'block':'none'}">${S.ar?fA(S.ar):''}</div></div></div>`;return h}
-
-function rPrint(){const idx=D.steps.length+4;const I=S.info;
-let h=`<div class="pn${idx===S.tab?' a':''}"><div class="c no-print"><h2>📖 Sổ Tay In</h2><button class="btn btn-p" onclick="window.print()">🖨️ In Sổ Tay</button></div>`;
-h+=`<div class="c"><h2 style="text-align:center;font-size:1.2rem">💒 SỔ TAY ĐÁM CƯỚI</h2><div style="text-align:center;font-size:1rem;color:var(--p);font-weight:700">${I.groom} & ${I.bride}</div><div style="text-align:center;font-size:.82rem;color:var(--t2)">${I.gf} ♥ ${I.bf}</div></div>`;
-D.steps.forEach(s=>{h+=`<div class="c"><h2>${s.icon} ${s.title}</h2>`;s.cers.forEach(cr=>{h+=`<h3>${cr.nm} ${cr.req?'[BẮT BUỘC]':'[TÙY CHỌN]'}</h3>`;if(cr.cl?.length)h+=`<ul style="font-size:.78rem;padding-left:16px">${cr.cl.map((c,i)=>`<li>${c.t}${c.c?' — '+fs(c.c):''}</li>`).join('')}</ul>`;if(cr.ri?.length)h+=`<ol style="font-size:.78rem;padding-left:16px">${cr.ri.map(r=>`<li>${r}</li>`).join('')}</ol>`});h+=`</div>`});
-return h+'</div>'}
-
-function rIdea(){const idx=D.steps.length+5;
-return `<div class="pn${idx===S.tab?' a':''}">
-<div class="idea-c"><h2>💡 Ý Tưởng Cải Thiện & Tính Năng Tương Lai</h2>
-<div class="idea-i"><b>🔗 QR Code thiệp online</b> — Tạo QR code cho mỗi thiệp, khách quét để xem bản đồ, RSVP, album ảnh cưới. Xu hướng 2025!</div>
-<div class="idea-i"><b>📊 Dashboard chi phí thực tế</b> — Theo dõi chi phí thực vs dự toán, nhập từng khoản đã chi, biểu đồ so sánh.</div>
-<div class="idea-i"><b>📱 RSVP trực tuyến</b> — Gửi link cho khách xác nhận tham dự, tự đếm số bàn cần đặt.</div>
-<div class="idea-i"><b>🗓️ Countdown timer</b> — Đếm ngược đến ngày cưới, hiển thị trên header.</div>
-<div class="idea-i"><b>📋 Sơ đồ bàn tiệc</b> — Kéo thả khách vào từng bàn, in sơ đồ chỗ ngồi.</div>
-<div class="idea-i"><b>🎨 Theme màu tùy chỉnh</b> — Cho phép chọn bảng màu chủ đạo: pastel, đỏ truyền thống, xanh navy, hồng blush...</div>
-<div class="idea-i"><b>📸 Gallery ảnh cưới</b> — Upload & quản lý ảnh pre-wedding, ảnh ngày cưới.</div>
-<div class="idea-i"><b>🔔 Nhắc nhở tự động</b> — Gửi thông báo trước deadline: book vendor, gửi thiệp, thử váy...</div>
-<div class="idea-i"><b>💬 Chat giữa cô dâu & chú rể</b> — Ghi chú, giao việc, cập nhật tiến độ cho nhau.</div>
-<div class="idea-i"><b>🌍 Multi-language</b> — Hỗ trợ tiếng Anh cho khách nước ngoài / Việt kiều.</div>
-<div class="idea-i"><b>📜 Lưu trữ vĩnh viễn</b> — Export toàn bộ data ra PDF/JSON, import lại khi cần.</div>
-<div class="idea-i"><b>🎬 Video timeline</b> — Tạo video slideshow tự động từ ảnh cưới + nhạc nền.</div>
-<div class="idea-i"><b>👗 Mood board trang phục</b> — Pin ảnh váy cưới, vest, phụ kiện yêu thích để so sánh.</div>
-<div class="idea-i"><b>🗺️ Bản đồ vendor</b> — Map hiển thị nhà hàng, studio, tiệm hoa gần bạn.</div>
+<div class="hdr">
+<h1>💒 Kế Hoạch Đám Cưới Việt Nam</h1>
+<p>Hướng dẫn từ A-Z — Phong tục truyền thống đầy đủ nhất</p>
+<div class="pbar"><div class="pfill" id="mp" style="width:0"></div></div>
+<div class="ptxt" id="mpt">0%</div>
 </div>
-<div class="c"><h2>🚀 Muốn tính năng nào?</h2><p style="font-size:.82rem;color:var(--t2)">Hãy dùng tab <b>🤖 AI</b> để hỏi chi tiết về bất kỳ ý tưởng nào ở trên, hoặc yêu cầu tôi code thêm!</p></div></div>`}
+<div class="ctn">
+<div class="sgrid" id="sg"></div>
+<div class="tabs" id="tabs"></div>
+<div id="panels"></div>
+</div>
+<div class="save-ind" id="saveInd">💾 Đã lưu</div>
 
-function sT(i){S.tab=i;sv();R()}
-function sST(sid,ci){S.st[sid]=ci;sv();const si=D.steps.findIndex(s=>s.id===sid);const p=document.querySelectorAll('.pn')[si];if(!p)return;p.querySelectorAll('.st-i').forEach((t,i)=>t.classList.toggle('a',i===ci));p.querySelectorAll('.sp').forEach((p,i)=>p.classList.toggle('a',i===ci))}
-function tC(k,el){S.ck[k]=!S.ck[k];el.classList.toggle('d');sv();const{t,d}=gCk();const p=t?Math.round(d/t*100):0;document.getElementById('mp').style.width=p+'%';document.getElementById('mpt').textContent=p+'% ('+d+'/'+t+')'}
-function uB(el){S.bud=parseInt(el.value.replace(/\D/g,''))||0;el.value=fm(S.bud);sv()}
-function sB(v){S.bud=v;sv();R()}
-function uC(k,v){S.bo[k]=parseFloat(v)||0;sv()}
-function goAI(hint){S.tab=D.steps.length+3;sv();R();setTimeout(()=>{const el=document.getElementById('aip');if(el){el.value=hint;el.scrollIntoView({behavior:'smooth'})}},100)}
-function aG(){const n=document.getElementById('gn').value.trim();if(!n)return;S.guests.push({n,p:document.getElementById('gp').value.trim(),s:document.getElementById('gs').value,g:document.getElementById('gg').value.trim(),id:++S.gid});sv();R();sT(S.tab)}
-function dG(i){S.guests.splice(i,1);sv();R();sT(S.tab)}
-function fG(v){const q=v.toLowerCase();document.querySelectorAll('#gT tbody tr').forEach(r=>{r.style.display=(r.dataset.q||'').includes(q)?'':'none'})}
-function dlC(){const csv='Họ tên,SĐT,Bên,Nhóm\nNguyễn A,0901234567,trai,Bàn 1\nTrần B,0912345678,gai,Họ hàng';const b=new Blob(['\uFEFF'+csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='khach_moi_mau.csv';a.click()}
-function iC(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{e.target.result.split('\n').slice(1).filter(l=>l.trim()).forEach(l=>{const p=l.split(',').map(s=>s.trim());if(p[0])S.guests.push({n:p[0],p:p[1]||'',s:p[2]||'trai',g:p[3]||'',id:++S.gid})});sv();R();sT(S.tab)};r.readAsText(f,'UTF-8')}
-function eC(){let csv='Họ tên,SĐT,Bên,Nhóm\n';S.guests.forEach(g=>csv+=`${g.n},${g.p||''},${g.s},${g.g||''}\n`);const b=new Blob(['\uFEFF'+csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='khach_moi.csv';a.click()}
-function fA(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/^### (.*$)/gm,'<h4 style="color:var(--g);margin:6px 0 2px">$1</h4>').replace(/^## (.*$)/gm,'<h3 style="color:var(--g);margin:8px 0 3px">$1</h3>').replace(/^# (.*$)/gm,'<h2 style="color:var(--g2);margin:10px 0 4px">$1</h2>').replace(/^[-*] (.*$)/gm,'<div style="padding:1px 0 1px 8px;border-left:2px solid rgba(255,255,255,.1)">• $1</div>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}
-async function cAI(p){if(!S.zk)return alert('Nhập API Key!');const r=document.getElementById('air');r.style.display='block';r.innerHTML='<div style="text-align:center;padding:12px;color:var(--g2)">🤖 Đang xử lý...</div>';
-try{const res=await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+S.zk},body:JSON.stringify({model:'glm-4-flash',messages:[{role:'system',content:`Chuyên gia đám cưới VN 20 năm kinh nghiệm. 3 miền. Chi tiết, có giá VNĐ. Budget: ${fs(S.bud)}.`},{role:'user',content:p}],max_tokens:2000,temperature:.7})});
-if(!res.ok)throw new Error('API '+res.status);const d=await res.json();const txt=d.choices?.[0]?.message?.content||'Không phản hồi.';S.ar=txt;r.innerHTML=fA(txt);sv()}catch(e){r.innerHTML=`<div style="color:#ff6b6b">❌ ${e.message}</div>`}}
-function rAP(i){document.getElementById('aip').value=D.aiP[i].p;cAI(D.aiP[i].p)}
-function rAC(){const p=document.getElementById('aip').value.trim();if(p)cAI(p)}
-ld();R();
+<script>
+// ============= FULL DATA =============
+const D={
+steps:[
+{
+ id:"gapmatchua",tab:"☕ Gặp Mặt",title:"Bước 0: Gặp Mặt Hai Gia Đình (Không Chính Thức)",icon:"☕",
+ desc:"Buổi gặp gỡ thân mật, không nghi lễ — hai bên gia đình làm quen, trao đổi sơ bộ trước khi tiến hành dạm ngõ chính thức.",
+ timeline:"4-6 tháng trước đám cưới",
+ ceremonies:[
+  {
+   name:"☕ Buổi Gặp Mặt Thân Mật",required:true,
+   desc:"Cô dâu chú rể sắp xếp để hai gia đình gặp nhau lần đầu trong không khí nhẹ nhàng.",
+   checklist:[
+    {t:"Cô dâu chú rể bàn bạc, thống nhất thời gian phù hợp cho cả hai bên",c:0,ct:"other"},
+    {t:"Chọn địa điểm gặp mặt (nhà hàng, quán cafe, hoặc nhà một bên)",c:500000,ct:"venue"},
+    {t:"Cô dâu chú rể giới thiệu sơ về gia đình đối phương cho bố mẹ mình",c:0,ct:"other"},
+    {t:"Chuẩn bị quà nhỏ khi đến nhà (trái cây, bánh — không cần cầu kỳ)",c:300000,ct:"levat"},
+    {t:"Ăn mặc lịch sự nhưng không quá trang trọng",c:0,ct:"clothes"},
+    {t:"Đặt bàn nhà hàng / chuẩn bị tiếp khách tại nhà",c:1000000,ct:"food"}
+   ],
+   people:[
+    {n:"Bố mẹ chú rể",r:"Gia đình nhà trai",a:"👫"},
+    {n:"Bố mẹ cô dâu",r:"Gia đình nhà gái",a:"👫"},
+    {n:"Cô dâu",r:"Con gái",a:"👰"},
+    {n:"Chú rể",r:"Con trai",a:"🤵"},
+    {n:"Anh/chị em (tuỳ)",r:"Đi cùng nếu muốn",a:"👤"}
+   ],
+   rituals:[
+    "Cô dâu chú rể đón tiếp, giới thiệu hai bên gia đình",
+    "Trò chuyện thân mật — gia cảnh, công việc, sở thích",
+    "Trao đổi SƠ BỘ về ý định cưới hỏi (chưa chốt gì)",
+    "Hỏi ý kiến hai bên về timeline, mong muốn",
+    "Nếu thoải mái: bàn sơ về vùng miền, phong tục mỗi bên",
+    "Kết thúc vui vẻ — KHÔNG chốt ngày, lễ vật tại buổi này"
+   ],
+   tips:["Mục đích chính là làm quen, tạo thiện cảm — không áp lực","Nên để cô dâu chú rể 'cầu nối' nếu hai bên chưa quen","Không nên bàn quá sâu về tiền bạc, lễ vật ở buổi này","Sau buổi gặp, cô dâu chú rể tổng hợp ý kiến hai bên rồi bàn tiếp","Nếu gặp tại nhà hàng: chọn nơi yên tĩnh, dễ nói chuyện"]
+  },
+  {
+   name:"📝 Bàn Bạc Sau Gặp Mặt",required:true,
+   desc:"Cô dâu chú rể họp lại, tổng hợp ý kiến và lên kế hoạch tổng thể.",
+   checklist:[
+    {t:"Tổng hợp ý kiến, mong muốn của bố mẹ hai bên",c:0,ct:"other"},
+    {t:"Thống nhất budget tổng (ai chi gì, chia như thế nào)",c:0,ct:"other"},
+    {t:"Dự kiến timeline: dạm ngõ → đám hỏi → đám cưới",c:0,ct:"other"},
+    {t:"Liệt kê các điểm khác biệt phong tục hai bên (nếu có) để dung hoà",c:0,ct:"other"},
+    {t:"Chốt danh sách việc cần làm trước lễ dạm ngõ",c:0,ct:"other"},
+    {t:"Liên hệ thầy/cô xem ngày (nếu cần) để có ngày sẵn khi dạm ngõ",c:500000,ct:"other"}
+   ],
+   people:[
+    {n:"Cô dâu",r:"Bàn bạc",a:"👰"},
+    {n:"Chú rể",r:"Bàn bạc",a:"🤵"}
+   ],
+   rituals:["Gặp riêng hai người, list ra tất cả mong muốn","So sánh phong tục hai bên, tìm điểm chung","Lập bảng ngân sách sơ bộ","Phân công ai phụ trách mảng nào","Chốt bước tiếp theo: tổ chức lễ dạm ngõ"],
+   tips:["Đây là bước CỰC KỲ quan trọng — nhiều cặp bỏ qua và gặp rắc rối sau","Ghi chép lại tất cả thỏa thuận","Nếu có xung đột phong tục: ưu tiên tôn trọng cả hai bên"]
+  }
+ ]
+},
+{
+ id:"cauhon",tab:"💍 Cầu Hôn",title:"Bước 1: Cầu Hôn",icon:"💍",
+ desc:"Khoảnh khắc lãng mạn — chàng trai ngỏ lời cầu hôn với cô gái.",
+ timeline:"3-6 tháng trước đám cưới",
+ ceremonies:[{
+  name:"💍 Lễ Cầu Hôn",required:true,
+  desc:"Nghi thức cầu hôn — có thể riêng tư hoặc trước bạn bè.",
+  checklist:[
+   {t:"Chọn mua nhẫn cầu hôn (kim cương / vàng / bạch kim)",c:15000000,ct:"ring"},
+   {t:"Tìm hiểu bí mật size nhẫn của cô dâu",c:0,ct:"other"},
+   {t:"Lên kế hoạch địa điểm (nhà hàng / bãi biển / nơi kỷ niệm)",c:2000000,ct:"venue"},
+   {t:"Chuẩn bị hoa tươi (99 bông hồng / hoa yêu thích cô dâu)",c:500000,ct:"flower"},
+   {t:"Thuê nhiếp ảnh chụp lén khoảnh khắc",c:3000000,ct:"photo"},
+   {t:"Viết / chuẩn bị lời cầu hôn từ trái tim",c:0,ct:"other"},
+   {t:"Book nhà hàng / setup địa điểm nếu cần",c:2000000,ct:"venue"},
+   {t:"Nến, bóng bay, banner, led trang trí",c:500000,ct:"decor"},
+   {t:"Mời bạn thân hỗ trợ bất ngờ (quay phim, rải hoa...)",c:0,ct:"other"},
+   {t:"Chuẩn bị nhạc nền lãng mạn (playlist / live violin)",c:500000,ct:"music"},
+   {t:"Lên plan B nếu thời tiết xấu",c:0,ct:"other"}
+  ],
+  people:[
+   {n:"Chú rể",r:"Người cầu hôn",a:"🤵"},{n:"Cô dâu",r:"Được cầu hôn",a:"👰"},
+   {n:"Bạn thân",r:"Hỗ trợ bí mật",a:"📹"},{n:"Nhiếp ảnh",r:"Chụp ảnh lén",a:"📷"}
+  ],
+  rituals:["Dẫn cô dâu đến địa điểm (bất ngờ hoặc hẹn hò bình thường)","Bạn bè setup nhanh nếu cần","Chú rể quỳ gối, mở hộp nhẫn","Nói lời cầu hôn chân thành","Đeo nhẫn vào ngón áp út tay trái","Ôm, hôn, ăn mừng 🎉","Chụp ảnh / quay video kỷ niệm"],
+  tips:["Tìm hiểu kỹ sở thích cô dâu — có người thích riêng tư, có người thích hoành tráng","Chọn nơi có ý nghĩa với cả hai","Luôn có plan B","Lời cầu hôn không cần dài — cần chân thành"]
+ }]
+},
+{
+ id:"damngo",tab:"🏠 Dạm Ngõ",title:"Bước 2: Lễ Dạm Ngõ (Chạm Ngõ)",icon:"🏠",
+ desc:"Hai gia đình chính thức gặp mặt theo nghi lễ — nhà trai xin phép cho đôi trẻ tiến tới hôn nhân.",
+ timeline:"2-3 tháng trước đám hỏi",
+ ceremonies:[
+  {
+   name:"🏠 Lễ Dạm Ngõ Chính",required:true,
+   desc:"Nhà trai mang lễ vật đến nhà gái, hai bên chính thức bàn bạc chuyện cưới xin.",
+   checklist:[
+    {t:"Xem ngày lành tháng tốt cho lễ dạm ngõ",c:200000,ct:"other"},
+    {t:"Nhà trai chuẩn bị: trầu cau (1 buồng), trà, rượu, bánh, trái cây",c:1500000,ct:"levat"},
+    {t:"Chuẩn bị 1-3 khay/mâm đựng lễ vật (phủ vải đỏ)",c:300000,ct:"levat"},
+    {t:"Chú rể: vest hoặc sơ mi lịch sự",c:500000,ct:"clothes"},
+    {t:"Cô dâu: áo dài hoặc đầm lịch sự",c:500000,ct:"clothes"},
+    {t:"Nhà gái: dọn dẹp, trang trí bàn thờ & phòng khách",c:500000,ct:"decor"},
+    {t:"Chuẩn bị trà nước, bánh ngọt tiếp khách nhà trai",c:300000,ct:"food"},
+    {t:"Hai gia đình xác nhận giờ & thành phần tham dự",c:0,ct:"other"},
+    {t:"Bàn bạc chi tiết: ngày hỏi, ngày cưới, số mâm quả, lễ vật, tiền nạp tài",c:0,ct:"other"},
+    {t:"Chụp ảnh gia đình hai bên",c:0,ct:"photo"}
+   ],
+   levat:[
+    {n:"Cau trầu",q:"1 buồng cau + trầu",c:200000,nt:"Tượng trưng tình duyên"},
+    {n:"Trà ngon",q:"1-2 hộp",c:200000,nt:"Kính trọng"},
+    {n:"Rượu",q:"2 chai vang/nếp",c:300000,nt:""},
+    {n:"Bánh",q:"1-2 hộp",c:300000,nt:"Bánh phu thê / bánh ngọt"},
+    {n:"Trái cây",q:"1 mâm ngũ quả",c:200000,nt:"Quả tròn, đẹp, tươi"},
+    {n:"Khay/mâm",q:"1-3 cái",c:300000,nt:"Phủ vải đỏ / giấy kiếng đỏ"}
+   ],
+   people:[
+    {n:"Bố mẹ chú rể",r:"Đại diện nhà trai",a:"👫"},{n:"Chú rể",r:"Chàng rể",a:"🤵"},
+    {n:"Bố mẹ cô dâu",r:"Đại diện nhà gái",a:"👫"},{n:"Cô dâu",r:"Con gái",a:"👰"},
+    {n:"Ông bà hai bên",r:"Trưởng bối",a:"👴"},{n:"Cô/chú/bác",r:"Người lớn đi cùng",a:"👤"}
+   ],
+   rituals:["Nhà trai đến đúng giờ đã hẹn","Đại diện nhà trai giới thiệu thành phần","Trao lễ vật","Đại diện nhà gái đáp lễ, mời vào nhà","Hai bên giới thiệu gia đình","Bàn bạc chi tiết: ngày hỏi, ngày cưới, lễ vật, tiền nạp tài","Thắp hương bàn thờ tổ tiên (nếu đồng ý)","Dùng bữa cơm thân mật, chụp ảnh"],
+   tips:["Đến đúng giờ, trang phục lịch sự","Chuẩn bị sẵn danh sách cần thống nhất","Không nên 'mặc cả' gay gắt — tinh thần là hai nhà thành thông gia","Ghi chép lại các thỏa thuận"]
+  },
+  {
+   name:"📋 Thống Nhất Sau Dạm Ngõ",required:true,
+   desc:"Chốt tất cả chi tiết đã bàn: ngày cưới, lễ vật, budget, phân công.",
+   checklist:[
+    {t:"Chốt ngày giờ đám hỏi + đám cưới (theo lịch thầy xem)",c:0,ct:"other"},
+    {t:"Chốt số lượng mâm quả đám hỏi (5/7/9/11)",c:0,ct:"other"},
+    {t:"Chốt danh sách lễ vật nhà gái yêu cầu",c:0,ct:"other"},
+    {t:"Chốt tiền nạp tài (nếu có)",c:0,ct:"other"},
+    {t:"Phân chia chi phí: nhà trai lo gì, nhà gái lo gì",c:0,ct:"other"},
+    {t:"Bắt đầu book nhà hàng, nhiếp ảnh, MC...",c:0,ct:"other"}
+   ],
+   people:[{n:"Cô dâu & Chú rể",r:"Tổng hợp",a:"💑"},{n:"Bố mẹ hai bên",r:"Xác nhận",a:"👫"}],
+   rituals:["Cô dâu chú rể tổng hợp ý kiến hai bên","Lập danh sách chi tiết chốt cuối","Gửi xác nhận cho bố mẹ hai bên","Bắt đầu triển khai book vendor"],
+   tips:["Nên ghi ra giấy/file tất cả thỏa thuận","Tránh thay đổi sau khi đã chốt"]
+  }
+ ]
+},
+{
+ id:"damhoi",tab:"🎀 Đám Hỏi",title:"Bước 3: Lễ Ăn Hỏi (Đính Hôn)",icon:"🎀",
+ desc:"Lễ chính thức công nhận hôn ước — nhà trai mang sính lễ sang nhà gái.",
+ timeline:"1-2 tháng trước đám cưới",
+ ceremonies:[
+  {
+   name:"🎀 Lễ Ăn Hỏi Chính",required:true,
+   desc:"Nghi lễ trao mâm quả, nhận dâu chính thức giữa hai họ.",
+   checklist:[
+    {t:"Xem giờ tốt cho lễ ăn hỏi",c:500000,ct:"other"},
+    {t:"Thống nhất số mâm quả (5/7/9/11 — SỐ LẺ)",c:0,ct:"other"},
+    {t:"Đặt mâm quả tại tiệm chuyên nghiệp",c:8000000,ct:"levat"},
+    {t:"Áo dài cô dâu (đỏ/hồng truyền thống)",c:3000000,ct:"clothes"},
+    {t:"Vest chú rể",c:2000000,ct:"clothes"},
+    {t:"Đồng phục đội bê tráp (áo dài nữ, áo sơ mi nam)",c:3000000,ct:"clothes"},
+    {t:"Trang trí nhà gái: cổng hoa, bàn thờ, rạp",c:5000000,ct:"decor"},
+    {t:"MC hoặc người dẫn lễ",c:1000000,ct:"mc"},
+    {t:"Phong bì lì xì cho đội bê tráp",c:1000000,ct:"other"},
+    {t:"Đặt tiệc nhà gái (mời họ hàng bên gái)",c:8000000,ct:"food"},
+    {t:"Nhiếp ảnh & quay phim",c:5000000,ct:"photo"},
+    {t:"In thiệp mời",c:500000,ct:"other"},
+    {t:"Book xe hoa / xe đưa đón nhà trai",c:2000000,ct:"transport"}
+   ],
+   levat:[
+    {n:"Mâm trầu cau",q:"105 quả cau + trầu",c:800000,nt:"Số cau theo yêu cầu nhà gái"},
+    {n:"Mâm trà rượu",q:"Trà sen + rượu ngoại",c:1500000,nt:"Trà ngon, rượu vang/XO"},
+    {n:"Mâm bánh",q:"Bánh phu thê / bánh cốm",c:1000000,nt:"Bánh truyền thống"},
+    {n:"Mâm trái cây",q:"Ngũ quả",c:600000,nt:"Quả tròn đẹp"},
+    {n:"Mâm xôi gấc",q:"1-2 mâm đỏ",c:500000,nt:"Tượng trưng may mắn"},
+    {n:"Heo quay",q:"1 con nguyên",c:3000000,nt:"Miền Nam thường có"},
+    {n:"Mâm hạt sen",q:"1 mâm",c:400000,nt:"Tùy vùng"},
+    {n:"Mâm rượu bia",q:"1 thùng bia + rượu",c:800000,nt:"Tùy vùng"}
+   ],
+   people:[
+    {n:"Bố mẹ chú rể",r:"Đại diện nhà trai",a:"👫"},{n:"Chú rể",r:"Chú rể",a:"🤵"},
+    {n:"Bố mẹ cô dâu",r:"Đại diện nhà gái",a:"👫"},{n:"Cô dâu",r:"Cô dâu",a:"👰"},
+    {n:"Ông bà hai bên",r:"Trưởng bối",a:"👴"},
+    {n:"Đội bê tráp nam",r:"Bê mâm quả (số lẻ)",a:"🧑"},
+    {n:"Đội bê tráp nữ",r:"Đón mâm quả (số lẻ)",a:"👧"},
+    {n:"MC / Người dẫn lễ",r:"Điều phối",a:"🎤"},
+    {n:"Họ hàng hai bên",r:"Chứng kiến",a:"👥"}
+   ],
+   rituals:["Nhà trai tập trung, sắp xếp đội hình bê tráp","Đội bê tráp nam bưng mâm quả đi trước","Đến nhà gái — đội bê tráp nữ ra đón, nhận mâm","Đại diện nhà trai phát biểu, trình lễ vật","Đại diện nhà gái đáp từ, nhận lễ","Mở mâm quả trước hai họ","Cô dâu được dẫn ra mắt hai họ","Cô dâu chú rể rót trà mời ông bà, bố mẹ","Hai họ chúc phúc, trao phong bì","Chụp ảnh kỷ niệm, tiệc mừng"],
+   tips:["Đội bê tráp phải SỐ LẺ (5,7,9,11)","Mâm quả đậy giấy kiếng đỏ, thắt nơ","Cô dâu trang điểm xong TRƯỚC khi nhà trai đến","Chuẩn bị sẵn phong bì lại quả"]
+  },
+  {
+   name:"💎 Lễ Nạp Tài",required:false,
+   desc:"Nhà trai trao tiền/vàng cho nhà gái theo thỏa thuận — thể hiện sự trân trọng.",
+   checklist:[
+    {t:"Thống nhất số tiền nạp tài với nhà gái (thường 10-100 triệu tùy vùng)",c:0,ct:"jewelry"},
+    {t:"Chuẩn bị phong bì đỏ đựng tiền nạp tài",c:50000,ct:"other"},
+    {t:"Chuẩn bị nữ trang: kiềng, nhẫn, bông tai, lắc vàng",c:20000000,ct:"jewelry"},
+    {t:"Trao nữ trang cho cô dâu tại buổi lễ",c:0,ct:"other"}
+   ],
+   people:[{n:"Bố mẹ chú rể",r:"Trao nạp tài",a:"👫"},{n:"Cô dâu",r:"Nhận",a:"👰"},{n:"Bố mẹ cô dâu",r:"Chứng kiến",a:"👫"}],
+   rituals:["Đại diện nhà trai trình tiền nạp tài (trong phong bì đỏ)","Nhà gái nhận và cảm ơn","Trao nữ trang cho cô dâu (kiềng, nhẫn, bông tai, lắc)","Cô dâu đeo nữ trang, chụp ảnh"],
+   tips:["Tiền nạp tài KHÔNG phải 'mua' con gái — là thể hiện sự trân trọng","Số tiền do hai bên thỏa thuận, không nên so sánh","Miền Bắc thường ít hơn miền Nam","Nữ trang nên thử trước để vừa size"]
+  },
+  {
+   name:"🔄 Lễ Lại Quả",required:true,
+   desc:"Nhà gái chia lại một phần lễ vật cho nhà trai mang về — ý nghĩa có đi có lại.",
+   checklist:[
+    {t:"Nhà gái chia mỗi mâm quả lấy ra 1 phần (thường 50-50 hoặc 30-70)",c:0,ct:"other"},
+    {t:"Để lại số CHẴN trong mâm nhà gái, trả số LẺ về nhà trai",c:0,ct:"other"},
+    {t:"Phủ lại giấy đỏ, gói đẹp",c:0,ct:"other"}
+   ],
+   people:[{n:"Mẹ cô dâu",r:"Chia lễ vật",a:"👩"},{n:"Phụ nữ nhà gái",r:"Phụ giúp",a:"👩"}],
+   rituals:["Sau khi nhận lễ, nhà gái mở mâm quả","Chia lại một phần cho nhà trai","Phủ lại giấy đỏ, sắp gọn","Trao lại cho đội bê tráp nam mang về"],
+   tips:["KHÔNG bao giờ trả lại mâm không (rỗng)","Số lại quả tùy phong tục vùng miền","Miền Bắc thường lại quả nhiều hơn miền Nam"]
+  }
+ ]
+},
+{
+ id:"cuoigai",tab:"🏡 Cưới Nhà Gái",title:"Bước 4: Lễ Cưới Tại Nhà Gái",icon:"🏡",
+ desc:"Tiệc cưới phía nhà gái — mời họ hàng, bạn bè cô dâu. Thường trước ngày rước dâu 1 ngày hoặc cùng ngày.",
+ timeline:"1-2 ngày trước hoặc cùng ngày rước dâu",
+ ceremonies:[
+  {
+   name:"🏡 Tiệc Cưới Nhà Gái",required:true,
+   desc:"Tiệc chính do nhà gái tổ chức.",
+   checklist:[
+    {t:"Đặt nhà hàng / dựng rạp (xác nhận số bàn)",c:15000000,ct:"venue"},
+    {t:"Xác nhận danh sách khách mời",c:0,ct:"other"},
+    {t:"In & gửi thiệp mời (trước 2-3 tuần)",c:1500000,ct:"other"},
+    {t:"Đặt menu tiệc + nước uống",c:20000000,ct:"food"},
+    {t:"Thuê MC",c:2000000,ct:"mc"},
+    {t:"Thuê ban nhạc/DJ + âm thanh ánh sáng",c:5000000,ct:"music"},
+    {t:"Trang trí sân khấu, backdrop, bàn tiệc",c:5000000,ct:"decor"},
+    {t:"Phân công người ghi phong bì (2-3 người tin cậy)",c:0,ct:"other"},
+    {t:"Nhiếp ảnh + quay phim",c:8000000,ct:"photo"},
+    {t:"Váy cưới / áo dài cho cô dâu",c:5000000,ct:"clothes"},
+    {t:"Make-up & hair cô dâu",c:3000000,ct:"makeup"},
+    {t:"Quà cho khách (kẹo, chocolate, thiệp cảm ơn)",c:2000000,ct:"other"},
+    {t:"Bánh cưới",c:2000000,ct:"food"},
+    {t:"Sổ ký tên / bảng welcome",c:300000,ct:"decor"}
+   ],
+   people:[
+    {n:"Bố mẹ cô dâu",r:"Chủ tiệc",a:"👫"},{n:"Cô dâu",r:"Cô dâu",a:"👰"},
+    {n:"Chú rể",r:"Có mặt",a:"🤵"},{n:"Họ hàng nhà gái",r:"Khách",a:"👥"},
+    {n:"MC",r:"Dẫn CT",a:"🎤"},{n:"Ban nhạc",r:"Âm nhạc",a:"🎵"},
+    {n:"Nhiếp ảnh",r:"Ghi hình",a:"📷"},{n:"Lễ tân",r:"Đón khách & ghi phong bì",a:"📋"}
+   ],
+   rituals:["Cô dâu trang điểm từ sáng sớm","Đón khách, mời nước","MC khai tiệc","Bố mẹ cô dâu phát biểu","Cô dâu chú rể lên sân khấu","Cắt bánh, nâng ly champagne","Đi từng bàn cảm ơn, nhận phong bì","Chụp ảnh từng bàn","Kết thúc, tiễn khách"],
+   tips:["Phân công rõ: ai đón khách, ai ghi phong bì, ai sắp chỗ ngồi","Kiểm tra âm thanh trước 2 tiếng","Chuẩn bị nước, khăn lạnh cho khách","Có kịch bản chi tiết cho MC"]
+  },
+  {
+   name:"🙏 Lễ Gia Tiên Nhà Gái",required:true,
+   desc:"Cô dâu chú rể thắp hương, lạy bàn thờ tổ tiên nhà gái — xin phép tổ tiên.",
+   checklist:[
+    {t:"Chuẩn bị bàn thờ: hoa tươi, nhang, nến, trái cây, xôi",c:300000,ct:"decor"},
+    {t:"Chuẩn bị áo dài truyền thống cho cô dâu (nếu chưa có)",c:0,ct:"clothes"},
+    {t:"Nhang, nến đỏ, đèn cầy",c:50000,ct:"other"},
+    {t:"Mâm cúng gia tiên (xôi, gà, trái cây, rượu, trà)",c:500000,ct:"food"}
+   ],
+   people:[
+    {n:"Cô dâu",r:"Thắp hương",a:"👰"},{n:"Chú rể",r:"Thắp hương",a:"🤵"},
+    {n:"Bố mẹ cô dâu",r:"Hướng dẫn",a:"👫"},{n:"Ông bà",r:"Chứng kiến",a:"👴"}
+   ],
+   rituals:["Bày mâm cúng lên bàn thờ","Bố/mẹ cô dâu thắp nhang khấn vái, xin phép tổ tiên","Cô dâu chú rể quỳ lạy bàn thờ (3 lạy)","Thắp hương, vái","Xin tổ tiên phù hộ cho hôn nhân hạnh phúc"],
+   tips:["Lễ gia tiên thường diễn ra trước tiệc","Cô dâu chú rể cần nghiêm trang","Hỏi bố mẹ cách khấn vái đúng phong tục gia đình"]
+  }
+ ]
+},
+{
+ id:"ruocdau",tab:"🚗 Rước Dâu",title:"Bước 5: Lễ Rước Dâu",icon:"🚗",
+ desc:"Nhà trai đến nhà gái đón cô dâu về nhà chồng — nghi lễ cảm động nhất.",
+ timeline:"Sáng ngày cưới chính thức",
+ ceremonies:[
+  {
+   name:"🚗 Lễ Rước Dâu",required:true,
+   desc:"Nghi thức chính: chú rể đến nhà gái, đón cô dâu về.",
+   checklist:[
+    {t:"Xem giờ xuất hành hoàng đạo",c:200000,ct:"other"},
+    {t:"Xe hoa trang trí hoa tươi",c:3000000,ct:"transport"},
+    {t:"Đoàn xe nhà trai (SỐ CHẴN xe)",c:2000000,ct:"transport"},
+    {t:"Mâm quả rước dâu (nếu nhà gái yêu cầu)",c:3000000,ct:"levat"},
+    {t:"Bó hoa cưới cho cô dâu",c:500000,ct:"flower"},
+    {t:"Phong bì mở cổng + tiền dẫn đường",c:1500000,ct:"other"},
+    {t:"Cô dâu make-up, mặc váy cưới từ sớm",c:3000000,ct:"makeup"},
+    {t:"Vali quần áo cô dâu mang về nhà chồng",c:0,ct:"other"},
+    {t:"Kiểm tra nhẫn cưới (!)",c:0,ct:"other"},
+    {t:"Ô/dù đỏ che cô dâu",c:200000,ct:"other"},
+    {t:"Nhiếp ảnh chụp rước dâu",c:5000000,ct:"photo"},
+    {t:"Phân công ai bưng/bê gì",c:0,ct:"other"}
+   ],
+   levat:[
+    {n:"Mâm lễ (nếu chưa hỏi)",q:"Tùy yêu cầu",c:3000000,nt:"Tùy nhà gái"},
+    {n:"Heo quay",q:"1 con (miền Nam)",c:3000000,nt:"Miền Nam thường có"},
+    {n:"Bó hoa cưới",q:"1 bó đẹp",c:500000,nt:"Hoa hồng / hoa lan"},
+    {n:"Phong bì mở cổng",q:"10-20 phong bì lẻ",c:500000,nt:"Qua 'ải' phù dâu"},
+    {n:"Tiền dẫn đường",q:"1-2 phong bì",c:500000,nt:"Cho người nhà gái dẫn đường"}
+   ],
+   people:[
+    {n:"Chú rể",r:"Đi đón dâu",a:"🤵"},{n:"Cô dâu",r:"Được rước",a:"👰"},
+    {n:"Bố mẹ chú rể",r:"Nhà trai",a:"👫"},{n:"Bố mẹ cô dâu",r:"Tiễn con",a:"👫"},
+    {n:"Phù rể",r:"Hỗ trợ chú rể",a:"🤵"},{n:"Phù dâu",r:"Hỗ trợ cô dâu / Chặn cổng",a:"👧"},
+    {n:"Tài xế xe hoa",r:"Lái xe",a:"🚗"},{n:"Nhiếp ảnh",r:"Ghi hình",a:"📷"}
+   ],
+   rituals:["Nhà trai tập trung, sắp xếp đoàn xe (số CHẴN)","Xuất phát ĐÚNG giờ hoàng đạo","Đến nhà gái — chú rể dẫn đầu vào","Phù dâu CHẶN CỔNG: hỏi đố, đòi phong bì, thử thách vui","Chú rể vượt qua thử thách, vào nhà","Trao hoa cưới cho cô dâu","Hai bên phát biểu","Cô dâu chú rể lạy gia tiên nhà gái","Cô dâu lạy tạ cha mẹ, xin phép về nhà chồng","Mẹ cô dâu dặn dò con gái (khoảnh khắc xúc động 😢)","Cô dâu bước lên xe hoa (KHÔNG quay đầu lại)","Đoàn xe rước dâu (đi đường khác lúc đến)"],
+   tips:["Giữ bình tĩnh khi bị chặn cổng — vui vẻ, hài hước","Chuẩn bị NHIỀU phong bì lẻ các mệnh giá","Cô dâu không nên khóc quá nhiều (theo quan niệm)","Đoàn xe ĐI ĐƯỜNG KHÁC LÚC ĐẾN — không quay lại đường cũ","KHÔNG TRỄ giờ hoàng đạo"]
+  },
+  {
+   name:"🚪 Nghi Thức Chặn Cổng",required:false,
+   desc:"Phù dâu và bạn bè cô dâu chặn cổng, thử thách chú rể — vui nhộn nhưng không quá khó.",
+   checklist:[
+    {t:"Chuẩn bị câu đố vui về cô dâu (sinh nhật, sở thích, kỷ niệm)",c:0,ct:"other"},
+    {t:"Chuẩn bị thử thách nhẹ nhàng (hát, nhảy, chống đẩy...)",c:0,ct:"other"},
+    {t:"Chuẩn bị bảng giá 'phí qua cổng' bằng phong bì",c:0,ct:"other"},
+    {t:"Hẹn trước với phù dâu: không kéo dài quá 15-20 phút",c:0,ct:"other"}
+   ],
+   people:[{n:"Phù dâu",r:"Chặn cổng",a:"👧"},{n:"Bạn gái cô dâu",r:"Phụ chặn",a:"👩"},{n:"Chú rể",r:"Vượt thử thách",a:"🤵"},{n:"Phù rể",r:"Hỗ trợ",a:"🧑"}],
+   rituals:["Phù dâu đứng cổng, chào đoàn nhà trai","Đưa ra thử thách 1: Câu hỏi về cô dâu","Thử thách 2: Hát/nhảy/chống đẩy","Thử thách 3: Phong bì (mặc cả vui)","Chú rể vượt qua → được vào nhà"],
+   tips:["Nên vui nhộn, KHÔNG quá khó đến mức gây khó chịu","Hẹn giờ trước — tránh trễ giờ hoàng đạo","Quay phim lại vì đây là kỷ niệm vui"]
+  },
+  {
+   name:"🙏 Lễ Gia Tiên Trước Khi Đi",required:true,
+   desc:"Cô dâu chú rể lạy bàn thờ tổ tiên nhà gái lần cuối trước khi cô dâu về nhà chồng.",
+   checklist:[
+    {t:"Bàn thờ đã được chuẩn bị từ trước (hoa, nhang, nến)",c:0,ct:"other"},
+    {t:"Cô dâu chú rể thắp hương, lạy 3 lạy",c:0,ct:"other"},
+    {t:"Cô dâu lạy tạ cha mẹ (xin phép về nhà chồng)",c:0,ct:"other"}
+   ],
+   people:[{n:"Cô dâu & chú rể",r:"Thắp hương",a:"💑"},{n:"Bố mẹ cô dâu",r:"Chứng kiến, dặn dò",a:"👫"}],
+   rituals:["Thắp nhang, khấn vái tổ tiên","Lạy bàn thờ 3 lạy","Cô dâu quỳ lạy cha mẹ","Mẹ cô dâu dặn dò, trao quà (nếu có)","Xuất phát về nhà trai"],
+   tips:["Chuẩn bị khăn giấy cho khoảnh khắc xúc động","Nhiếp ảnh nên sẵn sàng"]
+  }
+ ]
+},
+{
+ id:"cuoitrai",tab:"🎊 Cưới Nhà Trai",title:"Bước 6: Lễ Cưới Tại Nhà Trai",icon:"🎊",
+ desc:"Tiệc cưới chính thức — đón cô dâu về nhà trai, ra mắt họ hàng, tiệc linh đình.",
+ timeline:"Ngày cưới chính thức (sau rước dâu)",
+ ceremonies:[
+  {
+   name:"🙏 Lễ Gia Tiên Nhà Trai",required:true,
+   desc:"Cô dâu về đến nhà trai, thắp hương bàn thờ tổ tiên nhà chồng.",
+   checklist:[
+    {t:"Bàn thờ nhà trai trang trí: hoa, nhang, nến, trái cây, xôi",c:500000,ct:"decor"},
+    {t:"Mâm cúng: gà luộc, xôi, trái cây, rượu, trà",c:500000,ct:"food"},
+    {t:"Nhang đèn cầy sẵn sàng",c:50000,ct:"other"}
+   ],
+   people:[
+    {n:"Cô dâu & chú rể",r:"Thắp hương",a:"💑"},
+    {n:"Bố mẹ chú rể",r:"Hướng dẫn khấn",a:"👫"},
+    {n:"Ông bà nhà trai",r:"Chứng kiến",a:"👴"}
+   ],
+   rituals:["Cô dâu bước vào nhà trai (bố mẹ chồng đón ở cửa)","Dẫn cô dâu đến bàn thờ gia tiên","Bố/mẹ chú rể khấn vái, giới thiệu con dâu mới với tổ tiên","Cô dâu chú rể thắp hương, lạy 3 lạy","Rót trà mời ông bà, bố mẹ","Nhận lì xì, lời chúc từ ông bà bố mẹ"],
+   tips:["Cô dâu bước vào nhà bằng chân PHẢI (phong tục)","Nghiêm trang, thành kính","Hỏi trước bố mẹ chồng cách khấn vái"]
+  },
+  {
+   name:"🎊 Tiệc Cưới Chính",required:true,
+   desc:"Tiệc cưới linh đình nhất — đón khách hai họ, trao nhẫn, cắt bánh, tiệc mừng.",
+   checklist:[
+    {t:"Đặt nhà hàng tiệc cưới (xác nhận bàn + dự phòng +10%)",c:25000000,ct:"venue"},
+    {t:"Xác nhận danh sách khách mời (cả 2 bên)",c:0,ct:"other"},
+    {t:"In & gửi thiệp mời (trước 2-3 tuần)",c:2000000,ct:"other"},
+    {t:"Menu tiệc + nước + rượu bia",c:30000000,ct:"food"},
+    {t:"MC chuyên nghiệp",c:3000000,ct:"mc"},
+    {t:"Ban nhạc / DJ / âm thanh ánh sáng",c:8000000,ct:"music"},
+    {t:"Trang trí: sân khấu, backdrop, cổng hoa, bàn gallery, bàn tiệc",c:8000000,ct:"decor"},
+    {t:"Nhiếp ảnh + quay phim trọn gói (pre-wedding + ngày cưới)",c:10000000,ct:"photo"},
+    {t:"Váy cưới chính (soirée) + váy after party",c:8000000,ct:"clothes"},
+    {t:"Vest chú rể (may đo hoặc thuê)",c:3000000,ct:"clothes"},
+    {t:"Make-up & hair stylist CẢ NGÀY",c:5000000,ct:"makeup"},
+    {t:"Nhẫn cưới (cặp)",c:5000000,ct:"ring"},
+    {t:"Sổ ghi phong bì (phân 2-3 người tin cậy)",c:0,ct:"other"},
+    {t:"Quà cho khách (kẹo, socola, thiệp cảm ơn)",c:3000000,ct:"other"},
+    {t:"Bánh cưới nhiều tầng",c:3000000,ct:"food"},
+    {t:"Xe đưa đón khách (nếu cần)",c:2000000,ct:"transport"},
+    {t:"Phòng tân hôn (trang trí, hoa, nến)",c:2000000,ct:"other"},
+    {t:"Kịch bản chương trình chi tiết (từng phút)",c:0,ct:"other"},
+    {t:"Tập first dance (nếu có)",c:1000000,ct:"other"},
+    {t:"Quà cảm ơn bố mẹ hai bên",c:500000,ct:"other"},
+    {t:"Đồ dự phòng: kim chỉ, thuốc đau đầu, keo dán, băng keo",c:100000,ct:"other"}
+   ],
+   people:[
+    {n:"Bố mẹ chú rể",r:"Chủ tiệc",a:"👫"},{n:"Chú rể",r:"Chú rể",a:"🤵"},
+    {n:"Cô dâu",r:"Cô dâu",a:"👰"},{n:"Họ hàng + bạn bè",r:"Khách mời",a:"👥"},
+    {n:"MC",r:"Dẫn CT",a:"🎤"},{n:"Ban nhạc/DJ",r:"Âm nhạc",a:"🎵"},
+    {n:"Nhiếp ảnh & quay phim",r:"Ghi hình",a:"📷"},
+    {n:"Phù dâu & phù rể",r:"Hỗ trợ",a:"👫"},
+    {n:"Lễ tân",r:"Đón khách, phong bì",a:"📋"},
+    {n:"Wedding planner",r:"Điều phối (nếu thuê)",a:"📝"}
+   ],
+   rituals:["Đón khách, sắp chỗ ngồi, phát nước","MC khai tiệc","Bố mẹ chú rể phát biểu chào mừng","Chiếu video tình yêu (nếu có)","Cô dâu chú rể bước lên sân khấu","TRAO NHẪN CƯỚI 💍","Nâng ly champagne","CẮT BÁNH CƯỚI 🎂","Chương trình văn nghệ, games vui","First Dance (cô dâu & chú rể) 💃","Bố con dance / Mẹ con dance (tùy chọn)","Đi từng bàn chúc rượu, cảm ơn, chụp ảnh","TUNG HOA CƯỚI 💐 (cho các cô gái chưa chồng)","Cô dâu thay váy after party (nếu có)","Kết thúc tiệc, tiễn khách","Cô dâu chú rể về phòng tân hôn 🌙"],
+   tips:["Chuẩn bị 2-3 người ghi phong bì TIN CẬY","Kịch bản MC từng phút","Dự phòng thêm 10% số bàn","Kiểm tra toàn bộ âm thanh, ánh sáng, slide trước 3 tiếng","Chuẩn bị thuốc, kim chỉ, keo dán, khăn giấy dự phòng","Uống nước nhiều — cô dâu chú rể dễ kiệt sức"]
+  },
+  {
+   name:"💍 Lễ Trao Nhẫn Cưới",required:true,
+   desc:"Khoảnh khắc thiêng liêng nhất — trao nhẫn cưới trước sự chứng kiến của hai họ.",
+   checklist:[
+    {t:"Nhẫn cưới (cặp) đã sẵn sàng, kiểm tra lần cuối",c:0,ct:"ring"},
+    {t:"Gối nhẫn / hộp nhẫn đẹp",c:200000,ct:"other"},
+    {t:"Phù rể giữ nhẫn an toàn đến phút chót",c:0,ct:"other"}
+   ],
+   people:[{n:"Cô dâu",r:"Nhận nhẫn",a:"👰"},{n:"Chú rể",r:"Trao nhẫn",a:"🤵"},{n:"Phù rể",r:"Giữ nhẫn",a:"🧑"}],
+   rituals:["MC mời cô dâu chú rể lên sân khấu","Phù rể mang gối/hộp nhẫn lên","Chú rể đeo nhẫn cho cô dâu (tay trái, ngón áp út)","Cô dâu đeo nhẫn cho chú rể","Hôn nhau 💋","Khách vỗ tay chúc mừng"],
+   tips:["Thử nhẫn trước — tránh đeo không vào vì ngón tay sưng (nóng, stress)","Phù rể KHÔNG được quên nhẫn 😱","Nhiếp ảnh cần ở vị trí tốt nhất lúc này"]
+  },
+  {
+   name:"🥂 Lễ Rót Rượu & Cắt Bánh",required:false,
+   desc:"Nghi thức phương Tây phổ biến tại Việt Nam — nâng ly champagne và cắt bánh cưới.",
+   checklist:[
+    {t:"Bánh cưới nhiều tầng (đặt trước 1 tuần)",c:0,ct:"food"},
+    {t:"Champagne / rượu vang sâm banh",c:500000,ct:"food"},
+    {t:"Tháp ly champagne (nếu có)",c:300000,ct:"decor"},
+    {t:"Dao cắt bánh trang trí",c:100000,ct:"other"}
+   ],
+   people:[{n:"Cô dâu & chú rể",r:"Cắt bánh & rót rượu",a:"💑"}],
+   rituals:["MC mời cô dâu chú rể đến bàn bánh cưới","Hai người cùng cầm dao, cắt miếng đầu tiên","Cho nhau ăn miếng bánh đầu tiên (ngọt ngào 🥰)","Rót champagne (hoặc đổ tháp ly)","Nâng ly, khách cùng nâng ly chúc mừng"],
+   tips:["Tập cắt bánh trước nếu bánh nhiều tầng","Champagne nên ướp lạnh"]
+  }
+ ]
+}
+],
+budgetCats:[
+ {k:"ring",l:"💍 Nhẫn",p:5,c:"#e74c3c"},
+ {k:"levat",l:"🎁 Lễ vật",p:8,c:"#e67e22"},
+ {k:"venue",l:"🏛️ Nhà hàng & Rạp",p:15,c:"#f39c12"},
+ {k:"food",l:"🍽️ Tiệc & Ăn uống",p:25,c:"#27ae60"},
+ {k:"clothes",l:"👗 Trang phục",p:7,c:"#2980b9"},
+ {k:"photo",l:"📸 Ảnh & Video",p:10,c:"#8e44ad"},
+ {k:"decor",l:"🌸 Trang trí & Hoa",p:7,c:"#e84393"},
+ {k:"makeup",l:"💄 Make-up",p:4,c:"#fd79a8"},
+ {k:"music",l:"🎵 Nhạc & MC",p:5,c:"#00b894"},
+ {k:"transport",l:"🚗 Xe cộ",p:3,c:"#6c5ce7"},
+ {k:"jewelry",l:"💎 Nữ trang",p:8,c:"#fdcb6e"},
+ {k:"flower",l:"💐 Hoa tươi",p:1,c:"#ff6b6b"},
+ {k:"other",l:"📦 Khác & Dự phòng",p:2,c:"#636e72"}
+],
+aiPrompts:[
+ {l:"📋 Kịch bản MC đám cưới",p:"Viết kịch bản MC đám cưới Việt Nam chi tiết từng phút. Gồm: khai tiệc, giới thiệu cô dâu chú rể, trao nhẫn, cắt bánh, nâng ly, games, đi bàn, kết thúc. Phong cách vui tươi, trang trọng."},
+ {l:"🍽️ Menu tiệc cưới 3 mức giá",p:"Gợi ý 3 set menu tiệc cưới Việt Nam: cao cấp, trung bình, tiết kiệm. Mỗi set 8-10 món gồm: khai vị, soup, hải sản, thịt, lẩu/nướng, tráng miệng. Giá mỗi bàn 10 người."},
+ {l:"🎀 Lễ vật 3 miền Bắc-Trung-Nam",p:"Liệt kê chi tiết lễ vật đám hỏi theo 3 miền. Số mâm quả, lễ vật bắt buộc vs tùy chọn, tiền nạp tài, nữ trang. Giải thích ý nghĩa từng món."},
+ {l:"📅 Ngày cưới tốt 2025-2026",p:"Liệt kê ngày tốt tổ chức đám cưới 2025-2026 theo lịch âm. Ngày hoàng đạo, tháng tốt, ngày tránh. Cách chọn ngày theo tuổi cô dâu chú rể."},
+ {l:"💰 20 cách tiết kiệm chi phí",p:"20 cách tiết kiệm chi phí đám cưới Việt Nam mà vẫn sang trọng. Bao gồm: tiệc, decor, ảnh cưới, trang phục, lễ vật, xe."},
+ {l:"📝 Checklist 30 ngày countdown",p:"Checklist chi tiết theo từng tuần từ 30 ngày trước cưới. Mỗi ngày: việc cần làm, ai phụ trách, deadline. Cả việc sau cưới."},
+ {l:"💬 Bài phát biểu bố mẹ",p:"Viết 3 mẫu bài phát biểu cho: bố cô dâu tiễn con, mẹ chú rể đón dâu, bố chú rể khai tiệc. Ngắn gọn, xúc động, trang trọng."},
+ {l:"🎮 Games vui cho tiệc cưới",p:"Gợi ý 10 games vui nhộn cho tiệc cưới Việt Nam. Có cả games cho cô dâu chú rể, games cho khách mời. Luật chơi chi tiết, đạo cụ cần chuẩn bị."}
+]
+};
+
+// ============= STATE =============
+let S;
+const SK='wdp_state_v3';
+function loadS(){
+ try{S=JSON.parse(localStorage.getItem(SK))}catch(e){}
+ if(!S) S={tab:0,stab:{},ck:{},budget:200000000,bo:{},zk:'',air:''};
+}
+function saveS(){
+ try{localStorage.setItem(SK,JSON.stringify(S));showSave()}catch(e){}
+}
+function showSave(){const el=document.getElementById('saveInd');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200)}
+
+// ============= UTILS =============
+const fm=n=>new Intl.NumberFormat('vi-VN').format(Math.round(n));
+const fmS=n=>{
+ if(n>=1e9)return(n/1e9).toFixed(1).replace('.0','')+'tỷ';
+ if(n>=1e6)return(n/1e6).toFixed(1).replace('.0','')+'tr';
+ if(n>=1e3)return(n/1e3).toFixed(0)+'k';
+ return n+'đ';
+};
+
+function getAllCk(){
+ let t=0,d=0;
+ D.steps.forEach(s=>s.ceremonies.forEach((c,ci)=>c.checklist.forEach((_,i)=>{t++;if(S.ck[s.id+'_'+ci+'_'+i])d++})));
+ return{t,d};
+}
+
+// ============= RENDER =============
+function render(){
+ renderSum();renderTabs();renderPanels();
+}
+
+function renderSum(){
+ const{t,d}=getAllCk();
+ const pct=t?Math.round(d/t*100):0;
+ document.getElementById('sg').innerHTML=`
+  <div class="sitem"><div class="n">${D.steps.length}</div><div class="l">Bước chính</div></div>
+  <div class="sitem"><div class="n">${d}/${t}</div><div class="l">Hoàn thành</div></div>
+  <div class="sitem"><div class="n">${fmS(S.budget)}</div><div class="l">Ngân sách</div></div>
+  <div class="sitem"><div class="n">${pct}%</div><div class="l">Tiến độ</div></div>`;
+ document.getElementById('mp').style.width=pct+'%';
+ document.getElementById('mpt').textContent=`${pct}% hoàn thành (${d}/${t} việc)`;
+}
+
+function renderTabs(){
+ const ts=D.steps.map((s,i)=>`<div class="tab${i===S.tab?' a':''}" onclick="sTab(${i})">${s.tab}</div>`);
+ ts.push(`<div class="tab${S.tab===D.steps.length?' a':''}" onclick="sTab(${D.steps.length})">💰 Ngân Sách</div>`);
+ ts.push(`<div class="tab${S.tab===D.steps.length+1?' a':''}" onclick="sTab(${D.steps.length+1})">🤖 AI</div>`);
+ document.getElementById('tabs').innerHTML=ts.join('');
+}
+
+function renderPanels(){
+ let h='';
+ D.steps.forEach((step,si)=>{
+  const act=si===S.tab;
+  h+=`<div class="pnl${act?' a':''}" data-p="${si}">`;
+  // Header
+  let sc=0,sd=0;step.ceremonies.forEach((c,ci)=>c.checklist.forEach((_,i)=>{sc++;if(S.ck[step.id+'_'+ci+'_'+i])sd++}));
+  const sp=sc?Math.round(sd/sc*100):0;
+  h+=`<div class="cd"><h2>${step.icon} ${step.title}</h2><p style="color:var(--text2);font-size:.88rem;margin:3px 0">${step.desc}</p>
+   <span class="bg bg-b">⏰ ${step.timeline}</span>
+   <div class="pbar" style="margin-top:10px"><div class="pfill" style="width:${sp}%"></div></div>
+   <div style="font-size:.75rem;color:#888;text-align:right">${sd}/${sc} (${sp}%)</div></div>`;
+
+  // Sub ceremony tabs
+  const cst=S.stab[step.id]||0;
+  h+=`<div class="stabs">`;
+  step.ceremonies.forEach((c,ci)=>{
+   const req=c.required;
+   h+=`<div class="stab${ci===cst?' a':''}" onclick="sSTab('${step.id}',${ci})">${c.name}${req?'':'<span class="opt">(không bắt buộc)</span>'}</div>`;
+  });
+  h+=`</div>`;
+
+  // Sub panels
+  step.ceremonies.forEach((cer,ci)=>{
+   const cact=ci===cst;
+   h+=`<div class="spnl${cact?' a':''}" data-sp="${step.id}_${ci}">`;
+
+   // Description
+   h+=`<div class="cd"><h2>${cer.name} ${cer.required?'<span class="bg bg-r">BẮT BUỘC</span>':'<span class="bg bg-o">KHÔNG BẮT BUỘC</span>'}</h2>
+    <p style="font-size:.85rem;color:var(--text2);margin:4px 0">${cer.desc}</p></div>`;
+
+   // People
+   if(cer.people?.length){
+    h+=`<div class="cd"><h2>👥 Ai Có Mặt</h2><div class="pgrid">${cer.people.map(p=>`<div class="pp"><div class="av">${p.a}</div><div class="nm">${p.n}</div><div class="rl">${p.r}</div></div>`).join('')}</div></div>`;
+   }
+
+   // Checklist
+   if(cer.checklist?.length){
+    h+=`<div class="cd"><h2>✅ Checklist</h2><ul class="cl">`;
+    cer.checklist.forEach((c,i)=>{
+     const key=step.id+'_'+ci+'_'+i;
+     const dn=S.ck[key]?'d':'';
+     const cb=c.c>0?`<span class="bg bg-gd">${fmS(c.c)}</span>`:'';
+     h+=`<li class="${dn}" onclick="tCk('${key}',this)"><span class="cb"></span><span>${c.t} ${cb}</span></li>`;
+    });
+    h+=`</ul></div>`;
+   }
+
+   // Lễ vật
+   if(cer.levat?.length){
+    const tl=cer.levat.reduce((a,b)=>a+b.c,0);
+    h+=`<div class="cd"><h2>🎁 Lễ Vật Chi Tiết</h2>
+     <div class="nt nt-y">Tổng ước tính: <strong>${fm(tl)}đ</strong></div>
+     <table class="tb"><thead><tr><th>Lễ vật</th><th>SL</th><th>Chi phí</th><th>Ghi chú</th></tr></thead><tbody>
+     ${cer.levat.map(l=>`<tr><td><strong>${l.n}</strong></td><td>${l.q}</td><td class="c">${l.c?fm(l.c)+'đ':'Thỏa thuận'}</td><td style="font-size:.78rem;color:#888">${l.nt}</td></tr>`).join('')}
+     </tbody></table></div>`;
+   }
+
+   // Rituals
+   if(cer.rituals?.length){
+    h+=`<div class="cd"><h2>🎎 Trình Tự Nghi Thức</h2><div class="tl">`;
+    cer.rituals.forEach((r,ri)=>{h+=`<div class="ti"><div class="tt">Bước ${ri+1}</div><div class="td">${r}</div></div>`});
+    h+=`</div></div>`;
+   }
+
+   // Tips
+   if(cer.tips?.length){
+    h+=`<div class="cd"><h2>💡 Mẹo & Lưu Ý</h2>${cer.tips.map(t=>`<div class="nt nt-g">💡 ${t}</div>`).join('')}</div>`;
+   }
+
+   h+=`</div>`; // spnl
+  });
+
+  h+=`</div>`; // pnl
+ });
+
+ // Budget panel
+ h+=renderBudget();
+
+ // AI panel
+ h+=renderAI();
+
+ document.getElementById('panels').innerHTML=h;
+}
+
+function renderBudget(){
+ const idx=D.steps.length;
+ const act=idx===S.tab;
+ let h=`<div class="pnl${act?' a':''}" data-p="${idx}">`;
+ h+=`<div class="cd"><h2>💰 Ngân Sách Tổng Thể</h2>
+  <p style="font-size:.83rem;color:var(--text2)">Nhập tổng ngân sách → hệ thống tự phân bổ theo tỷ lệ chuẩn</p>
+  <input type="text" class="binp" id="bi" value="${fm(S.budget)}" oninput="uBud(this)" onfocus="this.select()">
+  <div class="bquick">Nhanh: <span onclick="sBud(100000000)">100tr</span>|<span onclick="sBud(150000000)">150tr</span>|<span onclick="sBud(200000000)">200tr</span>|<span onclick="sBud(300000000)">300tr</span>|<span onclick="sBud(500000000)">500tr</span>|<span onclick="sBud(1000000000)">1tỷ</span></div>`;
+
+ D.budgetCats.forEach(cat=>{
+  const p=S.bo[cat.k]!==undefined?S.bo[cat.k]:cat.p;
+  const a=S.budget*p/100;
+  h+=`<div class="brow"><span class="bcat">${cat.l}</span>
+   <div style="display:flex;align-items:center;gap:6px">
+    <input type="number" class="bedit" value="${p}" min="0" max="100" onchange="uCat('${cat.k}',this.value)">
+    <span class="bpct">%</span>
+    <span class="bamt">${fmS(a)}</span>
+   </div></div>
+  <div class="bbar"><div class="bfill" style="width:${p}%;background:${cat.c}"></div></div>`;
+ });
+
+ let up=D.budgetCats.reduce((a,c)=>a+(S.bo[c.k]!==undefined?S.bo[c.k]:c.p),0);
+ let ua=S.budget*up/100;
+ h+=`<div style="margin-top:10px;padding:12px;background:#f8f8f8;border-radius:10px;text-align:center">
+  <div style="font-size:.85rem">Phân bổ: <strong>${up}%</strong> = <strong style="color:var(--pri)">${fm(ua)}đ</strong></div>
+  <div style="font-size:.85rem;color:${S.budget-ua>=0?'var(--green)':'var(--pri)'}">Còn lại: <strong>${fm(S.budget-ua)}đ</strong></div></div>`;
+
+ h+=`<h3 style="margin-top:14px">📊 Ước Tính Theo Bước</h3>`;
+ D.steps.forEach(step=>{
+  let sc=0;
+  step.ceremonies.forEach(c=>{c.checklist.forEach(x=>sc+=x.c);if(c.levat)c.levat.forEach(l=>sc+=l.c)});
+  const pct=S.budget>0?Math.round(sc/S.budget*100):0;
+  h+=`<div class="brow"><span class="bcat">${step.icon} ${step.tab.replace(/[^\w\s\u00C0-\u024F\u1E00-\u1EFF]/g,'').trim()}</span><span class="bamt">${fmS(sc)} <span class="bpct">(${pct}%)</span></span></div>`;
+ });
+
+ h+=`</div></div>`;
+ return h;
+}
+
+function renderAI(){
+ const idx=D.steps.length+1;
+ const act=idx===S.tab;
+ let h=`<div class="pnl${act?' a':''}" data-p="${idx}">`;
+ h+=`<div class="ai"><h2>🤖 AI Hỗ Trợ Đám Cưới (Z.AI)</h2>
+  <p style="font-size:.82rem;opacity:.65;margin:3px 0">Dùng AI tạo kịch bản, gợi ý menu, lễ vật, ngày cưới và nhiều hơn nữa</p>
+  <h3 style="font-size:.88rem;margin-top:12px">🔑 API Key (lưu localStorage)</h3>
+  <input type="password" class="ai-key" id="zki" placeholder="Nhập ZAI API Key (bigmodel.cn)..." value="${S.zk}" onchange="sZk(this.value)">
+  <div style="font-size:.7rem;opacity:.5;margin:2px 0">Model: glm-4-flash | Endpoint: open.bigmodel.cn</div>
+  <h3 style="font-size:.88rem;margin-top:10px">⚡ Gợi Ý Nhanh</h3>
+  <div class="ai-btns">${D.aiPrompts.map((p,i)=>`<button class="ai-btn ai-sec" onclick="rAI(${i})">${p.l}</button>`).join('')}</div>
+  <h3 style="font-size:.88rem;margin-top:10px">✍️ Câu Hỏi Tùy Chỉnh</h3>
+  <textarea class="ai-inp" id="aip" placeholder="VD: Gợi ý nhà hàng tiệc cưới ở Sài Gòn dưới 2 triệu/bàn..."></textarea>
+  <div class="ai-btns">
+   <button class="ai-btn ai-pri" onclick="rCA()">🚀 Gửi AI</button>
+   <button class="ai-btn ai-sec" onclick="cAI()">🗑️ Xóa</button>
+  </div>
+  <div class="ai-res" id="air" style="display:${S.air?'block':'none'}">${S.air?fmtAI(S.air):''}</div>
+ </div>`;
+
+ h+=`<div class="cd"><h2>📖 Hướng Dẫn</h2>
+  <div class="nt nt-b"><strong>B1:</strong> Nhập API Key từ <a href="https://open.bigmodel.cn" target="_blank" style="color:var(--blue)">open.bigmodel.cn</a><br>
+  <strong>B2:</strong> Chọn gợi ý nhanh hoặc nhập câu hỏi<br>
+  <strong>B3:</strong> AI trả lời dựa trên prompt tối ưu cho đám cưới VN</div>
+  <div class="nt nt-g">💡 API Key được lưu trong localStorage — không cần nhập lại.</div>
+  <div class="nt nt-y">⚠️ Mỗi lần gọi tốn token. Đảm bảo key có đủ quota.</div></div>`;
+
+ h+=`</div>`;
+ return h;
+}
+
+// ============= ACTIONS =============
+function sTab(i){S.tab=i;saveS();renderTabs();document.querySelectorAll('.pnl').forEach((p,pi)=>p.classList.toggle('a',pi===i));window.scrollTo({top:document.getElementById('tabs').offsetTop-8,behavior:'smooth'})}
+
+function sSTab(sid,ci){
+ S.stab[sid]=ci;saveS();
+ // Toggle sub panels for this step
+ const stepIdx=D.steps.findIndex(s=>s.id===sid);
+ const pnl=document.querySelectorAll('.pnl')[stepIdx];
+ if(!pnl)return;
+ pnl.querySelectorAll('.stab').forEach((t,i)=>t.classList.toggle('a',i===ci));
+ pnl.querySelectorAll('.spnl').forEach((p,i)=>p.classList.toggle('a',i===ci));
+}
+
+function tCk(k,el){S.ck[k]=!S.ck[k];el.classList.toggle('d');saveS();renderSum()}
+
+function uBud(el){const v=el.value.replace(/\D/g,'');S.budget=parseInt(v)||0;el.value=fm(S.budget);saveS();/* Don't re-render full, just save */}
+function sBud(v){S.budget=v;saveS();render();sTab(S.tab)}
+function uCat(k,v){S.bo[k]=parseFloat(v)||0;saveS()}
+
+function sZk(v){S.zk=v.trim();saveS()}
+
+function fmtAI(t){
+ return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+  .replace(/^### (.*$)/gm,'<h4 style="color:var(--gold);margin:8px 0 3px">$1</h4>')
+  .replace(/^## (.*$)/gm,'<h3 style="color:var(--gold);margin:10px 0 4px">$1</h3>')
+  .replace(/^# (.*$)/gm,'<h2 style="color:var(--gold2);margin:12px 0 5px">$1</h2>')
+  .replace(/^[-*] (.*$)/gm,'<div style="padding:1px 0 1px 10px;border-left:2px solid rgba(255,255,255,.12)">• $1</div>')
+  .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+}
+
+async function callAI(prompt){
+ if(!S.zk){alert('Vui lòng nhập ZAI API Key!');return}
+ const r=document.getElementById('air');
+ r.style.display='block';
+ r.innerHTML='<div class="ai-ld">🤖 AI đang xử lý<span class="dots"></span></div>';
+ const sys=`Bạn là chuyên gia tư vấn đám cưới Việt Nam 20 năm kinh nghiệm. Hiểu rõ phong tục 3 miền Bắc-Trung-Nam. Trả lời chi tiết, thực tế, có số liệu & giá VNĐ. Format rõ ràng: tiêu đề ##, gạch đầu dòng -, bold **. Ngân sách khách: ${fmS(S.budget)}.`;
+ try{
+  const res=await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions',{
+   method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+S.zk},
+   body:JSON.stringify({model:'glm-4-flash',messages:[{role:'system',content:sys},{role:'user',content:prompt}],max_tokens:2000,temperature:.7})
+  });
+  if(!res.ok)throw new Error(`API ${res.status}: ${await res.text()}`);
+  const d=await res.json();
+  const txt=d.choices?.[0]?.message?.content||'Không nhận được phản hồi.';
+  S.air=txt;r.innerHTML=fmtAI(txt);saveS();
+ }catch(e){r.innerHTML=`<div style="color:#ff6b6b">❌ ${e.message}</div><div style="font-size:.78rem;opacity:.6;margin-top:6px">Kiểm tra API Key & kết nối mạng.</div>`}
+}
+
+function rAI(i){const p=D.aiPrompts[i];document.getElementById('aip').value=p.p;callAI(p.p)}
+function rCA(){const p=document.getElementById('aip').value.trim();if(!p){alert('Nhập câu hỏi!');return}callAI(p)}
+function cAI(){S.air='';const r=document.getElementById('air');if(r){r.style.display='none';r.innerHTML=''}saveS()}
+
+// ============= INIT =============
+loadS();render();sTab(S.tab);
 </script>
 </body>
 </html>
