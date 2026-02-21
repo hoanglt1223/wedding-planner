@@ -22,7 +22,7 @@ export function ScrollableTabBar({
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
 
-  const checkArrows = useCallback(() => {
+  const checkOverflow = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
     setShowLeft(el.scrollLeft > 4);
@@ -32,15 +32,15 @@ export function ScrollableTabBar({
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    checkArrows();
-    el.addEventListener("scroll", checkArrows, { passive: true });
-    const ro = new ResizeObserver(checkArrows);
+    checkOverflow();
+    el.addEventListener("scroll", checkOverflow, { passive: true });
+    const ro = new ResizeObserver(checkOverflow);
     ro.observe(el);
     return () => {
-      el.removeEventListener("scroll", checkArrows);
+      el.removeEventListener("scroll", checkOverflow);
       ro.disconnect();
     };
-  }, [checkArrows, tabs.length]);
+  }, [checkOverflow, tabs.length]);
 
   // Scroll active tab into view on mount / tab change
   useEffect(() => {
@@ -52,64 +52,60 @@ export function ScrollableTabBar({
     }
   }, [activeIndex]);
 
-  const scroll = (dir: -1 | 1) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 160, behavior: "smooth" });
-  };
-
   const isPill = variant === "pill";
 
   const activeClass = isPill
-    ? "bg-red-700 text-white"
+    ? "bg-white shadow-sm text-foreground font-semibold"
     : "bg-red-700 text-white border-red-700";
   const inactiveClass = isPill
-    ? "bg-white text-gray-600 hover:bg-red-50 shadow-sm"
+    ? "text-muted-foreground hover:text-foreground hover:bg-muted"
     : "bg-white border-amber-200 hover:border-red-300";
   const baseClass = isPill
-    ? "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap"
-    : "shrink-0 px-3 py-2 rounded-lg border-2 text-xs font-semibold transition-colors whitespace-nowrap";
+    ? "flex-shrink-0 snap-start px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap"
+    : "shrink-0 snap-start px-3 py-2 rounded-lg border-2 text-xs font-semibold transition-colors whitespace-nowrap";
+
+  const scrollContainer = (
+    <div
+      ref={scrollRef}
+      className={`flex gap-1 overflow-x-auto no-scrollbar scrollbar-hide ${isPill ? "snap-x snap-mandatory p-1" : "pb-2 mb-2"}`}
+    >
+      {tabs.map((tab, i) => (
+        <button
+          key={i}
+          onClick={() => onTabChange(i)}
+          className={`${baseClass} ${i === activeIndex ? activeClass : inactiveClass}`}
+        >
+          {tab.label}
+          {tab.suffix && (
+            <span className="ml-1 text-[0.6rem] opacity-70">{tab.suffix}</span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="relative flex items-center">
-      {/* Left arrow */}
-      {showLeft && (
-        <button
-          onClick={() => scroll(-1)}
-          className="absolute left-0 z-10 w-7 h-7 flex items-center justify-center rounded-full bg-white/90 shadow-md border border-gray-200 text-gray-500 hover:text-red-700 hover:bg-white transition-colors -ml-1"
-          aria-label="Scroll left"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-      )}
-
-      <div
-        ref={scrollRef}
-        className={`flex gap-1${isPill ? ".5" : ""} overflow-x-auto pb-1 ${isPill ? "" : "pb-2 mb-2"} no-scrollbar scrollbar-hide flex-1 ${showLeft ? "ml-6" : ""} ${showRight ? "mr-6" : ""}`}
-      >
-        {tabs.map((tab, i) => (
-          <button
-            key={i}
-            onClick={() => onTabChange(i)}
-            className={`${baseClass} ${i === activeIndex ? activeClass : inactiveClass}`}
-          >
-            {tab.label}
-            {tab.suffix && (
-              <span className="ml-1 text-[0.6rem] opacity-70">{tab.suffix}</span>
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Right arrow */}
-      {showRight && (
-        <button
-          onClick={() => scroll(1)}
-          className="absolute right-0 z-10 w-7 h-7 flex items-center justify-center rounded-full bg-white/90 shadow-md border border-gray-200 text-gray-500 hover:text-red-700 hover:bg-white transition-colors -mr-1"
-          aria-label="Scroll right"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
+    <div className="relative">
+      {isPill ? (
+        <div className="bg-muted/50 rounded-lg">
+          {scrollContainer}
+          {showLeft && (
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-background to-transparent rounded-l-lg" />
+          )}
+          {showRight && (
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background to-transparent rounded-r-lg" />
+          )}
+        </div>
+      ) : (
+        <>
+          {scrollContainer}
+          {showLeft && (
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-background to-transparent" />
+          )}
+          {showRight && (
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background to-transparent" />
+          )}
+        </>
       )}
     </div>
   );

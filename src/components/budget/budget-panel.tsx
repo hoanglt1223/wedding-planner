@@ -71,50 +71,64 @@ export function BudgetPanel({
           ))}
         </div>
 
-        <div>
-          {BUDGET_CATEGORIES.map((cat) => {
-            const pct = categoryOverrides[cat.key] ?? cat.percentage;
-            const amount = budget * pct / 100;
-            return (
-              <BudgetCategoryRow
-                key={cat.key}
-                category={cat}
-                percentage={pct}
-                amount={amount}
-                expense={expenses[cat.key] || 0}
-                onChange={onSetCategoryPercent}
-                onExpenseChange={onSetExpense}
-              />
-            );
-          })}
-        </div>
+        {budget === 0 ? (
+          <div className="flex flex-col items-center py-8 text-center">
+            <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center mb-3">
+              <span className="text-3xl">💰</span>
+            </div>
+            <h3 className="text-base font-semibold mb-1">Thiết lập ngân sách cưới</h3>
+            <p className="text-sm text-muted-foreground max-w-xs mb-3">
+              Chọn mức ngân sách để xem phân bổ chi phí hợp lý
+            </p>
+          </div>
+        ) : (
+          <>
+            <div>
+              {BUDGET_CATEGORIES.map((cat) => {
+                const pct = categoryOverrides[cat.key] ?? cat.percentage;
+                const amount = budget * pct / 100;
+                return (
+                  <BudgetCategoryRow
+                    key={cat.key}
+                    category={cat}
+                    percentage={pct}
+                    amount={amount}
+                    expense={expenses[cat.key] || 0}
+                    onChange={onSetCategoryPercent}
+                    onExpenseChange={onSetExpense}
+                  />
+                );
+              })}
+            </div>
 
-        <div className="mt-2 p-2.5 bg-gray-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem] leading-relaxed">
-          Tổng:{" "}
-          <b className={overBudget ? "text-red-500" : ""}>{totalPct}%</b>
-          {" = "}
-          <b className="text-[#c0392b]">{formatMoney(totalAllocated)}đ</b>
-          <br className="sm:hidden" />
-          <span className="hidden sm:inline">{" | "}</span>
-          <span className="sm:hidden"> </span>
-          Còn:{" "}
-          <b className={remaining >= 0 ? "text-green-600" : "text-red-500"}>
-            {formatMoney(remaining)}đ
-          </b>
-        </div>
-        <div className="mt-1 p-2.5 bg-amber-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem]">
-          Đã chi:{" "}
-          <b className={totalExpenses > budget ? "text-red-500" : "text-amber-600"}>
-            {formatMoney(totalExpenses)}đ
-          </b>
-          {" / "}
-          <b>{formatMoney(budget)}đ</b>
-          {totalExpenses > 0 && budget > 0 && (
-            <span className="ml-1 text-[0.72rem]">
-              ({Math.round((totalExpenses / budget) * 100)}%)
-            </span>
-          )}
-        </div>
+            <div className="mt-2 p-2.5 bg-gray-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem] leading-relaxed">
+              Tổng:{" "}
+              <b className={overBudget ? "text-red-500" : ""}>{totalPct}%</b>
+              {" = "}
+              <b className="text-[#c0392b]">{formatMoney(totalAllocated)}đ</b>
+              <br className="sm:hidden" />
+              <span className="hidden sm:inline">{" | "}</span>
+              <span className="sm:hidden"> </span>
+              Còn:{" "}
+              <b className={remaining >= 0 ? "text-green-600" : "text-red-500"}>
+                {formatMoney(remaining)}đ
+              </b>
+            </div>
+            <div className="mt-1 p-2.5 bg-amber-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem]">
+              Đã chi:{" "}
+              <b className={totalExpenses > budget ? "text-red-500" : "text-amber-600"}>
+                {formatMoney(totalExpenses)}đ
+              </b>
+              {" / "}
+              <b>{formatMoney(budget)}đ</b>
+              {totalExpenses > 0 && budget > 0 && (
+                <span className="ml-1 text-[0.72rem]">
+                  ({Math.round((totalExpenses / budget) * 100)}%)
+                </span>
+              )}
+            </div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

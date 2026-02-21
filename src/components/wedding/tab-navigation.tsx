@@ -18,7 +18,7 @@ export function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
       tabs={tabs}
       activeIndex={activeTab}
       onTabChange={onTabChange}
-      variant="box"
+      variant="pill"
     />
   );
 }

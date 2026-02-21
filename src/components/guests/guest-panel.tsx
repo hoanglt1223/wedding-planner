@@ -71,9 +71,11 @@ export function GuestPanel({
         <CardTitle className="text-base">👥 Khách Mời ({guests.length})</CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        <div className="text-sm bg-blue-50 text-blue-800 rounded px-3 py-1">
-          Trai: <b>{traiCount}</b> | Gái: <b>{gaiCount}</b> | Bàn ≈ <b>{tableCount}</b>
-        </div>
+        {guests.length > 0 && (
+          <div className="text-sm bg-blue-50 text-blue-800 rounded px-3 py-1">
+            Trai: <b>{traiCount}</b> | Gái: <b>{gaiCount}</b> | Bàn ≈ <b>{tableCount}</b>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-1 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
           <Input
@@ -156,6 +158,18 @@ export function GuestPanel({
             >
               🪑 Sơ đồ bàn
             </button>
+          </div>
+        )}
+
+        {guests.length === 0 && (
+          <div className="flex flex-col items-center py-10 text-center">
+            <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center mb-3">
+              <span className="text-3xl">👥</span>
+            </div>
+            <h3 className="text-base font-semibold mb-1">Thêm khách mời đầu tiên</h3>
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Nhập tên khách ở form bên trên để bắt đầu danh sách mời
+            </p>
           </div>
         )}
 
