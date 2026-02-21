@@ -43,6 +43,12 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+    /* Wedding planner custom colors */
+    --color-wedding-red: #c0392b;
+    --color-wedding-gold: #d4a843;
+    --color-wedding-bg: #fdf6f0;
+    --color-wedding-green: #27ae60;
+    --color-wedding-blue: #2980b9;
 }
 
 :root {
@@ -120,5 +126,46 @@
     }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     }
+}
+
+/* === Wedding Planner Custom Styles === */
+
+/* Hide scrollbar for tab navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fade-in animation for panel transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Print styles */
+@media print {
+  .no-print,
+  [data-print-hide] {
+    display: none !important;
+  }
+  .print-show {
+    display: block !important;
+  }
+  body {
+    background: white !important;
+    font-size: 11px !important;
+  }
+  .print-clean {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+  }
 }

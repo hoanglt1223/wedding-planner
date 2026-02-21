@@ -1,0 +1,89 @@
+import type { CoupleInfo } from "@/types/wedding";
+import { BACKGROUNDS } from "@/data/backgrounds";
+import { CoupleInfoForm } from "./couple-info-form";
+import { BackgroundGrid } from "./background-grid";
+import { InvitationGrid } from "./invitation-grid";
+
+const fmDs = (d: string) =>
+  d
+    ? new Date(d).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+    : "__.__.____";
+
+const fmD = (d: string) =>
+  d
+    ? new Date(d).toLocaleDateString("vi-VN", {
+        weekday: "long",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+    : "...";
+
+const getInviteMsg = (eventName: string) => {
+  if (eventName === "Tiệc Cưới") return "Trân trọng kính mời quý khách đến chung vui";
+  if (eventName === "Đám Hỏi") return "Kính mời quý khách đến dự lễ đính hôn";
+  return "Kính mời quý khách đến dự buổi lễ";
+};
+
+interface CardsPanelProps {
+  info: CoupleInfo;
+  onUpdateInfo: (field: string, value: string) => void;
+}
+
+export function CardsPanel({ info, onUpdateInfo }: CardsPanelProps) {
+  const events = [
+    { n: "Dạm Ngõ", d: info.dDN },
+    { n: "Đám Hỏi", d: info.dDH },
+    { n: "Tiệc Cưới", d: info.date },
+  ];
+
+  return (
+    <div className="space-y-4 p-4">
+      {/* Header + couple form */}
+      <div className="rounded-xl bg-white/5 p-4 shadow">
+        <h2 className="mb-1 text-lg font-bold">🖼️ Background &amp; 💌 Thiệp Mời</h2>
+        <p className="mb-3 text-xs text-muted-foreground">
+          10 mẫu cho mỗi lễ — xu hướng 2025: minimalist, pastel, ép kim, font thanh mảnh
+        </p>
+        <CoupleInfoForm info={info} onUpdateInfo={onUpdateInfo} />
+      </div>
+
+      {/* Events */}
+      {events.map((ev) => (
+        <div key={ev.n} className="space-y-3">
+          {/* Background cards */}
+          <div className="rounded-xl bg-white/5 p-4 shadow">
+            <h2 className="mb-3 text-base font-bold">🖼️ Background — {ev.n}</h2>
+            <BackgroundGrid
+              eventName={ev.n}
+              date={fmDs(ev.d)}
+              groom={info.groom}
+              bride={info.bride}
+              groomFamily={info.gf}
+              brideFamily={info.bf}
+              backgrounds={BACKGROUNDS}
+            />
+          </div>
+
+          {/* Invitation cards */}
+          <div className="rounded-xl bg-white/5 p-4 shadow">
+            <h2 className="mb-3 text-base font-bold">💌 Thiệp — {ev.n}</h2>
+            <InvitationGrid
+              dateFull={fmD(ev.d)}
+              groom={info.groom}
+              bride={info.bride}
+              groomFamily={info.gf}
+              brideFamily={info.bf}
+              invitationMessage={getInviteMsg(ev.n)}
+              backgrounds={BACKGROUNDS}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

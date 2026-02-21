@@ -1,0 +1,86 @@
+import type { Ceremony } from "@/types/wedding";
+
+// Ceremonies 1-2 for Step 6: Cuoi Trai
+export const CERS_CUOI_TRAI_A: Ceremony[] = [
+  {
+    nm: "🙏 Gia Tiên Nhà Trai",
+    req: 1,
+    desc: "Cô dâu thắp hương nhà chồng.",
+    cl: [{ t: "Bàn thờ + mâm cúng", c: 1000000, k: "food" }],
+    pp: [
+      { n: "Cô dâu & chú rể", r: "", a: "💑" },
+      { n: "Bố mẹ chú rể", r: "Hướng dẫn", a: "👫" },
+    ],
+    ri: ["Đón cô dâu ở cửa", "Dẫn đến bàn thờ", "Lạy 3 lạy", "Rót trà, nhận lì xì"],
+    tp: ["Bước vào chân PHẢI"],
+  },
+  {
+    nm: "🎊 Tiệc Chính",
+    req: 1,
+    desc: "Tiệc linh đình nhất.",
+    cl: [
+      { t: "Nhà hàng (+10% dự phòng)", c: 25000000, k: "venue" },
+      { t: "Thiệp mời", c: 2000000, k: "other" },
+      { t: "Menu + rượu bia", c: 30000000, k: "food" },
+      { t: "MC + nhạc + âm thanh", c: 11000000, k: "mc" },
+      { t: "Trang trí toàn bộ", c: 8000000, k: "decor" },
+      { t: "Ảnh + video trọn gói", c: 10000000, k: "photo" },
+      { t: "Váy cưới + after party", c: 8000000, k: "clothes" },
+      { t: "Vest chú rể", c: 3000000, k: "clothes" },
+      { t: "Makeup cả ngày", c: 5000000, k: "makeup" },
+      { t: "Nhẫn cưới cặp", c: 5000000, k: "ring" },
+      { t: "Quà cho khách", c: 3000000, k: "other" },
+      { t: "Bánh cưới", c: 3000000, k: "food" },
+      { t: "Phòng tân hôn", c: 2000000, k: "other" },
+    ],
+    pp: [
+      { n: "MC", r: "", a: "🎤" },
+      { n: "Nhiếp ảnh", r: "", a: "📷" },
+      { n: "Phù dâu phù rể", r: "", a: "👫" },
+      { n: "Lễ tân", r: "Phong bì", a: "📋" },
+    ],
+    ri: [
+      "Đón khách",
+      "MC khai tiệc",
+      "Bố mẹ phát biểu",
+      "Cô dâu chú rể lên sân khấu",
+      "TRAO NHẪN 💍",
+      "Nâng ly, CẮT BÁNH 🎂",
+      "Văn nghệ, Games",
+      "First dance 💃",
+      "Đi bàn chúc rượu",
+      "TUNG HOA 💐",
+      "Tiễn khách",
+      "Phòng tân hôn 🌙",
+    ],
+    tp: [
+      "2-3 người ghi phong bì TIN CẬY",
+      "Kịch bản MC từng phút",
+      "Kiểm tra âm thanh trước 3h",
+    ],
+  },
+  {
+    nm: "💍 Trao Nhẫn",
+    req: 1,
+    desc: "Trao nhẫn cưới.",
+    cl: [
+      { t: "Nhẫn sẵn sàng", c: 0, k: "ring" },
+      { t: "Gối/hộp nhẫn đẹp", c: 200000, k: "other" },
+    ],
+    pp: [{ n: "Cô dâu & chú rể", r: "", a: "💑" }],
+    ri: ["MC mời lên", "Trao nhẫn lẫn nhau", "Hôn 💋"],
+    tp: ["Thử nhẫn trước!"],
+  },
+  {
+    nm: "🥂 Cắt Bánh & Rượu",
+    req: 0,
+    desc: "Nâng ly champagne, cắt bánh.",
+    cl: [
+      { t: "Champagne ướp lạnh", c: 500000, k: "food" },
+      { t: "Tháp ly (nếu có)", c: 300000, k: "decor" },
+    ],
+    pp: [{ n: "Cô dâu & chú rể", r: "", a: "💑" }],
+    ri: ["Cắt bánh", "Cho nhau ăn 🥰", "Nâng ly"],
+    tp: ["Tập cắt trước nếu bánh nhiều tầng"],
+  },
+];

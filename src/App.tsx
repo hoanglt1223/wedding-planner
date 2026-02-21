@@ -1,43 +1,55 @@
-import { RootLayout } from "@/components/layout/root-layout";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useRef, useState } from "react";
+import { useWeddingStore } from "@/hooks/use-wedding-store";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { Topbar } from "@/components/layout/topbar";
+import { SaveToast } from "@/components/wedding/save-toast";
+import { PageRouter } from "@/pages/page-router";
 
 function App() {
+  const store = useWeddingStore();
+  const { state } = store;
+  const progress = store.getProgress();
+
+  const [showSave, setShowSave] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const mountRef = useRef(false);
+
+  // Show brief save toast on state changes (skip initial mount)
+  useEffect(() => {
+    if (!mountRef.current) {
+      mountRef.current = true;
+      return;
+    }
+    setShowSave(true); // eslint-disable-line react-hooks/set-state-in-effect
+    timerRef.current = setTimeout(() => setShowSave(false), 1200);
+    return () => clearTimeout(timerRef.current);
+  }, [state]);
+
+  const handleGoAI = (hint: string) => {
+    void hint;
+    store.setPage("ai");
+  };
+
   return (
-    <RootLayout>
-      <div className="container mx-auto px-4 py-16">
-        <div className="mx-auto max-w-2xl text-center">
-          <Badge variant="secondary" className="mb-4">
-            Under Construction
-          </Badge>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight">
-            Wedding Planner
-          </h2>
-          <p className="mb-8 text-lg text-muted-foreground">
-            Your perfect day, perfectly planned.
-          </p>
-          <Card>
-            <CardHeader>
-              <CardTitle>Getting Started</CardTitle>
-              <CardDescription>
-                This scaffold is ready for development.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex justify-center gap-4">
-              <Button>Get Started</Button>
-              <Button variant="outline">Learn More</Button>
-            </CardContent>
-          </Card>
-        </div>
+    <div className="min-h-screen bg-[#fdf6f0] text-[#2c1810]">
+      <Header
+        progressPct={progress.pct}
+        done={progress.done}
+        total={progress.total}
+      />
+      <Topbar activePage={state.page} onPageChange={store.setPage} />
+      <div className="max-w-[920px] mx-auto px-2 pt-2">
+        <PageRouter
+          state={state}
+          store={store}
+          progress={progress}
+          onGoAI={handleGoAI}
+        />
       </div>
-    </RootLayout>
+      <Footer />
+      <SaveToast visible={showSave} />
+    </div>
   );
 }
 

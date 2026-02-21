@@ -1,5 +1,5 @@
 export default {
-  async fetch(_request: Request): Promise<Response> {
+  async fetch(): Promise<Response> {
     const checks: Record<string, string> = {
       status: "ok",
       timestamp: new Date().toISOString(),
