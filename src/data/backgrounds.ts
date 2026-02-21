@@ -100,4 +100,5 @@ export const DEFAULT_STATE: WeddingState = {
   photos: [],
   photoIdCounter: 0,
   lang: "vi",
+  partyTime: "noon",
 };

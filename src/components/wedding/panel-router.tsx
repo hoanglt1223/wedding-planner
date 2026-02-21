@@ -30,6 +30,8 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onSubTabChange={store.setSubTab}
         onToggleCheck={store.toggleCheck}
         onGoAI={onGoAI}
+        partyTime={state.partyTime}
+        onSetPartyTime={store.setPartyTime}
       />
     );
   }

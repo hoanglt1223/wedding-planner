@@ -4,6 +4,7 @@ const V7_KEY = "wp_v7";
 const V8_KEY = "wp_v8";
 const V9_KEY = "wp_v9";
 const V10_KEY = "wp_v10";
+const V11_KEY = "wp_v11";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -53,12 +54,27 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * v7→v8: Added `page` field, remaps old tab indices.
  * v8→v9: Renamed abbreviated property keys to descriptive English names.
  * v9→v10: Renamed Vietnamese page/step/budget IDs to English.
+ * v10→v11: Added `partyTime` field for noon/afternoon toggle.
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
   // Already on latest
-  if (localStorage.getItem(V10_KEY)) return;
+  if (localStorage.getItem(V11_KEY)) return;
 
+  // v10→v11 migration: add partyTime
+  const v10Raw = localStorage.getItem(V10_KEY);
+  if (v10Raw) {
+    try {
+      const v10Data = JSON.parse(v10Raw);
+      const v11Data = { ...v10Data, partyTime: v10Data.partyTime ?? "noon" };
+      localStorage.setItem(V11_KEY, JSON.stringify(v11Data));
+    } catch {
+      // Corrupt data — ignore
+    }
+    return;
+  }
+
+  // Legacy migrations below (v7→v8→v9→v10→v11)
   // Try v8 first, then v7
   let raw = localStorage.getItem(V8_KEY);
   let needsV7Migration = false;
@@ -160,7 +176,9 @@ export function migrateState(): void {
       expenses: remapBudgetKeys((v9Data.expenses as Record<string, unknown>) ?? {}),
     };
 
-    localStorage.setItem(V10_KEY, JSON.stringify(v10Data));
+    // v10→v11: add partyTime
+    const v11Data = { ...v10Data, partyTime: "noon" };
+    localStorage.setItem(V11_KEY, JSON.stringify(v11Data));
   } catch {
     // Corrupt data — ignore, fresh state will be used
   }

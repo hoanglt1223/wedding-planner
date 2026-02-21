@@ -4,6 +4,7 @@ import { Checklist } from "./checklist";
 import { PeopleGrid } from "./people-grid";
 import { GiftsTable } from "./gifts-table";
 import { RitualTimeline } from "./ritual-timeline";
+import { StepTimelineDetail } from "./step-timeline-detail";
 
 interface CeremonySectionProps {
   ceremony: Ceremony;
@@ -11,6 +12,7 @@ interface CeremonySectionProps {
   ceremonyIndex: number;
   checkedKeys: Record<string, boolean>;
   onToggleCheck: (key: string) => void;
+  partyTime: "noon" | "afternoon";
 }
 
 export function CeremonySection({
@@ -19,6 +21,7 @@ export function CeremonySection({
   ceremonyIndex,
   checkedKeys,
   onToggleCheck,
+  partyTime,
 }: CeremonySectionProps) {
   return (
     <div className="space-y-2">
@@ -58,6 +61,11 @@ export function CeremonySection({
 
       {/* Ritual timeline */}
       {ceremony.ritualSteps.length > 0 && <RitualTimeline steps={ceremony.ritualSteps} />}
+
+      {/* Hour-by-hour timeline */}
+      {ceremony.timelineDetail && ceremony.timelineDetail.length > 0 && (
+        <StepTimelineDetail entries={ceremony.timelineDetail} partyTime={partyTime} />
+      )}
 
       {/* Tips */}
       {ceremony.tips.length > 0 && (

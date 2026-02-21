@@ -4,6 +4,7 @@ export interface ChecklistItem {
   text: string;
   cost: number;
   categoryKey: string;
+  detail?: string;
 }
 
 export interface Person {
@@ -18,6 +19,13 @@ export interface GiftItem {
   cost: number;
 }
 
+export interface TimelineEntry {
+  time: string;       // "08:00"
+  activity: string;   // "Đội bưng quả tập trung"
+  responsible: string; // "Phù rể"
+  note?: string;
+}
+
 export interface Ceremony {
   name: string;
   required: number;         // 1=required, 0=optional
@@ -27,6 +35,7 @@ export interface Ceremony {
   ritualSteps: string[];
   tips: string[];
   gifts?: GiftItem[];
+  timelineDetail?: TimelineEntry[];
 }
 
 export interface WeddingStep {
@@ -108,6 +117,7 @@ export interface WeddingState {
   photos: PhotoItem[];
   photoIdCounter: number;
   lang: string;
+  partyTime: "noon" | "afternoon";
 }
 
 export interface WeddingEvent {

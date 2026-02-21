@@ -91,16 +91,23 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                 {cer.checklist?.length > 0 && (
                   <div className="space-y-1 ml-1">
                     {cer.checklist.map((item, ii) => (
-                      <div key={ii} className="flex items-start gap-2 text-xs">
-                        <span className="inline-block w-3.5 h-3.5 border-2 border-gray-400 rounded-sm flex-shrink-0 mt-0.5 print:border-gray-600" />
-                        <span className="flex-1">
-                          {item.text}
-                          {item.cost > 0 && (
-                            <span className="ml-1 text-gray-400">
-                              ({item.cost.toLocaleString("vi-VN")}đ)
-                            </span>
-                          )}
-                        </span>
+                      <div key={ii} className="text-xs">
+                        <div className="flex items-start gap-2">
+                          <span className="inline-block w-3.5 h-3.5 border-2 border-gray-400 rounded-sm flex-shrink-0 mt-0.5 print:border-gray-600" />
+                          <span className="flex-1">
+                            {item.text}
+                            {item.cost > 0 && (
+                              <span className="ml-1 text-gray-400">
+                                ({item.cost.toLocaleString("vi-VN")}đ)
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                        {item.detail && (
+                          <div className="ml-6 text-[0.6rem] text-gray-500 leading-relaxed mt-0.5">
+                            {item.detail}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -142,6 +149,36 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                         </div>
                       ))}
                     </div>
+                  </div>
+                )}
+
+                {/* Timeline detail */}
+                {cer.timelineDetail && cer.timelineDetail.length > 0 && (
+                  <div className="mt-2 ml-1">
+                    <div className="text-[0.65rem] font-semibold text-gray-500 mb-1 uppercase">
+                      🕐 Lịch trình chi tiết:
+                    </div>
+                    <table className="w-full text-[0.65rem]">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">Giờ</th>
+                          <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold">Hoạt động</th>
+                          <th className="text-left py-0.5 text-gray-500 font-semibold w-16">Phụ trách</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cer.timelineDetail.map((entry, ti) => (
+                          <tr key={ti} className="border-b border-gray-50">
+                            <td className="py-0.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">{entry.time}</td>
+                            <td className="py-0.5 pr-2 text-gray-700 align-top">
+                              {entry.activity}
+                              {entry.note && <span className="text-gray-400 ml-1">({entry.note})</span>}
+                            </td>
+                            <td className="py-0.5 text-gray-500 align-top">{entry.responsible}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 )}
 

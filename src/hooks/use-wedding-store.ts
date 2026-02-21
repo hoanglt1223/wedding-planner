@@ -8,7 +8,7 @@ import { migrateState } from "@/lib/migrate-state";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v10";
+const STORAGE_KEY = "wp_v11";
 
 export function useWeddingStore() {
   const [state, setState] = useLocalStorage<WeddingState>(
@@ -146,6 +146,10 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, lang }));
   }, [setState]);
 
+  const setPartyTime = useCallback((partyTime: "noon" | "afternoon") => {
+    setState((prev) => ({ ...prev, partyTime }));
+  }, [setState]);
+
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
@@ -184,6 +188,7 @@ export function useWeddingStore() {
     addPhoto,
     removePhoto,
     setLang,
+    setPartyTime,
     getProgress,
   };
 }

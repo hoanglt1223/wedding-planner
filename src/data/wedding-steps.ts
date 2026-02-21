@@ -6,6 +6,7 @@ import { STEP_BETROTHAL } from "./wedding-steps-3-betrothal";
 import { STEP_BRIDE_CEREMONY } from "./wedding-steps-4-bride-ceremony";
 import { STEP_PROCESSION } from "./wedding-steps-5-procession";
 import { STEP_GROOM_CEREMONY } from "./wedding-steps-6-groom-ceremony";
+import { STEP_POST_WEDDING } from "./wedding-steps-7-post-wedding";
 
 export const WEDDING_STEPS: WeddingStep[] = [
   STEP_MEETING,
@@ -15,4 +16,5 @@ export const WEDDING_STEPS: WeddingStep[] = [
   STEP_BRIDE_CEREMONY,
   STEP_PROCESSION,
   STEP_GROOM_CEREMONY,
+  STEP_POST_WEDDING,
 ];

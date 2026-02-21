@@ -3,6 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { ScrollableTabBar } from "@/components/layout/scrollable-tab-bar";
 import { CeremonySection } from "./ceremony-section";
+import { PartyTimeToggle } from "./party-time-toggle";
 
 interface StepPanelProps {
   step: WeddingStep;
@@ -11,6 +12,8 @@ interface StepPanelProps {
   onSubTabChange: (stepId: string, index: number) => void;
   onToggleCheck: (key: string) => void;
   onGoAI: (hint: string) => void;
+  partyTime: "noon" | "afternoon";
+  onSetPartyTime: (v: "noon" | "afternoon") => void;
 }
 
 function getStepProgress(
@@ -28,6 +31,9 @@ function getStepProgress(
   return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
 }
 
+// Steps that have time-critical schedules (betrothal, bride-ceremony, procession, groom-ceremony)
+const TIMELINE_STEP_IDS = new Set(["betrothal", "bride-ceremony", "procession", "groom-ceremony"]);
+
 export function StepPanel({
   step,
   activeSubTab,
@@ -35,8 +41,11 @@ export function StepPanel({
   onSubTabChange,
   onToggleCheck,
   onGoAI,
+  partyTime,
+  onSetPartyTime,
 }: StepPanelProps) {
   const { done, total, pct } = getStepProgress(step, checkedKeys);
+  const showPartyTimeToggle = TIMELINE_STEP_IDS.has(step.id);
 
   const ceremonyTabs = step.ceremonies.map((cer) => ({
     label: cer.name,
@@ -91,6 +100,9 @@ export function StepPanel({
               🤖 Hỏi AI
             </Button>
           )}
+          {showPartyTimeToggle && (
+            <PartyTimeToggle value={partyTime} onChange={onSetPartyTime} />
+          )}
         </div>
         <Progress value={pct} className="h-2 mb-1" />
         <div className="text-[0.68rem] text-gray-400 text-right">
@@ -114,6 +126,7 @@ export function StepPanel({
           ceremonyIndex={activeSubTab}
           checkedKeys={checkedKeys}
           onToggleCheck={onToggleCheck}
+          partyTime={partyTime}
         />
       )}
     </div>
