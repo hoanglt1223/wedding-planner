@@ -6,8 +6,10 @@ import { BudgetCategoryRow } from "./budget-category-row";
 interface BudgetPanelProps {
   budget: number;
   categoryOverrides: Record<string, number>;
+  expenses: Record<string, number>;
   onSetBudget: (bud: number) => void;
   onSetCategoryPercent: (key: string, pct: number) => void;
+  onSetExpense: (key: string, amount: number) => void;
 }
 
 const PRESETS: [string, number][] = [
@@ -22,8 +24,10 @@ const PRESETS: [string, number][] = [
 export function BudgetPanel({
   budget,
   categoryOverrides,
+  expenses,
   onSetBudget,
   onSetCategoryPercent,
+  onSetExpense,
 }: BudgetPanelProps) {
   const handleBudgetInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/\D/g, "");
@@ -37,6 +41,10 @@ export function BudgetPanel({
   const totalAllocated = budget * totalPct / 100;
   const remaining = budget - totalAllocated;
   const overBudget = totalPct > 100;
+  const totalExpenses = BUDGET_CATEGORIES.reduce(
+    (sum, c) => sum + (expenses[c.k] || 0),
+    0
+  );
 
   return (
     <Card>
@@ -75,7 +83,9 @@ export function BudgetPanel({
                 category={cat}
                 percentage={pct}
                 amount={amount}
+                expense={expenses[cat.k] || 0}
                 onChange={onSetCategoryPercent}
+                onExpenseChange={onSetExpense}
               />
             );
           })}
@@ -90,6 +100,19 @@ export function BudgetPanel({
           <b className={remaining >= 0 ? "text-green-600" : "text-red-500"}>
             {formatMoney(remaining)}đ
           </b>
+        </div>
+        <div className="mt-1 p-[10px] bg-amber-50 rounded-lg text-center text-[0.82rem]">
+          Tong da chi:{" "}
+          <b className={totalExpenses > budget ? "text-red-500" : "text-amber-600"}>
+            {formatMoney(totalExpenses)}d
+          </b>
+          {" / "}
+          <b>{formatMoney(budget)}d</b>
+          {totalExpenses > 0 && (
+            <span className="ml-2 text-[0.75rem]">
+              ({Math.round((totalExpenses / budget) * 100)}%)
+            </span>
+          )}
         </div>
       </CardContent>
     </Card>

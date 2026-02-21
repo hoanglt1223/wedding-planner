@@ -75,6 +75,7 @@ export const DEFAULT_STATE: WeddingState = {
   ck: {},
   bud: 200_000_000,
   bo: {},
+  exp: {},
   zk: "",
   ar: "",
   info: {
@@ -85,6 +86,8 @@ export const DEFAULT_STATE: WeddingState = {
     date: "2025-12-20",
     dDN: "2025-10-15",
     dDH: "2025-11-15",
+    bby: "",
+    gby: "",
   },
   guests: [],
   gid: 0,

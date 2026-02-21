@@ -1,18 +1,22 @@
 import type { BudgetCategory } from "@/types/wedding";
-import { formatShort } from "@/lib/format";
+import { formatMoney, formatShort } from "@/lib/format";
 
 interface BudgetCategoryRowProps {
   category: BudgetCategory;
   percentage: number;
   amount: number;
+  expense: number;
   onChange: (key: string, value: number) => void;
+  onExpenseChange: (key: string, amount: number) => void;
 }
 
 export function BudgetCategoryRow({
   category,
   percentage,
   amount,
+  expense,
   onChange,
+  onExpenseChange,
 }: BudgetCategoryRowProps) {
   const barWidth = Math.min(percentage, 100);
 
@@ -40,6 +44,23 @@ export function BudgetCategoryRow({
           className="h-full rounded-[2px] transition-all"
           style={{ width: `${barWidth}%`, background: category.cl }}
         />
+      </div>
+      <div className="flex items-center justify-end gap-1 text-[0.7rem] text-gray-500 pb-1">
+        <span>Da chi:</span>
+        <input
+          type="text"
+          className="w-[80px] p-[2px] border border-gray-200 rounded text-right text-[0.7rem]"
+          value={expense ? formatMoney(expense) : ""}
+          placeholder="0"
+          onChange={(e) => {
+            const raw = e.target.value.replace(/\D/g, "");
+            onExpenseChange(category.k, parseInt(raw) || 0);
+          }}
+          onFocus={(e) => e.target.select()}
+        />
+        <span className={expense > amount ? "text-red-500 font-semibold" : "text-gray-400"}>
+          / {formatShort(amount)}
+        </span>
       </div>
     </div>
   );

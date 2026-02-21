@@ -38,8 +38,10 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
       <BudgetPanel
         budget={state.bud}
         categoryOverrides={state.bo}
+        expenses={state.exp || {}}
         onSetBudget={store.setBudget}
         onSetCategoryPercent={store.setCategoryPercent}
+        onSetExpense={store.setExpense}
       />
     );
   }

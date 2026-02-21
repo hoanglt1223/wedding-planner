@@ -1,4 +1,5 @@
 import { KeHoachPage } from "./ke-hoach-page";
+import { TuViPage } from "./tu-vi-page";
 import { CardsPanel } from "@/components/cards/cards-panel";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { PrintPanel } from "@/components/print/print-panel";
@@ -23,6 +24,14 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
           store={store}
           progress={progress}
           onGoAI={onGoAI}
+        />
+      );
+
+    case "tuvi":
+      return (
+        <TuViPage
+          info={state.info}
+          onUpdateInfo={store.updateInfo}
         />
       );
 
@@ -52,7 +61,7 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
       );
 
     case "ytuong":
-      return <IdeasPanel />;
+      return <IdeasPanel state={state} onSetState={store.setState} />;
 
     default:
       return null;

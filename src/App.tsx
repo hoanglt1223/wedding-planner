@@ -37,6 +37,7 @@ function App() {
         progressPct={progress.pct}
         done={progress.done}
         total={progress.total}
+        weddingDate={state.info.date}
       />
       <Topbar activePage={state.page} onPageChange={store.setPage} />
       <div className="max-w-[920px] mx-auto px-2 pt-2">

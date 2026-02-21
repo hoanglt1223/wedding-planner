@@ -5,6 +5,7 @@ export interface PageDef {
 
 export const PAGES: PageDef[] = [
   { id: "kehoach", label: "💒 Kế Hoạch" },
+  { id: "tuvi", label: "🔮 Tử Vi" },
   { id: "thiep", label: "🖼️ Thiệp" },
   { id: "ai", label: "🤖 AI" },
   { id: "sotay", label: "📖 Sổ Tay" },

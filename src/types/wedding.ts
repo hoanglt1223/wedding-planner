@@ -73,6 +73,8 @@ export interface CoupleInfo {
   date: string;  // wedding date YYYY-MM-DD
   dDN: string;   // dam ngo date
   dDH: string;   // dam hoi date
+  bby: string;   // bride birth year
+  gby: string;   // groom birth year
 }
 
 export interface Guest {
@@ -90,6 +92,7 @@ export interface WeddingState {
   ck: Record<string, boolean>;  // checklist key -> done
   bud: number;                  // total budget VND
   bo: Record<string, number>;   // budget category overrides (percentage)
+  exp: Record<string, number>;  // actual expenses by category key
   zk: string;                   // ZhipuAI API key
   ar: string;                   // AI last response
   info: CoupleInfo;

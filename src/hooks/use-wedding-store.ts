@@ -49,6 +49,13 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const setExpense = useCallback((key: string, amount: number) => {
+    setState((prev) => ({
+      ...prev,
+      exp: { ...prev.exp, [key]: amount },
+    }));
+  }, [setState]);
+
   const updateInfo = useCallback(
     (field: string, value: string) => {
       setState((prev) => ({
@@ -120,6 +127,7 @@ export function useWeddingStore() {
     toggleCheck,
     setBudget,
     setCategoryPercent,
+    setExpense,
     updateInfo,
     addGuest,
     removeGuest,
