@@ -1,10 +1,14 @@
 // All TypeScript interfaces for the Wedding Planner app
 
-export interface ChecklistItem {
+export interface CeremonyStep {
   text: string;
-  cost: number;
-  categoryKey: string;
+  time?: string;
+  responsible?: string;
+  cost?: number;
+  categoryKey?: string;
   detail?: string;
+  note?: string;
+  checkable?: boolean;
 }
 
 export interface Person {
@@ -19,23 +23,14 @@ export interface GiftItem {
   cost: number;
 }
 
-export interface TimelineEntry {
-  time: string;       // "08:00"
-  activity: string;   // "Đội bưng quả tập trung"
-  responsible: string; // "Phù rể"
-  note?: string;
-}
-
 export interface Ceremony {
   name: string;
   required: number;         // 1=required, 0=optional
   description: string;
-  checklist: ChecklistItem[];
+  steps: CeremonyStep[];
   people: Person[];
-  ritualSteps: string[];
   tips: string[];
   gifts?: GiftItem[];
-  timelineDetail?: TimelineEntry[];
 }
 
 export interface WeddingStep {

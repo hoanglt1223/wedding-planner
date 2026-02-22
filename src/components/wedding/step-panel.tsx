@@ -22,12 +22,16 @@ function getStepProgress(
 ): { done: number; total: number; pct: number } {
   let total = 0;
   let done = 0;
-  step.ceremonies.forEach((c, ci) =>
-    c.checklist.forEach((_item, i) => {
-      total++;
-      if (checkedKeys[`${step.id}_${ci}_${i}`]) done++;
-    }),
-  );
+  step.ceremonies.forEach((c, ci) => {
+    let checkIdx = 0;
+    c.steps.forEach((s) => {
+      if (s.checkable) {
+        total++;
+        if (checkedKeys[`${step.id}_${ci}_${checkIdx}`]) done++;
+        checkIdx++;
+      }
+    });
+  });
   return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
 }
 

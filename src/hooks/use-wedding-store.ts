@@ -154,12 +154,16 @@ export function useWeddingStore() {
     let total = 0;
     let done = 0;
     (WEDDING_STEPS as WeddingStep[]).forEach((step) =>
-      step.ceremonies.forEach((ceremony, ci: number) =>
-        ceremony.checklist.forEach((_item, i: number) => {
-          total++;
-          if (state.checkedItems[`${step.id}_${ci}_${i}`]) done++;
-        }),
-      ),
+      step.ceremonies.forEach((ceremony, ci: number) => {
+        let checkIdx = 0;
+        ceremony.steps.forEach((s) => {
+          if (s.checkable) {
+            total++;
+            if (state.checkedItems[`${step.id}_${ci}_${checkIdx}`]) done++;
+            checkIdx++;
+          }
+        });
+      }),
     );
     return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
   }, [state.checkedItems]);

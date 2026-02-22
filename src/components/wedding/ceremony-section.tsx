@@ -1,10 +1,8 @@
 import type { Ceremony } from "@/types/wedding";
 import { Badge } from "@/components/ui/badge";
-import { Checklist } from "./checklist";
+import { CeremonySteps } from "./ceremony-steps";
 import { PeopleGrid } from "./people-grid";
 import { GiftsTable } from "./gifts-table";
-import { RitualTimeline } from "./ritual-timeline";
-import { StepTimelineDetail } from "./step-timeline-detail";
 
 interface CeremonySectionProps {
   ceremony: Ceremony;
@@ -45,39 +43,32 @@ export function CeremonySection({
       {/* People grid */}
       {ceremony.people.length > 0 && <PeopleGrid people={ceremony.people} />}
 
-      {/* Checklist */}
-      {ceremony.checklist.length > 0 && (
-        <Checklist
-          items={ceremony.checklist}
+      {/* Unified steps */}
+      {ceremony.steps.length > 0 && (
+        <CeremonySteps
+          steps={ceremony.steps}
           stepId={stepId}
           ceremonyIndex={ceremonyIndex}
           checkedKeys={checkedKeys}
           onToggle={onToggleCheck}
+          partyTime={partyTime}
         />
       )}
 
       {/* Gifts table */}
       {ceremony.gifts && ceremony.gifts.length > 0 && <GiftsTable gifts={ceremony.gifts} />}
 
-      {/* Ritual timeline */}
-      {ceremony.ritualSteps.length > 0 && <RitualTimeline steps={ceremony.ritualSteps} />}
-
-      {/* Hour-by-hour timeline */}
-      {ceremony.timelineDetail && ceremony.timelineDetail.length > 0 && (
-        <StepTimelineDetail entries={ceremony.timelineDetail} partyTime={partyTime} />
-      )}
-
       {/* Tips */}
       {ceremony.tips.length > 0 && (
         <div className="bg-white rounded-xl p-3 shadow-sm">
-          <h2 className="text-sm font-bold text-red-800 mb-2">💡 Lưu Ý</h2>
+          <h2 className="text-sm font-bold text-red-800 mb-2">Lưu Ý</h2>
           <div className="space-y-1.5">
             {ceremony.tips.map((tip, i) => (
               <div
                 key={i}
                 className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-xs text-green-800"
               >
-                💡 {tip}
+                {tip}
               </div>
             ))}
           </div>
