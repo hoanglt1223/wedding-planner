@@ -10,7 +10,7 @@ interface CeremonySectionProps {
   ceremonyIndex: number;
   checkedKeys: Record<string, boolean>;
   onToggleCheck: (key: string) => void;
-  partyTime: "noon" | "afternoon";
+  timeOffset: number;
 }
 
 export function CeremonySection({
@@ -19,7 +19,7 @@ export function CeremonySection({
   ceremonyIndex,
   checkedKeys,
   onToggleCheck,
-  partyTime,
+  timeOffset,
 }: CeremonySectionProps) {
   return (
     <div className="space-y-2">
@@ -51,29 +51,13 @@ export function CeremonySection({
           ceremonyIndex={ceremonyIndex}
           checkedKeys={checkedKeys}
           onToggle={onToggleCheck}
-          partyTime={partyTime}
+          timeOffset={timeOffset}
         />
       )}
 
       {/* Gifts table */}
       {ceremony.gifts && ceremony.gifts.length > 0 && <GiftsTable gifts={ceremony.gifts} />}
 
-      {/* Tips */}
-      {ceremony.tips.length > 0 && (
-        <div className="bg-white rounded-xl p-3 shadow-sm">
-          <h2 className="text-sm font-bold text-red-800 mb-2">Lưu Ý</h2>
-          <div className="space-y-1.5">
-            {ceremony.tips.map((tip, i) => (
-              <div
-                key={i}
-                className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-xs text-green-800"
-              >
-                {tip}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

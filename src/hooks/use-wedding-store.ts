@@ -150,6 +150,13 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, partyTime }));
   }, [setState]);
 
+  const setStepStartTime = useCallback((stepId: string, time: string) => {
+    setState((prev) => ({
+      ...prev,
+      stepStartTimes: { ...(prev.stepStartTimes || {}), [stepId]: time },
+    }));
+  }, [setState]);
+
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
@@ -193,6 +200,7 @@ export function useWeddingStore() {
     removePhoto,
     setLang,
     setPartyTime,
+    setStepStartTime,
     getProgress,
   };
 }

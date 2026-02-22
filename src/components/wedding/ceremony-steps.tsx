@@ -14,14 +14,16 @@ interface CeremonyStepsProps {
   ceremonyIndex: number;
   checkedKeys: Record<string, boolean>;
   onToggle: (key: string) => void;
-  partyTime: "noon" | "afternoon";
+  timeOffset: number;
 }
 
-function offsetTime(time: string, partyTime: "noon" | "afternoon"): string {
-  if (partyTime === "noon") return time;
+function offsetTime(time: string, offsetMin: number): string {
+  if (offsetMin === 0) return time;
   const [h, m] = time.split(":").map(Number);
-  const newH = (h + 5) % 24;
-  return `${String(newH).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  const total = h * 60 + m + offsetMin;
+  const newH = Math.floor(((total % 1440) + 1440) % 1440 / 60);
+  const newM = ((total % 60) + 60) % 60;
+  return `${String(newH).padStart(2, "0")}:${String(newM).padStart(2, "0")}`;
 }
 
 function CheckableRow({
@@ -93,7 +95,7 @@ export function CeremonySteps({
   ceremonyIndex,
   checkedKeys,
   onToggle,
-  partyTime,
+  timeOffset,
 }: CeremonyStepsProps) {
   const checkable = steps.filter((s) => s.checkable);
   const sequence = steps.filter((s) => !s.checkable);
@@ -135,9 +137,11 @@ export function CeremonySteps({
           <>
             <h2 className="text-sm font-bold text-red-800 mb-2">
               Lịch Trình Chi Tiết
-              <span className="ml-1.5 text-[0.65rem] font-normal text-gray-400">
-                ({partyTime === "noon" ? "Buổi trưa" : "Buổi chiều"})
-              </span>
+              {timeOffset !== 0 && (
+                <span className="ml-1.5 text-[0.65rem] font-normal text-gray-400">
+                  ({timeOffset > 0 ? "+" : ""}{timeOffset} phút)
+                </span>
+              )}
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
@@ -152,7 +156,7 @@ export function CeremonySteps({
                   {sequence.map((s, i) => (
                     <tr key={i} className="border-b border-gray-50 last:border-0">
                       <td className="py-1.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">
-                        {s.time ? offsetTime(s.time, partyTime) : ""}
+                        {s.time ? offsetTime(s.time, timeOffset) : ""}
                       </td>
                       <td className="py-1.5 pr-2 text-gray-700 align-top">
                         {s.text}

@@ -29,7 +29,6 @@ export interface Ceremony {
   description: string;
   steps: CeremonyStep[];
   people: Person[];
-  tips: string[];
   gifts?: GiftItem[];
 }
 
@@ -113,6 +112,7 @@ export interface WeddingState {
   photoIdCounter: number;
   lang: string;
   partyTime: "noon" | "afternoon";
+  stepStartTimes: Record<string, string>;
 }
 
 export interface WeddingEvent {

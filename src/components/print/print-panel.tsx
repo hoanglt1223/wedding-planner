@@ -65,15 +65,6 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                 <p className="text-[0.65rem] text-amber-700 leading-relaxed">{step.meaning}</p>
               </div>
             )}
-            {step.notes && step.notes.length > 0 && (
-              <div className="mb-2 rounded border border-blue-200 bg-blue-50 p-2">
-                <div className="text-[0.65rem] font-semibold text-blue-800 mb-0.5">Lưu ý quan trọng</div>
-                {step.notes.map((note, ni) => (
-                  <div key={ni} className="text-[0.65rem] text-blue-700 leading-relaxed">• {note}</div>
-                ))}
-              </div>
-            )}
-
             {step.ceremonies.map((cer, ci) => {
               const checkable = cer.steps.filter((s) => s.checkable);
               const sequence = cer.steps.filter((s) => !s.checkable);
@@ -200,17 +191,18 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                     </div>
                   )}
 
-                  {/* Tips */}
-                  {cer.tips?.length > 0 && (
-                    <div className="mt-2 ml-1 text-xs text-gray-500 italic">
-                      {cer.tips.map((tip, ti) => (
-                        <div key={ti}>{tip}</div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               );
             })}
+
+            {step.notes && step.notes.length > 0 && (
+              <div className="mt-2 rounded border border-blue-200 bg-blue-50 p-2">
+                <div className="text-[0.65rem] font-semibold text-blue-800 mb-0.5">Lưu ý quan trọng</div>
+                {step.notes.map((note, ni) => (
+                  <div key={ni} className="text-[0.65rem] text-blue-700 leading-relaxed">• {note}</div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
 
