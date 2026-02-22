@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import {
   getStemBranch, getZodiac, getSoundElement, getElementRelation,
   isSixHarmony, isSixConflict, isSixHarm, isThreeHarmony, getThreeHarmonyGroup,
@@ -12,6 +11,8 @@ interface TabCompatibilityProps {
   groomYear: number;
   brideName: string;
   groomName: string;
+  brideGender?: string;
+  groomGender?: string;
 }
 
 const COMPAT_STYLE: Record<CompatType, { bg: string; border: string; text: string; icon: string }> = {
@@ -20,7 +21,7 @@ const COMPAT_STYLE: Record<CompatType, { bg: string; border: string; text: strin
   "overcoming": { bg: "bg-red-50", border: "border-red-200", text: "text-red-700", icon: "💔" },
 };
 
-export function TabCompatibility({ brideYear, groomYear, brideName, groomName }: TabCompatibilityProps) {
+export function TabCompatibility({ brideYear, groomYear, brideName, groomName, brideGender: _brideGender, groomGender: _groomGender }: TabCompatibilityProps) {
   const brideSoundElement = getSoundElement(brideYear);
   const groomSoundElement = getSoundElement(groomYear);
   const brideZ = getZodiac(brideYear);
@@ -53,36 +54,34 @@ export function TabCompatibility({ brideYear, groomYear, brideName, groomName }:
       </div>
 
       {/* Main compatibility result */}
-      <Card>
-        <CardContent className="pt-4 pb-3">
-          <div className={`rounded-lg p-4 ${style.bg} ${style.border} border text-center space-y-2`}>
-            <div className="text-3xl">{style.icon}</div>
-            <div className={`text-xl font-bold ${style.text}`}>{rel.label}</div>
-            <div className="text-sm text-gray-600">{rel.desc}</div>
-            <div className="flex justify-center gap-4 text-sm">
-              <span>{brideSoundElement.emoji} {ELEMENT_LABEL[brideSoundElement.element]}</span>
-              <span className="text-gray-400">×</span>
-              <span>{groomSoundElement.emoji} {ELEMENT_LABEL[groomSoundElement.element]}</span>
-            </div>
+      <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] pt-4 pb-3 px-4">
+        <div className={`rounded-lg p-4 ${style.bg} ${style.border} border text-center space-y-2`}>
+          <div className="text-3xl">{style.icon}</div>
+          <div className={`text-xl font-bold ${style.text}`}>{rel.label}</div>
+          <div className="text-sm text-muted-foreground">{rel.desc}</div>
+          <div className="flex justify-center gap-4 text-sm">
+            <span>{brideSoundElement.emoji} {ELEMENT_LABEL[brideSoundElement.element]}</span>
+            <span className="text-muted-foreground">×</span>
+            <span>{groomSoundElement.emoji} {ELEMENT_LABEL[groomSoundElement.element]}</span>
           </div>
+        </div>
 
-          {/* Score bar */}
-          <div className="mt-4">
-            <div className="flex justify-between text-xs mb-1">
-              <span className="text-gray-500">Điểm hợp tuổi tổng hợp</span>
-              <span className={`font-bold ${score >= 60 ? "text-green-600" : score >= 40 ? "text-amber-600" : "text-red-600"}`}>
-                {score}/100
-              </span>
-            </div>
-            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all ${score >= 60 ? "bg-green-500" : score >= 40 ? "bg-amber-500" : "bg-red-500"}`}
-                style={{ width: `${score}%` }}
-              />
-            </div>
+        {/* Score bar */}
+        <div className="mt-4">
+          <div className="flex justify-between text-xs mb-1">
+            <span className="text-muted-foreground">Điểm hợp tuổi tổng hợp</span>
+            <span className={`font-bold ${score >= 60 ? "text-green-600" : score >= 40 ? "text-amber-600" : "text-red-600"}`}>
+              {score}/100
+            </span>
           </div>
-        </CardContent>
-      </Card>
+          <div className="h-3 bg-muted rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all ${score >= 60 ? "bg-green-500" : score >= 40 ? "bg-amber-500" : "bg-red-500"}`}
+              style={{ width: `${score}%` }}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Share button */}
       <ZodiacShareButton
@@ -92,34 +91,30 @@ export function TabCompatibility({ brideYear, groomYear, brideName, groomName }:
       />
 
       {/* Chi relationships */}
-      <Card>
-        <CardContent className="pt-4 pb-3 space-y-2">
-          <h3 className="text-sm font-bold">Quan hệ địa chi ({brideZ.chi} — {groomZ.chi})</h3>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <ChiTag label="Tam Hợp" active={threeHarmony} good desc="Bộ ba tương hợp" />
-            <ChiTag label="Lục Hợp" active={sixHarmony} good desc="Cặp tương hợp hoàn hảo" />
-            <ChiTag label="Lục Xung" active={sixConflict} good={false} desc="Đối xung, bất hòa" />
-            <ChiTag label="Lục Hại" active={sixHarm} good={false} desc="Tương hại, gây bất lợi" />
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] pt-4 pb-3 px-4 space-y-2">
+        <h3 className="text-sm font-bold">Quan hệ địa chi ({brideZ.chi} — {groomZ.chi})</h3>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <ChiTag label="Tam Hợp" active={threeHarmony} good desc="Bộ ba tương hợp" />
+          <ChiTag label="Lục Hợp" active={sixHarmony} good desc="Cặp tương hợp hoàn hảo" />
+          <ChiTag label="Lục Xung" active={sixConflict} good={false} desc="Đối xung, bất hòa" />
+          <ChiTag label="Lục Hại" active={sixHarm} good={false} desc="Tương hại, gây bất lợi" />
+        </div>
+      </div>
 
       {/* Tam Hợp group */}
-      <Card>
-        <CardContent className="pt-4 pb-3 space-y-2">
-          <h3 className="text-sm font-bold">Nhóm Tam Hợp</h3>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="bg-pink-50 rounded-lg p-2">
-              <div className="text-gray-500 mb-1">{brideName || "Cô dâu"} ({brideZ.chi})</div>
-              {getThreeHarmonyGroup(brideYear).map((s) => <div key={s}>{s}</div>)}
-            </div>
-            <div className="bg-sky-50 rounded-lg p-2">
-              <div className="text-gray-500 mb-1">{groomName || "Chú rể"} ({groomZ.chi})</div>
-              {getThreeHarmonyGroup(groomYear).map((s) => <div key={s}>{s}</div>)}
-            </div>
+      <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] pt-4 pb-3 px-4 space-y-2">
+        <h3 className="text-sm font-bold">Nhóm Tam Hợp</h3>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="bg-[var(--theme-surface-muted)] rounded-lg p-2">
+            <div className="text-muted-foreground mb-1">{brideName || "Cô dâu"} ({brideZ.chi})</div>
+            {getThreeHarmonyGroup(brideYear).map((s) => <div key={s}>{s}</div>)}
           </div>
-        </CardContent>
-      </Card>
+          <div className="bg-[var(--theme-surface-muted)] rounded-lg p-2">
+            <div className="text-muted-foreground mb-1">{groomName || "Chú rể"} ({groomZ.chi})</div>
+            {getThreeHarmonyGroup(groomYear).map((s) => <div key={s}>{s}</div>)}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -129,25 +124,23 @@ function PersonMini({ label, name, year }: { label: string; name: string; year: 
   const z = getZodiac(year);
   const soundElement = getSoundElement(year);
   return (
-    <Card>
-      <CardContent className="pt-3 pb-2 px-3 text-center space-y-1">
-        <div className="text-xs text-gray-500 font-semibold">{label}</div>
-        <div className="text-sm font-bold">{name || "—"}</div>
-        <div className="text-3xl">{z.emoji}</div>
-        <div className="text-xs">{stemBranch}</div>
-        <div className="text-xs text-gray-500">{z.name} ({z.chi})</div>
-        <div className="text-xs">{soundElement.name}</div>
-        <div className={`text-sm font-bold ${soundElement.color}`}>{soundElement.emoji} {ELEMENT_LABEL[soundElement.element]}</div>
-      </CardContent>
-    </Card>
+    <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] pt-3 pb-2 px-3 text-center space-y-1">
+      <div className="text-xs text-muted-foreground font-semibold">{label}</div>
+      <div className="text-sm font-bold">{name || "—"}</div>
+      <div className="text-3xl">{z.emoji}</div>
+      <div className="text-xs">{stemBranch}</div>
+      <div className="text-xs text-muted-foreground">{z.name} ({z.chi})</div>
+      <div className="text-xs">{soundElement.name}</div>
+      <div className={`text-sm font-bold ${soundElement.color}`}>{soundElement.emoji} {ELEMENT_LABEL[soundElement.element]}</div>
+    </div>
   );
 }
 
 function ChiTag({ label, active, good, desc }: { label: string; active: boolean; good: boolean; desc: string }) {
   if (!active) return (
-    <div className="rounded-lg bg-gray-50 p-2 opacity-50">
-      <div className="font-medium text-gray-400">{label}</div>
-      <div className="text-xs text-gray-400">{desc}</div>
+    <div className="rounded-lg bg-[var(--theme-surface-muted)] p-2 opacity-50">
+      <div className="font-medium text-muted-foreground">{label}</div>
+      <div className="text-xs text-muted-foreground">{desc}</div>
     </div>
   );
   return (
@@ -155,7 +148,7 @@ function ChiTag({ label, active, good, desc }: { label: string; active: boolean;
       <div className={`font-medium ${good ? "text-green-700" : "text-red-700"}`}>
         {good ? "✅" : "⚠️"} {label}
       </div>
-      <div className="text-xs text-gray-600">{desc}</div>
+      <div className="text-xs text-muted-foreground">{desc}</div>
     </div>
   );
 }

@@ -34,7 +34,7 @@
 - No favicon, icons, manifest, robots.txt, or service worker
 
 ## Onboarding Gaps
-- App starts with pre-filled example data ("Nguyễn Thị A" & "Trần Văn B")
+- App starts with pre-filled example data ("Nguyễn Thị Thu Thảo" & "Nguyễn Thanh Hoàng")
 - No welcome page, tutorial, or feature explanation
 - No empty state design for first-time users
 - Budget pre-set to 200M VND with no explanation

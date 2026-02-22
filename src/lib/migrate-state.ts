@@ -5,6 +5,7 @@ const V8_KEY = "wp_v8";
 const V9_KEY = "wp_v9";
 const V10_KEY = "wp_v10";
 const V11_KEY = "wp_v11";
+const V12_KEY = "wp_v12";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -58,15 +59,31 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest — check for onboardingComplete backfill
-  if (localStorage.getItem(V11_KEY)) {
+  // Already on latest v12 — no-op
+  if (localStorage.getItem(V12_KEY)) return;
+
+  // v11→v12 migration: replace brideBirthYear/groomBirthYear with structured birth fields
+  const v11Raw = localStorage.getItem(V11_KEY);
+  if (v11Raw) {
     try {
-      const data = JSON.parse(localStorage.getItem(V11_KEY)!);
-      if (data.onboardingComplete === undefined) {
-        data.onboardingComplete = !!(data.info?.bride);
-        localStorage.setItem(V11_KEY, JSON.stringify(data));
-      }
-    } catch { /* ignore */ }
+      const v11Data = JSON.parse(v11Raw);
+      const info = v11Data.info || {};
+      const brideBY = info.brideBirthYear || "";
+      const groomBY = info.groomBirthYear || "";
+      const v12Info = {
+        ...info,
+        brideBirthDate: brideBY.length === 4 ? `${brideBY}-01-01` : "",
+        brideBirthHour: null,
+        brideGender: "female",
+        groomBirthDate: groomBY.length === 4 ? `${groomBY}-01-01` : "",
+        groomBirthHour: null,
+        groomGender: "male",
+      };
+      delete v12Info.brideBirthYear;
+      delete v12Info.groomBirthYear;
+      const v12Data = { ...v11Data, info: v12Info };
+      localStorage.setItem(V12_KEY, JSON.stringify(v12Data));
+    } catch { /* corrupt data */ }
     return;
   }
 

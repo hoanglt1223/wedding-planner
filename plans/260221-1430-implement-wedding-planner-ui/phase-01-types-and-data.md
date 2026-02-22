@@ -224,8 +224,8 @@ export const DEFAULT_STATE: WeddingState = {
   tab: 0, st: {}, ck: {}, bud: 200_000_000, bo: {},
   zk: "", ar: "",
   info: {
-    bride: "Nguyễn Thị A", groom: "Trần Văn B",
-    bf: "Họ Nguyễn", gf: "Họ Trần",
+    bride: "Nguyễn Thị Thu Thảo", groom: "Nguyễn Thanh Hoàng",
+    bf: "Họ Nguyễn", gf: "Họ Nhà Trai",
     date: "2025-12-20", dDN: "2025-10-15", dDH: "2025-11-15",
   },
   guests: [], gid: 0,

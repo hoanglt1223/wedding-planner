@@ -6,12 +6,12 @@ import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 
 const SAMPLE_DATA = {
-  bride: "Nguyễn Thị A",
-  groom: "Trần Văn B",
+  bride: "Nguyễn Thị Thu Thảo",
+  groom: "Nguyễn Thanh Hoàng",
   brideFamilyName: "Họ Nguyễn",
-  groomFamilyName: "Họ Trần",
-  date: "2026-12-20",
-  engagementDate: "2026-10-15",
+  groomFamilyName: "Họ Nhà Trai",
+  date: "2026-03-14",
+  engagementDate: "2026-09-15",
   betrothalDate: "2026-11-15",
 };
 

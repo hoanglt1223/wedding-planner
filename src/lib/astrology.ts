@@ -160,3 +160,9 @@ export function getCompatibleYears(birthYear: number, range = 15) {
   }
   return results;
 }
+
+/** Extract birth year from "YYYY-MM-DD" date string, returns 0 if invalid */
+export function getBirthYear(birthDate: string): number {
+  if (!birthDate || birthDate.length < 4) return 0;
+  return parseInt(birthDate.slice(0, 4)) || 0;
+}

@@ -79,8 +79,12 @@ export interface CoupleInfo {
   date: string;
   engagementDate: string;
   betrothalDate: string;
-  brideBirthYear: string;
-  groomBirthYear: string;
+  brideBirthDate: string;       // "YYYY-MM-DD" or ""
+  brideBirthHour: number | null; // 0-23 or null (unknown)
+  brideGender: string;           // "female" | "male"
+  groomBirthDate: string;
+  groomBirthHour: number | null;
+  groomGender: string;
 }
 
 export interface Guest {
