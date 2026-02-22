@@ -98,19 +98,40 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 ```
 
-## Tailwind CSS v4
+## Tailwind CSS v4 & Theme Variables
 
 - CSS-first approach (CSS layers in globals)
 - `@tailwindcss/vite` plugin active
 - Neutral color palette configured
 - No custom CSS when Tailwind covers it
+- **Theme CSS variables** applied dynamically via App.tsx based on user-selected theme
 
-Example:
+Theme variable naming convention (kebab-case, `--theme-` prefix):
+- `--theme-primary` - Main brand color (hex)
+- `--theme-primary-dark` - Darker variant (hex)
+- `--theme-primary-light` - Light background variant (hex)
+- `--theme-accent` - Highlight/accent color (hex)
+- `--theme-surface` - Card background (hex)
+- `--theme-surface-muted` - Nested section background (hex)
+- `--theme-border` - Card border color (hex)
+- `--theme-bg` - Page background (hex)
+- `--theme-note-bg` - Notes callout background (hex)
+- `--theme-note-border` - Notes callout border (hex)
+- `--theme-note-text` - Notes callout text color (hex)
+
+**Usage:**
 ```typescript
+// In components
 export default function Card() {
-  return <div className="bg-white shadow-md rounded-lg p-4" />;
+  return <div style={{ backgroundColor: 'var(--theme-surface)', borderColor: 'var(--theme-border)' }}
+              className="border rounded-lg p-4" />;
 }
+
+// Tailwind arbitrary values work too:
+<div className="bg-[var(--theme-surface)] border-[var(--theme-border)]" />
 ```
+
+Define theme tokens in `src/data/themes.ts` as `AppTheme` interface, then apply in App.tsx root style.
 
 ## Error Handling
 

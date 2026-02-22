@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: P2
-- **Status**: pending
+- **Status**: completed
 - **Description**: Apply theme colors to print panel while keeping `bg-white` for print compatibility
 
 ## Key Insights
@@ -36,11 +36,11 @@
 - Line 47: `text-[0.7rem]` → `text-xs`
 
 ## Todo List
-- [ ] Migrate print heading colors to text-primary
-- [ ] Migrate badge to theme-aware
-- [ ] Consolidate print font sizes
-- [ ] Update event-timeline dot and font
-- [ ] Verify print still looks correct (bg-white preserved)
+- [x] Migrate print heading colors to text-primary
+- [x] Migrate badge to theme-aware
+- [x] Consolidate print font sizes
+- [x] Update event-timeline dot and font
+- [x] Verify print still looks correct (bg-white preserved)
 
 ## Success Criteria
 - Print panel heading/badge colors respond to theme

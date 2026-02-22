@@ -22,7 +22,7 @@ export function BudgetCategoryRow({
 
   return (
     <div>
-      <div className="flex flex-wrap justify-between items-center py-[5px] gap-1 border-b border-[#f0e8e0] text-sm">
+      <div className="flex flex-wrap justify-between items-center py-[5px] gap-1 border-b border-[var(--theme-border)] text-sm">
         <span className="font-semibold">{category.label}</span>
         <div className="flex items-center gap-1">
           <input

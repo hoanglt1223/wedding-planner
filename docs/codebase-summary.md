@@ -19,13 +19,15 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | Directory | Purpose | Status |
 |-----------|---------|--------|
 | `src/main.tsx` | React entry point | Active |
-| `src/App.tsx` | Root component | Active |
+| `src/App.tsx` | Root component; applies theme CSS vars | Active |
+| `src/data/themes.ts` | Theme definitions (AppTheme interface + 4 themes) | Active |
 | `src/components/ui/` | shadcn/ui components | 6 components ready |
 | `src/components/layout/` | Layout wrappers | 3 components (header, footer, root) |
 | `src/pages/` | Route-based pages | Empty (TBD) |
 | `src/hooks/` | Custom React hooks | Empty (TBD) |
 | `src/lib/utils.ts` | Tailwind merge utility | Active |
 | `src/types/` | TypeScript definitions | Empty (TBD) |
+| `src/index.css` | Global styles + custom utilities (text-2xs) + print styles | Active |
 | `public/` | Static assets | Empty |
 
 ## Backend
@@ -72,6 +74,23 @@ Scripts:
 - `npm run build` - Production bundle
 - `npm run lint` - Code linting
 - `npm run db:*` - Database migrations
+
+## Theme System
+
+App-wide theming via CSS variables. Four themes available (Traditional Red, Blush Pink, Navy Blue, Sage Green).
+
+**Data Layer:** `src/data/themes.ts`
+- `AppTheme` interface defines 11 color tokens per theme (primary, surface, border, notes, etc.)
+- `THEMES` array holds 4 pre-configured theme objects
+- Each theme includes HSL values for shadcn --primary override
+
+**Application Layer:** `src/App.tsx`
+- Applies theme tokens to root element style as CSS vars (`--theme-surface`, `--theme-border`, etc.)
+- All components consume vars via inline styles or Tailwind arbitrary values
+
+**Styling Layer:** `src/index.css`
+- Declares CSS vars in @theme inline block
+- text-2xs utility added (0.625rem font size)
 
 ## Current Limitations (TBD)
 

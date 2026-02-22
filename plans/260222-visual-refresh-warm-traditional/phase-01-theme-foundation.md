@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: P0 (blocks all other phases)
-- **Status**: pending
+- **Status**: completed
 - **Description**: Expand theme data with new tokens, wire shadcn `--primary` HSL, add CSS utilities
 
 ## Key Insights
@@ -100,12 +100,12 @@ style={{
 Also remove the hardcoded `--color-wedding-red: #c0392b` if it's only used by components we're migrating.
 
 ## Todo List
-- [ ] Expand WeddingTheme interface with new tokens
-- [ ] Add all token values to each of 6 themes
-- [ ] Update App.tsx to inject new CSS vars + shadcn overrides
-- [ ] Update App.tsx background: `theme.bg` instead of `theme.primaryLight`
-- [ ] Add `@utility text-2xs` to index.css
-- [ ] Verify build compiles
+- [x] Expand WeddingTheme interface with new tokens
+- [x] Add all token values to each of 6 themes
+- [x] Update App.tsx to inject new CSS vars + shadcn overrides
+- [x] Update App.tsx background: `theme.bg` instead of `theme.primaryLight`
+- [x] Add `@utility text-2xs` to index.css
+- [x] Verify build compiles
 
 ## Success Criteria
 - All 6 themes have correct warm/cool surface colors

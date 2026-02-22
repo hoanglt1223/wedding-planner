@@ -6,7 +6,7 @@
 
 ## Overview
 - **Priority**: P1
-- **Status**: pending
+- **Status**: completed
 - **Description**: Unify card patterns + migrate hardcoded colors to theme vars. Can run parallel with Phase 3.
 
 ## Key Insights
@@ -127,15 +127,15 @@ Replace `<Card><CardHeader>...<CardContent>...</Card>` with themed div.
 - Send button: `bg-amber-500 hover:bg-amber-400` → keep amber (it's a distinct action, not theme-primary)
 
 ## Todo List
-- [ ] Migrate 5 wedding component cards to theme-surface
-- [ ] Drop shadcn Card from stats-grid, budget, guest, vendor, notes panels
-- [ ] Migrate non-semantic reds in ceremony-steps, people-grid, gifts-table
-- [ ] Migrate "BẮT BUỘC" badge colors
-- [ ] Migrate notes callout to theme-note vars
-- [ ] Update header bg-white to theme-surface
-- [ ] Update scrollable-tab-bar box variant
-- [ ] Migrate photo-board active filter + budget #c0392b refs
-- [ ] Verify build
+- [x] Migrate 5 wedding component cards to theme-surface
+- [x] Drop shadcn Card from stats-grid, budget, guest, vendor, notes panels
+- [x] Migrate non-semantic reds in ceremony-steps, people-grid, gifts-table
+- [x] Migrate "BẮT BUỘC" badge colors
+- [x] Migrate notes callout to theme-note vars
+- [x] Update header bg-white to theme-surface
+- [x] Update scrollable-tab-bar box variant
+- [x] Migrate photo-board active filter + budget #c0392b refs
+- [x] Verify build
 
 ## Success Criteria
 - No `bg-white` in non-print card wrappers

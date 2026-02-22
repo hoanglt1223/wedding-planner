@@ -7,7 +7,7 @@
 
 ## Overview
 - **Priority**: P1
-- **Status**: pending
+- **Status**: completed
 - **Description**: Consolidate arbitrary font sizes into 6 tiers. Unify interactive controls. Can run parallel with Phase 2.
 
 ## Key Insights
@@ -84,13 +84,13 @@ In `ceremony-steps.tsx`:
 - Checked row: `bg-green-50 text-green-800` → `bg-[var(--theme-surface-muted)] text-primary`
 
 ## Todo List
-- [ ] Replace text-[0.55rem]/text-[0.58rem]/text-[0.6rem]/text-[0.65rem] → text-2xs
-- [ ] Replace text-[0.68rem]/text-[0.7rem]/text-[0.72rem]/text-[0.75rem]/text-[0.78rem] → text-xs
-- [ ] Replace text-[0.8rem]/text-[0.82rem] → text-sm
-- [ ] Replace text-[1rem] → text-base (where appropriate)
-- [ ] Update CheckableRow checkbox colors to theme-aware
-- [ ] Update CheckableRow checked row bg to theme-surface-muted
-- [ ] Verify build
+- [x] Replace text-[0.55rem]/text-[0.58rem]/text-[0.6rem]/text-[0.65rem] → text-2xs
+- [x] Replace text-[0.68rem]/text-[0.7rem]/text-[0.72rem]/text-[0.75rem]/text-[0.78rem] → text-xs
+- [x] Replace text-[0.8rem]/text-[0.82rem] → text-sm
+- [x] Replace text-[1rem] → text-base (where appropriate)
+- [x] Update CheckableRow checkbox colors to theme-aware
+- [x] Update CheckableRow checked row bg to theme-surface-muted
+- [x] Verify build
 
 ## Success Criteria
 - Zero arbitrary font sizes text-[0.*rem] in non-print components

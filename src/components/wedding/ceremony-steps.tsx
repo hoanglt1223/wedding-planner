@@ -79,7 +79,7 @@ function CheckableRow({
         </div>
         {hasDetail && (
           <CollapsibleContent>
-            <div className="mt-1.5 ml-6 text-xs text-gray-500 leading-relaxed bg-gray-50 rounded-lg px-2.5 py-2 border border-gray-100">
+            <div className="mt-1.5 ml-6 text-xs text-gray-500 leading-relaxed bg-[var(--theme-surface-muted)] rounded-lg px-2.5 py-2 border border-[var(--theme-border)]">
               {step.detail}
             </div>
           </CollapsibleContent>

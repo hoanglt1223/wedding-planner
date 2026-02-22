@@ -100,7 +100,7 @@ export function BudgetPanel({
               })}
             </div>
 
-            <div className="mt-2 p-2.5 bg-gray-50 rounded-lg text-center text-xs sm:text-sm leading-relaxed">
+            <div className="mt-2 p-2.5 bg-[var(--theme-surface-muted)] rounded-lg text-center text-xs sm:text-sm leading-relaxed">
               Tổng:{" "}
               <b className={overBudget ? "text-red-500" : ""}>{totalPct}%</b>
               {" = "}
