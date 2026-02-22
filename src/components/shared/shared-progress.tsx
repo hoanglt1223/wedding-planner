@@ -1,5 +1,8 @@
 import { WEDDING_STEPS } from "@/data/wedding-steps";
 import type { SharedData } from "@/lib/share";
+import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
+
+const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 
 interface Props {
   data: SharedData;
@@ -30,10 +33,10 @@ export function SharedProgress({ data }: Props) {
       <div>
         <div className="flex justify-between text-xs mb-1">
           <span className="text-[#8a7060]">Tiến độ chuẩn bị</span>
-          <span className="font-bold text-[#c0392b]">{pct}%</span>
+          <span className="font-bold" style={{ color: BRAND.accent }}>{pct}%</span>
         </div>
         <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-          <div className="h-full rounded-full bg-[#c0392b] transition-all" style={{ width: `${pct}%` }} />
+          <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: BRAND.accent }} />
         </div>
       </div>
       <div className="space-y-1.5">

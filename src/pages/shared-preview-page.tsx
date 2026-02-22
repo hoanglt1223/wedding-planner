@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchSharedData, type SharedData } from "@/lib/share";
 import { SharedProgress } from "@/components/shared/shared-progress";
+import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
+
+const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 
 interface Props {
   shareId: string;
@@ -19,7 +22,10 @@ export function SharedPreviewPage({ shareId }: Props) {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-red-50 via-white to-amber-50">
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: `linear-gradient(to bottom, ${BRAND.primaryLight}, white, #fffbeb)` }}
+      >
         <div className="text-center">
           <div className="text-4xl mb-3 animate-pulse">💍</div>
           <p className="text-sm text-[#8a7060]">Đang tải...</p>
@@ -30,7 +36,10 @@ export function SharedPreviewPage({ shareId }: Props) {
 
   if (status === "expired" || !data) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-red-50 via-white to-amber-50 px-4">
+      <div
+        className="min-h-screen flex items-center justify-center px-4"
+        style={{ background: `linear-gradient(to bottom, ${BRAND.primaryLight}, white, #fffbeb)` }}
+      >
         <div className="text-center max-w-sm">
           <div className="text-4xl mb-3">⏰</div>
           <h2 className="text-lg font-bold text-[#2c1810] mb-2">Link Đã Hết Hạn</h2>
@@ -39,7 +48,8 @@ export function SharedPreviewPage({ shareId }: Props) {
           </p>
           <a
             href="/"
-            className="inline-flex items-center justify-center h-10 px-6 text-sm font-semibold text-white bg-[#c0392b] rounded-full hover:bg-[#a93226] transition-colors"
+            className="inline-flex items-center justify-center h-10 px-6 text-sm font-semibold text-white rounded-full transition-colors"
+            style={{ backgroundColor: BRAND.accent }}
           >
             Tạo Kế Hoạch Của Bạn
           </a>
@@ -55,7 +65,10 @@ export function SharedPreviewPage({ shareId }: Props) {
     : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 via-white to-amber-50 px-4 py-8">
+    <div
+      className="min-h-screen px-4 py-8"
+      style={{ background: `linear-gradient(to bottom, ${BRAND.primaryLight}, white, #fffbeb)` }}
+    >
       <div className="max-w-md mx-auto space-y-4">
         {/* Header */}
         <div className="text-center">
@@ -74,7 +87,7 @@ export function SharedPreviewPage({ shareId }: Props) {
         {/* Guest count */}
         {data.guests.length > 0 && (
           <div className="rounded-xl border border-[#e8ddd0] bg-white/80 p-4 text-center">
-            <p className="text-2xl font-bold text-[#c0392b]">{data.guests.length}</p>
+            <p className="text-2xl font-bold" style={{ color: BRAND.accent }}>{data.guests.length}</p>
             <p className="text-xs text-[#8a7060]">khách mời</p>
           </div>
         )}
@@ -83,7 +96,8 @@ export function SharedPreviewPage({ shareId }: Props) {
         <div className="text-center pt-2">
           <a
             href="/"
-            className="inline-flex items-center justify-center h-10 px-6 text-sm font-semibold text-white bg-[#c0392b] rounded-full hover:bg-[#a93226] transition-colors"
+            className="inline-flex items-center justify-center h-10 px-6 text-sm font-semibold text-white rounded-full transition-colors"
+            style={{ backgroundColor: BRAND.accent }}
           >
             💍 Tạo Kế Hoạch Đám Cưới
           </a>

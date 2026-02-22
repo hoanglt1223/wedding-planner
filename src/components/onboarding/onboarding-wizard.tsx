@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { OnboardingPreview } from "./onboarding-preview";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
+import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
+
+const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 
 const SAMPLE_DATA = {
   bride: "Nguyễn Thị A",
@@ -39,7 +42,15 @@ export function OnboardingWizard({ store }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 via-white to-amber-50 flex items-center justify-center px-4 py-8">
+    <div
+      className="min-h-screen flex items-center justify-center px-4 py-8"
+      style={{
+        background: `linear-gradient(to bottom, ${BRAND.primaryLight}, white, #fffbeb)`,
+        "--brand": BRAND.accent,
+        "--brand-dark": BRAND.primaryDark,
+        "--brand-border": BRAND.themeBorder,
+      } as React.CSSProperties}
+    >
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
           <div className="text-5xl mb-3">💍</div>
@@ -54,7 +65,7 @@ export function OnboardingWizard({ store }: Props) {
             <div
               key={s}
               className={`h-1.5 rounded-full transition-all ${
-                s === step ? "w-8 bg-[#c0392b]" : s < step ? "w-8 bg-[#c0392b]/40" : "w-4 bg-gray-200"
+                s === step ? "w-8 bg-[var(--brand)]" : s < step ? "w-8 bg-[var(--brand)]/40" : "w-4 bg-gray-200"
               }`}
             />
           ))}
@@ -74,7 +85,7 @@ export function OnboardingWizard({ store }: Props) {
                 value={bride}
                 onChange={(e) => setBride(e.target.value)}
                 placeholder="Nguyễn Thị..."
-                className="w-full h-10 px-3 text-sm border border-[#e8ddd0] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#c0392b]/30"
+                className="w-full h-10 px-3 text-sm border border-[var(--brand-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
               />
             </div>
             <div>
@@ -86,7 +97,7 @@ export function OnboardingWizard({ store }: Props) {
                 value={groom}
                 onChange={(e) => setGroom(e.target.value)}
                 placeholder="Trần Văn..."
-                className="w-full h-10 px-3 text-sm border border-[#e8ddd0] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#c0392b]/30"
+                className="w-full h-10 px-3 text-sm border border-[var(--brand-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
               />
             </div>
             <div>
@@ -97,13 +108,13 @@ export function OnboardingWizard({ store }: Props) {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full h-10 px-3 text-sm border border-[#e8ddd0] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#c0392b]/30"
+                className="w-full h-10 px-3 text-sm border border-[var(--brand-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
               />
             </div>
             <button
               onClick={() => setStep(1)}
               disabled={!canContinue}
-              className="w-full h-11 text-sm font-semibold text-white bg-[#c0392b] rounded-full hover:bg-[#a93226] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               Tiếp Tục →
             </button>
@@ -115,12 +126,12 @@ export function OnboardingWizard({ store }: Props) {
             <p className="text-sm text-[#5a3e2e] text-center">
               Quy trình cưới truyền thống Việt Nam
             </p>
-            <div className="max-h-[50vh] overflow-y-auto rounded-xl border border-[#e8ddd0] bg-white/80 p-3">
+            <div className="max-h-[50vh] overflow-y-auto rounded-xl border border-[var(--brand-border)] bg-white/80 p-3">
               <OnboardingPreview />
             </div>
             <button
               onClick={() => setStep(2)}
-              className="w-full h-11 text-sm font-semibold text-white bg-[#c0392b] rounded-full hover:bg-[#a93226] transition-colors"
+              className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] transition-colors"
             >
               Tiếp Tục →
             </button>
@@ -129,7 +140,7 @@ export function OnboardingWizard({ store }: Props) {
 
         {step === 2 && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-[#e8ddd0] bg-white/80 p-5 text-center">
+            <div className="rounded-xl border border-[var(--brand-border)] bg-white/80 p-5 text-center">
               <div className="text-3xl mb-2">💒</div>
               <p className="text-lg font-semibold text-[#2c1810] mb-1">
                 {bride} & {groom}
@@ -149,7 +160,7 @@ export function OnboardingWizard({ store }: Props) {
             </div>
             <button
               onClick={handleComplete}
-              className="w-full h-11 text-sm font-semibold text-white bg-[#c0392b] rounded-full hover:bg-[#a93226] transition-colors animate-pulse"
+              className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] transition-colors animate-pulse"
             >
               Bắt Đầu Lên Kế Hoạch! 🎉
             </button>

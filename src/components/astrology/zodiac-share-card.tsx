@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  getZodiac, getSoundElement, getElementRelation, ELEMENT_LABEL,
+  getZodiac, getSoundElement, ELEMENT_LABEL,
   type CompatType,
 } from "@/lib/astrology";
+import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 
 interface Props {
   brideYear: number;
@@ -127,7 +128,8 @@ function drawCard({ brideYear, groomYear, brideName, groomName, score, relationT
   ctx.fillText("Tử Vi Hợp Tuổi", cx, 50);
 
   // Bottom branding
-  ctx.fillStyle = "#c0392b";
+  const brandTheme = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
+  ctx.fillStyle = brandTheme.accent;
   ctx.fillRect(0, H - 50, W, 50);
   ctx.font = "bold 16px sans-serif";
   ctx.fillStyle = "#fff";
@@ -165,7 +167,7 @@ function drawPerson(
 
   // Element
   ctx.font = "bold 20px sans-serif";
-  ctx.fillStyle = "#c0392b";
+  ctx.fillStyle = (THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0]).accent;
   ctx.fillText(`${se.emoji} ${ELEMENT_LABEL[se.element]}`, x, 325);
 
   // Sound element name
