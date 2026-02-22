@@ -156,6 +156,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                           <tr className="border-b border-gray-200">
                             <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">Bước</th>
                             <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold">Hoạt động</th>
+                            <th className="text-left py-0.5 text-gray-500 font-semibold w-16">Phụ trách</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -166,6 +167,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                                 {s.text}
                                 {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
                               </td>
+                              <td className="py-0.5 text-gray-500 align-top">{s.responsible || ""}</td>
                             </tr>
                           ))}
                         </tbody>

@@ -179,6 +179,7 @@ export function CeremonySteps({
                   <tr className="border-b border-gray-200">
                     <th className="text-left py-1.5 pr-2 text-gray-500 font-semibold w-14">Bước</th>
                     <th className="text-left py-1.5 pr-2 text-gray-500 font-semibold">Hoạt động</th>
+                    <th className="text-left py-1.5 pr-2 text-gray-500 font-semibold w-20">Phụ trách</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -192,6 +193,9 @@ export function CeremonySteps({
                         {s.note && (
                           <span className="block text-[0.6rem] text-gray-400 mt-0.5">{s.note}</span>
                         )}
+                      </td>
+                      <td className="py-1.5 text-gray-500 align-top whitespace-nowrap">
+                        {s.responsible || ""}
                       </td>
                     </tr>
                   ))}
