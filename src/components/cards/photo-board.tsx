@@ -83,9 +83,9 @@ export function PhotoBoard({ photos, onAddPhoto, onRemovePhoto }: PhotoBoardProp
             <button
               key={t}
               onClick={() => setFilter(t)}
-              className={`px-2 py-0.5 rounded text-[0.7rem] font-medium transition-colors ${
+              className={`px-2 py-0.5 rounded text-xs font-medium transition-colors ${
                 filter === t
-                  ? "bg-red-700 text-white"
+                  ? "bg-primary text-primary-foreground"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -114,14 +114,14 @@ export function PhotoBoard({ photos, onAddPhoto, onRemovePhoto }: PhotoBoardProp
                 }}
               />
               <div className="p-1.5">
-                <span className="text-[0.6rem] bg-gray-100 rounded px-1 py-0.5">{p.tag}</span>
+                <span className="text-2xs bg-gray-100 rounded px-1 py-0.5">{p.tag}</span>
                 {p.note && (
-                  <div className="text-[0.65rem] text-gray-500 mt-0.5 truncate">{p.note}</div>
+                  <div className="text-2xs text-gray-500 mt-0.5 truncate">{p.note}</div>
                 )}
               </div>
               <button
                 onClick={() => onRemovePhoto(p.id)}
-                className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                className="absolute top-1 right-1 w-5 h-5 rounded-full bg-destructive text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
               >
                 ✕
               </button>

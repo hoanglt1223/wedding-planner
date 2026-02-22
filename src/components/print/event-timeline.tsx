@@ -17,7 +17,7 @@ export function EventTimeline({ info }: EventTimelineProps) {
   const events = [
     { label: "Dạm Ngõ", date: info.engagementDate, icon: "🏠", color: "bg-amber-500" },
     { label: "Đám Hỏi", date: info.betrothalDate, icon: "💍", color: "bg-pink-500" },
-    { label: "Ngày Cưới", date: info.date, icon: "💒", color: "bg-red-500" },
+    { label: "Ngày Cưới", date: info.date, icon: "💒", color: "bg-primary" },
   ].filter((e) => e.date);
 
   if (events.length === 0) return null;
@@ -44,7 +44,7 @@ export function EventTimeline({ info }: EventTimelineProps) {
                 </span>
                 <span className="text-xs text-gray-500">{fmDate(ev.date)}</span>
               </div>
-              <div className="text-[0.7rem] text-gray-400 mt-0.5">
+              <div className="text-xs text-gray-400 mt-0.5">
                 {(() => {
                   const d = new Date(ev.date + "T00:00:00");
                   const now = new Date();

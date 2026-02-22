@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BUDGET_CATEGORIES } from "@/data/budget-categories";
 import { formatMoney } from "@/lib/format";
 import { BudgetCategoryRow } from "./budget-category-row";
@@ -47,13 +46,13 @@ export function BudgetPanel({
   );
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base">💰 Ngân Sách</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-1">
+    <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4">
+      <div className="pb-2">
+        <h2 className="text-base font-semibold">💰 Ngân Sách</h2>
+      </div>
+      <div className="space-y-1">
         <input
-          className="w-full border border-gray-300 rounded px-2 py-1 text-center font-bold text-[#c0392b] text-[1rem]"
+          className="w-full border border-gray-300 rounded px-2 py-1 text-center font-bold text-[var(--theme-primary)] text-base"
           value={formatMoney(budget)}
           onChange={handleBudgetInput}
           onFocus={(e) => e.target.select()}
@@ -63,7 +62,7 @@ export function BudgetPanel({
           {PRESETS.map(([label, value]) => (
             <span
               key={label}
-              className="cursor-pointer text-blue-500 font-semibold hover:underline text-[0.75rem] px-1.5 py-0.5 rounded hover:bg-blue-50"
+              className="cursor-pointer text-blue-500 font-semibold hover:underline text-xs px-1.5 py-0.5 rounded hover:bg-blue-50"
               onClick={() => onSetBudget(value)}
             >
               {label}
@@ -101,11 +100,11 @@ export function BudgetPanel({
               })}
             </div>
 
-            <div className="mt-2 p-2.5 bg-gray-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem] leading-relaxed">
+            <div className="mt-2 p-2.5 bg-gray-50 rounded-lg text-center text-xs sm:text-sm leading-relaxed">
               Tổng:{" "}
               <b className={overBudget ? "text-red-500" : ""}>{totalPct}%</b>
               {" = "}
-              <b className="text-[#c0392b]">{formatMoney(totalAllocated)}đ</b>
+              <b className="text-[var(--theme-primary)]">{formatMoney(totalAllocated)}đ</b>
               <br className="sm:hidden" />
               <span className="hidden sm:inline">{" | "}</span>
               <span className="sm:hidden"> </span>
@@ -114,7 +113,7 @@ export function BudgetPanel({
                 {formatMoney(remaining)}đ
               </b>
             </div>
-            <div className="mt-1 p-2.5 bg-amber-50 rounded-lg text-center text-[0.78rem] sm:text-[0.82rem]">
+            <div className="mt-1 p-2.5 bg-amber-50 rounded-lg text-center text-xs sm:text-sm">
               Đã chi:{" "}
               <b className={totalExpenses > budget ? "text-red-500" : "text-amber-600"}>
                 {formatMoney(totalExpenses)}đ
@@ -122,14 +121,14 @@ export function BudgetPanel({
               {" / "}
               <b>{formatMoney(budget)}đ</b>
               {totalExpenses > 0 && budget > 0 && (
-                <span className="ml-1 text-[0.72rem]">
+                <span className="ml-1 text-xs">
                   ({Math.round((totalExpenses / budget) * 100)}%)
                 </span>
               )}
             </div>
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

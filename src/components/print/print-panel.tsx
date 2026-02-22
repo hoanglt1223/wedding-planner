@@ -33,7 +33,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
         {/* Header */}
         <div className="rounded-xl bg-white p-4 text-center shadow print-clean">
           <h2 className="text-lg sm:text-xl font-bold">SỔ TAY ĐÁM CƯỚI</h2>
-          <div className="mt-1 text-base font-bold text-red-700">
+          <div className="mt-1 text-base font-bold text-primary">
             {info.groom} &amp; {info.bride}
           </div>
           <div className="text-sm text-gray-500">
@@ -55,14 +55,14 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
               {step.icon} {step.title}
             </h2>
             {step.formalName && (
-              <div className="text-[0.65rem] text-gray-400 italic mb-1.5">
+              <div className="text-2xs text-gray-400 italic mb-1.5">
                 Tên chính thức: {step.formalName}
               </div>
             )}
             {step.meaning && (
               <div className="mb-2 rounded border border-amber-200 bg-amber-50 p-2">
-                <div className="text-[0.65rem] font-semibold text-amber-800 mb-0.5">Ý nghĩa</div>
-                <p className="text-[0.65rem] text-amber-700 leading-relaxed">{step.meaning}</p>
+                <div className="text-2xs font-semibold text-amber-800 mb-0.5">Ý nghĩa</div>
+                <p className="text-2xs text-amber-700 leading-relaxed">{step.meaning}</p>
               </div>
             )}
             {step.ceremonies.map((cer, ci) => {
@@ -74,9 +74,9 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                 <div key={ci} className="mb-4 last:mb-0">
                   <h3 className="text-xs sm:text-sm font-semibold mb-1.5 flex items-center gap-1.5 flex-wrap">
                     <span>{cer.name}</span>
-                    <span className={`text-[0.65rem] px-1.5 py-0.5 rounded ${
+                    <span className={`text-2xs px-1.5 py-0.5 rounded ${
                       cer.required
-                        ? "bg-red-100 text-red-700"
+                        ? "bg-primary/10 text-primary"
                         : "bg-gray-100 text-gray-500"
                     }`}>
                       {cer.required ? "BẮT BUỘC" : "TÙY CHỌN"}
@@ -100,7 +100,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                             </span>
                           </div>
                           {item.detail && (
-                            <div className="ml-6 text-[0.6rem] text-gray-500 leading-relaxed mt-0.5">
+                            <div className="ml-6 text-2xs text-gray-500 leading-relaxed mt-0.5">
                               {item.detail}
                             </div>
                           )}
@@ -112,10 +112,10 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                   {/* Ceremony sequence */}
                   {sequence.length > 0 && hasTimed ? (
                     <div className="mt-2 ml-1">
-                      <div className="text-[0.65rem] font-semibold text-gray-500 mb-1 uppercase">
+                      <div className="text-2xs font-semibold text-gray-500 mb-1 uppercase">
                         Lịch trình chi tiết:
                       </div>
-                      <table className="w-full text-[0.65rem]">
+                      <table className="w-full text-2xs">
                         <thead>
                           <tr className="border-b border-gray-200">
                             <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">Giờ</th>
@@ -126,7 +126,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                         <tbody>
                           {sequence.map((s, ti) => (
                             <tr key={ti} className="border-b border-gray-50">
-                              <td className="py-0.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">{s.time || ""}</td>
+                              <td className="py-0.5 pr-2 font-mono font-semibold text-primary align-top whitespace-nowrap">{s.time || ""}</td>
                               <td className="py-0.5 pr-2 text-gray-700 align-top">
                                 {s.text}
                                 {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
@@ -139,10 +139,10 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                     </div>
                   ) : sequence.length > 0 ? (
                     <div className="mt-2 ml-1">
-                      <div className="text-[0.65rem] font-semibold text-gray-500 mb-1 uppercase">
+                      <div className="text-2xs font-semibold text-gray-500 mb-1 uppercase">
                         Lịch trình chi tiết:
                       </div>
-                      <table className="w-full text-[0.65rem]">
+                      <table className="w-full text-2xs">
                         <thead>
                           <tr className="border-b border-gray-200">
                             <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">Bước</th>
@@ -153,7 +153,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                         <tbody>
                           {sequence.map((s, ri) => (
                             <tr key={ri} className="border-b border-gray-50">
-                              <td className="py-0.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">{ri + 1}</td>
+                              <td className="py-0.5 pr-2 font-mono font-semibold text-primary align-top whitespace-nowrap">{ri + 1}</td>
                               <td className="py-0.5 pr-2 text-gray-700 align-top">
                                 {s.text}
                                 {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
@@ -169,7 +169,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                   {/* Gifts/offerings */}
                   {cer.gifts && cer.gifts.length > 0 && (
                     <div className="mt-2 ml-1">
-                      <div className="text-[0.65rem] font-semibold text-gray-500 mb-1 uppercase">
+                      <div className="text-2xs font-semibold text-gray-500 mb-1 uppercase">
                         Lễ vật:
                       </div>
                       <div className="space-y-0.5">
@@ -197,9 +197,9 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
 
             {step.notes && step.notes.length > 0 && (
               <div className="mt-2 rounded border border-blue-200 bg-blue-50 p-2">
-                <div className="text-[0.65rem] font-semibold text-blue-800 mb-0.5">Lưu ý quan trọng</div>
+                <div className="text-2xs font-semibold text-blue-800 mb-0.5">Lưu ý quan trọng</div>
                 {step.notes.map((note, ni) => (
-                  <div key={ni} className="text-[0.65rem] text-blue-700 leading-relaxed">• {note}</div>
+                  <div key={ni} className="text-2xs text-blue-700 leading-relaxed">• {note}</div>
                 ))}
               </div>
             )}

@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   downloadSampleCsv,
@@ -66,20 +65,20 @@ export function GuestPanel({
     : guests;
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base">👥 Khách Mời ({guests.length})</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-2">
+    <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4">
+      <div className="pb-2">
+        <h2 className="text-base font-semibold">👥 Khách Mời ({guests.length})</h2>
+      </div>
+      <div className="space-y-2">
         {guests.length > 0 && (
           <div className="text-sm bg-blue-50 text-blue-800 rounded px-3 py-1">
             Trai: <b>{traiCount}</b> | Gái: <b>{gaiCount}</b> | Bàn ≈ <b>{tableCount}</b>
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-1 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
+        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
           <Input
-            className="col-span-2 sm:col-span-1 h-8 text-sm"
+            className="h-8 text-sm"
             placeholder="Họ tên"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -105,7 +104,7 @@ export function GuestPanel({
             value={group}
             onChange={(e) => setGroup(e.target.value)}
           />
-          <Button size="sm" className="h-8 px-3 col-span-2 sm:col-span-1" onClick={handleAdd}>+ Thêm</Button>
+          <Button size="sm" className="h-8 px-3" onClick={handleAdd}>+ Thêm</Button>
         </div>
 
         <div className="flex gap-1 flex-wrap">
@@ -141,7 +140,7 @@ export function GuestPanel({
             <button
               className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
                 view === "list"
-                  ? "bg-red-700 text-white"
+                  ? "bg-primary text-primary-foreground"
                   : "text-gray-500 hover:bg-gray-100"
               }`}
               onClick={() => setView("list")}
@@ -151,7 +150,7 @@ export function GuestPanel({
             <button
               className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
                 view === "chart"
-                  ? "bg-red-700 text-white"
+                  ? "bg-primary text-primary-foreground"
                   : "text-gray-500 hover:bg-gray-100"
               }`}
               onClick={() => setView("chart")}
@@ -187,7 +186,7 @@ export function GuestPanel({
         {guests.length > 0 && view === "chart" && (
           <SeatingChart guests={guests} />
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

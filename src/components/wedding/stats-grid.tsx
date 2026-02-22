@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { formatShort } from "@/lib/format";
 
 interface StatsGridProps {
@@ -20,12 +19,10 @@ export function StatsGrid({ totalSteps, done, total, budget, progressPct }: Stat
   return (
     <div className="grid grid-cols-4 gap-1.5 mb-2.5 max-sm:grid-cols-2">
       {stats.map((s) => (
-        <Card key={s.label} className="text-center py-2.5 px-1">
-          <CardContent className="p-0">
-            <div className="text-lg font-extrabold text-red-700">{s.value}</div>
-            <div className="text-[0.65rem] text-muted-foreground">{s.label}</div>
-          </CardContent>
-        </Card>
+        <div key={s.label} className="bg-[var(--theme-surface)] rounded-xl p-3 shadow-sm border border-[var(--theme-border)] text-center py-2.5 px-1">
+          <div className="text-lg font-extrabold text-primary">{s.value}</div>
+          <div className="text-2xs text-muted-foreground">{s.label}</div>
+        </div>
       ))}
     </div>
   );

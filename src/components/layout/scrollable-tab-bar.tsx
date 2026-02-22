@@ -56,10 +56,10 @@ export function ScrollableTabBar({
 
   const activeClass = isPill
     ? "bg-white shadow-sm text-foreground font-semibold"
-    : "bg-red-700 text-white border-red-700";
+    : "bg-primary text-primary-foreground border-primary";
   const inactiveClass = isPill
     ? "text-muted-foreground hover:text-foreground hover:bg-muted"
-    : "bg-white border-amber-200 hover:border-red-300";
+    : "bg-[var(--theme-surface)] border-[var(--theme-border)] hover:border-primary/50";
   const baseClass = isPill
     ? "flex-shrink-0 snap-start px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap"
     : "shrink-0 snap-start px-3 py-2 rounded-lg border-2 text-xs font-semibold transition-colors whitespace-nowrap";
@@ -77,7 +77,7 @@ export function ScrollableTabBar({
         >
           {tab.label}
           {tab.suffix && (
-            <span className="ml-1 text-[0.6rem] opacity-70">{tab.suffix}</span>
+            <span className="ml-1 text-2xs opacity-70">{tab.suffix}</span>
           )}
         </button>
       ))}

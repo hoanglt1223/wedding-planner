@@ -68,7 +68,7 @@ export function Navbar({
     : null;
 
   return (
-    <header className="h-12 sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm flex items-center">
+    <header className="h-12 sticky top-0 z-50 border-b bg-[var(--theme-surface)]/95 backdrop-blur-sm flex items-center">
       <div className="max-w-[920px] mx-auto px-3 w-full flex items-center gap-2 h-full">
         {/* Title */}
         <span
@@ -81,7 +81,7 @@ export function Navbar({
         {/* Nav tabs with gradient fade */}
         <div className="relative flex-1 flex items-center overflow-hidden h-full">
           {showLeftFade && (
-            <div className="absolute left-0 top-0 h-full w-6 z-10 pointer-events-none bg-gradient-to-r from-white/95 to-transparent" />
+            <div className="absolute left-0 top-0 h-full w-6 z-10 pointer-events-none bg-gradient-to-r from-[var(--theme-surface)]/95 to-transparent" />
           )}
           <div
             ref={tabsRef}
@@ -106,7 +106,7 @@ export function Navbar({
             })}
           </div>
           {showRightFade && (
-            <div className="absolute right-0 top-0 h-full w-6 z-10 pointer-events-none bg-gradient-to-l from-white/95 to-transparent" />
+            <div className="absolute right-0 top-0 h-full w-6 z-10 pointer-events-none bg-gradient-to-l from-[var(--theme-surface)]/95 to-transparent" />
           )}
         </div>
 
@@ -128,7 +128,7 @@ export function Navbar({
           </div>
           {countdownLabel && (
             <span
-              className={`text-[0.65rem] font-semibold px-1.5 py-0.5 rounded-full ${
+              className={`text-2xs font-semibold px-1.5 py-0.5 rounded-full ${
                 countdown?.passed
                   ? "bg-green-100 text-green-700"
                   : "bg-[var(--theme-primary-light)] text-[var(--theme-primary)]"

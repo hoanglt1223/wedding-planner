@@ -62,7 +62,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
         </h2>
 
         {/* Model info */}
-        <div className="text-[0.7rem] text-muted-foreground/60">
+        <div className="text-xs text-muted-foreground/60">
           Model: glm-5 | API key configured server-side (Z_AI_KEY)
         </div>
 

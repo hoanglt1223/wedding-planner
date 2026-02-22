@@ -43,13 +43,13 @@ function CheckableRow({
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <li className={`rounded-lg px-2 py-1.5 text-sm transition-colors ${
-        checked ? "bg-green-50 text-green-800 line-through opacity-70" : "hover:bg-red-50 text-gray-700"
+        checked ? "bg-[var(--theme-surface-muted)] text-primary line-through opacity-70" : "hover:bg-[var(--theme-surface-muted)] text-gray-700"
       }`}>
         <div className="flex items-center gap-2">
           <span
             onClick={(e) => { e.stopPropagation(); onToggle(checkKey); }}
             className={`inline-flex items-center justify-center w-4 h-4 rounded border flex-shrink-0 cursor-pointer transition-colors ${
-              checked ? "bg-green-500 border-green-500 text-white" : "border-gray-400"
+              checked ? "bg-primary border-primary text-primary-foreground" : "border-[var(--theme-border)]"
             }`}
           >
             {checked && (
@@ -65,7 +65,7 @@ function CheckableRow({
             {step.text}
           </span>
           {step.cost != null && step.cost > 0 && (
-            <span className="text-[0.65rem] font-semibold bg-amber-100 text-amber-700 rounded px-1.5 py-0.5 ml-1">
+            <span className="text-2xs font-semibold bg-amber-100 text-amber-700 rounded px-1.5 py-0.5 ml-1">
               {formatShort(step.cost)}
             </span>
           )}
@@ -105,11 +105,11 @@ export function CeremonySteps({
   if (steps.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-xl p-3 shadow-sm">
+    <div className="bg-[var(--theme-surface)] rounded-xl p-3 shadow-sm border border-[var(--theme-border)]">
       {/* Section 1: Checkable items */}
       {checkable.length > 0 && (
         <>
-          <h2 className="text-sm font-bold text-red-800 mb-2">Checklist</h2>
+          <h2 className="text-sm font-bold text-primary mb-2">Checklist</h2>
           <ul className="space-y-1">
             {checkable.map((s, i) => {
               const key = `${stepId}_${ceremonyIndex}_${i}`;
@@ -135,10 +135,10 @@ export function CeremonySteps({
         hasTimed ? (
           /* Timed table */
           <>
-            <h2 className="text-sm font-bold text-red-800 mb-2">
+            <h2 className="text-sm font-bold text-primary mb-2">
               Lịch Trình Chi Tiết
               {timeOffset !== 0 && (
-                <span className="ml-1.5 text-[0.65rem] font-normal text-gray-400">
+                <span className="ml-1.5 text-2xs font-normal text-gray-400">
                   ({timeOffset > 0 ? "+" : ""}{timeOffset} phút)
                 </span>
               )}
@@ -155,13 +155,13 @@ export function CeremonySteps({
                 <tbody>
                   {sequence.map((s, i) => (
                     <tr key={i} className="border-b border-gray-50 last:border-0">
-                      <td className="py-1.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">
+                      <td className="py-1.5 pr-2 font-mono font-semibold text-primary align-top whitespace-nowrap">
                         {s.time ? offsetTime(s.time, timeOffset) : ""}
                       </td>
                       <td className="py-1.5 pr-2 text-gray-700 align-top">
                         {s.text}
                         {s.note && (
-                          <span className="block text-[0.6rem] text-gray-400 mt-0.5">{s.note}</span>
+                          <span className="block text-2xs text-gray-400 mt-0.5">{s.note}</span>
                         )}
                       </td>
                       <td className="py-1.5 text-gray-500 align-top whitespace-nowrap">
@@ -176,7 +176,7 @@ export function CeremonySteps({
         ) : (
           /* Numbered table */
           <>
-            <h2 className="text-sm font-bold text-red-800 mb-2">Lịch Trình Chi Tiết</h2>
+            <h2 className="text-sm font-bold text-primary mb-2">Lịch Trình Chi Tiết</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
@@ -189,13 +189,13 @@ export function CeremonySteps({
                 <tbody>
                   {sequence.map((s, i) => (
                     <tr key={i} className="border-b border-gray-50 last:border-0">
-                      <td className="py-1.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">
+                      <td className="py-1.5 pr-2 font-mono font-semibold text-primary align-top whitespace-nowrap">
                         {i + 1}
                       </td>
                       <td className="py-1.5 pr-2 text-gray-700 align-top">
                         {s.text}
                         {s.note && (
-                          <span className="block text-[0.6rem] text-gray-400 mt-0.5">{s.note}</span>
+                          <span className="block text-2xs text-gray-400 mt-0.5">{s.note}</span>
                         )}
                       </td>
                       <td className="py-1.5 text-gray-500 align-top whitespace-nowrap">

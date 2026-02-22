@@ -130,13 +130,13 @@ function IdeaCard({ idea, onNavigate }: IdeaCardProps) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-semibold text-foreground">{idea.title}</span>
-          <span className={`rounded-full border px-2 py-0.5 text-[0.65rem] font-medium ${badge.cls}`}>
+          <span className={`rounded-full border px-2 py-0.5 text-2xs font-medium ${badge.cls}`}>
             {badge.label}
           </span>
           {hasLink && (
             <button
               onClick={() => onNavigate(idea.link!.page, idea.link!.tab)}
-              className="ml-auto rounded-full bg-muted px-2.5 py-0.5 text-[0.65rem] font-medium text-blue-600 hover:bg-muted/80 hover:text-blue-500 transition-colors"
+              className="ml-auto rounded-full bg-muted px-2.5 py-0.5 text-2xs font-medium text-blue-600 hover:bg-muted/80 hover:text-blue-500 transition-colors"
             >
               {idea.link!.hint} →
             </button>

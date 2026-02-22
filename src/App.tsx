@@ -63,7 +63,7 @@ function App() {
         weddingDate={state.info.date}
         info={state.info}
       />
-      <div className="max-w-[920px] mx-auto px-2 pt-2">
+      <div className="max-w-[920px] mx-auto px-3 sm:px-2 pt-2">
         <PageRouter
           state={state}
           store={store}

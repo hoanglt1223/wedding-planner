@@ -24,15 +24,15 @@ export function CeremonySection({
   return (
     <div className="space-y-2">
       {/* Header card */}
-      <div className="bg-white rounded-xl p-3 shadow-sm">
+      <div className="bg-[var(--theme-surface)] rounded-xl p-3 shadow-sm border border-[var(--theme-border)]">
         <div className="flex items-center gap-2 mb-1">
           <h2 className="text-base font-bold text-gray-900 flex-1">{ceremony.name}</h2>
           {ceremony.required ? (
-            <Badge className="bg-red-600 text-white text-[0.6rem] px-1.5 py-0.5 h-auto">
+            <Badge className="bg-primary text-primary-foreground text-2xs px-1.5 py-0.5 h-auto">
               BẮT BUỘC
             </Badge>
           ) : (
-            <Badge variant="outline" className="text-amber-600 border-amber-400 text-[0.6rem] px-1.5 py-0.5 h-auto">
+            <Badge variant="outline" className="text-amber-600 border-amber-400 text-2xs px-1.5 py-0.5 h-auto">
               TÙY CHỌN
             </Badge>
           )}

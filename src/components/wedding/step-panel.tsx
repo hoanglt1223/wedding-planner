@@ -78,7 +78,7 @@ export function StepPanel({
   return (
     <div className="space-y-2">
       {/* Overview card */}
-      <div className="bg-white rounded-xl p-3 shadow-sm">
+      <div className="bg-[var(--theme-surface)] rounded-xl p-3 shadow-sm border border-[var(--theme-border)]">
         <h2 className="text-base font-bold text-gray-900 mb-0.5">
           {step.icon} {step.title}
         </h2>
@@ -98,27 +98,27 @@ export function StepPanel({
         )}
 
         <div className="flex items-center gap-2 mb-2 flex-wrap">
-          <span className="text-[0.68rem] font-semibold bg-amber-100 text-amber-800 rounded px-2 py-0.5">
+          <span className="text-xs font-semibold bg-amber-100 text-amber-800 rounded px-2 py-0.5">
             ⏰ {step.timeline}
           </span>
           {step.aiHint && (
             <Button
               size="sm"
               variant="outline"
-              className="h-6 text-[0.68rem] px-2 border-blue-300 text-blue-600 hover:bg-blue-50"
+              className="h-6 text-xs px-2 border-blue-300 text-blue-600 hover:bg-blue-50"
               onClick={() => onGoAI(step.aiHint)}
             >
               🤖 Hỏi AI
             </Button>
           )}
           {hasTimes && (
-            <label className="inline-flex items-center gap-1 text-[0.68rem] font-medium text-gray-600">
+            <label className="inline-flex items-center gap-1 text-xs font-medium text-gray-600">
               🕐 Giờ bắt đầu
               <input
                 type="time"
                 value={currentStart}
                 onChange={(e) => onSetStepStartTime(step.id, e.target.value)}
-                className="border border-gray-300 rounded px-1.5 py-0.5 text-[0.68rem] font-mono w-[5.5rem]"
+                className="border border-gray-300 rounded px-1.5 py-0.5 text-xs font-mono w-[5.5rem]"
               />
             </label>
           )}
@@ -126,7 +126,7 @@ export function StepPanel({
         {pct > 0 && (
           <>
             <Progress value={pct} className="h-2 mb-1" />
-            <div className="text-[0.68rem] text-gray-400 text-right">
+            <div className="text-xs text-gray-400 text-right">
               {done}/{total} ({pct}%)
             </div>
           </>
@@ -155,11 +155,11 @@ export function StepPanel({
 
       {/* Step-level notes */}
       {step.notes && step.notes.length > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 shadow-sm">
-          <div className="text-xs font-semibold text-blue-800 mb-1">📝 Lưu ý quan trọng</div>
+        <div className="bg-[var(--theme-note-bg)] border border-[var(--theme-note-border)] rounded-xl p-3 shadow-sm">
+          <div className="text-xs font-semibold text-[var(--theme-note-text)] mb-1">📝 Lưu ý quan trọng</div>
           <div className="space-y-0.5">
             {step.notes.map((note, i) => (
-              <div key={i} className="text-xs text-blue-700 leading-relaxed">• {note}</div>
+              <div key={i} className="text-xs text-[var(--theme-note-text)] leading-relaxed">• {note}</div>
             ))}
           </div>
         </div>

@@ -47,7 +47,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
               <span className="text-sm font-bold text-amber-800">
                 🪑 {tableName}
               </span>
-              <span className="text-[0.65rem] bg-amber-200/60 text-amber-700 rounded-full px-2 py-0.5">
+              <span className="text-2xs bg-amber-200/60 text-amber-700 rounded-full px-2 py-0.5">
                 {tableGuests.length} người
               </span>
             </div>
@@ -55,7 +55,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
               {tableGuests.map((g) => (
                 <div
                   key={g.id}
-                  className="flex items-center gap-1.5 text-[0.75rem]"
+                  className="flex items-center gap-1.5 text-xs"
                 >
                   <span className={g.side === "trai" ? "text-blue-500" : "text-pink-500"}>
                     {g.side === "trai" ? "♂" : "♀"}
@@ -74,7 +74,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
             <span className="text-sm font-bold text-gray-600">
               ❓ Chưa xếp bàn
             </span>
-            <span className="text-[0.65rem] bg-gray-200/60 text-gray-600 rounded-full px-2 py-0.5">
+            <span className="text-2xs bg-gray-200/60 text-gray-600 rounded-full px-2 py-0.5">
               {ungrouped.length} người
             </span>
           </div>
@@ -82,7 +82,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
             {ungrouped.map((g) => (
               <div
                 key={g.id}
-                className="flex items-center gap-1.5 text-[0.75rem]"
+                className="flex items-center gap-1.5 text-xs"
               >
                 <span className={g.side === "trai" ? "text-blue-500" : "text-pink-500"}>
                   {g.side === "trai" ? "♂" : "♀"}

@@ -39,7 +39,7 @@ export function BackgroundGrid({
               />
             )}
             <div
-              className="text-[0.6rem] uppercase tracking-widest opacity-80"
+              className="text-2xs uppercase tracking-widest opacity-80"
               style={{ color: bg.accentColor }}
             >
               — {eventName} —
@@ -52,11 +52,11 @@ export function BackgroundGrid({
               <span className="text-base font-normal opacity-40">&</span>{" "}
               {bride}
             </div>
-            <div className="text-[0.75rem]" style={{ color: bg.accentColor }}>
+            <div className="text-xs" style={{ color: bg.accentColor }}>
               📅 {date}
             </div>
             <div
-              className="mt-1.5 text-[0.6rem] opacity-50"
+              className="mt-1.5 text-2xs opacity-50"
               style={{ color: bg.textColor }}
             >
               {groomFamily} ♥ {brideFamily}

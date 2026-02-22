@@ -42,19 +42,19 @@ export function InvitationGrid({
             }}
           >
             <div
-              className="text-[0.55rem] uppercase tracking-[4px] opacity-70"
+              className="text-2xs uppercase tracking-[4px] opacity-70"
               style={{ color: bg.accentColor }}
             >
               ✦ THIỆP MỜI ✦
             </div>
             <div
-              className="my-1.5 text-[0.65rem] opacity-60"
+              className="my-1.5 text-2xs opacity-60"
               style={{ color: bg.textColor }}
             >
               {groomFamily} &amp; {brideFamily}
             </div>
             <div
-              className="my-1 text-[0.7rem] opacity-75"
+              className="my-1 text-xs opacity-75"
               style={{ color: bg.textColor }}
             >
               {invitationMessage}
@@ -71,11 +71,11 @@ export function InvitationGrid({
               className="mx-auto my-1.5 h-px w-10 opacity-50"
               style={{ background: bg.accentColor }}
             />
-            <div className="my-1 text-[0.72rem]" style={{ color: bg.accentColor }}>
+            <div className="my-1 text-xs" style={{ color: bg.accentColor }}>
               📅 {dateFull}
             </div>
             <div
-              className="mt-2 text-[0.58rem] leading-relaxed opacity-45"
+              className="mt-2 text-2xs leading-relaxed opacity-45"
               style={{ color: bg.textColor }}
             >
               Sự hiện diện của quý khách
