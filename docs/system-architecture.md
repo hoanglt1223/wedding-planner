@@ -67,6 +67,7 @@ TypeScript → Vite Bundle → Vercel Edge → Browser
 
 **Key Files:**
 - `health.ts` - Health check endpoint (DB + Redis status)
+- `astrology-reading.ts` - AI-powered astrology reading endpoint (OpenAI gpt-4o-mini)
 - Future: User routes, guest endpoints, budget APIs, vendor endpoints
 
 **Error Handling:**
@@ -120,11 +121,10 @@ npm run db:studio    # UI for schema inspection
 export function createRedis() { ... }
 ```
 
-**Use Cases (TBD):**
-- Session tokens
-- Guest RSVP cache
-- Vendor availability
-- Rate limiting for APIs
+**Use Cases:**
+- AI reading cache (300-day TTL per unique birth data + year)
+- Rate limiting for APIs (5 req/IP/day for /api/astrology-reading)
+- Future: Session tokens, guest RSVP cache, vendor availability
 
 ## Data Flow
 
@@ -165,9 +165,45 @@ git push → Vercel auto-deploys
 - **Database:** Neon auto-scaling connections
 - **Cache:** Redis horizontal scaling (Upstash)
 
+## AI Integration (OpenAI)
+
+**Endpoint:** POST `/api/astrology-reading`
+
+**Model:** gpt-4o-mini (cost-optimized, 16x cheaper than gpt-4o)
+
+**Configuration:**
+- Auth: API key via `OPENAI_API_KEY` env var
+- Rate limit: 5 requests per IP per day (via @upstash/ratelimit)
+- Cache: Redis with 300-day TTL per unique birth data + year combination
+- Input: Zodiac sign, birth date, gender, year
+- Output: AI-generated astrological reading in Vietnamese
+
+**Architecture:**
+```
+Frontend (AI Reading Button)
+  → POST /api/astrology-reading
+    → Check Redis cache (300-day TTL)
+    → If miss: Call OpenAI gpt-4o-mini
+    → Cache result to Redis
+    → Return to frontend
+    → Display with cached indicator
+```
+
+**Rate Limiting:**
+- @upstash/ratelimit sliding window algorithm
+- 5 requests per IP per day
+- Returns 429 Too Many Requests when limit exceeded
+
+**Cost Optimization:**
+- gpt-4o-mini selected over gpt-4o for Vietnamese quality + cost
+- Long cache TTL (300 days) reduces API calls
+- Rate limiting prevents abuse and controls spending
+
 ## Monitoring
 
 - `/api/health` endpoint for deployment checks
+- `/api/astrology-reading` rate limit and cache metrics
 - Vercel Analytics dashboard
-- Database query logs (Neon console)
+- OpenAI API usage dashboard (cost tracking)
 - Redis command monitoring (Upstash dashboard)
+- Database query logs (Neon console)

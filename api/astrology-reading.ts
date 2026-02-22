@@ -1,10 +1,18 @@
-import OpenAI from "openai";
 import { Ratelimit } from "@upstash/ratelimit";
 import { createRedis } from "../src/lib/redis";
 import { getZodiac, getSoundElement, getStemBranch } from "../src/lib/astrology";
 
+const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
+const FETCH_TIMEOUT_MS = 25_000;
+
+function getCorsOrigin(): string {
+  const url = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (url) return `https://${url}`;
+  return process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "*";
+}
+
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": getCorsOrigin(),
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -93,6 +101,19 @@ export default {
       if (!body.birthDate || !body.gender || !body.currentYear) {
         return Response.json({ error: "missing_fields" }, { status: 400, headers: CORS_HEADERS });
       }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(body.birthDate)) {
+        return Response.json({ error: "invalid_birth_date" }, { status: 400, headers: CORS_HEADERS });
+      }
+      const birthYear = parseInt(body.birthDate.slice(0, 4));
+      if (isNaN(birthYear) || birthYear < 1900 || birthYear > 2100) {
+        return Response.json({ error: "invalid_birth_date" }, { status: 400, headers: CORS_HEADERS });
+      }
+      if (body.birthHour !== null && (typeof body.birthHour !== "number" || body.birthHour < 0 || body.birthHour > 23)) {
+        return Response.json({ error: "invalid_birth_hour" }, { status: 400, headers: CORS_HEADERS });
+      }
+      if (!["male", "female"].includes(body.gender)) {
+        return Response.json({ error: "invalid_gender" }, { status: 400, headers: CORS_HEADERS });
+      }
 
       // Redis cache check
       const hourKey = body.birthHour !== null ? String(body.birthHour) : "x";
@@ -102,26 +123,53 @@ export default {
         return Response.json({ text: cached, cached: true }, { headers: CORS_HEADERS });
       }
 
-      // Check API key before calling OpenAI
-      const apiKey = process.env.OPENAI_API_KEY;
+      // Check API key before calling ZhipuAI
+      const apiKey = process.env.Z_AI_KEY;
       if (!apiKey) {
         return Response.json({ error: "ai_not_configured" }, { status: 503, headers: CORS_HEADERS });
       }
 
-      // Build prompt and call OpenAI
+      // Build prompt and call ZhipuAI
       const prompt = buildPrompt(body);
-      const client = new OpenAI({ apiKey });
-      const completion = await client.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: prompt.system },
-          { role: "user", content: prompt.user },
-        ],
-        max_tokens: 800,
-        temperature: 0.7,
-      });
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
-      const text = completion.choices[0]?.message?.content ?? "";
+      let aiRes: Response;
+      try {
+        aiRes = await fetch(ZHIPU_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "glm-5",
+            messages: [
+              { role: "system", content: prompt.system },
+              { role: "user", content: prompt.user },
+            ],
+            max_tokens: 800,
+            temperature: 0.7,
+          }),
+          signal: controller.signal,
+        });
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") {
+          return Response.json({ error: "ai_timeout" }, { status: 504, headers: CORS_HEADERS });
+        }
+        throw err;
+      } finally {
+        clearTimeout(timer);
+      }
+
+      if (!aiRes.ok) {
+        const errText = await aiRes.text();
+        console.error("ZhipuAI error:", aiRes.status, errText);
+        return Response.json({ error: "generation_failed" }, { status: 502, headers: CORS_HEADERS });
+      }
+
+      const data = await aiRes.json() as { choices?: { message?: { content?: string } }[] };
+      const text = data.choices?.[0]?.message?.content ?? "";
       if (!text) {
         return Response.json({ error: "empty_response" }, { status: 500, headers: CORS_HEADERS });
       }
@@ -133,7 +181,7 @@ export default {
     } catch (err: unknown) {
       const status = (err as { status?: number })?.status;
       if (status === 429) {
-        return Response.json({ error: "openai_rate_limited" }, { status: 429, headers: CORS_HEADERS });
+        return Response.json({ error: "zhipu_rate_limited" }, { status: 429, headers: CORS_HEADERS });
       }
       if (status === 503) {
         return Response.json({ error: "ai_unavailable" }, { status: 503, headers: CORS_HEADERS });

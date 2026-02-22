@@ -2,6 +2,41 @@
 
 All notable changes are documented here.
 
+## [0.1.0] - 2026-02-23
+
+### Added
+
+- **Astrology Expansion — Personal Astrology**
+  - Data model migration v11 → v12: Added brideBirthDate, brideBirthHour, brideGender, groomBirthDate, groomBirthHour, groomGender fields
+  - Birth input form with date picker, Vietnamese Earthly Branch hour dropdown, collapsible gender toggle
+  - 12 zodiac personality profiles with characteristics, strengths, weaknesses, and compatibility
+  - 5 element profiles (Wood, Fire, Earth, Metal, Water) with detailed descriptions
+  - 12 yearly forecasts for 2026 with predictions for each zodiac sign
+  - New "Cá Nhân" (Personal) tab with personality section, yearly forecast, lucky attributes, and element deep-dive
+  - AI reading API endpoint (/api/astrology-reading) powered by OpenAI gpt-4o-mini
+  - Redis caching for AI readings with 300-day TTL
+  - Rate limiting (5 requests/IP/day) via @upstash/ratelimit
+  - AI reading frontend with "Xếp Chi Tiết" button, loading states, error handling, and cached indicator
+  - Updated all 5 astrology tabs to use v12 data model
+  - Feng shui tab now uses explicit gender field instead of hardcoded values
+
+### Dependencies Added
+
+- `openai` (v4.x) — OpenAI SDK for AI-powered readings
+- `@upstash/ratelimit` — Rate limiting for API endpoints
+
+### Environment Variables
+
+- `OPENAI_API_KEY` — OpenAI API key (required for AI readings)
+
+### Performance Notes
+
+- AI readings cached for 300 days per unique birth data + year combination
+- Rate limited to 5 requests per IP per day to control costs
+- gpt-4o-mini selected for cost efficiency (16x cheaper than gpt-4o)
+
+---
+
 ## [0.0.1] - 2026-02-21
 
 ### Added

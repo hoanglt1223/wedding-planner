@@ -81,19 +81,25 @@ export function migrateState(): void {
       };
       delete v12Info.brideBirthYear;
       delete v12Info.groomBirthYear;
-      const v12Data = { ...v11Data, info: v12Info };
+      const v12Data = {
+        ...v11Data,
+        info: v12Info,
+        onboardingComplete: v11Data.onboardingComplete ?? !!(info.bride),
+      };
       localStorage.setItem(V12_KEY, JSON.stringify(v12Data));
     } catch { /* corrupt data */ }
     return;
   }
 
-  // v10→v11 migration: add partyTime
+  // v10→v11→v12 migration: add partyTime then convert birth fields
   const v10Raw = localStorage.getItem(V10_KEY);
   if (v10Raw) {
     try {
       const v10Data = JSON.parse(v10Raw);
       const v11Data = { ...v10Data, partyTime: v10Data.partyTime ?? "noon" };
       localStorage.setItem(V11_KEY, JSON.stringify(v11Data));
+      // Fall through to v11→v12 by re-calling ourselves
+      migrateState();
     } catch {
       // Corrupt data — ignore
     }
@@ -205,6 +211,8 @@ export function migrateState(): void {
     // v10→v11: add partyTime
     const v11Data = { ...v10Data, partyTime: "noon" };
     localStorage.setItem(V11_KEY, JSON.stringify(v11Data));
+    // Fall through to v11→v12 by re-calling ourselves
+    migrateState();
   } catch {
     // Corrupt data — ignore, fresh state will be used
   }

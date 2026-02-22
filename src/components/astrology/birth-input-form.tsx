@@ -38,7 +38,7 @@ export function BirthInputForm({ info, onUpdateInfo }: BirthInputFormProps) {
             min="1940-01-01"
             max="2010-12-31"
             value={info.brideBirthDate || ""}
-            onChange={(e) => onUpdateInfo("brideBirthDate", e.target.value || null)}
+            onChange={(e) => onUpdateInfo("brideBirthDate", e.target.value)}
             className="text-xs h-8"
           />
           {info.bride && (
@@ -54,7 +54,7 @@ export function BirthInputForm({ info, onUpdateInfo }: BirthInputFormProps) {
             min="1940-01-01"
             max="2010-12-31"
             value={info.groomBirthDate || ""}
-            onChange={(e) => onUpdateInfo("groomBirthDate", e.target.value || null)}
+            onChange={(e) => onUpdateInfo("groomBirthDate", e.target.value)}
             className="text-xs h-8"
           />
           {info.groom && (

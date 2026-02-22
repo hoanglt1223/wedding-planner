@@ -1,12 +1,13 @@
 ---
 title: "Phase 1: Astrology Expansion — Personal Astrology"
 description: "Add personal zodiac profiles, birth date/hour input, AI readings via OpenAI, and migrate data model to v12"
-status: pending
+status: completed
 priority: P1
 effort: 18h
 branch: master
 tags: [astrology, personal, ai, openai, migration, phase-1]
 created: 2026-02-23
+completed: 2026-02-23
 ---
 
 # Phase 1: Astrology Expansion — Personal Astrology
@@ -19,13 +20,13 @@ Expand astrology page from couple-only analysis to include personal zodiac profi
 
 | # | Phase | Status | Effort | File |
 |---|-------|--------|--------|------|
-| 1 | Data Model Migration (v11 -> v12) | pending | 2h | [phase-01](./phase-01-data-model-migration.md) |
-| 2 | Birth Input Form Upgrade | pending | 2h | [phase-02](./phase-02-birth-input-form.md) |
-| 3 | Static Content Data Files | pending | 3h | [phase-03](./phase-03-static-content-data.md) |
-| 4 | Personal Tab UI | pending | 3h | [phase-04](./phase-04-personal-tab-ui.md) |
-| 5 | AI Reading API Endpoint | pending | 3h | [phase-05](./phase-05-ai-reading-api.md) |
-| 6 | AI Reading Frontend | pending | 2h | [phase-06](./phase-06-ai-reading-frontend.md) |
-| 7 | Existing Tabs Update | pending | 3h | [phase-07](./phase-07-existing-tabs-update.md) |
+| 1 | Data Model Migration (v11 -> v12) | completed | 2h | [phase-01](./phase-01-data-model-migration.md) |
+| 2 | Birth Input Form Upgrade | completed | 2h | [phase-02](./phase-02-birth-input-form.md) |
+| 3 | Static Content Data Files | completed | 3h | [phase-03](./phase-03-static-content-data.md) |
+| 4 | Personal Tab UI | completed | 3h | [phase-04](./phase-04-personal-tab-ui.md) |
+| 5 | AI Reading API Endpoint | completed | 3h | [phase-05](./phase-05-ai-reading-api.md) |
+| 6 | AI Reading Frontend | completed | 2h | [phase-06](./phase-06-ai-reading-frontend.md) |
+| 7 | Existing Tabs Update | completed | 3h | [phase-07](./phase-07-existing-tabs-update.md) |
 
 ## Dependencies
 

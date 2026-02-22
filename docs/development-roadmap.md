@@ -20,6 +20,26 @@
 
 ---
 
+### Phase 1.5: Astrology Expansion (COMPLETE)
+
+**Status:** Complete (Feb 23, 2026)
+
+**Deliverables:**
+- Data model migration (v11 → v12) with full birth date/hour/gender fields
+- Birth input form with date picker and Vietnamese Earthly Branch hour selector
+- 12 zodiac profiles, 5 element profiles, 12 yearly forecasts for 2026
+- New "Cá Nhân" (Personal) tab with personality, forecast, lucky attributes, element deep-dive
+- AI reading API endpoint with OpenAI gpt-4o-mini integration
+- Redis caching (300-day TTL) and rate limiting (5 req/IP/day)
+- AI reading frontend with loading, error handling, cached indicator
+- All 5 astrology tabs updated for v12 data model
+
+**Metrics:** All 7 phases completed, API tested, Redis caching operational, rate limiting active.
+
+**New Dependencies:** openai, @upstash/ratelimit
+
+---
+
 ### Phase 2: Core Features (TBD)
 
 **Estimated Duration:** 4-6 weeks
@@ -76,6 +96,7 @@
 | Milestone | Target Date | Status |
 |-----------|------------|--------|
 | Bootstrap Complete | Feb 21, 2026 | Done |
+| Astrology Expansion | Feb 23, 2026 | Done |
 | Core Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |
