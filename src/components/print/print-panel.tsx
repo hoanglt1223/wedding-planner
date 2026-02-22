@@ -149,16 +149,27 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
                   ) : sequence.length > 0 ? (
                     <div className="mt-2 ml-1">
                       <div className="text-[0.65rem] font-semibold text-gray-500 mb-1 uppercase">
-                        Trình tự:
+                        Lịch trình chi tiết:
                       </div>
-                      <ol className="space-y-0.5 pl-4 text-xs list-decimal list-inside">
-                        {sequence.map((s, ri) => (
-                          <li key={ri} className="text-gray-700">
-                            {s.text}
-                            {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
-                          </li>
-                        ))}
-                      </ol>
+                      <table className="w-full text-[0.65rem]">
+                        <thead>
+                          <tr className="border-b border-gray-200">
+                            <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">Bước</th>
+                            <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold">Hoạt động</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {sequence.map((s, ri) => (
+                            <tr key={ri} className="border-b border-gray-50">
+                              <td className="py-0.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">{ri + 1}</td>
+                              <td className="py-0.5 pr-2 text-gray-700 align-top">
+                                {s.text}
+                                {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   ) : null}
 

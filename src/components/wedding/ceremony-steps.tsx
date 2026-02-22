@@ -170,29 +170,33 @@ export function CeremonySteps({
             </div>
           </>
         ) : (
-          /* Numbered timeline */
+          /* Numbered table */
           <>
-            <h2 className="text-sm font-bold text-red-800 mb-2">Trình Tự</h2>
-            <div className="relative pl-6">
-              <div className="absolute left-2.5 top-1 bottom-1 w-px bg-red-200" />
-              <div className="space-y-2">
-                {sequence.map((s, i) => (
-                  <div key={i} className="relative flex items-start gap-2">
-                    <div className="absolute -left-6 flex items-center justify-center w-5 h-5 rounded-full bg-red-700 text-white text-[0.6rem] font-bold flex-shrink-0 mt-0.5">
-                      {i + 1}
-                    </div>
-                    <div className="ml-0.5">
-                      <div className="text-[0.68rem] font-semibold text-amber-700 mb-0.5">
-                        Bước {i + 1}
-                      </div>
-                      <div className="text-xs text-gray-700">{s.text}</div>
-                      {s.note && (
-                        <div className="text-[0.6rem] text-gray-400 mt-0.5">{s.note}</div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <h2 className="text-sm font-bold text-red-800 mb-2">Lịch Trình Chi Tiết</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-1.5 pr-2 text-gray-500 font-semibold w-14">Bước</th>
+                    <th className="text-left py-1.5 pr-2 text-gray-500 font-semibold">Hoạt động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sequence.map((s, i) => (
+                    <tr key={i} className="border-b border-gray-50 last:border-0">
+                      <td className="py-1.5 pr-2 font-mono font-semibold text-red-700 align-top whitespace-nowrap">
+                        {i + 1}
+                      </td>
+                      <td className="py-1.5 pr-2 text-gray-700 align-top">
+                        {s.text}
+                        {s.note && (
+                          <span className="block text-[0.6rem] text-gray-400 mt-0.5">{s.note}</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </>
         )
