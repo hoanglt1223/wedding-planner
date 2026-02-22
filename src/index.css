@@ -130,6 +130,11 @@
     }
 }
 
+@utility text-2xs {
+  font-size: 0.625rem;
+  line-height: 0.875rem;
+}
+
 /* === Wedding Planner Custom Styles === */
 
 /* Hide scrollbar for tab navigation */

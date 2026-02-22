@@ -37,11 +37,20 @@ function App() {
     <div
       className="min-h-screen text-[#2c1810]"
       style={{
-        backgroundColor: theme.primaryLight,
+        backgroundColor: theme.bg,
         "--theme-primary": theme.primary,
         "--theme-primary-dark": theme.primaryDark,
         "--theme-primary-light": theme.primaryLight,
         "--theme-accent": theme.accent,
+        "--theme-surface": theme.surface,
+        "--theme-surface-muted": theme.surfaceMuted,
+        "--theme-border": theme.themeBorder,
+        "--theme-bg": theme.bg,
+        "--theme-note-bg": theme.noteBg,
+        "--theme-note-border": theme.noteBorder,
+        "--theme-note-text": theme.noteText,
+        "--primary": theme.primaryHSL,
+        "--primary-foreground": theme.primaryForegroundHSL,
       } as React.CSSProperties}
     >
       <Navbar

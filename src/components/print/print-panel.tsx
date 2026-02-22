@@ -41,7 +41,7 @@ export function PrintPanel({ info, steps }: PrintPanelProps) {
           </div>
           {info.date && (
             <div className="mt-1 text-xs text-gray-400">
-              Ngày cưới: {new Date(info.date).toLocaleDateString("vi-VN")}
+              Ngày cưới: {new Date(info.date + "T00:00:00").toLocaleDateString("vi-VN")}
             </div>
           )}
         </div>

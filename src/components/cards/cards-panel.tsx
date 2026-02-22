@@ -8,7 +8,7 @@ import { PhotoBoard } from "./photo-board";
 
 const fmDs = (d: string) =>
   d
-    ? new Date(d).toLocaleDateString("vi-VN", {
+    ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -17,7 +17,7 @@ const fmDs = (d: string) =>
 
 const fmD = (d: string) =>
   d
-    ? new Date(d).toLocaleDateString("vi-VN", {
+    ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
         weekday: "long",
         day: "2-digit",
         month: "2-digit",

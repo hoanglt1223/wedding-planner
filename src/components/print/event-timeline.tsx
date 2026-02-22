@@ -7,7 +7,7 @@ interface EventTimelineProps {
 export function EventTimeline({ info }: EventTimelineProps) {
   const fmDate = (d: string) =>
     d
-      ? new Date(d).toLocaleDateString("vi-VN", {
+      ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
