@@ -3,7 +3,8 @@ import { PAGES } from "@/data/page-definitions";
 import { t } from "@/lib/i18n";
 import { getCountdown, type CountdownResult } from "@/lib/countdown";
 import { RemindersBell } from "./reminders";
-import type { CoupleInfo } from "@/types/wedding";
+import type { CoupleInfo, WeddingState } from "@/types/wedding";
+import { createShareLink } from "@/lib/share";
 
 interface NavbarProps {
   activePage: string;
@@ -14,6 +15,7 @@ interface NavbarProps {
   total: number;
   weddingDate: string;
   info: CoupleInfo;
+  state?: WeddingState;
 }
 
 export function Navbar({
@@ -25,6 +27,7 @@ export function Navbar({
   total,
   weddingDate,
   info,
+  state,
 }: NavbarProps) {
   const [countdown, setCountdown] = useState<CountdownResult | null>(() =>
     getCountdown(weddingDate)
@@ -139,10 +142,43 @@ export function Navbar({
           )}
         </div>
 
+        {/* Share button */}
+        {state && <ShareButton state={state} />}
+
         {/* Reminders bell */}
         <RemindersBell info={info} />
       </div>
     </header>
+  );
+}
+
+function ShareButton({ state }: { state: WeddingState }) {
+  const [sharing, setSharing] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    setSharing(true);
+    try {
+      const url = await createShareLink(state);
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Silently fail - share requires server
+    } finally {
+      setSharing(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleShare}
+      disabled={sharing}
+      className="shrink-0 h-8 w-8 flex items-center justify-center rounded-full text-sm hover:bg-muted transition-colors"
+      title="Chia sẻ"
+    >
+      {copied ? "✓" : sharing ? "…" : "↗"}
+    </button>
   );
 }
 

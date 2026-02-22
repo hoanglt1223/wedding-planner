@@ -58,8 +58,17 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest
-  if (localStorage.getItem(V11_KEY)) return;
+  // Already on latest — check for onboardingComplete backfill
+  if (localStorage.getItem(V11_KEY)) {
+    try {
+      const data = JSON.parse(localStorage.getItem(V11_KEY)!);
+      if (data.onboardingComplete === undefined) {
+        data.onboardingComplete = !!(data.info?.bride);
+        localStorage.setItem(V11_KEY, JSON.stringify(data));
+      }
+    } catch { /* ignore */ }
+    return;
+  }
 
   // v10→v11 migration: add partyTime
   const v10Raw = localStorage.getItem(V10_KEY);

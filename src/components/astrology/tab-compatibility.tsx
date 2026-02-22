@@ -5,6 +5,7 @@ import {
   ELEMENT_LABEL,
   type CompatType,
 } from "@/lib/astrology";
+import { ZodiacShareButton } from "./zodiac-share-card";
 
 interface TabCompatibilityProps {
   brideYear: number;
@@ -82,6 +83,13 @@ export function TabCompatibility({ brideYear, groomYear, brideName, groomName }:
           </div>
         </CardContent>
       </Card>
+
+      {/* Share button */}
+      <ZodiacShareButton
+        brideYear={brideYear} groomYear={groomYear}
+        brideName={brideName} groomName={groomName}
+        score={score} relationType={rel.type}
+      />
 
       {/* Chi relationships */}
       <Card>

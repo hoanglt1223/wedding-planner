@@ -113,6 +113,7 @@ export interface WeddingState {
   lang: string;
   partyTime: "noon" | "afternoon";
   stepStartTimes: Record<string, string>;
+  onboardingComplete: boolean;
 }
 
 export interface WeddingEvent {

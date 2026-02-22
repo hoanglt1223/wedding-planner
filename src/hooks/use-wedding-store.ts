@@ -157,6 +157,10 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const completeOnboarding = useCallback(() => {
+    setState((prev) => ({ ...prev, onboardingComplete: true }));
+  }, [setState]);
+
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
@@ -201,6 +205,7 @@ export function useWeddingStore() {
     setLang,
     setPartyTime,
     setStepStartTime,
+    completeOnboarding,
     getProgress,
   };
 }

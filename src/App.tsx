@@ -3,6 +3,8 @@ import { useWeddingStore } from "@/hooks/use-wedding-store";
 import { Navbar } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SaveToast } from "@/components/wedding/save-toast";
+import { IosInstallPrompt } from "@/components/pwa/ios-install-prompt";
+import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { PageRouter } from "@/pages/page-router";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 
@@ -33,6 +35,10 @@ function App() {
     store.setPage("ai");
   };
 
+  if (!state.onboardingComplete) {
+    return <OnboardingWizard store={store} />;
+  }
+
   return (
     <div
       className="min-h-screen text-[#2c1810]"
@@ -62,6 +68,7 @@ function App() {
         total={progress.total}
         weddingDate={state.info.date}
         info={state.info}
+        state={state}
       />
       <div className="max-w-[920px] mx-auto px-3 sm:px-2 pt-2">
         <PageRouter
@@ -73,6 +80,7 @@ function App() {
       </div>
       <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} lang={state.lang} onSetLang={store.setLang} />
       <SaveToast visible={showSave} />
+      <IosInstallPrompt />
     </div>
   );
 }
