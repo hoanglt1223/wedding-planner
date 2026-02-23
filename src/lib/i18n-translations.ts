@@ -213,7 +213,6 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Ý nghĩa văn hóa": { vi: "Ý nghĩa văn hóa", en: "Cultural significance" },
   "Mẹo hay": { vi: "Mẹo hay", en: "Helpful tips" },
   "Sai lầm thường gặp": { vi: "Sai lầm thường gặp", en: "Common mistakes" },
-  "Đặc trưng vùng miền": { vi: "Đặc trưng vùng miền", en: "Regional specifics" },
   "Lễ vật truyền thống": { vi: "Lễ vật truyền thống", en: "Traditional items" },
   "Đã chuẩn bị": { vi: "Đã chuẩn bị", en: "Prepared" },
   "Nơi mua": { vi: "Nơi mua", en: "Where to buy" },

@@ -45,54 +45,27 @@ export function BirthInputForm({ info, onUpdateInfo, lang = "vi" }: BirthInputFo
 
   return (
     <div className="space-y-2">
-      {/* Date inputs row */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="text-xs font-semibold text-muted-foreground block mb-0.5">
-            {t("Ngày sinh Cô dâu", lang)}
-          </label>
+      {/* Bride column */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground block">
+          {t("Ngày sinh Cô dâu", lang)}
+          {info.bride && <span className="font-normal ml-1">({info.bride})</span>}
+        </label>
+        <div className="grid grid-cols-2 gap-2">
           <Input
             type="date"
             min="1940-01-01"
             max="2010-12-31"
             value={info.brideBirthDate || ""}
             onChange={(e) => onUpdateInfo("brideBirthDate", e.target.value)}
-            className="text-xs h-8"
+            className="text-xs h-8 min-w-0"
           />
-          {info.bride && (
-            <div className="text-xs text-muted-foreground mt-0.5 truncate">{info.bride}</div>
-          )}
-        </div>
-        <div>
-          <label className="text-xs font-semibold text-muted-foreground block mb-0.5">
-            {t("Ngày sinh Chú rể", lang)}
-          </label>
-          <Input
-            type="date"
-            min="1940-01-01"
-            max="2010-12-31"
-            value={info.groomBirthDate || ""}
-            onChange={(e) => onUpdateInfo("groomBirthDate", e.target.value)}
-            className="text-xs h-8"
-          />
-          {info.groom && (
-            <div className="text-xs text-muted-foreground mt-0.5 truncate">{info.groom}</div>
-          )}
-        </div>
-      </div>
-
-      {/* Hour dropdowns row */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="text-xs font-semibold text-muted-foreground block mb-0.5">
-            {t("Giờ sinh Cô dâu", lang)}
-          </label>
           <select
             value={info.brideBirthHour ?? ""}
             onChange={(e) =>
               onUpdateInfo("brideBirthHour", e.target.value === "" ? null : Number(e.target.value))
             }
-            className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
+            className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs min-w-0 focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="">{t("Không biết", lang)}</option>
             {hours.map((h) => (
@@ -102,16 +75,29 @@ export function BirthInputForm({ info, onUpdateInfo, lang = "vi" }: BirthInputFo
             ))}
           </select>
         </div>
-        <div>
-          <label className="text-xs font-semibold text-muted-foreground block mb-0.5">
-            {t("Giờ sinh Chú rể", lang)}
-          </label>
+      </div>
+
+      {/* Groom column */}
+      <div className="space-y-1.5">
+        <label className="text-xs font-semibold text-muted-foreground block">
+          {t("Ngày sinh Chú rể", lang)}
+          {info.groom && <span className="font-normal ml-1">({info.groom})</span>}
+        </label>
+        <div className="grid grid-cols-2 gap-2">
+          <Input
+            type="date"
+            min="1940-01-01"
+            max="2010-12-31"
+            value={info.groomBirthDate || ""}
+            onChange={(e) => onUpdateInfo("groomBirthDate", e.target.value)}
+            className="text-xs h-8 min-w-0"
+          />
           <select
             value={info.groomBirthHour ?? ""}
             onChange={(e) =>
               onUpdateInfo("groomBirthHour", e.target.value === "" ? null : Number(e.target.value))
             }
-            className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
+            className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs min-w-0 focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="">{t("Không biết", lang)}</option>
             {hours.map((h) => (
