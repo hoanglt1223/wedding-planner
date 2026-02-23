@@ -1,6 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import { createRedis } from "../src/lib/redis";
-import { getZodiac, getSoundElement, getStemBranch } from "../src/lib/astrology";
+import { createRedis } from "../src/lib/redis.js";
+import { getZodiac, getSoundElement, getStemBranch } from "../src/lib/astrology.js";
 
 const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
 const FETCH_TIMEOUT_MS = 25_000;

@@ -1,4 +1,4 @@
-import { createRedis } from "../src/lib/redis";
+import { createRedis } from "../src/lib/redis.js";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
