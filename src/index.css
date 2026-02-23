@@ -128,6 +128,18 @@
     @apply bg-background text-foreground;
     font-family: 'Segoe UI', system-ui, sans-serif;
     }
+  button,
+  a,
+  select,
+  summary,
+  label[for],
+  [role="button"],
+  [role="tab"],
+  [role="checkbox"],
+  [role="switch"],
+  [role="menuitem"] {
+    cursor: pointer;
+    }
 }
 
 @utility text-2xs {
