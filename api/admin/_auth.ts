@@ -1,11 +1,10 @@
 import { and, eq, gt } from "drizzle-orm";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createDb } from "../../src/db/index.js";
 import { adminSessions } from "../../src/db/schema.js";
 
-/** Safely get a header — works with both Web API Headers and Node.js plain objects */
-export function getHeader(request: Request, name: string): string | null {
-  if (typeof request.headers?.get === "function") return request.headers.get(name);
-  const v = (request.headers as unknown as Record<string, string | string[]>)[name.toLowerCase()];
+export function getHeader(req: VercelRequest, name: string): string | null {
+  const v = req.headers[name.toLowerCase()];
   return typeof v === "string" ? v : Array.isArray(v) ? v[0] ?? null : null;
 }
 
@@ -34,9 +33,13 @@ export function getAdminCorsHeaders(methods = "GET, OPTIONS"): Record<string, st
   };
 }
 
-export async function verifyAdminSession(request: Request): Promise<boolean> {
+export function setCors(res: VercelResponse, headers: Record<string, string>): void {
+  for (const [k, v] of Object.entries(headers)) res.setHeader(k, v);
+}
+
+export async function verifyAdminSession(req: VercelRequest): Promise<boolean> {
   try {
-    const cookieHeader = getHeader(request, "cookie") ?? "";
+    const cookieHeader = getHeader(req, "cookie") ?? "";
     const cookies = parseCookies(cookieHeader);
     const sessionId = cookies["admin_session"];
     if (!sessionId) return false;
@@ -54,6 +57,7 @@ export async function verifyAdminSession(request: Request): Promise<boolean> {
   }
 }
 
-export function unauthorizedResponse(corsHeaders: Record<string, string>): Response {
-  return Response.json({ error: "unauthorized" }, { status: 401, headers: corsHeaders });
+export function unauthorizedResponse(res: VercelResponse, corsHeaders: Record<string, string>): void {
+  setCors(res, corsHeaders);
+  res.status(401).json({ error: "unauthorized" });
 }

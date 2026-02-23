@@ -1,35 +1,34 @@
 export const config = { maxDuration: 30 };
 
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
 const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
 const FETCH_TIMEOUT_MS = 25_000;
 
-export default async function handler(req: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
+    return res.status(405).end("Method not allowed");
   }
 
   const apiKey = process.env.Z_AI_KEY;
   if (!apiKey) {
-    return Response.json(
-      { error: "Z_AI_KEY not configured" },
-      { status: 500 },
-    );
+    return res.status(500).json({ error: "Z_AI_KEY not configured" });
   }
 
   try {
-    const body = (await req.json()) as { prompt?: string; budget?: string; lang?: string };
-    const { prompt, budget, lang = "vi" } = body;
+    const body = req.body as { prompt?: string; budget?: string; lang?: string };
+    const { prompt, budget, lang = "vi" } = body ?? {};
 
     if (!prompt) {
-      return Response.json({ error: "Missing prompt" }, { status: 400 });
+      return res.status(400).json({ error: "Missing prompt" });
     }
 
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
-    let res: Response;
+    let fetchRes: Response;
     try {
-      res = await fetch(ZHIPU_URL, {
+      fetchRes = await fetch(ZHIPU_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,30 +53,27 @@ export default async function handler(req: Request): Promise<Response> {
       });
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") {
-        return Response.json(
-          { error: lang === "en" ? "ZhipuAI timed out after 25s. Please try again." : "ZhipuAI timeout sau 25s. Thử lại sau." },
-          { status: 504 },
-        );
+        return res.status(504).json({
+          error: lang === "en"
+            ? "ZhipuAI timed out after 25s. Please try again."
+            : "ZhipuAI timeout sau 25s. Thử lại sau.",
+        });
       }
       throw err;
     } finally {
       clearTimeout(timer);
     }
 
-    if (!res.ok) {
-      const text = await res.text();
-      return Response.json(
-        { error: `ZhipuAI API ${res.status}: ${text}` },
-        { status: 502 },
-      );
+    if (!fetchRes.ok) {
+      const text = await fetchRes.text();
+      return res.status(502).json({ error: `ZhipuAI API ${fetchRes.status}: ${text}` });
     }
 
-    const data = await res.json();
-    return Response.json(data);
+    const data = await fetchRes.json();
+    return res.status(200).json(data);
   } catch (error) {
-    return Response.json(
-      { error: error instanceof Error ? error.message : "Unknown error" },
-      { status: 500 },
-    );
+    return res.status(500).json({
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 }

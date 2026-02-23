@@ -1,4 +1,5 @@
 import { Ratelimit } from "@upstash/ratelimit";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createDb } from "../src/db/index.js";
 import { createRedis } from "../src/lib/redis.js";
 import { userSessions } from "../src/db/schema.js";
@@ -16,6 +17,10 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
+function setCors(res: VercelResponse): void {
+  for (const [k, v] of Object.entries(CORS_HEADERS)) res.setHeader(k, v);
+}
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 interface SyncRequest {
@@ -24,35 +29,29 @@ interface SyncRequest {
   progress: number;
 }
 
-export default async function handler(request: Request): Promise<Response> {
-  if (request.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
-  }
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  setCors(res);
+  if (req.method === "OPTIONS") return res.status(204).end();
 
-  if (request.method !== "POST") {
-    return Response.json({ error: "method_not_allowed" }, { status: 405, headers: CORS_HEADERS });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "method_not_allowed" });
   }
 
   try {
-    // Parse body
-    let body: SyncRequest;
-    try {
-      body = (await request.json()) as SyncRequest;
-    } catch {
-      return Response.json({ error: "invalid_json" }, { status: 400, headers: CORS_HEADERS });
+    const body = req.body as SyncRequest;
+    if (!body || typeof body !== "object") {
+      return res.status(400).json({ error: "invalid_json" });
     }
 
     const { userId, data, progress } = body;
 
-    // Validate userId
     if (!userId || !UUID_RE.test(userId)) {
-      return Response.json({ error: "invalid_user_id" }, { status: 400, headers: CORS_HEADERS });
+      return res.status(400).json({ error: "invalid_user_id" });
     }
 
-    // Validate payload size (<50KB)
     const payloadSize = JSON.stringify(data).length;
     if (payloadSize > 50_000) {
-      return Response.json({ error: "payload_too_large" }, { status: 413, headers: CORS_HEADERS });
+      return res.status(413).json({ error: "payload_too_large" });
     }
 
     // Rate limit: 30 req/min per userId (sliding window)
@@ -60,7 +59,7 @@ export default async function handler(request: Request): Promise<Response> {
       const redis = createRedis();
       const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(30, "1 m"), prefix: "sync_rl" });
       const { success } = await rl.limit(userId);
-      if (!success) return Response.json({ error: "rate_limited" }, { status: 429, headers: CORS_HEADERS });
+      if (!success) return res.status(429).json({ error: "rate_limited" });
     } catch { /* Redis unavailable — skip rate limiting */ }
 
     // Strip sensitive fields before DB storage
@@ -118,9 +117,9 @@ export default async function handler(request: Request): Promise<Response> {
         },
       });
 
-    return Response.json({ ok: true, syncedAt: new Date().toISOString() }, { headers: CORS_HEADERS });
+    return res.status(200).json({ ok: true, syncedAt: new Date().toISOString() });
   } catch (err: unknown) {
     console.error("Sync error:", err);
-    return Response.json({ error: "internal_error" }, { status: 500, headers: CORS_HEADERS });
+    return res.status(500).json({ error: "internal_error" });
   }
 }
