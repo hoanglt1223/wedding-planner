@@ -1,4 +1,5 @@
 import type { WeddingStep } from "@/types/wedding";
+import type { RegionalContent } from "@/data/regions";
 
 export const STEP_ENGAGEMENT: WeddingStep = {
   id: "engagement",
@@ -30,6 +31,12 @@ export const STEP_ENGAGEMENT: WeddingStep = {
       name: "🏠 Lễ Dạm Ngõ",
       required: 1,
       description: "Hai bên gia đình gặp mặt chính thức lần đầu, nhà trai mang lễ vật tượng trưng đến nhà gái để xin phép bàn chuyện cưới hỏi.",
+      regionalNotes: {
+        default: [],
+        north: ["Miền Bắc: gọi 'Chạm ngõ' — nghi thức trang trọng hơn, yêu cầu đủ trầu cau + rượu + chè", "Đoàn nhà trai thường ít người, đi gọn nhẹ"],
+        south: ["Miền Nam: không khí thoải mái hơn, có thể kèm khay trái cây và bánh ngọt", "Một số gia đình miền Nam gộp dạm ngõ với ăn hỏi nếu hai nhà ở xa nhau"],
+        central: ["Miền Trung: gọi 'Giáp lời' hoặc 'Đi nói' — phong cách Huế ảnh hưởng cung đình, trang trọng và chuẩn mực"],
+      } as RegionalContent<string[]>,
       steps: [
         { text: "Xem ngày lành tháng tốt (lịch âm)", cost: 200000, categoryKey: "other", checkable: true },
         { text: "Lễ vật: trầu cau, trà, rượu, bánh, trái cây", cost: 1500000, categoryKey: "ceremonial-gifts", checkable: true },

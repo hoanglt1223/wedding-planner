@@ -6,6 +6,7 @@ const V9_KEY = "wp_v9";
 const V10_KEY = "wp_v10";
 const V11_KEY = "wp_v11";
 const V12_KEY = "wp_v12";
+const V13_KEY = "wp_v13";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -59,8 +60,23 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest v12 — no-op
-  if (localStorage.getItem(V12_KEY)) return;
+  // Already on latest v13 — no-op
+  if (localStorage.getItem(V13_KEY)) return;
+
+  // v12→v13 migration: add region + itemsChecked
+  const v12Raw = localStorage.getItem(V12_KEY);
+  if (v12Raw) {
+    try {
+      const v12Data = JSON.parse(v12Raw);
+      const v13Data = {
+        ...v12Data,
+        region: v12Data.region ?? "south",
+        itemsChecked: v12Data.itemsChecked ?? {},
+      };
+      localStorage.setItem(V13_KEY, JSON.stringify(v13Data));
+    } catch { /* corrupt data */ }
+    return;
+  }
 
   // v11→v12 migration: replace brideBirthYear/groomBirthYear with structured birth fields
   const v11Raw = localStorage.getItem(V11_KEY);

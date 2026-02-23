@@ -13,6 +13,7 @@ import { ELEMENT_PROFILES_EN } from "./astrology-element-profiles.en";
 import { YEARLY_FORECASTS } from "./astrology-yearly-forecast";
 import { YEARLY_FORECASTS_EN } from "./astrology-yearly-forecast.en";
 import type { WeddingStep, BudgetCategory, AiPrompt } from "@/types/wedding";
+import type { Region } from "@/data/regions";
 import type { IdeaItemExt } from "./ideas";
 import type { ZodiacProfile } from "./astrology-zodiac-profiles";
 import type { ElementProfile } from "./astrology-element-profiles";
@@ -45,3 +46,5 @@ export function getElementProfiles(lang: string): ElementProfile[] {
 export function getYearlyForecasts(lang: string): YearlyForecast[] {
   return lang === "en" ? YEARLY_FORECASTS_EN : YEARLY_FORECASTS;
 }
+
+export type { Region };

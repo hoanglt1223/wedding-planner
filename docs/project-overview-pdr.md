@@ -27,7 +27,38 @@ Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready 
 | Cache | Upstash Redis 1.36.2 |
 | Deployment | Vercel |
 
-## Functional Requirements (TBD)
+## Functional Requirements
+
+### Completed Features
+
+**Vietnamese Wedding Content**
+- 8-phase ceremony structure with 40+ ceremony steps
+- Regional variations (North/Central/South Vietnam)
+- Detailed step guides with cultural significance, tips, common mistakes
+- 33 traditional items checklist (per-phase, regional quantity variants)
+- 7 family role cards with per-phase responsibilities
+- 5 etiquette rules with regional notes
+- Auspicious date picker (lunar calendar + Hoàng Đạo/Hắc Đạo, Tam Nương, Nguyệt Kỵ, Ngũ Hành)
+
+**Astrology Features**
+- Birth data input (date, hour, gender) for both bride and groom
+- 12 zodiac profiles with personality traits and compatibility
+- 5 element profiles (Wood, Fire, Earth, Metal, Water)
+- Yearly forecasts for 2026
+- AI-powered astrological readings (OpenAI gpt-4o-mini)
+- Redis caching (300-day TTL) and rate limiting (5 req/IP/day)
+
+**Internationalization**
+- English and Vietnamese full translation coverage
+- Language-aware data loading (26 .en.ts files)
+- Format utilities per language (currency, numbers)
+- Language toggle in Settings
+
+**Theming**
+- 4 pre-configured themes (Traditional Red, Blush Pink, Navy Blue, Sage Green)
+- Dynamic CSS variable application
+
+### In Development (TBD)
 
 - User authentication and multi-user accounts
 - Guest management (RSVP tracking, dietary requirements)
@@ -36,7 +67,7 @@ Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready 
 - Vendor database and communication
 - Real-time notifications
 - Data export (PDF, CSV)
-- Mobile-responsive design
+- Mobile-responsive design improvements
 
 ## Non-Functional Requirements (TBD)
 

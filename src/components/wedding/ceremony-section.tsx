@@ -1,8 +1,11 @@
 import type { Ceremony } from "@/types/wedding";
+import type { Region } from "@/data/regions";
+import { resolveRegional } from "@/data/regions";
 import { Badge } from "@/components/ui/badge";
 import { CeremonySteps } from "./ceremony-steps";
 import { PeopleGrid } from "./people-grid";
 import { GiftsTable } from "./gifts-table";
+import { CollapsibleDetail } from "./collapsible-detail";
 import { t } from "@/lib/i18n";
 
 interface CeremonySectionProps {
@@ -13,6 +16,7 @@ interface CeremonySectionProps {
   onToggleCheck: (key: string) => void;
   timeOffset: number;
   lang?: string;
+  region?: Region;
 }
 
 export function CeremonySection({
@@ -23,7 +27,12 @@ export function CeremonySection({
   onToggleCheck,
   timeOffset,
   lang = "vi",
+  region = "south",
 }: CeremonySectionProps) {
+  const regionalNotes = ceremony.regionalNotes
+    ? resolveRegional(ceremony.regionalNotes, region)
+    : null;
+
   return (
     <div className="space-y-2">
       {/* Header card */}
@@ -43,6 +52,20 @@ export function CeremonySection({
         <p className="text-xs text-gray-500 leading-relaxed">{ceremony.description}</p>
       </div>
 
+      {/* Regional notes */}
+      {regionalNotes && regionalNotes.length > 0 && (
+        <CollapsibleDetail title={t("Đặc trưng vùng miền", lang)} icon="🗺️">
+          <ul className="space-y-1">
+            {regionalNotes.map((note, i) => (
+              <li key={i} className="text-xs text-blue-700 leading-relaxed flex gap-1.5">
+                <span className="mt-0.5 shrink-0">▸</span>
+                <span>{note}</span>
+              </li>
+            ))}
+          </ul>
+        </CollapsibleDetail>
+      )}
+
       {/* People grid */}
       {ceremony.people.length > 0 && <PeopleGrid people={ceremony.people} />}
 
@@ -60,7 +83,6 @@ export function CeremonySection({
 
       {/* Gifts table */}
       {ceremony.gifts && ceremony.gifts.length > 0 && <GiftsTable gifts={ceremony.gifts} lang={lang} />}
-
     </div>
   );
 }

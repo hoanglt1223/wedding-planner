@@ -1,4 +1,5 @@
 import type { WeddingStep } from "@/types/wedding";
+import type { RegionalContent } from "@/data/regions";
 
 export const STEP_BETROTHAL_EN: WeddingStep = {
   id: "betrothal",
@@ -46,6 +47,12 @@ export const STEP_BETROTHAL_EN: WeddingStep = {
       name: "🎀 Betrothal Ceremony (Le An Hoi)",
       required: 1,
       description: "The groom's family brings ceremonial gift trays to the bride's home. The gift bearer team lines up to formally present the trays. This is the most solemn and important ceremony before the wedding day.",
+      regionalNotes: {
+        default: [],
+        north: ["Northern: ODD number of trays (5, 7, 9, 11)", "Specialty items: green rice cakes (banh com), lotus seeds, candied lotus", "Gift bearer team must also be an ODD number of people"],
+        south: ["Southern: EVEN number of trays (6, 8, 10)", "Specialty items: whole roast pig, red sticky rice (xoi gac)", "Betrothal and wedding reception can be held on the same day"],
+        central: ["Central: Even number of trays (4, 6, 8)", "Hue court influence: highly formal and ceremonial", "Giao Boi Hop Can ritual: bride and groom chew betel together, symbolizing harmony"],
+      } as RegionalContent<string[]>,
       steps: [
         { text: "Consult an auspicious time (feng shui master or almanac)", cost: 500000, categoryKey: "other", checkable: true },
         { text: "Order gift trays (5/7/9/11 trays) — from a reputable vendor", cost: 8000000, categoryKey: "ceremonial-gifts", checkable: true },

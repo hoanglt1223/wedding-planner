@@ -2,6 +2,96 @@
 
 All notable changes are documented here.
 
+## [0.3.0] - 2026-02-23
+
+### Added
+
+- **Vietnamese Wedding Content Expansion — Cultural & Regional Features**
+  - Region system: North/Central/South Vietnam with `RegionalContent<T>` DRY pattern
+  - `src/data/regions.ts` — Region type definitions
+  - `src/components/layout/region-selector.tsx` — Region selector in header
+  - Region state in `WeddingState.region`, persisted in store (wp_v13)
+
+  - **Detailed Step Guides:** All 8 ceremony phases with collapsible sections
+    - Cultural significance, practical tips, common mistakes, regional notes
+    - `src/components/wedding/collapsible-detail.tsx` — Reusable detail expanders
+    - Updated all wedding-steps files with new fields
+
+  - **Traditional Items Checklist:** 33 items across 4 phases (Engagement, Betrothal, Procession, Wedding)
+    - `src/data/traditional-items/` — 9 files (items-*.ts, items-*.en.ts, index.ts)
+    - `src/components/wedding/items-checklist.tsx` — Interactive checklist UI
+    - Regional quantity variants (e.g., "1 pair" in North vs "2 pairs" in South)
+    - Persisted in store via `itemsChecked` map
+    - `toggleItemCheck()` action in useWeddingStore hook
+
+  - **Family Roles & Etiquette:** 7 role cards + 5 etiquette rules
+    - `src/data/family-roles/` — 5 files (roles.ts, roles.en.ts, etiquette.ts, etiquette.en.ts, index.ts)
+    - `src/components/wedding/family-roles-panel.tsx` — Role card grid with responsibilities
+    - Per-phase responsibility mapping (role → duties by phase)
+    - Regional etiquette notes via `EtiquetteRule.regionalNotes`
+
+  - **Auspicious Date Picker:** Full lunar calendar with traditional guidelines
+    - `src/data/auspicious/` — 6 files (types.ts, lunar-service.ts, hoang-dao.ts, avoidance-days.ts, ngu-hanh.ts, index.ts)
+    - `src/components/calendar/` — 4 files (auspicious-calendar.tsx, day-cell.tsx, date-detail-modal.tsx, couple-compatibility.tsx)
+    - Features: Hoàng Đạo/Hắc Đạo (lucky/unlucky days), Tam Nương (favorable dates), Nguyệt Kỵ (zodiac conflicts), Ngũ Hành (5 Elements compatibility)
+    - 60-day lunar calendar view with zodiac and holiday indicators
+    - Color-coded cell backgrounds (green=lucky, yellow=neutral, red=unlucky)
+    - Couple compatibility scoring (1-10) based on 5 Elements
+    - Couple birth data integration with yearly compatibility analysis
+
+  - **Store Migration:** wp_v12 → wp_v13
+    - Added `region: Region` field (default: "north")
+    - Added `itemsChecked: Record<string, boolean>` for traditional items tracking
+    - Migration logic in `migrateState()` function
+
+### New Components (13 total)
+
+**Wedding Ceremony:**
+- `ceremony-section.tsx` — Ceremony display with gifts
+- `ceremony-steps.tsx` — Step progression
+- `collapsible-detail.tsx` — Reusable expander for significance/tips/mistakes
+- `family-roles-panel.tsx` — Family role cards with per-phase duties
+- `gifts-table.tsx` — Gift item display
+- `items-checklist.tsx` — Interactive traditional items checklist
+- `people-grid.tsx` — Person card grid
+- `step-panel.tsx` — Main wedding step panel
+- `tab-navigation.tsx` — Phase tab navigation
+- `stats-grid.tsx` — Progress stats
+
+**Calendar:**
+- `auspicious-calendar.tsx` — Main lunar calendar grid
+- `day-cell.tsx` — Individual day cell with indicators
+- `date-detail-modal.tsx` — Extended date information modal
+- `couple-compatibility.tsx` — 5 Elements compatibility display
+
+### New Data Directories (3 total)
+
+- `src/data/traditional-items/` — 9 files, 33 items across 4 phases
+- `src/data/family-roles/` — 5 files, 7 roles + 5 etiquette rules
+- `src/data/auspicious/` — 6 files, lunar calendar logic and compatibility
+
+### Dependencies Added
+
+- `@dqcai/vn-lunar` ^1.0.1 — Vietnamese lunar calendar conversion
+
+### Type Additions
+
+- `Region` — "north" | "central" | "south"
+- `RegionalContent<T>` — Type helper for regional variations
+- `TraditionalItem` — Item with name, icon, regional quantity, phase, purpose
+- `FamilyRole` — Role with per-phase responsibilities
+- `EtiquetteRule` — Rule with title, content, regional notes
+- `Ceremony` fields: `significance`, `tips`, `commonMistakes`, `regionalNotes`
+
+### Performance Notes
+
+- Regional data loaded per-region (no unused content in memory)
+- Lunar calendar calculations via @dqcai/vn-lunar library
+- Checklist state stored in localStorage (wp_v13)
+- No additional API calls for content (all data-driven)
+
+---
+
 ## [0.2.0] - 2026-02-23
 
 ### Added

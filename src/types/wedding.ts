@@ -1,5 +1,9 @@
 // All TypeScript interfaces for the Wedding Planner app
 
+import type { Region, RegionalContent } from "@/data/regions";
+
+export type { Region, RegionalContent };
+
 export interface CeremonyStep {
   text: string;
   time?: string;
@@ -30,6 +34,7 @@ export interface Ceremony {
   steps: CeremonyStep[];
   people: Person[];
   gifts?: GiftItem[];
+  regionalNotes?: RegionalContent<string[]>;  // Region-specific notes
 }
 
 export interface WeddingStep {
@@ -115,6 +120,7 @@ export interface WeddingState {
   photos: PhotoItem[];
   photoIdCounter: number;
   lang: string;
+  region: Region;
   partyTime: "noon" | "afternoon";
   stepStartTimes: Record<string, string>;
   onboardingComplete: boolean;

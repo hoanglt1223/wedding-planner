@@ -4,6 +4,7 @@ import { BudgetPanel } from "@/components/budget/budget-panel";
 import { GuestPanel } from "@/components/guests/guest-panel";
 import { NotesPanel } from "@/components/notes/notes-panel";
 import { VendorPanel } from "@/components/vendors/vendor-panel";
+import { AuspiciousCalendar } from "@/components/calendar/auspicious-calendar";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 
@@ -34,6 +35,7 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         stepStartTime={(state.stepStartTimes || {})[step.id]}
         onSetStepStartTime={store.setStepStartTime}
         lang={lang}
+        region={state.region}
       />
     );
   }
@@ -82,6 +84,19 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onAddVendor={store.addVendor}
         onRemoveVendor={store.removeVendor}
         lang={lang}
+      />
+    );
+  }
+
+  if (tab === stepCount + 4) {
+    return (
+      <AuspiciousCalendar
+        lang={lang}
+        brideBirthDate={state.info.brideBirthDate}
+        groomBirthDate={state.info.groomBirthDate}
+        weddingDate={state.info.date}
+        betrothalDate={state.info.betrothalDate}
+        engagementDate={state.info.engagementDate}
       />
     );
   }

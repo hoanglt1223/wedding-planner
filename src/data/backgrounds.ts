@@ -68,6 +68,7 @@ export const EXTRA_TABS = [
   "👥 Khách Mời",
   "📝 Ghi Chú",
   "🗺️ Vendor",
+  "📅 Ngày Tốt",
 ] as const;
 
 export const DEFAULT_STATE: WeddingState = {
@@ -104,6 +105,7 @@ export const DEFAULT_STATE: WeddingState = {
   photos: [],
   photoIdCounter: 0,
   lang: "vi",
+  region: "south",
   partyTime: "noon",
   stepStartTimes: {},
   onboardingComplete: false,

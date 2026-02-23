@@ -21,14 +21,17 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | `src/main.tsx` | React entry point | Active |
 | `src/App.tsx` | Root component; applies theme CSS vars | Active |
 | `src/data/themes.ts` | Theme definitions (AppTheme interface + 4 themes) | Active |
+| `src/data/regions.ts` | Region type system (North/Central/South + `RegionalContent<T>` helper) | Active |
 | `src/components/ui/` | shadcn/ui components | 6 components ready |
-| `src/components/layout/` | Layout wrappers | 3 components (header, footer, root) |
+| `src/components/layout/` | Layout wrappers | 7 components (header, footer, root, region-selector, theme-picker, topbar, scrollable-tab-bar) |
+| `src/components/wedding/` | Wedding-specific UI | 13 components (ceremony, steps, checklist, family-roles, collapsible-detail, etc.) |
+| `src/components/calendar/` | Auspicious date picker | 4 components (calendar, day-cell, detail-modal, couple-compatibility) |
 | `src/pages/` | Route-based pages | Empty (TBD) |
-| `src/hooks/` | Custom React hooks | Empty (TBD) |
+| `src/hooks/` | Custom React hooks | use-wedding-store, use-local-storage, use-ai-reading |
 | `src/lib/utils.ts` | Tailwind merge utility | Active |
 | `src/lib/i18n.ts` | Translation function: `t(key, lang)` | Active |
 | `src/lib/format.ts` | Locale utilities & formatting with lang parameter | Active |
-| `src/types/` | TypeScript definitions | Empty (TBD) |
+| `src/types/` | TypeScript definitions | wedding.ts with WeddingState, Region, RegionalContent types |
 | `src/index.css` | Global styles + custom utilities (text-2xs) + print styles | Active |
 | `public/` | Static assets | Empty |
 
@@ -52,11 +55,11 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 
 ## Dependencies (Key)
 
-**Frontend:** React 19.2.4, Vite 7.3.1, TypeScript 5.9.3, Tailwind CSS 4.2.0, shadcn/ui 3.8.5
+**Frontend:** React 19.2.4, Vite 7.3.1, TypeScript 5.9.3, Tailwind CSS 4.2.0, shadcn/ui 3.8.5, @dqcai/vn-lunar 1.0.1
 
-**Backend:** Drizzle ORM 0.45.1, Neon serverless, Upstash Redis 1.36.2
+**Backend:** Drizzle ORM 0.45.1, Neon serverless, Upstash Redis 1.36.2, OpenAI SDK
 
-**Tooling:** ESLint, Drizzle Kit, TypeScript compiler
+**Tooling:** ESLint, Drizzle Kit, TypeScript compiler, @upstash/ratelimit
 
 ## Environment Setup
 
@@ -103,7 +106,7 @@ English and Vietnamese language support with centralized translation system.
 - `src/lib/i18n-translations.ts` — ~200 translation key-value pairs (vi/en)
 - `src/data/resolve-data.ts` — 7 lang-aware data getter functions
 
-**Data Translation Files (17 .en.ts files):**
+**Data Translation Files (26 .en.ts files):**
 - `wedding-steps*.en.ts` (7 files) — Wedding ceremony steps
 - `budget-categories.en.ts` — Budget categories
 - `ideas.en.ts` — Planning ideas
@@ -111,6 +114,9 @@ English and Vietnamese language support with centralized translation system.
 - `astrology-zodiac-profiles.en.ts` — Zodiac personality profiles
 - `astrology-element-profiles.en.ts` — Element profiles (Wood, Fire, Earth, Metal, Water)
 - `astrology-yearly-forecast.en.ts` — 2026 yearly forecasts
+- `family-roles/roles.en.ts` — Family role responsibilities per phase
+- `family-roles/etiquette.en.ts` — 5 etiquette rules with regional notes
+- `traditional-items/items-*.en.ts` (4 files) — 33 traditional items across 4 phases with regional quantities
 
 **Format Utilities:**
 - `src/lib/format.ts` — `getLocale(lang)`, `getCurrencySymbol(lang)`, `formatMoney(n, lang)`, `formatShort(n, lang)`

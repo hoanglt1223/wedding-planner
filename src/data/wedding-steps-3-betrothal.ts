@@ -1,4 +1,5 @@
 import type { WeddingStep } from "@/types/wedding";
+import type { RegionalContent } from "@/data/regions";
 
 export const STEP_BETROTHAL: WeddingStep = {
   id: "betrothal",
@@ -46,6 +47,12 @@ export const STEP_BETROTHAL: WeddingStep = {
       name: "🎀 Lễ Ăn Hỏi",
       required: 1,
       description: "Nhà trai mang mâm quả (sính lễ) đến nhà gái, đội bê tráp xếp hàng trao lễ. Đây là nghi lễ trang trọng, long trọng nhất trước ngày cưới.",
+      regionalNotes: {
+        default: [],
+        north: ["Miền Bắc: SỐ LẺ mâm quả (5, 7, 9, 11)", "Đặc trưng: bánh cốm, hạt sen, mứt sen", "Đội bê tráp SỐ LẺ người"],
+        south: ["Miền Nam: SỐ CHẴN mâm quả (6, 8, 10)", "Đặc trưng: heo quay nguyên con, xôi gấc đỏ", "Có thể gộp ăn hỏi + cưới trong cùng ngày"],
+        central: ["Miền Trung: số mâm chẵn (4, 6, 8)", "Phong cách Huế: trang trọng, ảnh hưởng cung đình Nguyễn", "Nghi thức Giao Bôi Hợp Cẩn: cô dâu chú rể cùng nhai trầu, tượng trưng hòa hợp"],
+      } as RegionalContent<string[]>,
       steps: [
         { text: "Xem giờ tốt (thầy phong thủy hoặc lịch vạn niên)", cost: 500000, categoryKey: "other", checkable: true },
         { text: "Đặt mâm quả (5/7/9/11 mâm) — đặt tiệm uy tín", cost: 8000000, categoryKey: "ceremonial-gifts", checkable: true },

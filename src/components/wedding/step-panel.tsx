@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import type { WeddingStep } from "@/types/wedding";
+import type { Region } from "@/data/regions";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { ScrollableTabBar } from "@/components/layout/scrollable-tab-bar";
@@ -16,6 +17,7 @@ interface StepPanelProps {
   stepStartTime?: string;
   onSetStepStartTime: (stepId: string, time: string) => void;
   lang?: string;
+  region?: Region;
 }
 
 function getStepProgress(
@@ -65,6 +67,7 @@ export function StepPanel({
   stepStartTime,
   onSetStepStartTime,
   lang = "vi",
+  region = "south",
 }: StepPanelProps) {
   const { done, total, pct } = getStepProgress(step, checkedKeys);
 
@@ -154,6 +157,7 @@ export function StepPanel({
           onToggleCheck={onToggleCheck}
           timeOffset={timeOffset}
           lang={lang}
+          region={region}
         />
       )}
 

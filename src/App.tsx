@@ -64,6 +64,8 @@ function App() {
         onPageChange={store.setPage}
         lang={state.lang}
         onSetLang={store.setLang}
+        region={state.region}
+        onSetRegion={store.setRegion}
         progressPct={progress.pct}
         done={progress.done}
         total={progress.total}

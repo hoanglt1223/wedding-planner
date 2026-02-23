@@ -1,4 +1,5 @@
 import type { WeddingStep } from "@/types/wedding";
+import type { RegionalContent } from "@/data/regions";
 
 export const STEP_ENGAGEMENT_EN: WeddingStep = {
   id: "engagement",
@@ -30,6 +31,12 @@ export const STEP_ENGAGEMENT_EN: WeddingStep = {
       name: "🏠 Engagement Visit (Le Dam Ngo)",
       required: 1,
       description: "The two families meet officially for the first time. The groom's family brings symbolic gifts to the bride's home to request permission to discuss marriage.",
+      regionalNotes: {
+        default: [],
+        north: ["Northern style: called 'Cham Ngo' — more formal etiquette, betel nuts + wine + tea are required", "The groom's group is typically small and compact"],
+        south: ["Southern style: more relaxed atmosphere; a fruit tray and sweet cakes are common additions", "Some Southern families combine Dam Ngo with the betrothal if both families live far apart"],
+        central: ["Central style: called 'Giap Loi' or 'Di Noi' — Hue court influence makes it more formal and structured"],
+      } as RegionalContent<string[]>,
       steps: [
         { text: "Consult the lunar calendar for an auspicious date", cost: 200000, categoryKey: "other", checkable: true },
         { text: "Gifts: betel nuts & leaves, tea, wine, cakes, fruits", cost: 1500000, categoryKey: "ceremonial-gifts", checkable: true },

@@ -3,14 +3,17 @@ import { PAGES } from "@/data/page-definitions";
 import { t, getLangLabel } from "@/lib/i18n";
 import { getCountdown, type CountdownResult } from "@/lib/countdown";
 import { RemindersBell } from "./reminders";
-import type { CoupleInfo, WeddingState } from "@/types/wedding";
+import type { CoupleInfo, WeddingState, Region } from "@/types/wedding";
 import { createShareLink } from "@/lib/share";
+import { RegionSelector } from "./region-selector";
 
 interface NavbarProps {
   activePage: string;
   onPageChange: (pageId: string) => void;
   lang?: string;
   onSetLang?: (lang: string) => void;
+  region?: Region;
+  onSetRegion?: (region: Region) => void;
   progressPct: number;
   done: number;
   total: number;
@@ -24,6 +27,8 @@ export function Navbar({
   onPageChange,
   lang = "vi",
   onSetLang,
+  region = "south",
+  onSetRegion,
   progressPct,
   done,
   total,
@@ -146,6 +151,11 @@ export function Navbar({
 
         {/* Share button */}
         {state && <ShareButton state={state} />}
+
+        {/* Region selector */}
+        {onSetRegion && (
+          <RegionSelector region={region} onRegionChange={onSetRegion} lang={lang} />
+        )}
 
         {/* Language toggle */}
         {onSetLang && (

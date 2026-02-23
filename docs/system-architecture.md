@@ -45,11 +45,14 @@ Wedding Planner is a three-tier serverless architecture optimized for scalabilit
 
 **Key Directories:**
 - `components/ui/` - shadcn/ui system components
-- `components/layout/` - Root layout, headers, footers
+- `components/layout/` - Root layout, headers, footers, region selector, theme picker
+- `components/wedding/` - Wedding ceremony steps, checklists, family roles, collapsible details
+- `components/calendar/` - Auspicious date picker with lunar calendar and compatibility
 - `pages/` - Route-based page components
 - `hooks/` - Custom React hooks (state management)
 - `lib/` - Utility functions and helpers
 - `types/` - TypeScript interfaces
+- `data/` - Static data (wedding steps, budget categories, astrology, family roles, traditional items, regions)
 
 **Build Pipeline:**
 ```
@@ -234,6 +237,67 @@ Each returns Vietnamese OR English data array based on lang parameter
 **Language Support:**
 - Vietnamese (vi) — default, original language
 - English (en) — full translation coverage for all content
+
+## Regional Content System
+
+**Purpose:** Support regional variations across North, Central, and South Vietnam
+
+**Architecture:**
+```typescript
+type Region = "north" | "central" | "south"
+type RegionalContent<T> = Record<Region, T>
+```
+
+**Components:**
+- `src/data/regions.ts` — Region definitions and helper type
+- `src/components/layout/region-selector.tsx` — UI for selecting region
+- `src/hooks/use-wedding-store.ts` — Region state management (`setRegion()`)
+
+**Data Integration:**
+- 33 traditional items per phase with regional quantity variants
+- Family roles include region-specific duties
+- Ceremony steps include regional notes via `Ceremony.regionalNotes` field
+- Etiquette rules include regional variations
+
+**State Storage:**
+- `WeddingState.region` persisted in localStorage (wp_v13)
+- Default region: "north"
+
+## Auspicious Date Picker System
+
+**Purpose:** Lunar calendar with traditional Vietnamese dating guidelines for wedding planning
+
+**Architecture:**
+```
+Frontend (Auspicious Calendar Component)
+  → Lunar Service (@dqcai/vn-lunar)
+    → Full lunar dates for selected month/year
+  → Hoàng Đạo/Hắc Đạo (Lucky/Unlucky Days)
+  → Tam Nương (3rd/7th/13th lunar days)
+  → Nguyệt Kỵ (Zodiac month conflicts)
+  → Ngũ Hành (5 Elements) couple compatibility
+  → Day cell color coding + detailed info modal
+```
+
+**Components:**
+- `src/components/calendar/auspicious-calendar.tsx` — Main calendar grid
+- `src/components/calendar/day-cell.tsx` — Individual day with indicators
+- `src/components/calendar/date-detail-modal.tsx` — Extended date info
+- `src/components/calendar/couple-compatibility.tsx` — 5 Elements match scoring
+
+**Data Files:**
+- `src/data/auspicious/types.ts` — Type definitions
+- `src/data/auspicious/lunar-service.ts` — Lunar date utilities
+- `src/data/auspicious/hoang-dao.ts` — Lucky/unlucky days mapping
+- `src/data/auspicious/avoidance-days.ts` — Nguyệt Kỵ zodiac conflicts
+- `src/data/auspicious/ngu-hanh.ts` — 5 Elements compatibility matrix
+
+**Features:**
+- 60-day lunar calendar view with date/holiday/zodiac indicators
+- Color-coded cell backgrounds (green=lucky, yellow=neutral, red=unlucky)
+- Couple birth data integration (from `WeddingState.info`)
+- 5 Elements matching algorithm (1-10 score)
+- Detailed info modal with explanation of flags
 
 ## Monitoring
 

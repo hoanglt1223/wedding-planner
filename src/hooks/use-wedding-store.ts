@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -8,7 +8,7 @@ import { migrateState } from "@/lib/migrate-state";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v12";
+const STORAGE_KEY = "wp_v13";
 
 export function useWeddingStore() {
   const [state, setState] = useLocalStorage<WeddingState>(
@@ -146,6 +146,10 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, lang }));
   }, [setState]);
 
+  const setRegion = useCallback((region: Region) => {
+    setState((prev) => ({ ...prev, region }));
+  }, [setState]);
+
   const setPartyTime = useCallback((partyTime: "noon" | "afternoon") => {
     setState((prev) => ({ ...prev, partyTime }));
   }, [setState]);
@@ -203,6 +207,7 @@ export function useWeddingStore() {
     addPhoto,
     removePhoto,
     setLang,
+    setRegion,
     setPartyTime,
     setStepStartTime,
     completeOnboarding,

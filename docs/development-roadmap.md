@@ -59,6 +59,34 @@
 
 ---
 
+### Phase 1.7: Vietnamese Wedding Content Expansion (COMPLETE)
+
+**Status:** Complete (Feb 23, 2026)
+
+**Deliverables:**
+- Region system: North/Central/South Vietnam with `RegionalContent<T>` DRY pattern
+- Region selector in header + state management in `WeddingState.region`
+- Detailed step guides on all 8 ceremony phases (collapsible sections)
+  - Cultural significance, tips, common mistakes, regional notes
+- Traditional items checklist: 33 items across 4 phases (Engagement, Betrothal, Procession, Wedding)
+  - Interactive checklist with regional quantity variants
+  - Persisted in store via `itemsChecked` map
+- Family roles & etiquette: 7 role cards + 5 etiquette rules
+  - Per-phase responsibility mapping
+  - Regional etiquette notes
+- Auspicious date picker: Full lunar calendar
+  - Hoàng Đạo/Hắc Đạo (lucky/unlucky days)
+  - Tam Nương, Nguyệt Kỵ, Ngũ Hành compatibility
+  - Couple compatibility scoring (1-10)
+- Data migration: wp_v12 → wp_v13 with region + itemsChecked fields
+- 9 new data files + 4 component files + 4 calendar components
+
+**Metrics:** 13 wedding-specific components, 9 data files, 60-day lunar calendar operational, regional data working.
+
+**New Dependencies:** @dqcai/vn-lunar ^1.0.1
+
+---
+
 ### Phase 2: Core Features (TBD)
 
 **Estimated Duration:** 4-6 weeks
@@ -117,6 +145,7 @@
 | Bootstrap Complete | Feb 21, 2026 | Done |
 | Astrology Expansion | Feb 23, 2026 | Done |
 | English Localization | Feb 23, 2026 | Done |
+| Vietnamese Wedding Content Expansion | Feb 23, 2026 | Done |
 | Core Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |
