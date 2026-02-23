@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
 import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
-import { WEDDING_STEPS } from "@/data/wedding-steps";
+import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
 
 // Run migration once on module load
@@ -164,7 +164,7 @@ export function useWeddingStore() {
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
-    (WEDDING_STEPS as WeddingStep[]).forEach((step) =>
+    (getWeddingSteps(state.lang) as WeddingStep[]).forEach((step) =>
       step.ceremonies.forEach((ceremony, ci: number) => {
         let checkIdx = 0;
         ceremony.steps.forEach((s) => {
@@ -177,7 +177,7 @@ export function useWeddingStore() {
       }),
     );
     return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
-  }, [state.checkedItems]);
+  }, [state.checkedItems, state.lang]);
 
   return {
     state,

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { PAGES } from "@/data/page-definitions";
-import { t } from "@/lib/i18n";
+import { t, getLangLabel } from "@/lib/i18n";
 import { getCountdown, type CountdownResult } from "@/lib/countdown";
 import { RemindersBell } from "./reminders";
 import type { CoupleInfo, WeddingState } from "@/types/wedding";
@@ -10,6 +10,7 @@ interface NavbarProps {
   activePage: string;
   onPageChange: (pageId: string) => void;
   lang?: string;
+  onSetLang?: (lang: string) => void;
   progressPct: number;
   done: number;
   total: number;
@@ -22,6 +23,7 @@ export function Navbar({
   activePage,
   onPageChange,
   lang = "vi",
+  onSetLang,
   progressPct,
   done,
   total,
@@ -144,6 +146,16 @@ export function Navbar({
 
         {/* Share button */}
         {state && <ShareButton state={state} />}
+
+        {/* Language toggle */}
+        {onSetLang && (
+          <button
+            onClick={() => onSetLang(lang === "vi" ? "en" : "vi")}
+            className="shrink-0 h-7 px-2 rounded-full text-2xs font-semibold bg-[var(--theme-primary-light)] text-[var(--theme-primary)] hover:opacity-80 transition-opacity"
+          >
+            {getLangLabel(lang)}
+          </button>
+        )}
 
         {/* Reminders bell */}
         <RemindersBell info={info} />

@@ -63,6 +63,7 @@ function App() {
         activePage={state.page}
         onPageChange={store.setPage}
         lang={state.lang}
+        onSetLang={store.setLang}
         progressPct={progress.pct}
         done={progress.done}
         total={progress.total}
@@ -78,7 +79,7 @@ function App() {
           onGoAI={handleGoAI}
         />
       </div>
-      <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} lang={state.lang} onSetLang={store.setLang} />
+      <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} />
       <SaveToast visible={showSave} />
       <IosInstallPrompt />
     </div>
