@@ -111,7 +111,7 @@ export default async function handler(request: Request): Promise<Response> {
   if (!(await verifyAdminSession(request))) return unauthorizedResponse(cors);
 
   try {
-    const url = new URL(request.url);
+    const url = new URL(request.url, "http://n");
     const action = url.searchParams.get("action") ?? "";
     if (action === "dashboard") return dashboard();
     if (action === "users") return users(url);

@@ -12,7 +12,10 @@ export default async function handler(request: Request): Promise<Response> {
   }
 
   try {
-    const redis = createRedis();
+    let redis: ReturnType<typeof createRedis>;
+    try { redis = createRedis(); } catch {
+      return Response.json({ error: "redis_not_configured" }, { status: 503, headers: CORS_HEADERS });
+    }
 
     if (request.method === "POST") {
       const body = (await request.json()) as { data?: string };
@@ -28,7 +31,7 @@ export default async function handler(request: Request): Promise<Response> {
     }
 
     if (request.method === "GET") {
-      const url = new URL(request.url);
+      const url = new URL(request.url, "http://n");
       const id = url.searchParams.get("id");
       if (!id || id.length > 36) {
         return Response.json({ error: "Missing id" }, { status: 400, headers: CORS_HEADERS });

@@ -102,27 +102,30 @@ export default async function handler(request: Request): Promise<Response> {
   }
 
   try {
-    const redis = createRedis();
+    // Redis is optional — used for rate limiting + caching
+    let redis: ReturnType<typeof createRedis> | null = null;
+    try { redis = createRedis(); } catch { /* Redis unavailable */ }
 
     // Rate limit: 5 requests per IP per day (sliding window)
-    const ratelimit = new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(5, "1 d"),
-      prefix: "astro_rl",
-    });
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
-    const { success } = await ratelimit.limit(ip);
-    if (!success) {
-      const lang = ((await request.clone().json()) as ReadingRequest).lang || "vi";
-      return Response.json(
-        {
-          error: "rate_limited",
-          message: lang === "en"
-            ? "You've used all your readings for today. Please try again tomorrow."
-            : "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.",
-        },
-        { status: 429, headers: CORS_HEADERS },
-      );
+    if (redis) {
+      const ratelimit = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, "1 d"), prefix: "astro_rl" });
+      const fwd = typeof request.headers?.get === "function"
+        ? request.headers.get("x-forwarded-for")
+        : (request.headers as unknown as Record<string, string>)["x-forwarded-for"];
+      const ip = fwd?.split(",")[0]?.trim() ?? "anonymous";
+      const { success } = await ratelimit.limit(ip);
+      if (!success) {
+        const lang = ((await request.clone().json()) as ReadingRequest).lang || "vi";
+        return Response.json(
+          {
+            error: "rate_limited",
+            message: lang === "en"
+              ? "You've used all your readings for today. Please try again tomorrow."
+              : "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.",
+          },
+          { status: 429, headers: CORS_HEADERS },
+        );
+      }
     }
 
     // Parse and validate body
@@ -148,9 +151,11 @@ export default async function handler(request: Request): Promise<Response> {
     const lang = body.lang || "vi";
     const hourKey = body.birthHour !== null ? String(body.birthHour) : "x";
     const cacheKey = `astro:reading:${body.birthDate}:${hourKey}:${body.gender}:${body.currentYear}:${lang}`;
-    const cached = await redis.get<string>(cacheKey);
-    if (cached) {
-      return Response.json({ text: cached, cached: true }, { headers: CORS_HEADERS });
+    if (redis) {
+      const cached = await redis.get<string>(cacheKey);
+      if (cached) {
+        return Response.json({ text: cached, cached: true }, { headers: CORS_HEADERS });
+      }
     }
 
     // Check API key before calling ZhipuAI
@@ -205,7 +210,7 @@ export default async function handler(request: Request): Promise<Response> {
     }
 
     // Cache result for 300 days
-    await redis.set(cacheKey, text, { ex: 86400 * 300 });
+    if (redis) await redis.set(cacheKey, text, { ex: 86400 * 300 });
 
     return Response.json({ text, cached: false }, { headers: CORS_HEADERS });
   } catch (err: unknown) {

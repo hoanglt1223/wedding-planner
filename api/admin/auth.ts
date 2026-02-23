@@ -3,16 +3,18 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { createDb } from "../../src/db/index.js";
 import { createRedis } from "../../src/lib/redis.js";
 import { adminSessions } from "../../src/db/schema.js";
-import { parseCookies, getAdminCorsHeaders } from "./_auth.js";
+import { parseCookies, getAdminCorsHeaders, getHeader } from "./_auth.js";
 
 const cors = getAdminCorsHeaders("GET, POST, OPTIONS");
 
 async function handleLogin(request: Request): Promise<Response> {
-  const ip = request.headers.get("x-forwarded-for") ?? "anonymous";
-  const redis = createRedis();
-  const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, "1 m"), prefix: "admin_login_rl" });
-  const { success } = await rl.limit(ip);
-  if (!success) return Response.json({ error: "rate_limited" }, { status: 429, headers: cors });
+  const ip = getHeader(request, "x-forwarded-for") ?? "anonymous";
+  try {
+    const redis = createRedis();
+    const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, "1 m"), prefix: "admin_login_rl" });
+    const { success } = await rl.limit(ip);
+    if (!success) return Response.json({ error: "rate_limited" }, { status: 429, headers: cors });
+  } catch { /* Redis unavailable — skip rate limiting */ }
 
   let body: { password?: string };
   try { body = (await request.json()) as { password?: string }; }
@@ -38,7 +40,7 @@ async function handleLogin(request: Request): Promise<Response> {
 }
 
 async function handleLogout(request: Request): Promise<Response> {
-  const cookies = parseCookies(request.headers.get("cookie") ?? "");
+  const cookies = parseCookies(getHeader(request, "cookie") ?? "");
   const sessionId = cookies["admin_session"];
   if (sessionId) {
     const db = createDb();
@@ -49,7 +51,7 @@ async function handleLogout(request: Request): Promise<Response> {
 }
 
 async function handleVerify(request: Request): Promise<Response> {
-  const cookies = parseCookies(request.headers.get("cookie") ?? "");
+  const cookies = parseCookies(getHeader(request, "cookie") ?? "");
   const sessionId = cookies["admin_session"];
   if (!sessionId) return Response.json({ authenticated: false }, { status: 401, headers: cors });
 
@@ -65,7 +67,7 @@ export default async function handler(request: Request): Promise<Response> {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
 
   try {
-    const url = new URL(request.url);
+    const url = new URL(request.url, "http://n");
     const action = url.searchParams.get("action") ?? "";
 
     if (request.method === "POST" && action === "login") return handleLogin(request);

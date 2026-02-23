@@ -60,16 +60,12 @@ export default async function handler(request: Request): Promise<Response> {
     }
 
     // Rate limit: 10 req/min per userId
-    const redis = createRedis();
-    const ratelimit = new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(10, "1 m"),
-      prefix: "track_rl",
-    });
-    const { success } = await ratelimit.limit(userId);
-    if (!success) {
-      return Response.json({ error: "rate_limited" }, { status: 429, headers: CORS_HEADERS });
-    }
+    try {
+      const redis = createRedis();
+      const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1 m"), prefix: "track_rl" });
+      const { success } = await rl.limit(userId);
+      if (!success) return Response.json({ error: "rate_limited" }, { status: 429, headers: CORS_HEADERS });
+    } catch { /* Redis unavailable — skip rate limiting */ }
 
     const rows = events.map((e) => {
       const ts = new Date(e.timestamp);

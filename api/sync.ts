@@ -56,16 +56,12 @@ export default async function handler(request: Request): Promise<Response> {
     }
 
     // Rate limit: 30 req/min per userId (sliding window)
-    const redis = createRedis();
-    const ratelimit = new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(30, "1 m"),
-      prefix: "sync_rl",
-    });
-    const { success } = await ratelimit.limit(userId);
-    if (!success) {
-      return Response.json({ error: "rate_limited" }, { status: 429, headers: CORS_HEADERS });
-    }
+    try {
+      const redis = createRedis();
+      const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(30, "1 m"), prefix: "sync_rl" });
+      const { success } = await rl.limit(userId);
+      if (!success) return Response.json({ error: "rate_limited" }, { status: 429, headers: CORS_HEADERS });
+    } catch { /* Redis unavailable — skip rate limiting */ }
 
     // Strip sensitive fields before DB storage
     const { apiKey: _ak, aiResponse: _ar, ...safeData } = data ?? {} as Record<string, unknown>;
