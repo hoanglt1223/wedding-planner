@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wp-v1';
+const CACHE_NAME = 'wp-v2';
 const PRECACHE_URLS = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {
@@ -19,16 +19,18 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  // Skip API calls — let them go to the network directly
+  if (event.request.url.includes('/api/')) return;
+
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const fetched = fetch(event.request).then((response) => {
+    fetch(event.request)
+      .then((response) => {
         if (response.ok) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         }
         return response;
-      }).catch(() => cached);
-      return cached || fetched;
-    })
+      })
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/index.html')))
   );
 });

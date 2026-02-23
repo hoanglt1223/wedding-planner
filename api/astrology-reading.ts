@@ -92,133 +92,131 @@ Viết 5 phần:
   return { system, user };
 }
 
-export default {
-  async fetch(request: Request): Promise<Response> {
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: CORS_HEADERS });
+export default async function handler(request: Request): Promise<Response> {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: CORS_HEADERS });
+  }
+
+  if (request.method !== "POST") {
+    return Response.json({ error: "Method not allowed" }, { status: 405, headers: CORS_HEADERS });
+  }
+
+  try {
+    const redis = createRedis();
+
+    // Rate limit: 5 requests per IP per day (sliding window)
+    const ratelimit = new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(5, "1 d"),
+      prefix: "astro_rl",
+    });
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
+    const { success } = await ratelimit.limit(ip);
+    if (!success) {
+      const lang = ((await request.clone().json()) as ReadingRequest).lang || "vi";
+      return Response.json(
+        {
+          error: "rate_limited",
+          message: lang === "en"
+            ? "You've used all your readings for today. Please try again tomorrow."
+            : "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.",
+        },
+        { status: 429, headers: CORS_HEADERS },
+      );
     }
 
-    if (request.method !== "POST") {
-      return Response.json({ error: "Method not allowed" }, { status: 405, headers: CORS_HEADERS });
+    // Parse and validate body
+    const body = (await request.json()) as ReadingRequest;
+    if (!body.birthDate || !body.gender || !body.currentYear) {
+      return Response.json({ error: "missing_fields" }, { status: 400, headers: CORS_HEADERS });
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(body.birthDate)) {
+      return Response.json({ error: "invalid_birth_date" }, { status: 400, headers: CORS_HEADERS });
+    }
+    const birthYear = parseInt(body.birthDate.slice(0, 4));
+    if (isNaN(birthYear) || birthYear < 1900 || birthYear > 2100) {
+      return Response.json({ error: "invalid_birth_date" }, { status: 400, headers: CORS_HEADERS });
+    }
+    if (body.birthHour !== null && (typeof body.birthHour !== "number" || body.birthHour < 0 || body.birthHour > 23)) {
+      return Response.json({ error: "invalid_birth_hour" }, { status: 400, headers: CORS_HEADERS });
+    }
+    if (!["male", "female"].includes(body.gender)) {
+      return Response.json({ error: "invalid_gender" }, { status: 400, headers: CORS_HEADERS });
     }
 
+    // Redis cache check (include lang to separate cached responses)
+    const lang = body.lang || "vi";
+    const hourKey = body.birthHour !== null ? String(body.birthHour) : "x";
+    const cacheKey = `astro:reading:${body.birthDate}:${hourKey}:${body.gender}:${body.currentYear}:${lang}`;
+    const cached = await redis.get<string>(cacheKey);
+    if (cached) {
+      return Response.json({ text: cached, cached: true }, { headers: CORS_HEADERS });
+    }
+
+    // Check API key before calling ZhipuAI
+    const apiKey = process.env.Z_AI_KEY;
+    if (!apiKey) {
+      return Response.json({ error: "ai_not_configured" }, { status: 503, headers: CORS_HEADERS });
+    }
+
+    // Build prompt and call ZhipuAI
+    const prompt = buildPrompt(body);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    let aiRes: Response;
     try {
-      const redis = createRedis();
-
-      // Rate limit: 5 requests per IP per day (sliding window)
-      const ratelimit = new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(5, "1 d"),
-        prefix: "astro_rl",
+      aiRes = await fetch(ZHIPU_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "glm-5",
+          messages: [
+            { role: "system", content: prompt.system },
+            { role: "user", content: prompt.user },
+          ],
+          max_tokens: 800,
+          temperature: 0.7,
+        }),
+        signal: controller.signal,
       });
-      const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
-      const { success } = await ratelimit.limit(ip);
-      if (!success) {
-        const lang = ((await request.clone().json()) as ReadingRequest).lang || "vi";
-        return Response.json(
-          {
-            error: "rate_limited",
-            message: lang === "en"
-              ? "You've used all your readings for today. Please try again tomorrow."
-              : "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.",
-          },
-          { status: 429, headers: CORS_HEADERS }
-        );
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        return Response.json({ error: "ai_timeout" }, { status: 504, headers: CORS_HEADERS });
       }
-
-      // Parse and validate body
-      const body = await request.json() as ReadingRequest;
-      if (!body.birthDate || !body.gender || !body.currentYear) {
-        return Response.json({ error: "missing_fields" }, { status: 400, headers: CORS_HEADERS });
-      }
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(body.birthDate)) {
-        return Response.json({ error: "invalid_birth_date" }, { status: 400, headers: CORS_HEADERS });
-      }
-      const birthYear = parseInt(body.birthDate.slice(0, 4));
-      if (isNaN(birthYear) || birthYear < 1900 || birthYear > 2100) {
-        return Response.json({ error: "invalid_birth_date" }, { status: 400, headers: CORS_HEADERS });
-      }
-      if (body.birthHour !== null && (typeof body.birthHour !== "number" || body.birthHour < 0 || body.birthHour > 23)) {
-        return Response.json({ error: "invalid_birth_hour" }, { status: 400, headers: CORS_HEADERS });
-      }
-      if (!["male", "female"].includes(body.gender)) {
-        return Response.json({ error: "invalid_gender" }, { status: 400, headers: CORS_HEADERS });
-      }
-
-      // Redis cache check (include lang to separate cached responses)
-      const lang = body.lang || "vi";
-      const hourKey = body.birthHour !== null ? String(body.birthHour) : "x";
-      const cacheKey = `astro:reading:${body.birthDate}:${hourKey}:${body.gender}:${body.currentYear}:${lang}`;
-      const cached = await redis.get<string>(cacheKey);
-      if (cached) {
-        return Response.json({ text: cached, cached: true }, { headers: CORS_HEADERS });
-      }
-
-      // Check API key before calling ZhipuAI
-      const apiKey = process.env.Z_AI_KEY;
-      if (!apiKey) {
-        return Response.json({ error: "ai_not_configured" }, { status: 503, headers: CORS_HEADERS });
-      }
-
-      // Build prompt and call ZhipuAI
-      const prompt = buildPrompt(body);
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-
-      let aiRes: Response;
-      try {
-        aiRes = await fetch(ZHIPU_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model: "glm-5",
-            messages: [
-              { role: "system", content: prompt.system },
-              { role: "user", content: prompt.user },
-            ],
-            max_tokens: 800,
-            temperature: 0.7,
-          }),
-          signal: controller.signal,
-        });
-      } catch (err) {
-        if (err instanceof DOMException && err.name === "AbortError") {
-          return Response.json({ error: "ai_timeout" }, { status: 504, headers: CORS_HEADERS });
-        }
-        throw err;
-      } finally {
-        clearTimeout(timer);
-      }
-
-      if (!aiRes.ok) {
-        const errText = await aiRes.text();
-        console.error("ZhipuAI error:", aiRes.status, errText);
-        return Response.json({ error: "generation_failed" }, { status: 502, headers: CORS_HEADERS });
-      }
-
-      const data = await aiRes.json() as { choices?: { message?: { content?: string } }[] };
-      const text = data.choices?.[0]?.message?.content ?? "";
-      if (!text) {
-        return Response.json({ error: "empty_response" }, { status: 500, headers: CORS_HEADERS });
-      }
-
-      // Cache result for 300 days
-      await redis.set(cacheKey, text, { ex: 86400 * 300 });
-
-      return Response.json({ text, cached: false }, { headers: CORS_HEADERS });
-    } catch (err: unknown) {
-      const status = (err as { status?: number })?.status;
-      if (status === 429) {
-        return Response.json({ error: "zhipu_rate_limited" }, { status: 429, headers: CORS_HEADERS });
-      }
-      if (status === 503) {
-        return Response.json({ error: "ai_unavailable" }, { status: 503, headers: CORS_HEADERS });
-      }
-      console.error("Astrology reading error:", err);
-      return Response.json({ error: "generation_failed" }, { status: 500, headers: CORS_HEADERS });
+      throw err;
+    } finally {
+      clearTimeout(timer);
     }
-  },
-};
+
+    if (!aiRes.ok) {
+      const errText = await aiRes.text();
+      console.error("ZhipuAI error:", aiRes.status, errText);
+      return Response.json({ error: "generation_failed" }, { status: 502, headers: CORS_HEADERS });
+    }
+
+    const data = (await aiRes.json()) as { choices?: { message?: { content?: string } }[] };
+    const text = data.choices?.[0]?.message?.content ?? "";
+    if (!text) {
+      return Response.json({ error: "empty_response" }, { status: 500, headers: CORS_HEADERS });
+    }
+
+    // Cache result for 300 days
+    await redis.set(cacheKey, text, { ex: 86400 * 300 });
+
+    return Response.json({ text, cached: false }, { headers: CORS_HEADERS });
+  } catch (err: unknown) {
+    const status = (err as { status?: number })?.status;
+    if (status === 429) {
+      return Response.json({ error: "zhipu_rate_limited" }, { status: 429, headers: CORS_HEADERS });
+    }
+    if (status === 503) {
+      return Response.json({ error: "ai_unavailable" }, { status: 503, headers: CORS_HEADERS });
+    }
+    console.error("Astrology reading error:", err);
+    return Response.json({ error: "generation_failed" }, { status: 500, headers: CORS_HEADERS });
+  }
+}
