@@ -87,6 +87,30 @@
 
 ---
 
+### Phase 1.8: User Data Tracking & Admin Panel (COMPLETE)
+
+**Status:** Complete (Feb 23, 2026)
+
+**Deliverables:**
+- Anonymous user tracking with UUID + localStorage persistence (wp_user_id)
+- Smart sync: debounced (5s), visibility-based, heartbeat (5min), sendBeacon on unload
+- Event tracking: batched with 30s flush, tracks page views, onboarding, checklist, guests, budget, theme/lang/region, AI readings, shares
+- Database schema: user_sessions, analytics_events, admin_sessions tables with optimized columns for queries
+- Admin panel password-based auth with httpOnly cookie (24h expiry)
+- Admin shell with lazy loading at #/admin with sidebar navigation
+- Admin dashboard: stat cards (total users, active today/week/month, top regions/languages)
+- Admin users page: paginated table (50/page) with search/sort, detail modal with full wedding_data JSON
+- Admin analytics page: event aggregation, daily active users, feature usage breakdown (date range filter)
+- Admin system page: DB/Redis status, env checks, session count, last sync time
+- Rate limiting: 30 req/min for sync, 10 req/min for tracking, payload guards (50KB sync, 50 events per batch)
+- Consolidated API: auth.ts + data.ts for Vercel Hobby plan limits
+
+**Metrics:** 4 implementation phases complete, 5 new API endpoints, 3 new DB tables, 5 admin pages, full analytics coverage.
+
+**New Dependencies:** None
+
+---
+
 ### Phase 2: Core Features (TBD)
 
 **Estimated Duration:** 4-6 weeks
@@ -146,6 +170,7 @@
 | Astrology Expansion | Feb 23, 2026 | Done |
 | English Localization | Feb 23, 2026 | Done |
 | Vietnamese Wedding Content Expansion | Feb 23, 2026 | Done |
+| User Data Tracking & Admin Panel | Feb 23, 2026 | Done |
 | Core Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |

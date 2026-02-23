@@ -61,6 +61,8 @@ See `.env.example` for required variables:
 - `DATABASE_URL` — Neon PostgreSQL connection string
 - `UPSTASH_REDIS_REST_URL` — Upstash Redis REST URL
 - `UPSTASH_REDIS_REST_TOKEN` — Upstash Redis REST token
+- `OPENAI_API_KEY` — OpenAI API key for AI-powered astrology readings
+- `ADMIN_PASSWORD` — Admin panel login password (for #/admin access)
 
 ## Deployment
 

@@ -25,7 +25,7 @@ export function CeremonySection({
   onToggleCheck,
   timeOffset,
   lang = "vi",
-  region = "south",
+  region: _region = "south",
 }: CeremonySectionProps) {
   return (
     <div className="space-y-2">

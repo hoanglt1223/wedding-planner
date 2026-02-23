@@ -35,8 +35,8 @@ export default function AdminAnalytics() {
     setLoading(true);
     setError(null);
     try {
-      const params = new URLSearchParams({ from, to });
-      const res = await fetch(`/api/admin/analytics?${params}`, { credentials: "include" });
+      const params = new URLSearchParams({ action: "analytics", from, to });
+      const res = await fetch(`/api/admin/data?${params}`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed");
       setData(await res.json() as AnalyticsData);
     } catch {
@@ -46,7 +46,7 @@ export default function AdminAnalytics() {
     }
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const totalEvents = data?.dailyEvents.reduce((s, d) => s + d.count, 0) ?? 0;
   const maxDailyUsers = data?.dailyUsers.length ? Math.max(...data.dailyUsers.map((d) => d.count)) : 0;

@@ -28,7 +28,7 @@ export default function AdminSystem() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/system", { credentials: "include" });
+      const res = await fetch("/api/admin/data?action=system", { credentials: "include" });
       if (!res.ok) throw new Error("Failed");
       setData(await res.json() as SystemData);
     } catch {

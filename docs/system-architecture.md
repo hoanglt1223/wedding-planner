@@ -71,7 +71,10 @@ TypeScript → Vite Bundle → Vercel Edge → Browser
 **Key Files:**
 - `health.ts` - Health check endpoint (DB + Redis status)
 - `astrology-reading.ts` - AI-powered astrology reading endpoint (OpenAI gpt-4o-mini)
-- Future: User routes, guest endpoints, budget APIs, vendor endpoints
+- `sync.ts` - User state sync endpoint (debounced, rate-limited, 50KB guard)
+- `track.ts` - Event tracking endpoint (batched, rate-limited, max 50 events/batch)
+- `admin/auth.ts` - Admin authentication (login, logout, verify session)
+- `admin/data.ts` - Admin data endpoints (dashboard, users, analytics, system)
 
 **Error Handling:**
 - Database connection validation
@@ -95,6 +98,11 @@ export default { async fetch(req) { ... } }
 - Migrations: Drizzle Kit
 
 **Schema Location:** `src/db/schema.ts`
+
+**Tables:**
+- `user_sessions` - UUID PK, wedding_data jsonb, extracted columns (names, dates, region, lang, counts, progress, budget, onboarding status), timestamps
+- `analytics_events` - Auto-increment PK, user_id FK, event_type text, event_data jsonb, created_at
+- `admin_sessions` - Text PK, created_at, expires_at (24h)
 
 **Factory:**
 ```typescript
@@ -126,8 +134,8 @@ export function createRedis() { ... }
 
 **Use Cases:**
 - AI reading cache (300-day TTL per unique birth data + year)
-- Rate limiting for APIs (5 req/IP/day for /api/astrology-reading)
-- Future: Session tokens, guest RSVP cache, vendor availability
+- Rate limiting for APIs (5 req/IP/day for /api/astrology-reading, 30 req/min for /api/sync, 10 req/min for /api/track)
+- Session tokens, guest RSVP cache, vendor availability
 
 ## Data Flow
 
@@ -299,11 +307,85 @@ Frontend (Auspicious Calendar Component)
 - 5 Elements matching algorithm (1-10 score)
 - Detailed info modal with explanation of flags
 
+## User Data Tracking System
+
+**Purpose:** Monitor user engagement and app usage without external analytics dependencies
+
+**Architecture:**
+```
+Frontend (useSync + useTracking hooks)
+  → POST /api/sync (debounced 5s, visibility, heartbeat 5min)
+     → user_sessions table (upsert with extracted columns)
+  → POST /api/track (batched every 30s or at buffer limit)
+     → analytics_events table (append events with timestamps)
+```
+
+**Client-Side Hooks:**
+- `useUserId()` - Generate/persist anonymous UUID in localStorage (wp_user_id)
+- `useSync()` - Smart sync with debounce, visibility-based, heartbeat, sendBeacon on unload
+- `useTracking()` - Batch events in memory, auto-flush on interval or buffer threshold
+
+**Events Tracked:**
+- Page views, onboarding completion, checklist toggles
+- Guest list changes, budget updates, theme/language/region changes
+- AI reading requests, share creation
+
+**Features:**
+- Debounced sync (5s) reduces writes 80%+
+- Visibility API triggers immediate sync on tab hide
+- 5-minute heartbeat keeps sessions alive
+- sendBeacon on unload for reliable final sync
+- Rate limiting: 30 req/min for sync, 10 req/min for track
+- Payload guards: 50KB max for sync, 50 events per batch
+
+## Admin Panel System
+
+**Purpose:** Monitor users, track analytics, and verify system health
+
+**Architecture:**
+```
+Admin Shell (#/admin with lazy loading)
+  → Admin Auth (password via ADMIN_PASSWORD env var)
+  → Session validation (httpOnly cookie, 24h expiry)
+  → Sidebar navigation to:
+     → Dashboard (stat cards: users, active counts, top regions/languages)
+     → Users (paginated table 50/page, search/sort, detail modal)
+     → Analytics (event aggregation, daily active users, date range filter)
+     → System (DB/Redis status, env checks, session count, last sync)
+```
+
+**API Endpoints:**
+- `POST /api/admin/auth/login` - Verify password, create session, set httpOnly cookie
+- `POST /api/admin/auth/logout` - Delete session, clear cookie
+- `GET /api/admin/auth/verify` - Check session validity
+- `GET /api/admin/data/dashboard` - Aggregated stats (users, activity, regions, languages)
+- `GET /api/admin/data/users` - Paginated users with search/sort
+- `GET /api/admin/data/users/[id]` - User detail with full wedding_data JSON
+- `GET /api/admin/data/analytics` - Event aggregation with date range
+- `GET /api/admin/data/system` - System health (DB, Redis, env, sessions, last sync)
+
+**Components:**
+- `pages/admin/admin-shell.tsx` - Layout with sidebar
+- `pages/admin/admin-dashboard.tsx` - Stat cards, simple CSS bar charts
+- `pages/admin/admin-users.tsx` - Paginated table, detail modal
+- `pages/admin/admin-analytics.tsx` - Event charts, daily active users
+- `pages/admin/admin-system.tsx` - Health indicators
+
+**Authentication:**
+- Password-based (single admin password from env var)
+- httpOnly cookie with Secure + SameSite=Lax flags
+- 24-hour session expiry
+- Session stored in admin_sessions table
+
 ## Monitoring
 
 - `/api/health` endpoint for deployment checks
 - `/api/astrology-reading` rate limit and cache metrics
+- `/api/sync` rate limit and payload metrics
+- `/api/track` rate limit and event counts
+- `/api/admin/auth/verify` session validation
 - Vercel Analytics dashboard
 - OpenAI API usage dashboard (cost tracking)
 - Redis command monitoring (Upstash dashboard)
 - Database query logs (Neon console)
+- Admin panel system page for real-time health checks

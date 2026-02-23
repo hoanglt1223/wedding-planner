@@ -1,6 +1,6 @@
 // All TypeScript interfaces for the Wedding Planner app
 
-import type { Region, RegionalContent } from "@/data/regions";
+import type { Region, RegionalContent } from "../data/regions";
 
 export type { Region, RegionalContent };
 

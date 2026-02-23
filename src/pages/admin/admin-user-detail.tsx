@@ -36,12 +36,12 @@ export function AdminUserDetail({ userId, onClose }: AdminUserDetailProps) {
   const [jsonOpen, setJsonOpen] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`/api/admin/user-detail?id=${encodeURIComponent(userId)}`, { credentials: "include" })
+    let cancelled = false;
+    fetch(`/api/admin/data?action=user-detail&id=${encodeURIComponent(userId)}`, { credentials: "include" })
       .then((r) => r.json())
-      .then((d) => setUser(d as UserDetail))
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false));
+      .then((d) => { if (!cancelled) { setUser(d as UserDetail); setLoading(false); } })
+      .catch(() => { if (!cancelled) { setUser(null); setLoading(false); } });
+    return () => { cancelled = true; };
   }, [userId]);
 
   if (loading) {

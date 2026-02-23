@@ -17,7 +17,7 @@ interface DashboardData {
 }
 
 async function fetchDashboard(): Promise<DashboardData> {
-  const res = await fetch("/api/admin/dashboard", { credentials: "include" });
+  const res = await fetch("/api/admin/data?action=dashboard", { credentials: "include" });
   if (!res.ok) throw new Error("Failed to load dashboard");
   return res.json() as Promise<DashboardData>;
 }

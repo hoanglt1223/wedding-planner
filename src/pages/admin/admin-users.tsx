@@ -39,10 +39,10 @@ export default function AdminUsers() {
     setLoading(true);
     try {
       const params = new URLSearchParams({
-        page: String(p), limit: String(limit), sort: sortCol, order: sortOrder,
+        action: "users", page: String(p), limit: String(limit), sort: sortCol, order: sortOrder,
         ...(s ? { search: s } : {}),
       });
-      const res = await fetch(`/api/admin/users?${params}`, { credentials: "include" });
+      const res = await fetch(`/api/admin/data?${params}`, { credentials: "include" });
       const data = await res.json() as UsersResponse;
       setUsers(data.users);
       setTotal(data.total);
@@ -50,7 +50,7 @@ export default function AdminUsers() {
     finally { setLoading(false); }
   }
 
-  useEffect(() => { load(page, search, sort, order); }, [page, sort, order]);
+  useEffect(() => { load(page, search, sort, order); }, [page, search, sort, order]);
 
   function onSearchChange(val: string) {
     setSearch(val);
