@@ -1,4 +1,6 @@
-export default async function handler(): Promise<Response> {
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
+export default async function handler(_req: VercelRequest, res: VercelResponse) {
   const checks: Record<string, string> = {
     status: "ok",
     timestamp: new Date().toISOString(),
@@ -6,10 +8,11 @@ export default async function handler(): Promise<Response> {
   };
 
   // Database check
-  if (process.env.DATABASE_URL) {
+  const dbUrl = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+  if (dbUrl) {
     try {
       const { neon } = await import("@neondatabase/serverless");
-      const sql = neon(process.env.DATABASE_URL);
+      const sql = neon(dbUrl);
       await sql`SELECT 1`;
       checks.database = "connected";
     } catch {
@@ -20,13 +23,12 @@ export default async function handler(): Promise<Response> {
   }
 
   // Redis check
-  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+  if (redisUrl && redisToken) {
     try {
       const { Redis } = await import("@upstash/redis");
-      const redis = new Redis({
-        url: process.env.UPSTASH_REDIS_REST_URL,
-        token: process.env.UPSTASH_REDIS_REST_TOKEN,
-      });
+      const redis = new Redis({ url: redisUrl, token: redisToken });
       await redis.ping();
       checks.redis = "connected";
     } catch {
@@ -36,5 +38,5 @@ export default async function handler(): Promise<Response> {
     checks.redis = "not_configured";
   }
 
-  return Response.json(checks);
+  return res.status(200).json(checks);
 }
