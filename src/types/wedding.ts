@@ -123,6 +123,7 @@ export interface WeddingState {
   region: Region;
   partyTime: "noon" | "afternoon";
   stepStartTimes: Record<string, string>;
+  enabledSteps: Record<string, boolean>;
   onboardingComplete: boolean;
 }
 

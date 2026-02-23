@@ -1,4 +1,5 @@
 import { getWeddingSteps } from "@/data/resolve-data";
+import { isStepEnabled } from "@/hooks/use-wedding-store";
 import type { SharedData } from "@/lib/share";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 
@@ -7,10 +8,11 @@ const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 interface Props {
   data: SharedData;
   lang?: string;
+  enabledSteps?: Record<string, boolean>;
 }
 
-export function SharedProgress({ data, lang = "vi" }: Props) {
-  const weddingSteps = getWeddingSteps(lang);
+export function SharedProgress({ data, lang = "vi", enabledSteps = {} }: Props) {
+  const weddingSteps = getWeddingSteps(lang).filter((s) => isStepEnabled(enabledSteps, s.id));
   let total = 0, done = 0;
   const steps = weddingSteps.map((step) => {
     let stepTotal = 0, stepDone = 0;

@@ -108,5 +108,6 @@ export const DEFAULT_STATE: WeddingState = {
   region: "south",
   partyTime: "noon",
   stepStartTimes: {},
+  enabledSteps: {},
   onboardingComplete: false,
 };

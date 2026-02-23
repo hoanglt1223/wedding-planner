@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { OnboardingPreview } from "./onboarding-preview";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
+import { getWeddingSteps } from "@/data/resolve-data";
 import { getLocale } from "@/lib/format";
 import { t } from "@/lib/i18n";
 
@@ -37,13 +38,29 @@ export function OnboardingWizard({ store }: Props) {
   const [bride, setBride] = useState("");
   const [groom, setGroom] = useState("");
   const [date, setDate] = useState("");
+  const [enabledSteps, setEnabledSteps] = useState<Record<string, boolean>>({});
 
   const canContinue = bride.trim() && groom.trim();
+
+  const handleToggleStep = useCallback((stepId: string) => {
+    setEnabledSteps((prev) => {
+      const allSteps = getWeddingSteps(lang);
+      // First toggle: initialize all as true, then flip the toggled one
+      if (Object.keys(prev).length === 0) {
+        const init: Record<string, boolean> = {};
+        for (const s of allSteps) init[s.id] = true;
+        init[stepId] = false;
+        return init;
+      }
+      return { ...prev, [stepId]: prev[stepId] === false ? true : false };
+    });
+  }, [lang]);
 
   const handleComplete = () => {
     store.updateInfo("bride", bride.trim());
     store.updateInfo("groom", groom.trim());
     if (date) store.updateInfo("date", date);
+    store.setEnabledSteps(enabledSteps);
     store.completeOnboarding();
   };
 
@@ -141,7 +158,7 @@ export function OnboardingWizard({ store }: Props) {
               {lang === "en" ? "Traditional Vietnamese wedding process" : "Quy trình cưới truyền thống Việt Nam"}
             </p>
             <div className="max-h-[50vh] overflow-y-auto rounded-xl border border-[var(--brand-border)] bg-white/80 p-3">
-              <OnboardingPreview lang={lang} />
+              <OnboardingPreview lang={lang} enabledSteps={enabledSteps} onToggleStep={handleToggleStep} />
             </div>
             <button
               onClick={() => setStep(2)}

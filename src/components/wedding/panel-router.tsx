@@ -5,6 +5,7 @@ import { GuestPanel } from "@/components/guests/guest-panel";
 import { NotesPanel } from "@/components/notes/notes-panel";
 import { VendorPanel } from "@/components/vendors/vendor-panel";
 import { AuspiciousCalendar } from "@/components/calendar/auspicious-calendar";
+import { isStepEnabled } from "@/hooks/use-wedding-store";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 
@@ -17,7 +18,7 @@ interface PanelRouterProps {
 export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
   const tab = state.tab;
   const lang = state.lang;
-  const steps = getWeddingSteps(lang);
+  const steps = getWeddingSteps(lang).filter((s) => isStepEnabled(state.enabledSteps || {}, s.id));
   const stepCount = steps.length;
 
   // Step panels (tabs 0-6)

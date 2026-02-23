@@ -10,6 +10,12 @@ migrateState();
 
 const STORAGE_KEY = "wp_v13";
 
+/** A step is enabled if enabledSteps is empty/undefined (all enabled) or the step's value is not false */
+export function isStepEnabled(enabledSteps: Record<string, boolean> | undefined, stepId: string): boolean {
+  if (!enabledSteps || Object.keys(enabledSteps).length === 0) return true;
+  return enabledSteps[stepId] !== false;
+}
+
 export function useWeddingStore() {
   const [state, setState] = useLocalStorage<WeddingState>(
     STORAGE_KEY,
@@ -161,6 +167,10 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const setEnabledSteps = useCallback((enabledSteps: Record<string, boolean>) => {
+    setState((prev) => ({ ...prev, enabledSteps }));
+  }, [setState]);
+
   const completeOnboarding = useCallback(() => {
     setState((prev) => ({ ...prev, onboardingComplete: true }));
   }, [setState]);
@@ -168,20 +178,23 @@ export function useWeddingStore() {
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
-    (getWeddingSteps(state.lang) as WeddingStep[]).forEach((step) =>
-      step.ceremonies.forEach((ceremony, ci: number) => {
-        let checkIdx = 0;
-        ceremony.steps.forEach((s) => {
-          if (s.checkable) {
-            total++;
-            if (state.checkedItems[`${step.id}_${ci}_${checkIdx}`]) done++;
-            checkIdx++;
-          }
-        });
-      }),
-    );
+    const enabled = state.enabledSteps || {};
+    (getWeddingSteps(state.lang) as WeddingStep[])
+      .filter((step) => isStepEnabled(enabled, step.id))
+      .forEach((step) =>
+        step.ceremonies.forEach((ceremony, ci: number) => {
+          let checkIdx = 0;
+          ceremony.steps.forEach((s) => {
+            if (s.checkable) {
+              total++;
+              if (state.checkedItems[`${step.id}_${ci}_${checkIdx}`]) done++;
+              checkIdx++;
+            }
+          });
+        }),
+      );
     return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
-  }, [state.checkedItems, state.lang]);
+  }, [state.checkedItems, state.lang, state.enabledSteps]);
 
   return {
     state,
@@ -210,6 +223,7 @@ export function useWeddingStore() {
     setRegion,
     setPartyTime,
     setStepStartTime,
+    setEnabledSteps,
     completeOnboarding,
     getProgress,
   };
