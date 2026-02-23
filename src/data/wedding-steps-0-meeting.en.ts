@@ -1,0 +1,60 @@
+import type { WeddingStep } from "@/types/wedding";
+
+export const STEP_MEETING_EN: WeddingStep = {
+  id: "meeting",
+  tab: "☕ Meeting",
+  title: "Step 1: Family Meeting (Gap Mat)",
+  formalName: "First Family Introduction (Le Giap Mat)",
+  icon: "☕",
+  description: "The first informal get-together — both families meet, get to know each other, and share backgrounds.",
+  meaning: "This is the crucial opening step in Vietnamese wedding tradition — not a formal ceremony, but it sets the tone for everything that follows. Both families meet for the first time to get acquainted, learn about each other's backgrounds, and gauge thoughts on the upcoming union. First impressions matter enormously: when both families connect warmly from the start, every subsequent step flows smoothly. The bride and groom serve as 'bridges' — helping both sides understand each other and build goodwill.",
+  notes: [
+    "Do NOT discuss money or gifts in detail — this is purely a friendly get-acquainted visit",
+    "Choose a neutral venue: a quiet restaurant, an elegant café, or either family's home",
+    "Attendees: both sets of parents + couple. At most 1-2 additional relatives (grandparents, siblings)",
+    "Dress smart-casual — the goal is a relaxed, comfortable atmosphere",
+    "Most important: make a good impression — be on time, polite, open, and attentive",
+    "The couple should brief their own parents about the other family BEFORE the meeting",
+    "If meeting at a restaurant: choose somewhere quiet enough for easy conversation — avoid noisy venues",
+    "After the meeting: the couple consolidates feedback from both sides and plans next steps",
+    "Internal discussion is EXTREMELY important — write down all agreements and expectations",
+  ],
+  timeline: "4-6 months before",
+  aiHint: "Suggest how to organize the first family meeting, what to say, what to avoid, suitable venues, and what gifts to bring.",
+  ceremonies: [
+    {
+      name: "☕ Informal Family Introduction",
+      required: 1,
+      description: "Both families meet for the first time — no ceremony, just friendly conversation.",
+      steps: [
+        { text: "Choose a time that works for everyone", cost: 0, categoryKey: "other", checkable: true },
+        { text: "Choose a venue (restaurant / café / home)", cost: 500000, categoryKey: "venue", checkable: true },
+        { text: "Small gift (fruits, pastries)", cost: 300000, categoryKey: "ceremonial-gifts", checkable: true },
+        { text: "Make a reservation / prepare to host guests", cost: 1000000, categoryKey: "food", checkable: true },
+        { text: "Introductions on both sides", time: "10:00", responsible: "Bride & Groom" },
+        { text: "Friendly conversation", time: "10:15", responsible: "Both Parents" },
+        { text: "Casual exchange of intentions", time: "10:45", responsible: "Both Parents" },
+        { text: "Wrap up on a positive note — no commitments today", time: "11:15", responsible: "Bride & Groom" },
+      ],
+      people: [
+        { name: "Both Parents", role: "", avatar: "👫" },
+        { name: "Bride & Groom", role: "Liaison", avatar: "💑" },
+      ],
+    },
+    {
+      name: "📝 Internal Planning",
+      required: 1,
+      description: "The couple consolidates feedback and makes a plan.",
+      steps: [
+        { text: "Compile feedback from both sets of parents", cost: 0, categoryKey: "other", checkable: true },
+        { text: "Agree on budget & timeline", cost: 0, categoryKey: "other", checkable: true },
+        { text: "Consult a traditional calendar master for auspicious dates", cost: 500000, categoryKey: "other", checkable: true },
+        { text: "List individual wishes", responsible: "Bride & Groom" },
+        { text: "Compare regional customs", responsible: "Bride & Groom" },
+        { text: "Draft the budget", responsible: "Bride & Groom" },
+        { text: "Assign responsibilities", responsible: "Bride & Groom" },
+      ],
+      people: [{ name: "Bride & Groom", role: "", avatar: "💑" }],
+    },
+  ],
+};

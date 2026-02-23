@@ -1,9 +1,7 @@
 import { useState } from "react";
 import type { CoupleInfo } from "@/types/wedding";
 import { getZodiac, getSoundElement, getStemBranch } from "@/lib/astrology";
-import { getZodiacProfile } from "@/data/astrology-zodiac-profiles";
-import { getElementProfile } from "@/data/astrology-element-profiles";
-import { getYearlyForecast } from "@/data/astrology-yearly-forecast";
+import { getZodiacProfiles, getElementProfiles, getYearlyForecasts } from "@/data/resolve-data";
 import { PersonalitySection } from "./personal-personality";
 import { YearlyForecastSection } from "./personal-yearly-forecast";
 import { LuckyAttributesSection } from "./personal-lucky-attributes";
@@ -18,21 +16,25 @@ interface TabPersonalProps {
   groomName: string;
   brideGender?: string;
   groomGender?: string;
+  lang?: string;
 }
 
-export function TabPersonal({ info, brideYear, groomYear, brideName, groomName }: TabPersonalProps) {
+export function TabPersonal({ info, brideYear, groomYear, brideName, groomName, lang = "vi" }: TabPersonalProps) {
   const [activeProfile, setActiveProfile] = useState<"bride" | "groom">("bride");
 
   const year = activeProfile === "bride" ? brideYear : groomYear;
-  const name = activeProfile === "bride" ? (brideName || "Cô dâu") : (groomName || "Chú rể");
+  const name = activeProfile === "bride" ? (brideName || (lang === "en" ? "Bride" : "Cô dâu")) : (groomName || (lang === "en" ? "Groom" : "Chú rể"));
   const birthHour = activeProfile === "bride" ? info.brideBirthHour : info.groomBirthHour;
 
   const zodiac = getZodiac(year);
   const soundElement = getSoundElement(year);
   const stemBranch = getStemBranch(year);
-  const profile = getZodiacProfile(zodiac.chiIndex);
-  const elementProfile = getElementProfile(soundElement.element);
-  const forecast = getYearlyForecast(zodiac.chiIndex);
+  const zodiacProfiles = getZodiacProfiles(lang);
+  const elementProfiles = getElementProfiles(lang);
+  const yearlyForecasts = getYearlyForecasts(lang);
+  const profile = zodiacProfiles[zodiac.chiIndex];
+  const elementProfile = elementProfiles.find((e) => e.key === soundElement.element) || elementProfiles[0];
+  const forecast = yearlyForecasts[zodiac.chiIndex];
 
   return (
     <div className="space-y-3">
@@ -41,12 +43,12 @@ export function TabPersonal({ info, brideYear, groomYear, brideName, groomName }
         <ToggleButton
           active={activeProfile === "bride"}
           onClick={() => setActiveProfile("bride")}
-          label={brideName || "Cô dâu"}
+          label={brideName || (lang === "en" ? "Bride" : "Cô dâu")}
         />
         <ToggleButton
           active={activeProfile === "groom"}
           onClick={() => setActiveProfile("groom")}
-          label={groomName || "Chú rể"}
+          label={groomName || (lang === "en" ? "Groom" : "Chú rể")}
         />
       </div>
 
@@ -72,6 +74,7 @@ export function TabPersonal({ info, brideYear, groomYear, brideName, groomName }
         birthHour={birthHour}
         gender={activeProfile === "bride" ? info.brideGender : info.groomGender}
         currentYear={new Date().getFullYear()}
+        lang={lang}
       />
     </div>
   );

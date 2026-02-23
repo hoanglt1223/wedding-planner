@@ -2,26 +2,22 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Vendor } from "@/types/wedding";
+import { t } from "@/lib/i18n";
 
 const CATEGORIES = [
-  "🏛️ Nhà hàng",
-  "📸 Ảnh/Video",
-  "🌸 Trang trí",
-  "💄 Makeup",
-  "🎵 MC/Nhạc",
-  "🚗 Xe",
-  "💐 Hoa",
-  "👗 Trang phục",
-  "📦 Khác",
+  "🏛️ Nhà hàng", "📸 Ảnh/Video", "🌸 Trang trí",
+  "💄 Makeup", "🎵 MC/Nhạc", "🚗 Xe",
+  "💐 Hoa", "👗 Trang phục", "📦 Khác",
 ];
 
 interface VendorPanelProps {
   vendors: Vendor[];
   onAddVendor: (vendor: Omit<Vendor, "id">) => void;
   onRemoveVendor: (id: number) => void;
+  lang?: string;
 }
 
-export function VendorPanel({ vendors, onAddVendor, onRemoveVendor }: VendorPanelProps) {
+export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, lang = "vi" }: VendorPanelProps) {
   const [cat, setCat] = useState(CATEGORIES[0]);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -40,11 +36,11 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor }: VendorPane
   return (
     <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4">
       <div className="pb-2">
-        <h2 className="text-base font-semibold">🗺️ Danh Sách Vendor</h2>
+        <h2 className="text-base font-semibold">{t("🗺️ Danh Sách Vendor", lang)}</h2>
       </div>
       <div className="space-y-2">
         <p className="text-xs text-gray-500">
-          Lưu thông tin nhà cung cấp: nhà hàng, studio, trang trí, MC...
+          {lang === "en" ? "Save vendor info: restaurants, studios, decorators, MCs..." : "Lưu thông tin nhà cung cấp: nhà hàng, studio, trang trí, MC..."}
         </p>
 
         {/* Add form */}
@@ -55,33 +51,33 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor }: VendorPane
             onChange={(e) => setCat(e.target.value)}
           >
             {CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option key={c} value={c}>{t(c, lang)}</option>
             ))}
           </select>
           <div className="flex flex-col sm:flex-row gap-1.5">
             <Input
               className="flex-[2] h-8 text-sm"
-              placeholder="Tên vendor"
+              placeholder={t("Tên vendor", lang)}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
               className="flex-1 h-8 text-sm"
-              placeholder="SĐT"
+              placeholder={t("SĐT", lang)}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <Input
             className="h-8 text-sm"
-            placeholder="Địa chỉ"
+            placeholder={t("Địa chỉ", lang)}
             value={addr}
             onChange={(e) => setAddr(e.target.value)}
           />
           <div className="flex flex-col sm:flex-row gap-1.5">
             <Input
               className="flex-1 h-8 text-sm"
-              placeholder="Ghi chú (giá, gói...)"
+              placeholder={lang === "en" ? "Notes (price, package...)" : "Ghi chú (giá, gói...)"}
               value={note}
               onChange={(e) => setNote(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleAdd()}
@@ -120,9 +116,9 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor }: VendorPane
             <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center mb-3">
               <span className="text-3xl">🗺️</span>
             </div>
-            <h3 className="text-base font-semibold mb-1">Thêm nhà cung cấp đầu tiên</h3>
+            <h3 className="text-base font-semibold mb-1">{lang === "en" ? "Add your first vendor" : "Thêm nhà cung cấp đầu tiên"}</h3>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Lưu thông tin nhà hàng, studio, trang trí để so sánh và liên hệ
+              {lang === "en" ? "Save restaurant, studio, decorator info to compare and contact" : "Lưu thông tin nhà hàng, studio, trang trí để so sánh và liên hệ"}
             </p>
           </div>
         )}

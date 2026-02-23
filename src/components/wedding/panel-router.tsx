@@ -1,4 +1,4 @@
-import { WEDDING_STEPS } from "@/data/wedding-steps";
+import { getWeddingSteps } from "@/data/resolve-data";
 import { StepPanel } from "@/components/wedding/step-panel";
 import { BudgetPanel } from "@/components/budget/budget-panel";
 import { GuestPanel } from "@/components/guests/guest-panel";
@@ -13,14 +13,15 @@ interface PanelRouterProps {
   onGoAI: (hint: string) => void;
 }
 
-const STEP_COUNT = WEDDING_STEPS.length; // 7
-
 export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
   const tab = state.tab;
+  const lang = state.lang;
+  const steps = getWeddingSteps(lang);
+  const stepCount = steps.length;
 
   // Step panels (tabs 0-6)
-  if (tab < STEP_COUNT) {
-    const step = WEDDING_STEPS[tab];
+  if (tab < stepCount) {
+    const step = steps[tab];
     return (
       <StepPanel
         key={step.id}
@@ -32,12 +33,12 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onGoAI={onGoAI}
         stepStartTime={(state.stepStartTimes || {})[step.id]}
         onSetStepStartTime={store.setStepStartTime}
+        lang={lang}
       />
     );
   }
 
-  if (tab === STEP_COUNT) {
-    // tab 7 — Budget
+  if (tab === stepCount) {
     return (
       <BudgetPanel
         budget={state.budget}
@@ -46,12 +47,12 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onSetBudget={store.setBudget}
         onSetCategoryPercent={store.setCategoryPercent}
         onSetExpense={store.setExpense}
+        lang={lang}
       />
     );
   }
 
-  if (tab === STEP_COUNT + 1) {
-    // tab 8 — Guests
+  if (tab === stepCount + 1) {
     return (
       <GuestPanel
         guests={state.guests}
@@ -59,27 +60,28 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onRemoveGuest={store.removeGuest}
         onClearGuests={store.clearGuests}
         onImportGuests={store.importGuests}
+        lang={lang}
       />
     );
   }
 
-  if (tab === STEP_COUNT + 2) {
-    // tab 9 — Notes
+  if (tab === stepCount + 2) {
     return (
       <NotesPanel
         notes={state.notes || ""}
         onSetNotes={store.setNotes}
+        lang={lang}
       />
     );
   }
 
-  if (tab === STEP_COUNT + 3) {
-    // tab 10 — Vendors
+  if (tab === stepCount + 3) {
     return (
       <VendorPanel
         vendors={state.vendors || []}
         onAddVendor={store.addVendor}
         onRemoveVendor={store.removeVendor}
+        lang={lang}
       />
     );
   }

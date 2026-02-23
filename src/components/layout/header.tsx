@@ -64,7 +64,7 @@ export function Navbar({
 
   const countdownLabel = countdown
     ? countdown.passed
-      ? "Chúc mừng! 🎊"
+      ? t("Chúc mừng! 🎊", lang)
       : countdown.days > 0
       ? `${countdown.days}d`
       : `${countdown.hours}h`
@@ -175,7 +175,7 @@ function ShareButton({ state }: { state: WeddingState }) {
       onClick={handleShare}
       disabled={sharing}
       className="shrink-0 h-8 w-8 flex items-center justify-center rounded-full text-sm hover:bg-muted transition-colors"
-      title="Chia sẻ"
+      title={t("Chia sẻ", state.lang)}
     >
       {copied ? "✓" : sharing ? "…" : "↗"}
     </button>

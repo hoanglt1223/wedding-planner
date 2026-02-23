@@ -1,5 +1,6 @@
 import type { BudgetCategory } from "@/types/wedding";
 import { formatMoney, formatShort } from "@/lib/format";
+import { t } from "@/lib/i18n";
 
 interface BudgetCategoryRowProps {
   category: BudgetCategory;
@@ -8,6 +9,7 @@ interface BudgetCategoryRowProps {
   expense: number;
   onChange: (key: string, value: number) => void;
   onExpenseChange: (key: string, amount: number) => void;
+  lang?: string;
 }
 
 export function BudgetCategoryRow({
@@ -17,6 +19,7 @@ export function BudgetCategoryRow({
   expense,
   onChange,
   onExpenseChange,
+  lang = "vi",
 }: BudgetCategoryRowProps) {
   const barWidth = Math.min(percentage, 100);
 
@@ -35,7 +38,7 @@ export function BudgetCategoryRow({
           />
           <span className="text-xs text-gray-400">%</span>
           <span className="text-[var(--theme-primary)] font-bold min-w-[45px] text-right">
-            {formatShort(amount)}
+            {formatShort(amount, lang)}
           </span>
         </div>
       </div>
@@ -46,11 +49,11 @@ export function BudgetCategoryRow({
         />
       </div>
       <div className="flex items-center justify-end gap-1 text-xs text-gray-500 pb-1">
-        <span>Đã chi:</span>
+        <span>{t("Đã chi:", lang)}</span>
         <input
           type="text"
           className="w-20 p-[2px] border border-gray-200 rounded text-right text-xs"
-          value={expense ? formatMoney(expense) : ""}
+          value={expense ? formatMoney(expense, lang) : ""}
           placeholder="0"
           onChange={(e) => {
             const raw = e.target.value.replace(/\D/g, "");
@@ -59,7 +62,7 @@ export function BudgetCategoryRow({
           onFocus={(e) => e.target.select()}
         />
         <span className={expense > amount ? "text-red-500 font-semibold" : "text-gray-400"}>
-          / {formatShort(amount)}
+          / {formatShort(amount, lang)}
         </span>
       </div>
     </div>

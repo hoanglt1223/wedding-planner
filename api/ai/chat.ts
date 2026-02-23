@@ -17,8 +17,8 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   try {
-    const body = (await req.json()) as { prompt?: string; budget?: string };
-    const { prompt, budget } = body;
+    const body = (await req.json()) as { prompt?: string; budget?: string; lang?: string };
+    const { prompt, budget, lang = "vi" } = body;
 
     if (!prompt) {
       return Response.json({ error: "Missing prompt" }, { status: 400 });
@@ -41,7 +41,9 @@ export default async function handler(req: Request): Promise<Response> {
           messages: [
             {
               role: "system",
-              content: `Chuyên gia đám cưới VN 20 năm kinh nghiệm. 3 miền. Chi tiết, có giá VNĐ. Budget: ${budget}.`,
+              content: lang === "en"
+                ? `Expert Vietnamese wedding consultant with 20 years of experience across all 3 regions of Vietnam. Provide detailed advice with VND pricing. Respond in English. Budget: ${budget}.`
+                : `Chuyên gia đám cưới VN 20 năm kinh nghiệm. 3 miền. Chi tiết, có giá VNĐ. Budget: ${budget}.`,
             },
             { role: "user", content: prompt },
           ],
@@ -53,7 +55,7 @@ export default async function handler(req: Request): Promise<Response> {
     } catch (err) {
       if (err instanceof DOMException && err.name === "AbortError") {
         return Response.json(
-          { error: "ZhipuAI timeout sau 25s. Thử lại sau." },
+          { error: lang === "en" ? "ZhipuAI timed out after 25s. Please try again." : "ZhipuAI timeout sau 25s. Thử lại sau." },
           { status: 504 },
         );
       }

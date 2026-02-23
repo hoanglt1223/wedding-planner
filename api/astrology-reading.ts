@@ -22,6 +22,7 @@ interface ReadingRequest {
   birthHour: number | null;
   gender: string;
   currentYear: number;
+  lang?: string;
 }
 
 /** Map hour (0-23) to Earthly Branch name */
@@ -32,6 +33,7 @@ function getHourBranch(hour: number): string {
 }
 
 function buildPrompt(body: ReadingRequest): { system: string; user: string } {
+  const lang = body.lang || "vi";
   const year = parseInt(body.birthDate.slice(0, 4));
   const zodiac = getZodiac(year);
   const soundElement = getSoundElement(year);
@@ -39,18 +41,40 @@ function buildPrompt(body: ReadingRequest): { system: string; user: string } {
   const currentStemBranch = getStemBranch(body.currentYear);
   const currentZodiac = getZodiac(body.currentYear);
 
-  const hourLabel = body.birthHour !== null
-    ? `Giờ ${getHourBranch(body.birthHour)}`
-    : "Không rõ giờ sinh";
+  const hourLabel = lang === "en"
+    ? (body.birthHour !== null ? `${getHourBranch(body.birthHour)} hour` : "Unknown birth hour")
+    : (body.birthHour !== null ? `Giờ ${getHourBranch(body.birthHour)}` : "Không rõ giờ sinh");
 
-  const genderLabel = body.gender === "female" ? "Nữ" : "Nam";
+  const genderLabel = lang === "en"
+    ? (body.gender === "female" ? "Female" : "Male")
+    : (body.gender === "female" ? "Nữ" : "Nam");
 
-  const system = `Bạn là chuyên gia Tử Vi Việt Nam, am hiểu sâu về Địa Chi, Thiên Can, Ngũ Hành Nạp Âm.
+  const system = lang === "en"
+    ? `You are a Vietnamese astrology expert with deep knowledge of Earthly Branches (Dia Chi), Heavenly Stems (Thien Can), and Five Elements (Ngu Hanh Nap Am).
+Write a personal astrology analysis in fluent English, using traditional Vietnamese terminology with translations in parentheses.
+Tone: warm, encouraging, use tendencies rather than absolute predictions.
+Length: 400-500 words.`
+    : `Bạn là chuyên gia Tử Vi Việt Nam, am hiểu sâu về Địa Chi, Thiên Can, Ngũ Hành Nạp Âm.
 Viết bài phân tích tử vi bằng tiếng Việt, dùng thuật ngữ truyền thống với dấu tiếng Việt đầy đủ.
 Giọng văn: ấm áp, khích lệ, dùng xu hướng thay vì tiên đoán tuyệt đối.
 Độ dài: 400-500 từ.`;
 
-  const user = `Phân tích tử vi cá nhân:
+  const user = lang === "en"
+    ? `Personal astrology analysis:
+- Birth year: ${year} (${stemBranch})
+- Zodiac: ${zodiac.name} (${zodiac.chi})
+- Nap Am: ${soundElement.name} — ${soundElement.label} element
+- Birth hour: ${hourLabel}
+- Gender: ${genderLabel}
+- Current year: ${body.currentYear} (${currentStemBranch}) — Year of the ${currentZodiac.name}
+
+Write 5 sections:
+1. 🔮 Overall fortune for ${body.currentYear}
+2. 💕 Love & marriage
+3. 💼 Career & wealth
+4. 🏥 Health
+5. 💡 Special advice`
+    : `Phân tích tử vi cá nhân:
 - Năm sinh: ${year} (${stemBranch})
 - Con giáp: ${zodiac.name} (${zodiac.chi})
 - Nạp Âm: ${soundElement.name} — Mệnh ${soundElement.label}
@@ -90,8 +114,14 @@ export default {
       const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "anonymous";
       const { success } = await ratelimit.limit(ip);
       if (!success) {
+        const lang = ((await request.clone().json()) as ReadingRequest).lang || "vi";
         return Response.json(
-          { error: "rate_limited", message: "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai." },
+          {
+            error: "rate_limited",
+            message: lang === "en"
+              ? "You've used all your readings for today. Please try again tomorrow."
+              : "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.",
+          },
           { status: 429, headers: CORS_HEADERS }
         );
       }
@@ -115,9 +145,10 @@ export default {
         return Response.json({ error: "invalid_gender" }, { status: 400, headers: CORS_HEADERS });
       }
 
-      // Redis cache check
+      // Redis cache check (include lang to separate cached responses)
+      const lang = body.lang || "vi";
       const hourKey = body.birthHour !== null ? String(body.birthHour) : "x";
-      const cacheKey = `astro:reading:${body.birthDate}:${hourKey}:${body.gender}:${body.currentYear}`;
+      const cacheKey = `astro:reading:${body.birthDate}:${hourKey}:${body.gender}:${body.currentYear}:${lang}`;
       const cached = await redis.get<string>(cacheKey);
       if (cached) {
         return Response.json({ text: cached, cached: true }, { headers: CORS_HEADERS });

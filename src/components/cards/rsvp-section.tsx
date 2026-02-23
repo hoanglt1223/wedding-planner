@@ -1,24 +1,37 @@
 import { useState } from "react";
 import type { CoupleInfo } from "@/types/wedding";
+import { getLocale } from "@/lib/format";
 
 interface RsvpSectionProps {
   info: CoupleInfo;
+  lang?: string;
 }
 
-export function RsvpSection({ info }: RsvpSectionProps) {
+export function RsvpSection({ info, lang = "vi" }: RsvpSectionProps) {
   const [copied, setCopied] = useState(false);
 
   const fmDate = (d: string) =>
     d
-      ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
-          weekday: "long",
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
+      ? new Date(d + "T00:00:00").toLocaleDateString(getLocale(lang), {
+          weekday: "long", day: "2-digit", month: "2-digit", year: "numeric",
         })
       : "...";
 
-  const rsvpText = `💒 THIỆP MỜI ĐÁM CƯỚI 💒
+  const rsvpText = lang === "en"
+    ? `💒 WEDDING INVITATION 💒
+
+${info.groomFamilyName} & ${info.brideFamilyName} cordially invite you to the wedding of:
+
+💑 ${info.groom} & ${info.bride}
+
+📅 Wedding: ${fmDate(info.date)}
+${info.betrothalDate ? `📅 Betrothal: ${fmDate(info.betrothalDate)}` : ""}
+${info.engagementDate ? `📅 First meeting: ${fmDate(info.engagementDate)}` : ""}
+
+Your presence would be our greatest honor! 🎉
+
+Please RSVP at your earliest convenience. Thank you! 🙏`
+    : `💒 THIỆP MỜI ĐÁM CƯỚI 💒
 
 ${info.groomFamilyName} & ${info.brideFamilyName} trân trọng kính mời bạn đến dự lễ cưới của:
 
@@ -52,9 +65,9 @@ Xin vui lòng xác nhận tham dự. Xin cảm ơn! 🙏`;
 
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <h2 className="mb-2 text-base font-bold">📱 RSVP — Gửi cho khách</h2>
+      <h2 className="mb-2 text-base font-bold">{lang === "en" ? "📱 RSVP — Send to guests" : "📱 RSVP — Gửi cho khách"}</h2>
       <p className="mb-3 text-xs text-muted-foreground">
-        Copy tin nhắn bên dưới gửi qua Zalo, SMS, Messenger để mời khách
+        {lang === "en" ? "Copy the message below and send via text, email, or messenger" : "Copy tin nhắn bên dưới gửi qua Zalo, SMS, Messenger để mời khách"}
       </p>
       <div className="rounded-lg bg-green-50 border border-green-200 p-3 text-sm whitespace-pre-line text-gray-700 leading-relaxed">
         {rsvpText.trim()}
@@ -65,7 +78,7 @@ Xin vui lòng xác nhận tham dự. Xin cảm ơn! 🙏`;
           copied ? "bg-green-500" : "bg-blue-600 hover:bg-blue-500"
         }`}
       >
-        {copied ? "✅ Đã copy!" : "📋 Copy tin nhắn"}
+        {copied ? (lang === "en" ? "✅ Copied!" : "✅ Đã copy!") : (lang === "en" ? "📋 Copy message" : "📋 Copy tin nhắn")}
       </button>
     </div>
   );

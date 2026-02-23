@@ -2,14 +2,26 @@ import { useState } from "react";
 import { OnboardingPreview } from "./onboarding-preview";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
+import { getLocale } from "@/lib/format";
+import { t } from "@/lib/i18n";
 
 const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 
-const SAMPLE_DATA = {
+const SAMPLE_DATA_VI = {
   bride: "Nguyễn Thị Thu Thảo",
   groom: "Nguyễn Thanh Hoàng",
   brideFamilyName: "Họ Nguyễn",
   groomFamilyName: "Họ Nhà Trai",
+  date: "2026-03-14",
+  engagementDate: "2026-09-15",
+  betrothalDate: "2026-11-15",
+};
+
+const SAMPLE_DATA_EN = {
+  bride: "Emily Nguyen",
+  groom: "David Tran",
+  brideFamilyName: "Nguyen Family",
+  groomFamilyName: "Tran Family",
   date: "2026-03-14",
   engagementDate: "2026-09-15",
   betrothalDate: "2026-11-15",
@@ -20,6 +32,7 @@ interface Props {
 }
 
 export function OnboardingWizard({ store }: Props) {
+  const lang = store.state.lang;
   const [step, setStep] = useState(0);
   const [bride, setBride] = useState("");
   const [groom, setGroom] = useState("");
@@ -35,7 +48,8 @@ export function OnboardingWizard({ store }: Props) {
   };
 
   const handleSkip = () => {
-    for (const [k, v] of Object.entries(SAMPLE_DATA)) {
+    const sample = lang === "en" ? SAMPLE_DATA_EN : SAMPLE_DATA_VI;
+    for (const [k, v] of Object.entries(sample)) {
       store.updateInfo(k, v);
     }
     store.completeOnboarding();
@@ -55,7 +69,7 @@ export function OnboardingWizard({ store }: Props) {
         <div className="text-center mb-6">
           <div className="text-5xl mb-3">💍</div>
           <h1 className="text-2xl font-bold text-[#2c1810]">
-            Kế Hoạch Đám Cưới
+            {t("Kế Hoạch Đám Cưới", lang)}
           </h1>
         </div>
 
@@ -74,35 +88,35 @@ export function OnboardingWizard({ store }: Props) {
         {step === 0 && (
           <div className="space-y-4">
             <p className="text-sm text-[#5a3e2e] text-center">
-              Nhập thông tin cơ bản để bắt đầu
+              {lang === "en" ? "Enter basic info to get started" : "Nhập thông tin cơ bản để bắt đầu"}
             </p>
             <div>
               <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-                Tên cô dâu
+                {t("Tên cô dâu", lang)}
               </label>
               <input
                 type="text"
                 value={bride}
                 onChange={(e) => setBride(e.target.value)}
-                placeholder="Nguyễn Thị..."
+                placeholder={lang === "en" ? "Emily Nguyen..." : "Nguyễn Thị..."}
                 className="w-full h-10 px-3 text-sm border border-[var(--brand-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
               />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-                Tên chú rể
+                {t("Tên chú rể", lang)}
               </label>
               <input
                 type="text"
                 value={groom}
                 onChange={(e) => setGroom(e.target.value)}
-                placeholder="Trần Văn..."
+                placeholder={lang === "en" ? "David Tran..." : "Trần Văn..."}
                 className="w-full h-10 px-3 text-sm border border-[var(--brand-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
               />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-                Ngày cưới (tùy chọn)
+                {lang === "en" ? "Wedding date (optional)" : "Ngày cưới (tùy chọn)"}
               </label>
               <input
                 type="date"
@@ -116,7 +130,7 @@ export function OnboardingWizard({ store }: Props) {
               disabled={!canContinue}
               className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
-              Tiếp Tục →
+              {t("Tiếp Tục →", lang)}
             </button>
           </div>
         )}
@@ -124,16 +138,16 @@ export function OnboardingWizard({ store }: Props) {
         {step === 1 && (
           <div className="space-y-4">
             <p className="text-sm text-[#5a3e2e] text-center">
-              Quy trình cưới truyền thống Việt Nam
+              {lang === "en" ? "Traditional Vietnamese wedding process" : "Quy trình cưới truyền thống Việt Nam"}
             </p>
             <div className="max-h-[50vh] overflow-y-auto rounded-xl border border-[var(--brand-border)] bg-white/80 p-3">
-              <OnboardingPreview />
+              <OnboardingPreview lang={lang} />
             </div>
             <button
               onClick={() => setStep(2)}
               className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] transition-colors"
             >
-              Tiếp Tục →
+              {t("Tiếp Tục →", lang)}
             </button>
           </div>
         )}
@@ -147,7 +161,7 @@ export function OnboardingWizard({ store }: Props) {
               </p>
               {date && (
                 <p className="text-sm text-[#8a7060]">
-                  {new Date(date + "T00:00:00").toLocaleDateString("vi-VN", {
+                  {new Date(date + "T00:00:00").toLocaleDateString(getLocale(lang), {
                     day: "numeric",
                     month: "long",
                     year: "numeric",
@@ -155,14 +169,14 @@ export function OnboardingWizard({ store }: Props) {
                 </p>
               )}
               <p className="text-xs text-[#8a7060] mt-3">
-                Sẵn sàng lên kế hoạch cho ngày trọng đại!
+                {lang === "en" ? "Ready to plan for the big day!" : "Sẵn sàng lên kế hoạch cho ngày trọng đại!"}
               </p>
             </div>
             <button
               onClick={handleComplete}
               className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] transition-colors animate-pulse"
             >
-              Bắt Đầu Lên Kế Hoạch! 🎉
+              {t("Bắt Đầu Lên Kế Hoạch! 🎉", lang)}
             </button>
           </div>
         )}
@@ -171,7 +185,7 @@ export function OnboardingWizard({ store }: Props) {
           onClick={handleSkip}
           className="w-full mt-4 text-xs text-[#8a7060] hover:text-[#5a3e2e] transition-colors"
         >
-          Xem thử với dữ liệu mẫu →
+          {t("Xem thử với dữ liệu mẫu →", lang)}
         </button>
       </div>
     </div>

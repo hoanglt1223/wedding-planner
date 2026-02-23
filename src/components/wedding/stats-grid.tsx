@@ -1,4 +1,5 @@
 import { formatShort } from "@/lib/format";
+import { t } from "@/lib/i18n";
 
 interface StatsGridProps {
   totalSteps: number;
@@ -6,14 +7,15 @@ interface StatsGridProps {
   total: number;
   budget: number;
   progressPct: number;
+  lang?: string;
 }
 
-export function StatsGrid({ totalSteps, done, total, budget, progressPct }: StatsGridProps) {
+export function StatsGrid({ totalSteps, done, total, budget, progressPct, lang = "vi" }: StatsGridProps) {
   const stats = [
-    { value: String(totalSteps), label: "Bước" },
-    { value: `${done}/${total}`, label: "Xong" },
-    { value: formatShort(budget), label: "Budget" },
-    { value: `${progressPct}%`, label: "Tiến độ" },
+    { value: String(totalSteps), label: t("Bước", lang) },
+    { value: `${done}/${total}`, label: t("Xong", lang) },
+    { value: formatShort(budget, lang), label: "Budget" },
+    { value: `${progressPct}%`, label: t("Tiến độ", lang) },
   ];
 
   return (

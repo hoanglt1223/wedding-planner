@@ -1,43 +1,49 @@
 import { useState } from "react";
-import { AI_PROMPTS } from "@/data/ai-prompts";
+import { getAiPrompts } from "@/data/resolve-data";
 import { renderMarkdown } from "@/lib/markdown";
 import { AiPromptButtons } from "./ai-prompt-buttons";
+import { t } from "@/lib/i18n";
+import { getLocale, getCurrencySymbol } from "@/lib/format";
 
 interface AiPanelProps {
   aiResponse: string;
   budget: number;
   onSetAiResponse: (response: string) => void;
+  lang?: string;
 }
 
-async function callAI(prompt: string, budget: number): Promise<string> {
+async function callAI(prompt: string, budget: number, lang: string): Promise<string> {
   const res = await fetch("/api/ai/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       prompt,
-      budget: budget.toLocaleString("vi-VN") + "đ",
+      budget: budget.toLocaleString(getLocale(lang)) + getCurrencySymbol(lang),
+      lang,
     }),
   });
   if (!res.ok) throw new Error(`API ${res.status}`);
   const data = await res.json();
   if (data.error) throw new Error(data.error);
-  return data.choices?.[0]?.message?.content || "Không phản hồi.";
+  return data.choices?.[0]?.message?.content || (lang === "en" ? "No response." : "Không phản hồi.");
 }
 
-export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
+export function AiPanel({ aiResponse, budget, onSetAiResponse, lang = "vi" }: AiPanelProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [customPrompt, setCustomPrompt] = useState("");
   const [error, setError] = useState("");
+
+  const prompts = getAiPrompts(lang);
 
   const handleSend = async (prompt: string) => {
     if (!prompt.trim()) return;
     setIsLoading(true);
     setError("");
     try {
-      const result = await callAI(prompt, budget);
+      const result = await callAI(prompt, budget, lang);
       onSetAiResponse(result);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Lỗi không xác định");
+      setError(e instanceof Error ? e.message : (lang === "en" ? "Unknown error" : "Lỗi không xác định"));
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +64,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
     <div className="space-y-4 p-3 sm:p-4">
       <div className="mx-auto max-w-3xl space-y-4">
         <h2 className="text-xl font-bold text-foreground">
-          🤖 AI Hỗ Trợ (Z.AI) — {AI_PROMPTS.length} Prompts
+          {t("🤖 AI Hỗ Trợ", lang)} (Z.AI) — {prompts.length} Prompts
         </h2>
 
         {/* Model info */}
@@ -69,18 +75,18 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
         {/* Quick prompts */}
         <div>
           <h3 className="mb-2 text-sm font-semibold text-foreground">
-            ⚡ {AI_PROMPTS.length} Gợi Ý Nhanh
+            {t("⚡ Gợi Ý Nhanh", lang)} ({prompts.length})
           </h3>
-          <AiPromptButtons prompts={AI_PROMPTS} onSelect={handlePromptSelect} />
+          <AiPromptButtons prompts={prompts} onSelect={handlePromptSelect} />
         </div>
 
         {/* Custom prompt */}
         <div>
-          <h3 className="mb-1 text-sm font-semibold text-foreground">✍️ Hỏi Tùy Chỉnh</h3>
+          <h3 className="mb-1 text-sm font-semibold text-foreground">{t("✍️ Hỏi Tùy Chỉnh", lang)}</h3>
           <textarea
             value={customPrompt}
             onChange={(e) => setCustomPrompt(e.target.value)}
-            placeholder="Nhập câu hỏi..."
+            placeholder={t("Nhập câu hỏi...", lang)}
             rows={3}
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-ring"
           />
@@ -90,7 +96,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse }: AiPanelProps) {
               disabled={isLoading}
               className="rounded-lg bg-amber-500 px-4 py-1.5 text-sm font-semibold text-white hover:bg-amber-400 disabled:opacity-50"
             >
-              {isLoading ? "⏳ Đang xử lý..." : "🚀 Gửi"}
+              {isLoading ? t("⏳ Đang xử lý...", lang) : t("🚀 Gửi", lang)}
             </button>
             <button
               onClick={handleClear}

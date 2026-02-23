@@ -1,10 +1,12 @@
 import type { Guest } from "@/types/wedding";
+import { t } from "@/lib/i18n";
 
 interface SeatingChartProps {
   guests: Guest[];
+  lang?: string;
 }
 
-export function SeatingChart({ guests }: SeatingChartProps) {
+export function SeatingChart({ guests, lang = "vi" }: SeatingChartProps) {
   // Group guests by their g (group/table) field
   const tables = new Map<string, Guest[]>();
   const ungrouped: Guest[] = [];
@@ -26,7 +28,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
   if (guests.length === 0) {
     return (
       <div className="text-center text-sm text-gray-400 py-8">
-        Chưa có khách mời. Thêm khách ở trên để xem sơ đồ bàn tiệc.
+        {lang === "en" ? "No guests yet. Add guests above to see seating chart." : "Chưa có khách mời. Thêm khách ở trên để xem sơ đồ bàn tiệc."}
       </div>
     );
   }
@@ -34,7 +36,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
   return (
     <div className="space-y-3">
       <div className="text-sm text-gray-500">
-        {sortedTables.length} bàn/nhóm · {guests.length} khách
+        {sortedTables.length} {t("bàn/nhóm", lang)} · {guests.length} {t("khách", lang)}
       </div>
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -48,7 +50,7 @@ export function SeatingChart({ guests }: SeatingChartProps) {
                 🪑 {tableName}
               </span>
               <span className="text-2xs bg-amber-200/60 text-amber-700 rounded-full px-2 py-0.5">
-                {tableGuests.length} người
+                {tableGuests.length} {t("người", lang)}
               </span>
             </div>
             <div className="space-y-0.5">
@@ -72,10 +74,10 @@ export function SeatingChart({ guests }: SeatingChartProps) {
         <div className="rounded-xl border border-gray-200 bg-gray-50/50 p-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-bold text-gray-600">
-              ❓ Chưa xếp bàn
+              {t("❓ Chưa xếp bàn", lang)}
             </span>
             <span className="text-2xs bg-gray-200/60 text-gray-600 rounded-full px-2 py-0.5">
-              {ungrouped.length} người
+              {ungrouped.length} {t("người", lang)}
             </span>
           </div>
           <div className="grid grid-cols-2 gap-x-2">

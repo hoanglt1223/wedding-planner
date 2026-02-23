@@ -40,6 +40,25 @@
 
 ---
 
+### Phase 1.6: English Localization (COMPLETE)
+
+**Status:** Complete (Feb 23, 2026)
+
+**Deliverables:**
+- i18n system: `t(key, lang)` function + 200+ translation keys
+- Data resolver pattern with 7 lang-aware getter functions
+- 17 English data files (.en.ts) covering all data sets
+- Locale utilities: `getLocale(lang)`, `getCurrencySymbol(lang)`, format functions with lang parameter
+- All components updated to accept `lang?: string` prop
+- API endpoints accept `lang` parameter for English responses
+- Language toggle in Settings, stored in `WeddingState.lang`
+
+**Metrics:** Full English translation coverage, all data sets localized, zero runtime performance impact.
+
+**New Dependencies:** None
+
+---
+
 ### Phase 2: Core Features (TBD)
 
 **Estimated Duration:** 4-6 weeks
@@ -97,6 +116,7 @@
 |-----------|------------|--------|
 | Bootstrap Complete | Feb 21, 2026 | Done |
 | Astrology Expansion | Feb 23, 2026 | Done |
+| English Localization | Feb 23, 2026 | Done |
 | Core Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |

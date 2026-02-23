@@ -4,7 +4,7 @@ import { CardsPanel } from "@/components/cards/cards-panel";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { PrintPanel } from "@/components/print/print-panel";
 import { IdeasPanel } from "@/components/ideas/ideas-panel";
-import { WEDDING_STEPS } from "@/data/wedding-steps";
+import { getWeddingSteps } from "@/data/resolve-data";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 
@@ -16,6 +16,8 @@ interface PageRouterProps {
 }
 
 export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) {
+  const lang = state.lang;
+
   switch (state.page) {
     case "planning":
       return (
@@ -32,6 +34,7 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
         <AstrologyPage
           info={state.info}
           onUpdateInfo={store.updateInfo}
+          lang={lang}
         />
       );
 
@@ -43,6 +46,7 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
           photos={state.photos || []}
           onAddPhoto={store.addPhoto}
           onRemovePhoto={store.removePhoto}
+          lang={lang}
         />
       );
 
@@ -52,6 +56,7 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
           aiResponse={state.aiResponse}
           budget={state.budget}
           onSetAiResponse={store.setAiResponse}
+          lang={lang}
         />
       );
 
@@ -59,7 +64,8 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
       return (
         <PrintPanel
           info={state.info}
-          steps={WEDDING_STEPS}
+          steps={getWeddingSteps(lang)}
+          lang={lang}
         />
       );
 

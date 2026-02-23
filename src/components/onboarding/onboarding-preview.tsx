@@ -1,13 +1,20 @@
-import { WEDDING_STEPS } from "@/data/wedding-steps";
+import { getWeddingSteps } from "@/data/resolve-data";
+import { t } from "@/lib/i18n";
 
-export function OnboardingPreview() {
+interface OnboardingPreviewProps {
+  lang?: string;
+}
+
+export function OnboardingPreview({ lang = "vi" }: OnboardingPreviewProps) {
+  const steps = getWeddingSteps(lang);
+
   return (
     <div className="space-y-2">
       <h3 className="text-sm font-semibold text-[#2c1810] mb-3">
-        Nghi Lễ Cưới 8 Bước
+        {t("Nghi Lễ Cưới 8 Bước", lang)}
       </h3>
       <div className="space-y-1.5">
-        {WEDDING_STEPS.map((step, i) => (
+        {steps.map((step, i) => (
           <div
             key={step.id}
             className="flex items-center gap-3 rounded-lg border border-[#e8ddd0] bg-white/60 px-3 py-2"

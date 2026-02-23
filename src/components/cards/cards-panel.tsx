@@ -5,31 +5,35 @@ import { BackgroundGrid } from "./background-grid";
 import { InvitationGrid } from "./invitation-grid";
 import { RsvpSection } from "./rsvp-section";
 import { PhotoBoard } from "./photo-board";
+import { getLocale } from "@/lib/format";
+import { t } from "@/lib/i18n";
 
-const fmDs = (d: string) =>
-  d
-    ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
+function fmDs(d: string, lang: string) {
+  return d
+    ? new Date(d + "T00:00:00").toLocaleDateString(getLocale(lang), {
+        day: "2-digit", month: "2-digit", year: "numeric",
       })
     : "__.__.____";
+}
 
-const fmD = (d: string) =>
-  d
-    ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
-        weekday: "long",
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
+function fmD(d: string, lang: string) {
+  return d
+    ? new Date(d + "T00:00:00").toLocaleDateString(getLocale(lang), {
+        weekday: "long", day: "2-digit", month: "2-digit", year: "numeric",
       })
     : "...";
+}
 
-const getInviteMsg = (eventName: string) => {
+function getInviteMsg(eventName: string, lang: string) {
+  if (lang === "en") {
+    if (eventName === "Tiệc Cưới") return "We cordially invite you to our wedding celebration";
+    if (eventName === "Đám Hỏi") return "We cordially invite you to our betrothal ceremony";
+    return "We cordially invite you to the ceremony";
+  }
   if (eventName === "Tiệc Cưới") return "Trân trọng kính mời quý khách đến chung vui";
   if (eventName === "Đám Hỏi") return "Kính mời quý khách đến dự lễ đính hôn";
   return "Kính mời quý khách đến dự buổi lễ";
-};
+}
 
 interface CardsPanelProps {
   info: CoupleInfo;
@@ -37,9 +41,10 @@ interface CardsPanelProps {
   photos: PhotoItem[];
   onAddPhoto: (photo: Omit<PhotoItem, "id">) => void;
   onRemovePhoto: (id: number) => void;
+  lang?: string;
 }
 
-export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePhoto }: CardsPanelProps) {
+export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePhoto, lang = "vi" }: CardsPanelProps) {
   const events = [
     { n: "Dạm Ngõ", d: info.engagementDate },
     { n: "Đám Hỏi", d: info.betrothalDate },
@@ -50,9 +55,9 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
     <div className="space-y-4 p-4">
       {/* Header + couple form */}
       <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-        <h2 className="mb-1 text-lg font-bold">🖼️ Background &amp; 💌 Thiệp Mời</h2>
+        <h2 className="mb-1 text-lg font-bold">{t("🖼️ Background & 💌 Thiệp Mời", lang)}</h2>
         <p className="mb-3 text-xs text-muted-foreground">
-          10 mẫu cho mỗi lễ — xu hướng 2025: minimalist, pastel, ép kim, font thanh mảnh
+          {lang === "en" ? "10 templates per event — 2025 trends: minimalist, pastel, gold foil" : "10 mẫu cho mỗi lễ — xu hướng 2025: minimalist, pastel, ép kim, font thanh mảnh"}
         </p>
         <CoupleInfoForm info={info} onUpdateInfo={onUpdateInfo} />
       </div>
@@ -62,10 +67,10 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
         <div key={ev.n} className="space-y-3">
           {/* Background cards */}
           <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-            <h2 className="mb-3 text-base font-bold">🖼️ Background — {ev.n}</h2>
+            <h2 className="mb-3 text-base font-bold">🖼️ Background — {t(ev.n, lang)}</h2>
             <BackgroundGrid
-              eventName={ev.n}
-              date={fmDs(ev.d)}
+              eventName={t(ev.n, lang)}
+              date={fmDs(ev.d, lang)}
               groom={info.groom}
               bride={info.bride}
               groomFamily={info.groomFamilyName}
@@ -76,15 +81,15 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
 
           {/* Invitation cards */}
           <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-            <h2 className="mb-3 text-base font-bold">💌 Thiệp — {ev.n}</h2>
+            <h2 className="mb-3 text-base font-bold">{lang === "en" ? "💌 Invitation" : "💌 Thiệp"} — {t(ev.n, lang)}</h2>
             <InvitationGrid
-              eventName={ev.n}
-              dateFull={fmD(ev.d)}
+              eventName={t(ev.n, lang)}
+              dateFull={fmD(ev.d, lang)}
               groom={info.groom}
               bride={info.bride}
               groomFamily={info.groomFamilyName}
               brideFamily={info.brideFamilyName}
-              invitationMessage={getInviteMsg(ev.n)}
+              invitationMessage={getInviteMsg(ev.n, lang)}
               backgrounds={BACKGROUNDS}
             />
           </div>
@@ -92,7 +97,7 @@ export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePho
       ))}
 
       {/* RSVP Section */}
-      <RsvpSection info={info} />
+      <RsvpSection info={info} lang={lang} />
 
       {/* Photo/Mood Board */}
       <PhotoBoard photos={photos} onAddPhoto={onAddPhoto} onRemovePhoto={onRemovePhoto} />

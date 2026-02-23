@@ -7,14 +7,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { t } from "@/lib/i18n";
 import type { Guest } from "@/types/wedding";
 
 interface GuestTableProps {
   guests: Guest[];
   onDelete: (id: number) => void;
+  lang?: string;
 }
 
-export function GuestTable({ guests, onDelete }: GuestTableProps) {
+export function GuestTable({ guests, onDelete, lang = "vi" }: GuestTableProps) {
   return (
     <ScrollArea className="max-h-[350px] rounded border">
       <div className="overflow-x-auto">
@@ -22,10 +24,10 @@ export function GuestTable({ guests, onDelete }: GuestTableProps) {
           <TableHeader>
             <TableRow>
               <TableHead className="w-8 text-xs">#</TableHead>
-              <TableHead className="text-xs">Tên</TableHead>
-              <TableHead className="text-xs hidden sm:table-cell">SĐT</TableHead>
-              <TableHead className="text-xs">Bên</TableHead>
-              <TableHead className="text-xs hidden sm:table-cell">Nhóm</TableHead>
+              <TableHead className="text-xs">{t("Tên", lang)}</TableHead>
+              <TableHead className="text-xs hidden sm:table-cell">{t("SĐT", lang)}</TableHead>
+              <TableHead className="text-xs">{lang === "en" ? "Side" : "Bên"}</TableHead>
+              <TableHead className="text-xs hidden sm:table-cell">{lang === "en" ? "Group" : "Nhóm"}</TableHead>
               <TableHead className="w-6 text-xs text-center">✕</TableHead>
             </TableRow>
           </TableHeader>
@@ -39,7 +41,7 @@ export function GuestTable({ guests, onDelete }: GuestTableProps) {
                 </TableCell>
                 <TableCell className="text-xs py-1 hidden sm:table-cell">{g.phone || ""}</TableCell>
                 <TableCell className="text-xs py-1">
-                  {g.side === "trai" ? "Trai" : "Gái"}
+                  {g.side === "trai" ? (lang === "en" ? "Groom" : "Trai") : (lang === "en" ? "Bride" : "Gái")}
                 </TableCell>
                 <TableCell className="text-xs py-1 hidden sm:table-cell">{g.tableGroup || ""}</TableCell>
                 <TableCell className="text-xs py-1 text-center">

@@ -1,4 +1,4 @@
-import { WEDDING_STEPS } from "@/data/wedding-steps";
+import { getWeddingSteps } from "@/data/resolve-data";
 import { StatsGrid } from "@/components/wedding/stats-grid";
 import { TabNavigation } from "@/components/wedding/tab-navigation";
 import { PanelRouter } from "@/components/wedding/panel-router";
@@ -13,16 +13,19 @@ interface PlanningPageProps {
 }
 
 export function PlanningPage({ state, store, progress, onGoAI }: PlanningPageProps) {
+  const lang = state.lang;
+
   return (
     <>
       <StatsGrid
-        totalSteps={WEDDING_STEPS.length}
+        totalSteps={getWeddingSteps(lang).length}
         done={progress.done}
         total={progress.total}
         budget={state.budget}
         progressPct={progress.pct}
+        lang={lang}
       />
-      <TabNavigation activeTab={state.tab} onTabChange={store.setTab} />
+      <TabNavigation activeTab={state.tab} onTabChange={store.setTab} lang={lang} />
       <PanelRouter state={state} store={store} onGoAI={onGoAI} />
     </>
   );

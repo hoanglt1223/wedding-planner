@@ -1,23 +1,24 @@
 import type { CoupleInfo } from "@/types/wedding";
+import { getLocale } from "@/lib/format";
+import { t } from "@/lib/i18n";
 
 interface EventTimelineProps {
   info: CoupleInfo;
+  lang?: string;
 }
 
-export function EventTimeline({ info }: EventTimelineProps) {
+export function EventTimeline({ info, lang = "vi" }: EventTimelineProps) {
   const fmDate = (d: string) =>
     d
-      ? new Date(d + "T00:00:00").toLocaleDateString("vi-VN", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
+      ? new Date(d + "T00:00:00").toLocaleDateString(getLocale(lang), {
+          day: "2-digit", month: "2-digit", year: "numeric",
         })
       : "";
 
   const events = [
-    { label: "Dạm Ngõ", date: info.engagementDate, icon: "🏠", color: "bg-amber-500" },
-    { label: "Đám Hỏi", date: info.betrothalDate, icon: "💍", color: "bg-pink-500" },
-    { label: "Ngày Cưới", date: info.date, icon: "💒", color: "bg-primary" },
+    { label: t("Dạm Ngõ", lang), date: info.engagementDate, icon: "🏠", color: "bg-amber-500" },
+    { label: t("Đám Hỏi", lang), date: info.betrothalDate, icon: "💍", color: "bg-pink-500" },
+    { label: t("Ngày Cưới", lang), date: info.date, icon: "💒", color: "bg-primary" },
   ].filter((e) => e.date);
 
   if (events.length === 0) return null;
@@ -25,7 +26,7 @@ export function EventTimeline({ info }: EventTimelineProps) {
   return (
     <div className="rounded-xl bg-white p-4 shadow print-clean">
       <h2 className="text-sm sm:text-base font-bold mb-3 border-b border-gray-200 pb-1">
-        🎬 Lịch Trình Sự Kiện
+        {t("🎬 Lịch Trình Sự Kiện", lang)}
       </h2>
       <div className="relative pl-6">
         {/* Timeline line */}
@@ -52,9 +53,9 @@ export function EventTimeline({ info }: EventTimelineProps) {
                   const diff = Math.ceil(
                     (d.getTime() - now.getTime()) / 86400000,
                   );
-                  if (diff < 0) return "Đã qua";
-                  if (diff === 0) return "Hôm nay!";
-                  return `Còn ${diff} ngày`;
+                  if (diff < 0) return t("Đã qua", lang);
+                  if (diff === 0) return t("Hôm nay!", lang);
+                  return lang === "en" ? `${diff} days left` : `Còn ${diff} ngày`;
                 })()}
               </div>
             </div>

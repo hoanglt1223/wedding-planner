@@ -10,6 +10,7 @@ import {
 import type { Guest } from "@/types/wedding";
 import { GuestTable } from "./guest-table";
 import { SeatingChart } from "./seating-chart";
+import { t } from "@/lib/i18n";
 
 interface GuestPanelProps {
   guests: Guest[];
@@ -17,6 +18,7 @@ interface GuestPanelProps {
   onRemoveGuest: (id: number) => void;
   onClearGuests: () => void;
   onImportGuests: (guests: Omit<Guest, "id">[]) => void;
+  lang?: string;
 }
 
 export function GuestPanel({
@@ -25,6 +27,7 @@ export function GuestPanel({
   onRemoveGuest,
   onClearGuests,
   onImportGuests,
+  lang = "vi",
 }: GuestPanelProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -57,7 +60,7 @@ export function GuestPanel({
   };
 
   const handleClear = () => {
-    if (window.confirm("Xóa tất cả?")) onClearGuests();
+    if (window.confirm(t("Xóa tất cả?", lang))) onClearGuests();
   };
 
   const filteredGuests = search
@@ -67,26 +70,26 @@ export function GuestPanel({
   return (
     <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4">
       <div className="pb-2">
-        <h2 className="text-base font-semibold">👥 Khách Mời ({guests.length})</h2>
+        <h2 className="text-base font-semibold">{t("👥 Khách Mời", lang)} ({guests.length})</h2>
       </div>
       <div className="space-y-2">
         {guests.length > 0 && (
           <div className="text-sm bg-blue-50 text-blue-800 rounded px-3 py-1">
-            Trai: <b>{traiCount}</b> | Gái: <b>{gaiCount}</b> | Bàn ≈ <b>{tableCount}</b>
+            {t("Trai:", lang)} <b>{traiCount}</b> | {t("Gái:", lang)} <b>{gaiCount}</b> | {lang === "en" ? "Tables" : "Bàn"} ≈ <b>{tableCount}</b>
           </div>
         )}
 
         <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
           <Input
             className="h-8 text-sm"
-            placeholder="Họ tên"
+            placeholder={t("Họ tên", lang)}
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           />
           <Input
             className="h-8 text-sm"
-            placeholder="SĐT"
+            placeholder={t("SĐT", lang)}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -95,21 +98,21 @@ export function GuestPanel({
             value={side}
             onChange={(e) => setSide(e.target.value as "trai" | "gai")}
           >
-            <option value="trai">Trai</option>
-            <option value="gai">Gái</option>
+            <option value="trai">{lang === "en" ? "Groom" : "Trai"}</option>
+            <option value="gai">{lang === "en" ? "Bride" : "Gái"}</option>
           </select>
           <Input
             className="h-8 text-sm"
-            placeholder="Nhóm/Bàn"
+            placeholder={t("Nhóm/Bàn", lang)}
             value={group}
             onChange={(e) => setGroup(e.target.value)}
           />
-          <Button size="sm" className="h-8 px-3" onClick={handleAdd}>+ Thêm</Button>
+          <Button size="sm" className="h-8 px-3" onClick={handleAdd}>+ {t("Thêm", lang)}</Button>
         </div>
 
         <div className="flex gap-1 flex-wrap">
           <Button size="sm" variant="secondary" className="h-7 text-xs" onClick={downloadSampleCsv}>
-            📥 CSV mẫu
+            {lang === "en" ? "📥 Sample CSV" : "📥 CSV mẫu"}
           </Button>
           <label className="cursor-pointer">
             <span className="inline-flex items-center h-7 px-3 text-xs bg-green-100 text-green-800 rounded hover:bg-green-200 border border-green-300">
@@ -129,7 +132,7 @@ export function GuestPanel({
                 📤 Export
               </Button>
               <Button size="sm" variant="destructive" className="h-7 text-xs" onClick={handleClear}>
-                🗑️ Xóa tất cả
+                {lang === "en" ? "🗑️ Delete all" : "🗑️ Xóa tất cả"}
               </Button>
             </>
           )}
@@ -145,7 +148,7 @@ export function GuestPanel({
               }`}
               onClick={() => setView("list")}
             >
-              📋 Danh sách
+              {t("📋 Danh sách", lang)}
             </button>
             <button
               className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
@@ -155,7 +158,7 @@ export function GuestPanel({
               }`}
               onClick={() => setView("chart")}
             >
-              🪑 Sơ đồ bàn
+              {t("🪑 Sơ đồ bàn", lang)}
             </button>
           </div>
         )}
@@ -165,9 +168,9 @@ export function GuestPanel({
             <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center mb-3">
               <span className="text-3xl">👥</span>
             </div>
-            <h3 className="text-base font-semibold mb-1">Thêm khách mời đầu tiên</h3>
+            <h3 className="text-base font-semibold mb-1">{lang === "en" ? "Add your first guest" : "Thêm khách mời đầu tiên"}</h3>
             <p className="text-sm text-muted-foreground max-w-xs">
-              Nhập tên khách ở form bên trên để bắt đầu danh sách mời
+              {lang === "en" ? "Enter guest names above to start your guest list" : "Nhập tên khách ở form bên trên để bắt đầu danh sách mời"}
             </p>
           </div>
         )}
@@ -176,15 +179,15 @@ export function GuestPanel({
           <>
             <Input
               className="h-8 text-sm"
-              placeholder="🔍 Tìm kiếm..."
+              placeholder={t("🔍 Tìm kiếm...", lang)}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <GuestTable guests={filteredGuests} onDelete={onRemoveGuest} />
+            <GuestTable guests={filteredGuests} onDelete={onRemoveGuest} lang={lang} />
           </>
         )}
         {guests.length > 0 && view === "chart" && (
-          <SeatingChart guests={guests} />
+          <SeatingChart guests={guests} lang={lang} />
         )}
       </div>
     </div>

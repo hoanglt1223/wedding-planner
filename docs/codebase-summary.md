@@ -26,6 +26,8 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | `src/pages/` | Route-based pages | Empty (TBD) |
 | `src/hooks/` | Custom React hooks | Empty (TBD) |
 | `src/lib/utils.ts` | Tailwind merge utility | Active |
+| `src/lib/i18n.ts` | Translation function: `t(key, lang)` | Active |
+| `src/lib/format.ts` | Locale utilities & formatting with lang parameter | Active |
 | `src/types/` | TypeScript definitions | Empty (TBD) |
 | `src/index.css` | Global styles + custom utilities (text-2xs) + print styles | Active |
 | `public/` | Static assets | Empty |
@@ -91,6 +93,31 @@ App-wide theming via CSS variables. Four themes available (Traditional Red, Blus
 **Styling Layer:** `src/index.css`
 - Declares CSS vars in @theme inline block
 - text-2xs utility added (0.625rem font size)
+
+## Internationalization (i18n)
+
+English and Vietnamese language support with centralized translation system.
+
+**Core Files:**
+- `src/lib/i18n.ts` — `t(key, lang)` function + `getLangLabel(lang)` for UI display
+- `src/lib/i18n-translations.ts` — ~200 translation key-value pairs (vi/en)
+- `src/data/resolve-data.ts` — 7 lang-aware data getter functions
+
+**Data Translation Files (17 .en.ts files):**
+- `wedding-steps*.en.ts` (7 files) — Wedding ceremony steps
+- `budget-categories.en.ts` — Budget categories
+- `ideas.en.ts` — Planning ideas
+- `ai-prompts.en.ts` — AI chat prompts
+- `astrology-zodiac-profiles.en.ts` — Zodiac personality profiles
+- `astrology-element-profiles.en.ts` — Element profiles (Wood, Fire, Earth, Metal, Water)
+- `astrology-yearly-forecast.en.ts` — 2026 yearly forecasts
+
+**Format Utilities:**
+- `src/lib/format.ts` — `getLocale(lang)`, `getCurrencySymbol(lang)`, `formatMoney(n, lang)`, `formatShort(n, lang)`
+
+**Component Pattern:**
+- All components accept optional `lang?: string` prop (default: "vi")
+- Language stored in `WeddingState.lang`, toggled via Settings UI
 
 ## Current Limitations (TBD)
 

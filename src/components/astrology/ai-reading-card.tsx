@@ -6,15 +6,17 @@ interface AiReadingCardProps {
   birthHour: number | null;
   gender: string;
   currentYear: number;
+  lang?: string;
 }
 
-export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiReadingCardProps) {
+export function AiReadingCard({ birthDate, birthHour, gender, currentYear, lang = "vi" }: AiReadingCardProps) {
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [cached, setCached] = useState(false);
 
   const hasFullData = Boolean(birthDate && birthHour !== null);
+  const en = lang === "en";
 
   const fetchReading = async () => {
     setLoading(true);
@@ -23,17 +25,17 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
       const res = await fetch("/api/astrology-reading", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ birthDate, birthHour, gender, currentYear }),
+        body: JSON.stringify({ birthDate, birthHour, gender, currentYear, lang }),
       });
       const data = await res.json();
 
       if (!res.ok) {
         if (res.status === 429) {
-          setError(data.message || "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.");
+          setError(data.message || (en ? "You've reached today's limit. Please try again tomorrow." : "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai."));
         } else if (res.status === 503) {
-          setError("Tính năng AI đang bảo trì. Vui lòng thử lại sau.");
+          setError(en ? "AI feature is under maintenance. Please try again later." : "Tính năng AI đang bảo trì. Vui lòng thử lại sau.");
         } else {
-          setError("Không thể tạo phân tích. Vui lòng thử lại.");
+          setError(en ? "Unable to generate analysis. Please try again." : "Không thể tạo phân tích. Vui lòng thử lại.");
         }
         return;
       }
@@ -41,7 +43,7 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
       setText(data.text);
       setCached(data.cached ?? false);
     } catch {
-      setError("Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.");
+      setError(en ? "Connection error. Please check your network and try again." : "Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại.");
     } finally {
       setLoading(false);
     }
@@ -49,11 +51,11 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
 
   return (
     <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4 space-y-3">
-      <h3 className="text-sm font-bold">🔮 Phân Tích Chi Tiết (AI)</h3>
+      <h3 className="text-sm font-bold">{en ? "🔮 Detailed AI Analysis" : "🔮 Phân Tích Chi Tiết (AI)"}</h3>
 
       {!hasFullData && (
         <p className="text-xs text-muted-foreground">
-          Nhập đầy đủ ngày sinh và giờ sinh để mở khóa phân tích chi tiết bằng AI.
+          {en ? "Enter full birth date and birth hour to unlock detailed AI analysis." : "Nhập đầy đủ ngày sinh và giờ sinh để mở khóa phân tích chi tiết bằng AI."}
         </p>
       )}
 
@@ -63,15 +65,15 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
           disabled={!hasFullData || loading}
           className="w-full"
           variant={hasFullData ? "default" : "outline"}
-          aria-label={loading ? "Đang phân tích tử vi" : "Xếp chi tiết tử vi bằng AI"}
+          aria-label={loading ? (en ? "Analyzing..." : "Đang phân tích tử vi") : (en ? "Get AI reading" : "Xếp chi tiết tử vi bằng AI")}
         >
           {loading ? (
             <span className="flex items-center gap-2">
               <LoadingSpinner />
-              Đang phân tích tử vi...
+              {en ? "Analyzing..." : "Đang phân tích tử vi..."}
             </span>
           ) : (
-            "🔮 Xếp Chi Tiết"
+            en ? "🔮 Get Detailed Reading" : "🔮 Xếp Chi Tiết"
           )}
         </Button>
       )}
@@ -83,7 +85,7 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
             onClick={fetchReading}
             className="shrink-0 underline text-xs text-red-600 hover:text-red-800"
           >
-            Thử lại
+            {en ? "Retry" : "Thử lại"}
           </button>
         </div>
       )}
@@ -95,7 +97,7 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
           </div>
           {cached && (
             <p className="text-xs text-muted-foreground text-center">
-              📋 Kết quả từ bộ nhớ đệm
+              {en ? "📋 Result from cache" : "📋 Kết quả từ bộ nhớ đệm"}
             </p>
           )}
           <Button
@@ -104,7 +106,7 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear }: AiR
             onClick={() => { setText(""); setCached(false); setError(""); }}
             className="w-full text-xs"
           >
-            Xếp lại
+            {en ? "Get new reading" : "Xếp lại"}
           </Button>
         </div>
       )}

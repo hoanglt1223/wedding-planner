@@ -2,6 +2,33 @@
 
 All notable changes are documented here.
 
+## [0.2.0] - 2026-02-23
+
+### Added
+
+- **English Mode — Full Localization**
+  - i18n system: `t(key, lang)` function with ~200 translation keys
+  - `src/lib/i18n-translations.ts` centralized translation dictionary
+  - Data resolver pattern: `src/data/resolve-data.ts` with 7 lang-aware getter functions
+  - 17 new English data files (.en.ts) parallel to Vietnamese originals
+  - Locale utilities in `src/lib/format.ts`: `getLocale(lang)`, `getCurrencySymbol(lang)`
+  - `formatMoney()` and `formatShort()` now accept optional `lang` parameter
+  - All components accept `lang?: string` prop (default "vi")
+  - API endpoints (`/api/astrology-reading`) accept `lang` parameter
+  - Language toggle in Settings UI, stored in `WeddingState.lang`
+  - Full English translation coverage: UI strings, data sets, API responses
+
+### Dependencies Added
+
+- None (i18n implemented without external libraries)
+
+### Performance Notes
+
+- No runtime performance impact (language selection stored in state)
+- Data arrays loaded per-language (no unused translations in memory)
+
+---
+
 ## [0.1.0] - 2026-02-23
 
 ### Added

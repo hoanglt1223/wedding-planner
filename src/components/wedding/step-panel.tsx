@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { ScrollableTabBar } from "@/components/layout/scrollable-tab-bar";
 import { CeremonySection } from "./ceremony-section";
+import { t } from "@/lib/i18n";
 
 interface StepPanelProps {
   step: WeddingStep;
@@ -14,6 +15,7 @@ interface StepPanelProps {
   onGoAI: (hint: string) => void;
   stepStartTime?: string;
   onSetStepStartTime: (stepId: string, time: string) => void;
+  lang?: string;
 }
 
 function getStepProgress(
@@ -62,6 +64,7 @@ export function StepPanel({
   onGoAI,
   stepStartTime,
   onSetStepStartTime,
+  lang = "vi",
 }: StepPanelProps) {
   const { done, total, pct } = getStepProgress(step, checkedKeys);
 
@@ -72,7 +75,7 @@ export function StepPanel({
 
   const ceremonyTabs = step.ceremonies.map((cer) => ({
     label: cer.name,
-    suffix: !cer.required ? "(tùy chọn)" : undefined,
+    suffix: !cer.required ? `(${t("tùy chọn", lang)})` : undefined,
   }));
 
   return (
@@ -84,7 +87,7 @@ export function StepPanel({
         </h2>
         {step.formalName && (
           <div className="text-xs text-gray-400 italic mb-1.5">
-            Tên chính thức: {step.formalName}
+            {lang === "en" ? "Formal name:" : "Tên chính thức:"} {step.formalName}
           </div>
         )}
         <p className="text-xs text-gray-500 mb-2 leading-relaxed">{step.description}</p>
@@ -92,7 +95,7 @@ export function StepPanel({
         {/* Meaning section */}
         {step.meaning && (
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 mb-2">
-            <div className="text-xs font-semibold text-amber-800 mb-1">📖 Ý nghĩa</div>
+            <div className="text-xs font-semibold text-amber-800 mb-1">📖 {t("Ý nghĩa", lang)}</div>
             <p className="text-xs text-amber-700 leading-relaxed">{step.meaning}</p>
           </div>
         )}
@@ -108,12 +111,12 @@ export function StepPanel({
               className="h-6 text-xs px-2 border-blue-300 text-blue-600 hover:bg-blue-50"
               onClick={() => onGoAI(step.aiHint)}
             >
-              🤖 Hỏi AI
+              {t("🤖 Hỏi AI", lang)}
             </Button>
           )}
           {hasTimes && (
             <label className="inline-flex items-center gap-1 text-xs font-medium text-gray-600">
-              🕐 Giờ bắt đầu
+              {lang === "en" ? "🕐 Start time" : "🕐 Giờ bắt đầu"}
               <input
                 type="time"
                 value={currentStart}
@@ -150,13 +153,14 @@ export function StepPanel({
           checkedKeys={checkedKeys}
           onToggleCheck={onToggleCheck}
           timeOffset={timeOffset}
+          lang={lang}
         />
       )}
 
       {/* Step-level notes */}
       {step.notes && step.notes.length > 0 && (
         <div className="bg-[var(--theme-note-bg)] border border-[var(--theme-note-border)] rounded-xl p-3 shadow-sm">
-          <div className="text-xs font-semibold text-[var(--theme-note-text)] mb-1">📝 Lưu ý quan trọng</div>
+          <div className="text-xs font-semibold text-[var(--theme-note-text)] mb-1">{t("📝 Lưu ý quan trọng", lang)}</div>
           <div className="space-y-0.5">
             {step.notes.map((note, i) => (
               <div key={i} className="text-xs text-[var(--theme-note-text)] leading-relaxed">• {note}</div>

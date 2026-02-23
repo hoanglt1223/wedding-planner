@@ -199,6 +199,42 @@ Frontend (AI Reading Button)
 - Long cache TTL (300 days) reduces API calls
 - Rate limiting prevents abuse and controls spending
 
+## Internationalization (i18n)
+
+**Translation System:**
+```
+User selects language in Settings
+  → Stored in WeddingState.lang
+  → Passed to components as lang prop
+  → Components call resolve-data functions
+  → Language-specific data arrays loaded
+  → t(key, lang) for UI strings
+```
+
+**Data Resolution Pattern:**
+```
+resolve-data.ts exposes 7 getters:
+  getWeddingSteps(lang)
+  getBudgetCategories(lang)
+  getAiPrompts(lang)
+  getIdeas(lang)
+  getZodiacProfiles(lang)
+  getElementProfiles(lang)
+  getYearlyForecasts(lang)
+
+Each returns Vietnamese OR English data array based on lang parameter
+```
+
+**Translation Coverage:**
+- 200+ UI strings in `i18n-translations.ts` (vi/en key-value pairs)
+- 7 data files with English translations (.en.ts parallel versions)
+- API endpoints accept `lang` parameter for responses
+- Format utilities (`formatMoney`, `formatShort`) accept `lang` parameter
+
+**Language Support:**
+- Vietnamese (vi) — default, original language
+- English (en) — full translation coverage for all content
+
 ## Monitoring
 
 - `/api/health` endpoint for deployment checks
