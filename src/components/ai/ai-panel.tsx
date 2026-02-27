@@ -13,7 +13,7 @@ interface AiPanelProps {
 }
 
 async function callAI(prompt: string, budget: number, lang: string): Promise<string> {
-  const res = await fetch("/api/ai/chat", {
+  const res = await fetch("/api/ai?action=chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

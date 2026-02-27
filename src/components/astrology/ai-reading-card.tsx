@@ -22,7 +22,7 @@ export function AiReadingCard({ birthDate, birthHour, gender, currentYear, lang 
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/astrology-reading", {
+      const res = await fetch("/api/ai?action=astrology", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ birthDate, birthHour, gender, currentYear, lang }),

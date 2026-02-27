@@ -36,7 +36,7 @@ export default function AdminAnalytics() {
     setError(null);
     try {
       const params = new URLSearchParams({ action: "analytics", from, to });
-      const res = await fetch(`/api/admin/data?${params}`, { credentials: "include" });
+      const res = await fetch(`/api/admin?${params}`, { credentials: "include" });
       if (!res.ok) throw new Error("Failed");
       setData(await res.json() as AnalyticsData);
     } catch {

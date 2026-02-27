@@ -1,9 +1,8 @@
-const AUTH = "/api/admin/auth";
-const DATA = "/api/admin/data";
+const ADMIN = "/api/admin";
 
 export async function adminLogin(password: string): Promise<{ ok: boolean; error?: string }> {
   try {
-    const res = await fetch(`${AUTH}?action=login`, {
+    const res = await fetch(`${ADMIN}?action=login`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -19,13 +18,13 @@ export async function adminLogin(password: string): Promise<{ ok: boolean; error
 
 export async function adminLogout(): Promise<void> {
   try {
-    await fetch(`${AUTH}?action=logout`, { method: "POST", credentials: "include" });
+    await fetch(`${ADMIN}?action=logout`, { method: "POST", credentials: "include" });
   } catch { /* ignore */ }
 }
 
 export async function adminVerify(): Promise<boolean> {
   try {
-    const res = await fetch(`${AUTH}?action=verify`, { method: "GET", credentials: "include" });
+    const res = await fetch(`${ADMIN}?action=verify`, { method: "GET", credentials: "include" });
     if (!res.ok) return false;
     const data = await res.json() as { authenticated?: boolean };
     return data.authenticated === true;
@@ -36,5 +35,5 @@ export async function adminVerify(): Promise<boolean> {
 
 export function adminDataUrl(action: string, params?: Record<string, string>): string {
   const sp = new URLSearchParams({ action, ...params });
-  return `${DATA}?${sp}`;
+  return `${ADMIN}?${sp}`;
 }

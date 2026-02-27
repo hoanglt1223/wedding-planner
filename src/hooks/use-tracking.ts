@@ -17,9 +17,9 @@ export function useTracking(userId: string) {
       const payload = JSON.stringify({ userId, events });
 
       if (beacon && typeof navigator.sendBeacon === "function") {
-        navigator.sendBeacon("/api/track", new Blob([payload], { type: "application/json" }));
+        navigator.sendBeacon("/api/util?action=track", new Blob([payload], { type: "application/json" }));
       } else {
-        fetch("/api/track", {
+        fetch("/api/util?action=track", {
           method: "POST",
           body: payload,
           headers: { "Content-Type": "application/json" },

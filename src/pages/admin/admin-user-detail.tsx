@@ -55,7 +55,7 @@ export function AdminUserDetail({ userId, onClose }: Props) {
 
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/admin/data?action=user-detail&id=${encodeURIComponent(userId)}`, { credentials: "include" })
+    fetch(`/api/admin?action=user-detail&id=${encodeURIComponent(userId)}`, { credentials: "include" })
       .then((r) => r.json())
       .then((d) => { if (!cancelled) { setUser(d as UserDetail); setLoading(false); } })
       .catch(() => { if (!cancelled) { setUser(null); setLoading(false); } });

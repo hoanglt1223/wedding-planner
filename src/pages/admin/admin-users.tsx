@@ -42,7 +42,7 @@ export default function AdminUsers() {
         action: "users", page: String(p), limit: String(limit), sort: sortCol, order: sortOrder,
         ...(s ? { search: s } : {}),
       });
-      const res = await fetch(`/api/admin/data?${params}`, { credentials: "include" });
+      const res = await fetch(`/api/admin?${params}`, { credentials: "include" });
       const data = await res.json() as UsersResponse;
       setUsers(data.users);
       setTotal(data.total);

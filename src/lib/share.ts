@@ -18,7 +18,7 @@ function filterState(state: WeddingState) {
 export async function createShareLink(state: WeddingState): Promise<string> {
   const filtered = filterState(state);
   const data = btoa(encodeURIComponent(JSON.stringify(filtered)));
-  const res = await fetch("/api/share", {
+  const res = await fetch("/api/util?action=share", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ data }),
@@ -31,7 +31,7 @@ export async function createShareLink(state: WeddingState): Promise<string> {
 export type SharedData = ReturnType<typeof filterState>;
 
 export async function fetchSharedData(id: string): Promise<SharedData | null> {
-  const res = await fetch(`/api/share?id=${encodeURIComponent(id)}`);
+  const res = await fetch(`/api/util?action=share&id=${encodeURIComponent(id)}`);
   if (!res.ok) return null;
   const { data } = await res.json() as { data: string };
   try {
