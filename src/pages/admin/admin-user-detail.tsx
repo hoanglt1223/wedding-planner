@@ -51,7 +51,7 @@ interface Props { userId: string; onClose: () => void }
 export function AdminUserDetail({ userId, onClose }: Props) {
   const [user, setUser] = useState<UserDetail | null>(null);
   const [loading, setLoading] = useState(true);
-  const [section, setSection] = useState<"info" | "guests" | "vendors" | "photos" | "json">("info");
+  const [section, setSection] = useState<"info" | "guests" | "vendors" | "photos" | "steps" | "json">("info");
 
   useEffect(() => {
     let cancelled = false;
@@ -71,11 +71,15 @@ export function AdminUserDetail({ userId, onClose }: Props) {
   const photos = wd?.photos ?? [];
   const pct = Math.round((user.checklistProgress ?? 0) * 100);
 
+  const enabledSteps = wd?.enabledSteps ?? {};
+  const skippedCount = Object.values(enabledSteps).filter((v) => v === false).length;
+
   const tabs: { id: typeof section; label: string; count?: number }[] = [
     { id: "info", label: "Info" },
     { id: "guests", label: "Guests", count: guests.length },
     { id: "vendors", label: "Vendors", count: vendors.length },
     { id: "photos", label: "Photos", count: photos.length },
+    { id: "steps", label: "Steps", count: skippedCount > 0 ? skippedCount : undefined },
     { id: "json", label: "JSON" },
   ];
 
@@ -104,6 +108,7 @@ export function AdminUserDetail({ userId, onClose }: Props) {
       {section === "guests" && <GuestsSection guests={guests} />}
       {section === "vendors" && <VendorsSection vendors={vendors} />}
       {section === "photos" && <PhotosSection photos={photos} />}
+      {section === "steps" && <StepsSection enabledSteps={enabledSteps} />}
       {section === "json" && <JsonSection data={wd} />}
     </div>
   );
@@ -236,6 +241,37 @@ function PhotosSection({ photos }: { photos: PhotoItem[] }) {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/* ---------- Steps ---------- */
+
+function StepsSection({ enabledSteps }: { enabledSteps: Record<string, boolean> }) {
+  const entries = Object.entries(enabledSteps);
+  if (!entries.length) return <p className="text-muted-foreground">All steps enabled (default).</p>;
+  return (
+    <div className="max-h-96 overflow-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Step ID</TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {entries.map(([id, enabled]) => (
+            <TableRow key={id}>
+              <TableCell className="font-mono text-xs">{id}</TableCell>
+              <TableCell>
+                <Badge variant={enabled ? "default" : "secondary"}>
+                  {enabled ? "Enabled" : "Skipped"}
+                </Badge>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

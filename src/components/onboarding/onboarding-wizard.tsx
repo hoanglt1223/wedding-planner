@@ -43,6 +43,8 @@ export function OnboardingWizard({ store, track }: Props) {
   const [step, setStep] = useState(0);
   const [bride, setBride] = useState("");
   const [groom, setGroom] = useState("");
+  const [brideBirthDate, setBrideBirthDate] = useState("");
+  const [groomBirthDate, setGroomBirthDate] = useState("");
   const [date, setDate] = useState("");
   const [engagementDate, setEngagementDate] = useState("");
   const [budget, setBudget] = useState(200_000_000);
@@ -68,6 +70,8 @@ export function OnboardingWizard({ store, track }: Props) {
   const handleComplete = () => {
     store.updateInfo("bride", bride.trim());
     store.updateInfo("groom", groom.trim());
+    if (brideBirthDate) store.updateInfo("brideBirthDate", brideBirthDate);
+    if (groomBirthDate) store.updateInfo("groomBirthDate", groomBirthDate);
     if (date) store.updateInfo("date", date);
     if (engagementDate) store.updateInfo("engagementDate", engagementDate);
     store.setBudget(budget);
@@ -92,6 +96,7 @@ export function OnboardingWizard({ store, track }: Props) {
   const handleStep0Continue = () => {
     track("onboarding_step_info", {
       brideName: bride.trim(), groomName: groom.trim(),
+      brideBirthDate: brideBirthDate || null, groomBirthDate: groomBirthDate || null,
       weddingDate: date || null, engagementDate: engagementDate || null,
       budget, region, partyTime,
     });
@@ -126,10 +131,14 @@ export function OnboardingWizard({ store, track }: Props) {
         </div>
 
         {step === 0 && <Step0
-          lang={lang} bride={bride} groom={groom} date={date} engagementDate={engagementDate}
+          lang={lang} bride={bride} groom={groom}
+          brideBirthDate={brideBirthDate} groomBirthDate={groomBirthDate}
+          date={date} engagementDate={engagementDate}
           budget={budget} region={region} partyTime={partyTime} canContinue={canContinue}
           inputCls={inputCls} fmtBudget={fmtBudget}
-          onBride={setBride} onGroom={setGroom} onDate={setDate} onEngagementDate={setEngagementDate}
+          onBride={setBride} onGroom={setGroom}
+          onBrideBirthDate={setBrideBirthDate} onGroomBirthDate={setGroomBirthDate}
+          onDate={setDate} onEngagementDate={setEngagementDate}
           onBudget={setBudget} onRegion={setRegion} onPartyTime={setPartyTime}
           onContinue={handleStep0Continue}
         />}
@@ -180,10 +189,13 @@ export function OnboardingWizard({ store, track }: Props) {
 /* ---------- Step 0 sub-component (keeps main component small) ---------- */
 
 interface Step0Props {
-  lang: string; bride: string; groom: string; date: string; engagementDate: string;
+  lang: string; bride: string; groom: string;
+  brideBirthDate: string; groomBirthDate: string;
+  date: string; engagementDate: string;
   budget: number; region: Region; partyTime: "noon" | "afternoon"; canContinue: boolean;
   inputCls: string; fmtBudget: (v: number) => string;
   onBride: (v: string) => void; onGroom: (v: string) => void;
+  onBrideBirthDate: (v: string) => void; onGroomBirthDate: (v: string) => void;
   onDate: (v: string) => void; onEngagementDate: (v: string) => void;
   onBudget: (v: number) => void; onRegion: (v: Region) => void;
   onPartyTime: (v: "noon" | "afternoon") => void; onContinue: () => void;
@@ -208,6 +220,22 @@ function Step0(p: Step0Props) {
           <label className="block text-xs font-medium text-[#5a3e2e] mb-1">{t("Tên chú rể", lang)}</label>
           <input type="text" value={p.groom} onChange={(e) => p.onGroom(e.target.value)}
             placeholder={lang === "en" ? "David..." : "Trần Văn..."} className={inputCls} />
+        </div>
+      </div>
+
+      {/* Birthdays */}
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+            {lang === "en" ? "Bride birthday" : "Sinh nhật cô dâu"} <span className="text-[#8a7060] font-normal">({lang === "en" ? "opt." : "tùy chọn"})</span>
+          </label>
+          <input type="date" value={p.brideBirthDate} onChange={(e) => p.onBrideBirthDate(e.target.value)} className={inputCls} />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+            {lang === "en" ? "Groom birthday" : "Sinh nhật chú rể"} <span className="text-[#8a7060] font-normal">({lang === "en" ? "opt." : "tùy chọn"})</span>
+          </label>
+          <input type="date" value={p.groomBirthDate} onChange={(e) => p.onGroomBirthDate(e.target.value)} className={inputCls} />
         </div>
       </div>
 
