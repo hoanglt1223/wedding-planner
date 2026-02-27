@@ -255,41 +255,41 @@ function Step0(p: Step0Props) {
         </div>
       </div>
 
-      {/* Region + Party time */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-            {lang === "en" ? "Region" : "Miền"}
-          </label>
-          <div className="flex gap-1">
-            {REGIONS.map((r) => (
-              <button key={r.id} type="button" onClick={() => p.onRegion(r.id)}
-                className={`flex-1 h-9 text-xs font-medium rounded-lg border transition-colors ${
-                  p.region === r.id
-                    ? "bg-[var(--brand)] text-white border-[var(--brand)]"
-                    : "bg-white text-[#5a3e2e] border-[var(--brand-border)] hover:bg-[var(--brand)]/10"
-                }`}>
-                {lang === "en" ? r.en.charAt(0) : r.vi.slice(5)}
-              </button>
-            ))}
-          </div>
+      {/* Region */}
+      <div>
+        <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+          {lang === "en" ? "Region" : "Miền"}
+        </label>
+        <div className="flex gap-2">
+          {REGIONS.map((r) => (
+            <button key={r.id} type="button" onClick={() => p.onRegion(r.id)}
+              className={`flex-1 h-9 text-sm font-medium rounded-lg border transition-colors ${
+                p.region === r.id
+                  ? "bg-[var(--brand)] text-white border-[var(--brand)]"
+                  : "bg-white text-[#5a3e2e] border-[var(--brand-border)] hover:bg-[var(--brand)]/10"
+              }`}>
+              {lang === "en" ? r.en : r.vi}
+            </button>
+          ))}
         </div>
-        <div>
-          <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-            {lang === "en" ? "Party time" : "Giờ tiệc"}
-          </label>
-          <div className="flex gap-1">
-            {(["noon", "afternoon"] as const).map((pt) => (
-              <button key={pt} type="button" onClick={() => p.onPartyTime(pt)}
-                className={`flex-1 h-9 text-xs font-medium rounded-lg border transition-colors ${
-                  p.partyTime === pt
-                    ? "bg-[var(--brand)] text-white border-[var(--brand)]"
-                    : "bg-white text-[#5a3e2e] border-[var(--brand-border)] hover:bg-[var(--brand)]/10"
-                }`}>
-                {pt === "noon" ? (lang === "en" ? "Noon" : "Trưa") : (lang === "en" ? "Evening" : "Chiều")}
-              </button>
-            ))}
-          </div>
+      </div>
+
+      {/* Party time */}
+      <div>
+        <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+          {lang === "en" ? "Party time" : "Giờ tiệc"}
+        </label>
+        <div className="flex gap-2">
+          {(["noon", "afternoon"] as const).map((pt) => (
+            <button key={pt} type="button" onClick={() => p.onPartyTime(pt)}
+              className={`flex-1 h-9 text-sm font-medium rounded-lg border transition-colors ${
+                p.partyTime === pt
+                  ? "bg-[var(--brand)] text-white border-[var(--brand)]"
+                  : "bg-white text-[#5a3e2e] border-[var(--brand-border)] hover:bg-[var(--brand)]/10"
+              }`}>
+              {pt === "noon" ? (lang === "en" ? "Noon" : "Buổi trưa") : (lang === "en" ? "Evening" : "Buổi chiều")}
+            </button>
+          ))}
         </div>
       </div>
 
