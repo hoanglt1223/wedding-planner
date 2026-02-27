@@ -2,7 +2,7 @@
   "name": "Wedding Planner - Kế Hoạch Đám Cưới",
   "short_name": "Wedding Planner",
   "description": "Ứng dụng lên kế hoạch đám cưới Việt Nam",
-  "theme_color": "#c0392b",
+  "theme_color": "#b5314a",
   "background_color": "#fdf6f0",
   "display": "standalone",
   "scope": "/",

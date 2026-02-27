@@ -1,4 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#c0392b"/>
-  <text x="256" y="300" text-anchor="middle" font-size="280" fill="white">&#x1F48D;</text>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b5314a"/>
+      <stop offset="100%" stop-color="#d4576b"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffecd2"/>
+      <stop offset="100%" stop-color="#fff5eb"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="108" fill="url(#bg)"/>
+  <!-- Two interlocking rings -->
+  <g fill="none" stroke="url(#ring)" stroke-width="24" stroke-linecap="round">
+    <!-- Left ring -->
+    <ellipse cx="216" cy="270" rx="88" ry="92"/>
+    <!-- Right ring -->
+    <ellipse cx="296" cy="270" rx="88" ry="92"/>
+  </g>
+  <!-- Small diamond/gem on top -->
+  <g transform="translate(256, 148)">
+    <polygon points="0,-32 22,-6 0,20 -22,-6" fill="#ffecd2" opacity="0.95"/>
+    <polygon points="0,-32 22,-6 0,-6" fill="#fff5eb" opacity="0.7"/>
+  </g>
+  <!-- Tiny sparkles -->
+  <circle cx="148" cy="155" r="4" fill="#ffecd2" opacity="0.6"/>
+  <circle cx="364" cy="155" r="4" fill="#ffecd2" opacity="0.6"/>
+  <circle cx="130" cy="190" r="2.5" fill="#ffecd2" opacity="0.4"/>
+  <circle cx="382" cy="190" r="2.5" fill="#ffecd2" opacity="0.4"/>
 </svg>
