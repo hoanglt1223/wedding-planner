@@ -124,7 +124,7 @@ export function StepPanel({
                 type="time"
                 value={currentStart}
                 onChange={(e) => onSetStepStartTime(step.id, e.target.value)}
-                className="border border-gray-300 rounded px-1.5 py-0.5 text-xs font-mono w-[5.5rem]"
+                className="border border-gray-300 rounded px-2 py-1 text-sm font-mono min-w-[7.5rem]"
               />
             </label>
           )}
