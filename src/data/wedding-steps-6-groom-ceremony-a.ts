@@ -1,21 +1,18 @@
 import type { Ceremony } from "@/types/wedding";
 
-// Ceremonies 1-2 for Step 6: Cưới Trai
+// Core ceremonies for Step 6: Cưới Trai (groom-specific, not shared)
 export const GROOM_CEREMONIES_A: Ceremony[] = [
   {
     name: "🙏 Gia Tiên Nhà Trai",
     required: 1,
     description: "Cô dâu chính thức lạy tổ tiên nhà chồng — từ đây cô dâu trở thành thành viên của gia đình nhà trai. Nghi lễ thiêng liêng, trang trọng, phải diễn ra TRƯỚC tiệc.",
     steps: [
-      // Checklist items (checkable: true) — FIRST
       { text: "Bàn thờ sạch sẽ, trang nghiêm: hoa tươi, nhang, nến", cost: 300000, categoryKey: "decor", checkable: true },
       { text: "Mâm cúng: xôi, gà, trái cây, rượu, trà", cost: 700000, categoryKey: "food", checkable: true },
       { text: "Ảnh gia tiên (nếu có) đặt ngay ngắn", cost: 0, categoryKey: "other", checkable: true },
       { text: "Văn khấn gia tiên nhà trai (ba chú rể / trưởng tộc đọc)", cost: 0, categoryKey: "other", checkable: true, detail: "\"Nam mô A Di Đà Phật (3 lần). Con kính lạy chư vị Tôn thần, Cao tằng Tổ khảo, Tổ tỷ, Tiên linh nội ngoại họ [HỌ NHÀ TRAI]. Hôm nay ngày... tháng... năm..., con là [TÊN BA CHÚ RỂ], ngụ tại [ĐỊA CHỈ]. Nay con trai chúng con là [TÊN CHÚ RỂ] đã thành hôn cùng [TÊN CÔ DÂU], con ông/bà [TÊN BA MẸ CÔ DÂU]. Chúng con thành tâm kính cáo, xin Tiên tổ chứng giám, phù hộ cho hai cháu sống hạnh phúc, hòa thuận, gia đình an khang thịnh vượng. Nam mô A Di Đà Phật (3 lần).\"" },
       { text: "Trà ngon để rót mời bố mẹ, ông bà", cost: 100000, categoryKey: "food", checkable: true },
-      // Merged: checklist "Lì xì/phong bì cho cô dâu chú rể" + timeline "Bố mẹ chồng trao lì xì, chúc phúc"
       { text: "Lì xì/phong bì cho cô dâu chú rể", cost: 500000, categoryKey: "other", checkable: true, time: "09:40", responsible: "Bố mẹ chú rể" },
-      // Timeline steps (non-checkable) — AFTER checklist
       { text: "Nhà trai chuẩn bị bàn thờ, mâm cúng", time: "08:30", responsible: "Mẹ chồng" },
       { text: "Đoàn rước dâu về đến nhà trai", time: "09:00", responsible: "Chú rể" },
       { text: "Mẹ chồng đón cô dâu ở cửa nhà — trao quà chào đón (vòng vàng)", time: "09:05", responsible: "Mẹ chồng" },
@@ -37,7 +34,6 @@ export const GROOM_CEREMONIES_A: Ceremony[] = [
     required: 1,
     description: "Tiệc cưới linh đình nhất — đón khách hai họ, trao nhẫn, cắt bánh, games, first dance. Đây là sự kiện lớn nhất, cần chuẩn bị kỹ lưỡng nhất.",
     steps: [
-      // Checklist items (checkable: true) — FIRST (preparation items, distinct from day-of timeline)
       { text: "Đặt nhà hàng (xác nhận bàn + dự phòng 10%)", cost: 25000000, categoryKey: "venue", checkable: true },
       { text: "In & gửi thiệp mời (trước 2-3 tuần)", cost: 2000000, categoryKey: "other", checkable: true },
       { text: "Menu tiệc 8-10 món + rượu bia nước ngọt", cost: 30000000, categoryKey: "food", checkable: true },
@@ -54,7 +50,6 @@ export const GROOM_CEREMONIES_A: Ceremony[] = [
       { text: "Kịch bản MC chi tiết từng phút + bản backup", cost: 0, categoryKey: "other", checkable: true },
       { text: "Sơ đồ bàn: VIP gần sân khấu, bạn bè phía sau", cost: 0, categoryKey: "other", checkable: true },
       { text: "Kit cấp cứu ngày cưới (đồ dự phòng)", cost: 100000, categoryKey: "other", checkable: true, detail: "Gồm: kim ghim, băng dính 2 mặt, thuốc nhức đầu, thuốc dạ dày, dầu gió, khăn giấy, nước uống, kẹo ngậm, son touch-up, bàn chải nhỏ, kim chỉ, keo dán, pin mic dự phòng." },
-      // Timeline steps (non-checkable) — AFTER checklist
       { text: "Kiểm tra trang trí, âm thanh, ánh sáng, backdrop", time: "07:00", responsible: "Wedding planner" },
       { text: "Cô dâu thay váy cưới, touch-up makeup", time: "08:00", responsible: "Cô dâu + MUA" },
       { text: "Lễ tân sẵn sàng, bắt đầu đón khách", time: "08:30", responsible: "Lễ tân" },
@@ -80,54 +75,6 @@ export const GROOM_CEREMONIES_A: Ceremony[] = [
       { name: "Lễ tân", role: "Đón khách, ghi phong bì", avatar: "📋" },
       { name: "Ban nhạc / DJ", role: "Âm nhạc suốt tiệc", avatar: "🎵" },
       { name: "Wedding planner", role: "Điều phối (nếu thuê)", avatar: "📝" },
-    ],
-  },
-  {
-    name: "💍 Trao Nhẫn",
-    required: 1,
-    description: "Khoảnh khắc thiêng liêng nhất — trao nhẫn cưới trước sự chứng kiến của hai họ. Nhẫn tròn tượng trưng cho tình yêu vĩnh cửu, không có điểm đầu không có điểm cuối.",
-    steps: [
-      // Checklist items (checkable: true) — FIRST
-      { text: "Nhẫn cưới cặp đã sẵn sàng — kiểm tra lần cuối", cost: 0, categoryKey: "ring", checkable: true },
-      { text: "Gối nhẫn / hộp nhẫn trang trí đẹp", cost: 200000, categoryKey: "other", checkable: true },
-      { text: "Phù rể giữ nhẫn AN TOÀN đến phút chót", cost: 0, categoryKey: "other", checkable: true },
-      { text: "Nhạc nền lãng mạn khi trao nhẫn", cost: 0, categoryKey: "music", checkable: true },
-      // Ritual steps (non-checkable) — AFTER checklist
-      { text: "MC mời cô dâu chú rể lên sân khấu", time: "09:45", responsible: "MC" },
-      { text: "Nhạc nền lãng mạn nổi lên — spotlight tập trung", time: "09:47", responsible: "Kỹ thuật âm thanh" },
-      { text: "Phù rể mang gối/hộp nhẫn lên sân khấu", time: "09:48", responsible: "Phù rể" },
-      { text: "Chú rể đeo nhẫn cho cô dâu (tay trái, ngón áp út)", time: "09:50", responsible: "Chú rể" },
-      { text: "Cô dâu đeo nhẫn cho chú rể", time: "09:52", responsible: "Cô dâu" },
-      { text: "Nụ hôn đầu tiên với tư cách vợ chồng 💋", time: "09:55", responsible: "Cô dâu & chú rể" },
-      { text: "Khách mời vỗ tay, tung confetti/cánh hoa chúc mừng", time: "09:57", responsible: "Khách mời" },
-    ],
-    people: [
-      { name: "Chú rể", role: "Trao nhẫn cho cô dâu", avatar: "🤵" },
-      { name: "Cô dâu", role: "Trao nhẫn cho chú rể", avatar: "👰" },
-      { name: "Phù rể / Best man", role: "Giữ nhẫn, trao lên", avatar: "🧑" },
-    ],
-  },
-  {
-    name: "🥂 Cắt Bánh & Rượu Giao Bôi",
-    required: 0,
-    description: "Cắt bánh cưới tượng trưng cho chia sẻ ngọt ngào. Rượu giao bôi — hai người uống chung 1 ly, kết duyên vĩnh cửu. Nghi thức phương Tây phổ biến tại Việt Nam.",
-    steps: [
-      // Checklist items (checkable: true) — FIRST
-      { text: "Bánh cưới nhiều tầng (đặt trước 1 tuần)", cost: 2000000, categoryKey: "food", checkable: true },
-      { text: "Champagne / rượu vang sâm banh ướp lạnh", cost: 500000, categoryKey: "food", checkable: true },
-      { text: "Tháp ly champagne (nếu có)", cost: 300000, categoryKey: "decor", checkable: true },
-      { text: "Dao cắt bánh trang trí", cost: 100000, categoryKey: "other", checkable: true },
-      // Ritual steps (non-checkable) — AFTER checklist
-      { text: "MC mời cô dâu chú rể đến bàn bánh cưới", time: "10:00", responsible: "MC" },
-      { text: "Hai người cùng cầm dao, cắt miếng bánh đầu tiên", time: "10:02", responsible: "Cô dâu & chú rể" },
-      { text: "Cho nhau ăn miếng bánh đầu tiên — ngọt ngào 🥰", time: "10:04", responsible: "Cô dâu & chú rể" },
-      { text: "Rót champagne (hoặc đổ tháp ly từ trên xuống)", time: "10:06", responsible: "Cô dâu & chú rể" },
-      { text: "Nâng ly — cả sảnh cùng nâng ly chúc mừng", time: "10:08", responsible: "MC" },
-      { text: "Uống giao bôi — hai người uống chung 1 ly", time: "10:10", responsible: "Cô dâu & chú rể" },
-    ],
-    people: [
-      { name: "Cô dâu & chú rể", role: "Cắt bánh & rót rượu", avatar: "💑" },
-      { name: "MC", role: "Hướng dẫn nghi thức", avatar: "🎤" },
     ],
   },
 ];

@@ -1,7 +1,51 @@
 import type { Ceremony } from "@/types/wedding";
 
-// Ceremonies 5-7 for Step 6: Groom's Family Reception (EN)
-export const GROOM_CEREMONIES_B_EN: Ceremony[] = [
+// Shared optional reception ceremonies — used by both Step 4 (Bride) and Step 6 (Groom)
+export const RECEPTION_EXTRAS_EN: Ceremony[] = [
+  {
+    name: "💍 Ring Exchange (Trao Nhan)",
+    required: 0,
+    description: "The most sacred moment — exchanging wedding rings before both families. The circular ring symbolizes eternal love with no beginning and no end.",
+    steps: [
+      { text: "Wedding ring set is ready — final check", cost: 0, categoryKey: "ring", checkable: true },
+      { text: "Ring pillow / decorative ring box", cost: 200000, categoryKey: "other", checkable: true },
+      { text: "Best man holds the rings SAFELY until the last moment", cost: 0, categoryKey: "other", checkable: true },
+      { text: "Romantic background music during the ring exchange", cost: 0, categoryKey: "music", checkable: true },
+      { text: "MC invites the bride and groom to the stage", time: "09:45", responsible: "MC / Host" },
+      { text: "Romantic music rises — spotlight centers on the couple", time: "09:47", responsible: "Sound Technician" },
+      { text: "Best man brings the ring pillow/box to the stage", time: "09:48", responsible: "Best Man" },
+      { text: "Groom slides the ring onto the bride's finger (left hand, ring finger)", time: "09:50", responsible: "Groom" },
+      { text: "Bride slides the ring onto the groom's finger", time: "09:52", responsible: "Bride" },
+      { text: "First kiss as husband and wife 💋", time: "09:55", responsible: "Bride & Groom" },
+      { text: "Guests applaud; confetti / flower petals shower the couple", time: "09:57", responsible: "Guests" },
+    ],
+    people: [
+      { name: "Groom", role: "Present ring to bride", avatar: "🤵" },
+      { name: "Bride", role: "Present ring to groom", avatar: "👰" },
+      { name: "Best Man", role: "Hold rings, present", avatar: "🧑" },
+    ],
+  },
+  {
+    name: "🥂 Cake Cutting & Wine Toast (Giao Boi)",
+    required: 0,
+    description: "Cutting the wedding cake symbolizes sharing life's sweetness together. The 'Giao Boi' wine toast — two people drinking from one glass, sealing an eternal bond. A Western-inspired ritual widely embraced in Vietnamese weddings.",
+    steps: [
+      { text: "Multi-tiered wedding cake (order 1 week in advance)", cost: 2000000, categoryKey: "food", checkable: true },
+      { text: "Chilled champagne / sparkling wine", cost: 500000, categoryKey: "food", checkable: true },
+      { text: "Champagne tower (if desired)", cost: 300000, categoryKey: "decor", checkable: true },
+      { text: "Decorated cake-cutting knife", cost: 100000, categoryKey: "other", checkable: true },
+      { text: "MC invites the bride and groom to the cake table", time: "10:00", responsible: "MC / Host" },
+      { text: "Together they hold the knife and cut the first slice", time: "10:02", responsible: "Bride & Groom" },
+      { text: "They feed each other the first piece of cake — sweetness shared 🥰", time: "10:04", responsible: "Bride & Groom" },
+      { text: "Pour champagne (or cascade the champagne tower)", time: "10:06", responsible: "Bride & Groom" },
+      { text: "Raise glasses — the whole hall toasts together", time: "10:08", responsible: "MC / Host" },
+      { text: "Wine toast (Giao Boi) — the couple drinks from one shared glass", time: "10:10", responsible: "Bride & Groom" },
+    ],
+    people: [
+      { name: "Bride & Groom", role: "Cut cake & pour wine", avatar: "💑" },
+      { name: "MC / Host", role: "Guide ceremony", avatar: "🎤" },
+    ],
+  },
   {
     name: "📜 Wedding Vows (Le Vow / The Nguyen)",
     required: 0,

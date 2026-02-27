@@ -1,4 +1,5 @@
 import type { WeddingStep } from "@/types/wedding";
+import { RECEPTION_EXTRAS_EN } from "./wedding-steps-reception-extras.en";
 
 export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
   id: "bride-ceremony",
@@ -96,7 +97,7 @@ export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
     },
     {
       name: "🌙 Family Gathering (Nhom Ho — Eve of Wedding)",
-      required: 1,
+      required: 0,
       description: "The bride's relatives gather the evening before the wedding — preparing for the procession the next day, finalizing the dowry, and giving counsel to the bride. This is a cherished Southern/Mekong Delta tradition, deeply meaningful and emotional.",
       steps: [
         { text: "Invite close relatives of the bride's family from the afternoon/evening", cost: 0, categoryKey: "other", checkable: true },
@@ -128,5 +129,6 @@ export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
         { name: "Bride Escort", role: "Selected tonight", avatar: "👩" },
       ],
     },
+    ...RECEPTION_EXTRAS_EN,
   ],
 };

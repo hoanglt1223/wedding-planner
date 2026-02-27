@@ -1,6 +1,6 @@
 import type { WeddingStep } from "@/types/wedding";
 import { GROOM_CEREMONIES_A_EN } from "./wedding-steps-6-groom-ceremony-a.en";
-import { GROOM_CEREMONIES_B_EN } from "./wedding-steps-6-groom-ceremony-b.en";
+import { RECEPTION_EXTRAS_EN } from "./wedding-steps-reception-extras.en";
 
 export const STEP_GROOM_CEREMONY_EN: WeddingStep = {
   id: "groom-ceremony",
@@ -46,5 +46,10 @@ export const STEP_GROOM_CEREMONY_EN: WeddingStep = {
   ],
   timeline: "Wedding day",
   aiHint: "Minute-by-minute MC script for a Vietnamese wedding, menu ideas at three price levels, fun games for the reception.",
-  ceremonies: [...GROOM_CEREMONIES_A_EN, ...GROOM_CEREMONIES_B_EN],
+  ceremonies: [
+    ...GROOM_CEREMONIES_A_EN,
+    ...RECEPTION_EXTRAS_EN.map((c) =>
+      c.name.includes("Ring Exchange") ? { ...c, required: 1 } : c,
+    ),
+  ],
 };

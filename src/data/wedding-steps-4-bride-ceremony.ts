@@ -1,4 +1,5 @@
 import type { WeddingStep } from "@/types/wedding";
+import { RECEPTION_EXTRAS } from "./wedding-steps-reception-extras";
 
 export const STEP_BRIDE_CEREMONY: WeddingStep = {
   id: "bride-ceremony",
@@ -96,7 +97,7 @@ export const STEP_BRIDE_CEREMONY: WeddingStep = {
     },
     {
       name: "🌙 Nhóm Họ (Đêm Trước Cưới)",
-      required: 1,
+      required: 0,
       description: "Họ hàng nhà gái tụ họp đêm trước ngày cưới — chuẩn bị cho ngày rước dâu hôm sau, thống nhất của hồi môn, dặn dò cô dâu. Đây là nét đặc trưng miền Tây/Nam Bộ, rất quan trọng và xúc động.",
       steps: [
         { text: "Mời họ hàng thân thiết nhà gái đến từ chiều/tối", cost: 0, categoryKey: "other", checkable: true },
@@ -128,5 +129,6 @@ export const STEP_BRIDE_CEREMONY: WeddingStep = {
         { name: "Người đưa dâu", role: "Được chọn tối nay", avatar: "👩" },
       ],
     },
+    ...RECEPTION_EXTRAS,
   ],
 };
