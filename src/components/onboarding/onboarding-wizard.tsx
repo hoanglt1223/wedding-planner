@@ -249,7 +249,7 @@ function Step0(p: Step0Props) {
         </div>
         <div>
           <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-            {lang === "en" ? "Party date" : "Ngày tiệc"} <span className="text-[#8a7060] font-normal">({lang === "en" ? "opt." : "tùy chọn"})</span>
+            {lang === "en" ? "Engagement date" : "Ngày đám hỏi"} <span className="text-[#8a7060] font-normal">({lang === "en" ? "opt." : "tùy chọn"})</span>
           </label>
           <input type="date" value={p.engagementDate} onChange={(e) => p.onEngagementDate(e.target.value)} className={inputCls} />
         </div>
