@@ -34,7 +34,7 @@ export const userSessions = pgTable("user_sessions", {
 
 export const analyticsEvents = pgTable("analytics_events", {
   id: serial("id").primaryKey(),
-  userId: uuid("user_id").references(() => userSessions.id),
+  userId: uuid("user_id"),
   eventType: text("event_type").notNull(),
   eventData: jsonb("event_data"),
   createdAt: timestamp("created_at").defaultNow().notNull(),

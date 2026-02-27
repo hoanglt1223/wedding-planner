@@ -80,16 +80,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     const db = createDb();
-    try {
-      await db.insert(analyticsEvents).values(rows);
-    } catch (e: unknown) {
-      // FK violation if user_sessions row doesn't exist yet -- silently drop
-      const msg = e instanceof Error ? e.message : "";
-      if (msg.includes("foreign key") || msg.includes("violates")) {
-        return res.status(200).json({ ok: true, count: 0, dropped: true });
-      }
-      throw e;
-    }
+    await db.insert(analyticsEvents).values(rows);
 
     return res.status(200).json({ ok: true, count: rows.length });
   } catch (err: unknown) {
