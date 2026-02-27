@@ -35,7 +35,7 @@ export const STEP_BRIDE_CEREMONY: WeddingStep = {
   aiHint: "Gợi ý trang trí tiệc cưới nhà gái đẹp, tiết kiệm. Menu tiệc phù hợp.",
   ceremonies: [
     {
-      name: "🏡 Tiệc Nhà Gái",
+      name: "🏡 Tiệc Vu Quy",
       required: 1,
       description: "Tiệc cưới chính do nhà gái tổ chức — chiêu đãi họ hàng, bạn bè, đồng nghiệp phía cô dâu. Đây là lần cuối cô dâu đãi khách với tư cách 'con gái nhà'.",
       steps: [

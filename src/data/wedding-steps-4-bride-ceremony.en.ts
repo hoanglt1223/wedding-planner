@@ -35,7 +35,7 @@ export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
   aiHint: "Suggest beautiful and budget-friendly decoration ideas for the bride's family reception. Suggest an appropriate menu.",
   ceremonies: [
     {
-      name: "🏡 Bride's Family Reception",
+      name: "🏡 Vu Quy Reception",
       required: 1,
       description: "The main reception hosted by the bride's family — welcoming relatives, friends, and colleagues on the bride's side. This is the last time the bride hosts guests as 'her family's daughter.'",
       steps: [
