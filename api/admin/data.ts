@@ -88,7 +88,7 @@ async function analytics(req: VercelRequest, res: VercelResponse): Promise<void>
   res.status(200).json({ eventsByType, dailyEvents, dailyUsers, from: fromStr, to: toStr });
 }
 
-const ENV_KEYS = ["DATABASE_URL", "UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN", "ADMIN_PASSWORD", "Z_AI_KEY"] as const;
+const ENV_KEYS = ["DATABASE_URL", "POSTGRES_URL", "KV_REST_API_URL", "KV_REST_API_TOKEN", "ADMIN_PASSWORD", "Z_AI_KEY"] as const;
 
 async function system(res: VercelResponse): Promise<void> {
   let dbStatus = "ok", redisStatus = "ok", activeSessions = 0, lastSync: string | null = null;

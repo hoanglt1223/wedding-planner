@@ -28,16 +28,25 @@ const SAMPLE_DATA_EN = {
   betrothalDate: "2026-11-15",
 };
 
+const BUDGET_PRESETS = [
+  { label: "50M", value: 50_000_000 },
+  { label: "100M", value: 100_000_000 },
+  { label: "200M", value: 200_000_000 },
+  { label: "500M", value: 500_000_000 },
+];
+
 interface Props {
   store: WeddingStore;
+  track: (type: string, data?: unknown) => void;
 }
 
-export function OnboardingWizard({ store }: Props) {
+export function OnboardingWizard({ store, track }: Props) {
   const lang = store.state.lang;
   const [step, setStep] = useState(0);
   const [bride, setBride] = useState("");
   const [groom, setGroom] = useState("");
   const [date, setDate] = useState("");
+  const [budget, setBudget] = useState(200_000_000);
   const [enabledSteps, setEnabledSteps] = useState<Record<string, boolean>>({});
 
   const canContinue = bride.trim() && groom.trim();
@@ -45,7 +54,6 @@ export function OnboardingWizard({ store }: Props) {
   const handleToggleStep = useCallback((stepId: string) => {
     setEnabledSteps((prev) => {
       const allSteps = getWeddingSteps(lang);
-      // First toggle: initialize all as true, then flip the toggled one
       if (Object.keys(prev).length === 0) {
         const init: Record<string, boolean> = {};
         for (const s of allSteps) init[s.id] = true;
@@ -60,7 +68,15 @@ export function OnboardingWizard({ store }: Props) {
     store.updateInfo("bride", bride.trim());
     store.updateInfo("groom", groom.trim());
     if (date) store.updateInfo("date", date);
+    store.setBudget(budget);
     store.setEnabledSteps(enabledSteps);
+    track("onboarding_info", {
+      hasDate: !!date,
+      budget,
+      enabledStepCount: Object.values(enabledSteps).filter(Boolean).length,
+      region: store.state.region,
+      lang,
+    });
     store.completeOnboarding();
   };
 
@@ -69,8 +85,24 @@ export function OnboardingWizard({ store }: Props) {
     for (const [k, v] of Object.entries(sample)) {
       store.updateInfo(k, v);
     }
+    track("onboarding_skipped", { lang });
     store.completeOnboarding();
   };
+
+  const handleStep0Continue = () => {
+    track("onboarding_step_info", {
+      brideName: bride.trim(),
+      groomName: groom.trim(),
+      weddingDate: date || null,
+      budget,
+    });
+    setStep(1);
+  };
+
+  const formatBudget = (v: number) =>
+    v >= 1_000_000_000
+      ? `${(v / 1_000_000_000).toFixed(v % 1_000_000_000 === 0 ? 0 : 1)}${lang === "en" ? "B" : " tỷ"}`
+      : `${(v / 1_000_000).toFixed(0)}${lang === "en" ? "M" : " triệu"}`;
 
   return (
     <div
@@ -142,8 +174,41 @@ export function OnboardingWizard({ store }: Props) {
                 className="w-full h-10 px-3 text-sm border border-[var(--brand-border)] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30"
               />
             </div>
+            <div>
+              <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+                {lang === "en" ? "Estimated budget" : "Ngân sách dự kiến"}
+              </label>
+              <div className="flex gap-2 mb-2">
+                {BUDGET_PRESETS.map((p) => (
+                  <button
+                    key={p.value}
+                    type="button"
+                    onClick={() => setBudget(p.value)}
+                    className={`flex-1 h-9 text-xs font-medium rounded-lg border transition-colors ${
+                      budget === p.value
+                        ? "bg-[var(--brand)] text-white border-[var(--brand)]"
+                        : "bg-white text-[#5a3e2e] border-[var(--brand-border)] hover:bg-[var(--brand)]/10"
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="range"
+                min={10_000_000}
+                max={2_000_000_000}
+                step={10_000_000}
+                value={budget}
+                onChange={(e) => setBudget(Number(e.target.value))}
+                className="w-full accent-[var(--brand)]"
+              />
+              <p className="text-center text-sm font-semibold text-[#2c1810] mt-1">
+                {formatBudget(budget)} VNĐ
+              </p>
+            </div>
             <button
-              onClick={() => setStep(1)}
+              onClick={handleStep0Continue}
               disabled={!canContinue}
               className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
@@ -161,7 +226,7 @@ export function OnboardingWizard({ store }: Props) {
               <OnboardingPreview lang={lang} enabledSteps={enabledSteps} onToggleStep={handleToggleStep} />
             </div>
             <button
-              onClick={() => setStep(2)}
+              onClick={() => { track("onboarding_step_ceremonies", { enabledSteps }); setStep(2); }}
               className="w-full h-11 text-sm font-semibold text-white bg-[var(--brand)] rounded-full hover:bg-[var(--brand-dark)] transition-colors"
             >
               {t("Tiếp Tục →", lang)}
@@ -185,6 +250,9 @@ export function OnboardingWizard({ store }: Props) {
                   })}
                 </p>
               )}
+              <p className="text-xs text-[#8a7060] mt-1">
+                {lang === "en" ? "Budget:" : "Ngân sách:"} {formatBudget(budget)} VNĐ
+              </p>
               <p className="text-xs text-[#8a7060] mt-3">
                 {lang === "en" ? "Ready to plan for the big day!" : "Sẵn sàng lên kế hoạch cho ngày trọng đại!"}
               </p>

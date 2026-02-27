@@ -39,7 +39,12 @@ function App() {
   }, [state]);
 
   // Track state-change events (only fires for values that actually changed)
-  const prevSnap = useRef({ page: state.page, lang: state.lang, region: state.region, themeId: state.themeId, budget: state.budget, guestCount: state.guests.length, onboarded: state.onboardingComplete });
+  const prevSnap = useRef({
+    page: state.page, lang: state.lang, region: state.region, themeId: state.themeId,
+    budget: state.budget, guestCount: state.guests.length, onboarded: state.onboardingComplete,
+    weddingDate: state.info.date, groomName: state.info.groom, brideName: state.info.bride,
+    groomBirthDate: state.info.groomBirthDate, brideBirthDate: state.info.brideBirthDate,
+  });
   useEffect(() => {
     if (!trackMountRef.current) { trackMountRef.current = true; return; }
     const prev = prevSnap.current;
@@ -50,8 +55,18 @@ function App() {
     if (state.budget !== prev.budget) track("budget_set", { budget: state.budget });
     if (state.guests.length !== prev.guestCount) track("guest_count_change", { count: state.guests.length });
     if (state.onboardingComplete && !prev.onboarded) track("onboarding_complete", { region: state.region, lang: state.lang });
-    prevSnap.current = { page: state.page, lang: state.lang, region: state.region, themeId: state.themeId, budget: state.budget, guestCount: state.guests.length, onboarded: state.onboardingComplete };
-  }, [state.page, state.lang, state.region, state.themeId, state.budget, state.guests.length, state.onboardingComplete, track]);
+    if (state.info.date !== prev.weddingDate) track("wedding_date_set", { date: state.info.date });
+    if (state.info.groom !== prev.groomName) track("groom_name_set", { name: state.info.groom });
+    if (state.info.bride !== prev.brideName) track("bride_name_set", { name: state.info.bride });
+    if (state.info.groomBirthDate !== prev.groomBirthDate) track("groom_birth_date_set", { date: state.info.groomBirthDate });
+    if (state.info.brideBirthDate !== prev.brideBirthDate) track("bride_birth_date_set", { date: state.info.brideBirthDate });
+    prevSnap.current = {
+      page: state.page, lang: state.lang, region: state.region, themeId: state.themeId,
+      budget: state.budget, guestCount: state.guests.length, onboarded: state.onboardingComplete,
+      weddingDate: state.info.date, groomName: state.info.groom, brideName: state.info.bride,
+      groomBirthDate: state.info.groomBirthDate, brideBirthDate: state.info.brideBirthDate,
+    };
+  }, [state.page, state.lang, state.region, state.themeId, state.budget, state.guests.length, state.onboardingComplete, state.info.date, state.info.groom, state.info.bride, state.info.groomBirthDate, state.info.brideBirthDate, track]);
 
   const handleGoAI = (hint: string) => {
     void hint;
@@ -59,7 +74,7 @@ function App() {
   };
 
   if (!state.onboardingComplete) {
-    return <OnboardingWizard store={store} />;
+    return <OnboardingWizard store={store} track={track} />;
   }
 
   return (
