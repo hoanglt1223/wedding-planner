@@ -38,7 +38,7 @@ export async function createRsvpTokens(
   themeId: string,
   lang: string,
 ): Promise<{ guestName: string; token: string }[]> {
-  const res = await fetch("/api/rsvp", {
+  const res = await fetch("/api/rsvp?action=create", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId, guests, themeId, lang }),
@@ -61,7 +61,7 @@ export async function submitRsvpResponse(
   dietary: string,
   message: string,
 ): Promise<{ ok: boolean; respondedAt?: string; error?: string }> {
-  const res = await fetch("/api/rsvp/respond", {
+  const res = await fetch("/api/rsvp?action=respond", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token, status, plusOnes, dietary, message }),
@@ -73,7 +73,7 @@ export async function submitRsvpResponse(
 }
 
 export async function fetchRsvpList(userId: string): Promise<RsvpInvitation[]> {
-  const res = await fetch(`/api/rsvp/list?userId=${encodeURIComponent(userId)}`);
+  const res = await fetch(`/api/rsvp?action=list&userId=${encodeURIComponent(userId)}`);
   if (!res.ok) return [];
   const data = await res.json() as { invitations: RsvpInvitation[] };
   return data.invitations;
