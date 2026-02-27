@@ -22,6 +22,20 @@
       "when": 1772186761807,
       "tag": "0002_tired_rogue",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1772210244175,
+      "tag": "0003_perfect_leader",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1772210607086,
+      "tag": "0004_mighty_cable",
+      "breakpoints": true
     }
   ]
 }

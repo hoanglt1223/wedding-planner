@@ -11,9 +11,10 @@ interface PlanningPageProps {
   store: WeddingStore;
   progress: { done: number; total: number; pct: number };
   onGoAI: (hint: string) => void;
+  userId?: string;
 }
 
-export function PlanningPage({ state, store, progress, onGoAI }: PlanningPageProps) {
+export function PlanningPage({ state, store, progress, onGoAI, userId }: PlanningPageProps) {
   const lang = state.lang;
   const enabled = state.enabledSteps || {};
   const filteredCount = getWeddingSteps(lang).filter((s) => isStepEnabled(enabled, s.id)).length;
@@ -29,7 +30,7 @@ export function PlanningPage({ state, store, progress, onGoAI }: PlanningPagePro
         lang={lang}
       />
       <TabNavigation activeTab={state.tab} onTabChange={store.setTab} lang={lang} enabledSteps={enabled} />
-      <PanelRouter state={state} store={store} onGoAI={onGoAI} />
+      <PanelRouter state={state} store={store} onGoAI={onGoAI} userId={userId} />
     </>
   );
 }

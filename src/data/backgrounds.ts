@@ -110,4 +110,11 @@ export const DEFAULT_STATE: WeddingState = {
   stepStartTimes: {},
   enabledSteps: {},
   onboardingComplete: false,
+  rsvpSettings: {
+    welcomeMessage: "",
+    venue: "",
+    venueAddress: "",
+    venueMapLink: "",
+    coupleStory: "",
+  },
 };

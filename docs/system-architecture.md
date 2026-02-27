@@ -70,9 +70,13 @@ TypeScript → Vite Bundle → Vercel Edge → Browser
 
 **Key Files:**
 - `health.ts` - Health check endpoint (DB + Redis status)
-- `astrology-reading.ts` - AI-powered astrology reading endpoint (OpenAI gpt-4o-mini)
+- `ai/chat.ts` - AI-powered wedding consultation chat endpoint (ZhipuAI glm-5)
 - `sync.ts` - User state sync endpoint (debounced, rate-limited, 50KB guard)
 - `track.ts` - Event tracking endpoint (batched, rate-limited, max 50 events/batch)
+- `share.ts` - Ephemeral share links for zodiac cards (Redis, 10-min TTL)
+- `rsvp.ts` - Bulk create RSVP invitations + fetch by token
+- `rsvp/respond.ts` - One-time atomic RSVP response submission
+- `rsvp/list.ts` - Fetch all RSVP responses for dashboard (rate-limited)
 - `admin/auth.ts` - Admin authentication (login, logout, verify session)
 - `admin/data.ts` - Admin data endpoints (dashboard, users, analytics, system)
 
@@ -103,6 +107,7 @@ export default { async fetch(req) { ... } }
 - `user_sessions` - UUID PK, wedding_data jsonb, extracted columns (names, dates, region, lang, counts, progress, budget, onboarding status), timestamps
 - `analytics_events` - Auto-increment PK, user_id FK, event_type text, event_data jsonb, created_at
 - `admin_sessions` - Text PK, created_at, expires_at (24h)
+- `rsvp_invitations` - UUID PK, user_id FK, guest_name, token (unique), status (pending/accepted/declined), plus_ones int, dietary text, message text, responded_at, created_at. Index: user_id
 
 **Factory:**
 ```typescript
@@ -133,9 +138,9 @@ export function createRedis() { ... }
 ```
 
 **Use Cases:**
-- AI reading cache (300-day TTL per unique birth data + year)
-- Rate limiting for APIs (5 req/IP/day for /api/astrology-reading, 30 req/min for /api/sync, 10 req/min for /api/track)
-- Session tokens, guest RSVP cache, vendor availability
+- Ephemeral share links (10-min TTL)
+- Rate limiting for APIs (30 req/min for /api/sync, 10 req/min for /api/track, 30 req/min for /api/rsvp/list)
+- RSVP token validation cache, session management
 
 ## Data Flow
 
@@ -377,15 +382,49 @@ Admin Shell (#/admin with lazy loading)
 - 24-hour session expiry
 - Session stored in admin_sessions table
 
+## RSVP System
+
+**Purpose:** Guest-facing RSVP collection with admin dashboard management.
+
+**Guest Flow:**
+1. Admin generates RSVP invitations via dashboard (bulk create)
+2. Guests access `#/rsvp/:token` with unique token
+3. Guest submits one-time response (status + dietary + plus-ones)
+4. Admin views responses, exports data, manages settings
+
+**Components:**
+- Guest page: hero, event details, couple story, RSVP form, thank-you confirmation
+- Admin dashboard: stats bar, settings form, link generator, QR code modal, response table, CSV export
+
+**API Endpoints:**
+```
+POST/GET /api/rsvp           — Bulk create & fetch by token
+POST /api/rsvp/respond       — One-time atomic response (guards against duplicate submissions)
+GET /api/rsvp/list           — All responses (rate-limited 30 req/min)
+```
+
+**Security:**
+- Rate limiting on /api/rsvp/list via @upstash/ratelimit
+- XSS protection on venueMapLink rendering
+- Atomic one-time response guard (transaction per submission)
+- CSV formula injection prevention (@index prefix escaping)
+
+**State:**
+- `WeddingState.rsvpSettings: RsvpSettings` (eventTitle, eventDate, venueMapLink, coupleStory)
+- `Guest.rsvpToken?: string` (persisted in wedding_data)
+- localStorage version: wp_v14
+
+**Dependencies:** nanoid (token gen), qrcode (QR rendering)
+
 ## Monitoring
 
 - `/api/health` endpoint for deployment checks
-- `/api/astrology-reading` rate limit and cache metrics
 - `/api/sync` rate limit and payload metrics
 - `/api/track` rate limit and event counts
+- `/api/rsvp/list` rate limit metrics
 - `/api/admin/auth/verify` session validation
 - Vercel Analytics dashboard
-- OpenAI API usage dashboard (cost tracking)
+- ZhipuAI API usage dashboard (cost tracking)
 - Redis command monitoring (Upstash dashboard)
 - Database query logs (Neon console)
 - Admin panel system page for real-time health checks

@@ -1,0 +1,1 @@
+CREATE INDEX "rsvp_invitations_user_id_idx" ON "rsvp_invitations" USING btree ("user_id");

@@ -7,9 +7,10 @@ import {
   parseCsvToGuests,
   readFileAsText,
 } from "@/lib/csv";
-import type { Guest } from "@/types/wedding";
+import type { Guest, RsvpSettings } from "@/types/wedding";
 import { GuestTable } from "./guest-table";
 import { SeatingChart } from "./seating-chart";
+import { RsvpDashboard } from "./rsvp-dashboard";
 import { t } from "@/lib/i18n";
 
 interface GuestPanelProps {
@@ -19,6 +20,11 @@ interface GuestPanelProps {
   onClearGuests: () => void;
   onImportGuests: (guests: Omit<Guest, "id">[]) => void;
   lang?: string;
+  userId?: string;
+  rsvpSettings?: RsvpSettings;
+  onSetRsvpSettings?: (partial: Partial<RsvpSettings>) => void;
+  onUpdateGuestRsvpToken?: (guestId: number, token: string) => void;
+  themeId?: string;
 }
 
 export function GuestPanel({
@@ -28,13 +34,18 @@ export function GuestPanel({
   onClearGuests,
   onImportGuests,
   lang = "vi",
+  userId,
+  rsvpSettings,
+  onSetRsvpSettings,
+  onUpdateGuestRsvpToken,
+  themeId,
 }: GuestPanelProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [side, setSide] = useState<"trai" | "gai">("trai");
   const [group, setGroup] = useState("");
   const [search, setSearch] = useState("");
-  const [view, setView] = useState<"list" | "chart">("list");
+  const [view, setView] = useState<"list" | "chart" | "rsvp">("list");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const traiCount = guests.filter((g) => g.side === "trai").length;
@@ -138,7 +149,7 @@ export function GuestPanel({
           )}
         </div>
 
-        {guests.length > 0 && (
+        {(guests.length > 0 || view === "rsvp") && (
           <div className="flex gap-1 border-b border-gray-100 pb-1">
             <button
               className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
@@ -159,6 +170,16 @@ export function GuestPanel({
               onClick={() => setView("chart")}
             >
               {t("🪑 Sơ đồ bàn", lang)}
+            </button>
+            <button
+              className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
+                view === "rsvp"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+              onClick={() => setView("rsvp")}
+            >
+              {t("📬 RSVP", lang)}
             </button>
           </div>
         )}
@@ -188,6 +209,17 @@ export function GuestPanel({
         )}
         {guests.length > 0 && view === "chart" && (
           <SeatingChart guests={guests} lang={lang} />
+        )}
+        {view === "rsvp" && userId && rsvpSettings && onSetRsvpSettings && onUpdateGuestRsvpToken && (
+          <RsvpDashboard
+            guests={guests}
+            userId={userId}
+            rsvpSettings={rsvpSettings}
+            onSetRsvpSettings={onSetRsvpSettings}
+            onUpdateGuestRsvpToken={onUpdateGuestRsvpToken}
+            themeId={themeId || "red"}
+            lang={lang}
+          />
         )}
       </div>
     </div>

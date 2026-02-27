@@ -111,6 +111,51 @@
 
 ---
 
+### Phase 1.9: RSVP System (COMPLETE)
+
+**Status:** Complete (Feb 27, 2026)
+
+**Deliverables:**
+- Database schema: `rsvp_invitations` table with 10 columns (id, userId, guestName, token, status, plusOnes, dietary, message, respondedAt, createdAt)
+- User session state migration: wp_v13 → wp_v14 with `rsvpSettings` field
+- Guest interface extended with optional `rsvpToken` field
+- Three API endpoints:
+  - POST /api/rsvp — Bulk token generation for guests (12-char nanoid tokens)
+  - GET /api/rsvp?token=X — Fetch invitation data + planner settings (theme, lang, event details)
+  - POST /api/rsvp/respond — Submit RSVP response (one-time guard via responded_at)
+  - GET /api/rsvp/list?userId=X — Dashboard list endpoint
+- Guest-facing RSVP landing page at #/rsvp/:token with:
+  - Hero section (couple names, date, welcome message)
+  - Event details (venue, address, map link)
+  - Couple story section (optional)
+  - RSVP form (attendance radio, plus-ones counter, dietary, message)
+  - Thank-you screen with response summary
+  - Themed color application per planner's selection
+- Planner RSVP dashboard with:
+  - Settings form (welcome message, venue, address, map link, couple story)
+  - Bulk link generation button with token assignment
+  - Stats bar (accepted/declined/pending counts)
+  - Response table with status badges, plus-ones, dietary, message
+  - QR code generation per guest (client-side, scannable)
+  - Copy link button (individual and all-links export)
+  - CSV export with guest responses and links
+- Security features:
+  - Rate limiting: POST /api/rsvp (10 req/min per userId), POST /api/rsvp/respond (20 req/min per IP)
+  - One-time response guard: atomic check on responded_at field
+  - XSS protection in form inputs (max lengths enforced)
+  - CSV formula injection prevention
+  - Token-based auth: no login required for guests
+- Internationalization: Full Vietnamese/English support (~35 translation keys)
+- Mobile-responsive design: Tested at 375px viewport
+
+**Metrics:** 5 implementation phases completed, 3 API endpoints deployed, guest landing page operational, planner dashboard integrated into Guest panel, full i18n coverage.
+
+**Dependencies Added:**
+- `nanoid` — 12-char URL-safe token generation
+- `qrcode` — Client-side QR code rendering
+
+---
+
 ### Phase 2: Core Features (TBD)
 
 **Estimated Duration:** 4-6 weeks
@@ -171,6 +216,7 @@
 | English Localization | Feb 23, 2026 | Done |
 | Vietnamese Wedding Content Expansion | Feb 23, 2026 | Done |
 | User Data Tracking & Admin Panel | Feb 23, 2026 | Done |
+| RSVP System | Feb 27, 2026 | Done |
 | Core Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |

@@ -13,9 +13,10 @@ interface PanelRouterProps {
   state: WeddingState;
   store: WeddingStore;
   onGoAI: (hint: string) => void;
+  userId?: string;
 }
 
-export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
+export function PanelRouter({ state, store, onGoAI, userId }: PanelRouterProps) {
   const tab = state.tab;
   const lang = state.lang;
   const steps = getWeddingSteps(lang).filter((s) => isStepEnabled(state.enabledSteps || {}, s.id));
@@ -64,6 +65,11 @@ export function PanelRouter({ state, store, onGoAI }: PanelRouterProps) {
         onClearGuests={store.clearGuests}
         onImportGuests={store.importGuests}
         lang={lang}
+        userId={userId}
+        rsvpSettings={state.rsvpSettings}
+        onSetRsvpSettings={store.setRsvpSettings}
+        onUpdateGuestRsvpToken={store.updateGuestRsvpToken}
+        themeId={state.themeId}
       />
     );
   }

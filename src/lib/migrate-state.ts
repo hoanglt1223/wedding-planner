@@ -7,6 +7,7 @@ const V10_KEY = "wp_v10";
 const V11_KEY = "wp_v11";
 const V12_KEY = "wp_v12";
 const V13_KEY = "wp_v13";
+const V14_KEY = "wp_v14";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -60,8 +61,28 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest v13 — no-op
-  if (localStorage.getItem(V13_KEY)) return;
+  // Already on latest v14 — no-op
+  if (localStorage.getItem(V14_KEY)) return;
+
+  // v13→v14 migration: add rsvpSettings
+  const v13Raw = localStorage.getItem(V13_KEY);
+  if (v13Raw) {
+    try {
+      const v13Data = JSON.parse(v13Raw);
+      const v14Data = {
+        ...v13Data,
+        rsvpSettings: v13Data.rsvpSettings ?? {
+          welcomeMessage: "",
+          venue: "",
+          venueAddress: "",
+          venueMapLink: "",
+          coupleStory: "",
+        },
+      };
+      localStorage.setItem(V14_KEY, JSON.stringify(v14Data));
+    } catch { /* corrupt data */ }
+    return;
+  }
 
   // v12→v13 migration: add region + itemsChecked
   const v12Raw = localStorage.getItem(V12_KEY);

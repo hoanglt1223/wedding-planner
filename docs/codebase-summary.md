@@ -26,6 +26,8 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | `src/components/layout/` | Layout wrappers | 7 components (header, footer, root, region-selector, theme-picker, topbar, scrollable-tab-bar) |
 | `src/components/wedding/` | Wedding-specific UI | 13 components (ceremony, steps, checklist, family-roles, collapsible-detail, etc.) |
 | `src/components/calendar/` | Auspicious date picker | 4 components (calendar, day-cell, detail-modal, couple-compatibility) |
+| `src/components/rsvp/` | RSVP guest landing page | 5 components (hero, event-details, couple-story, form, thank-you) |
+| `src/components/guests/` | Guest management dashboard | 7 components (stats-bar, settings-form, generate-links, qr-modal, response-table, export-actions, dashboard) |
 | `src/pages/` | Route-based pages | Empty (TBD) |
 | `src/hooks/` | Custom React hooks | use-wedding-store, use-local-storage, use-ai-reading |
 | `src/lib/utils.ts` | Tailwind merge utility | Active |
@@ -40,8 +42,11 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | File | Purpose | Status |
 |------|---------|--------|
 | `api/health.ts` | Deployment health check | Active |
+| `api/rsvp.ts` | Bulk create & fetch RSVP invitations | Active |
+| `api/rsvp/respond.ts` | One-time atomic RSVP response submission | Active |
+| `api/rsvp/list.ts` | Dashboard: fetch all responses (rate-limited) | Active |
 | `src/db/index.ts` | Database factory function | Active |
-| `src/db/schema.ts` | Drizzle table definitions | Template (commented) |
+| `src/db/schema.ts` | Drizzle table definitions (includes rsvp_invitations) | Active |
 | `src/lib/redis.ts` | Redis factory function | Active |
 
 ## Configuration Files
@@ -55,11 +60,11 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 
 ## Dependencies (Key)
 
-**Frontend:** React 19.2.4, Vite 7.3.1, TypeScript 5.9.3, Tailwind CSS 4.2.0, shadcn/ui 3.8.5, @dqcai/vn-lunar 1.0.1
+**Frontend:** React 19.2.4, Vite 7.3.1, TypeScript 5.9.3, Tailwind CSS 4.2.0, shadcn/ui 3.8.5, @dqcai/vn-lunar 1.0.1, nanoid 5.x, qrcode 1.5.x
 
-**Backend:** Drizzle ORM 0.45.1, Neon serverless, Upstash Redis 1.36.2, OpenAI SDK
+**Backend:** Drizzle ORM 0.45.1, Neon serverless, Upstash Redis 1.36.2, ZhipuAI SDK
 
-**Tooling:** ESLint, Drizzle Kit, TypeScript compiler, @upstash/ratelimit
+**Tooling:** ESLint, Drizzle Kit, TypeScript compiler, @upstash/ratelimit, @types/qrcode
 
 ## Environment Setup
 
@@ -125,10 +130,21 @@ English and Vietnamese language support with centralized translation system.
 - All components accept optional `lang?: string` prop (default: "vi")
 - Language stored in `WeddingState.lang`, toggled via Settings UI
 
-## Current Limitations (TBD)
+## RSVP System
 
-- No authentication implemented
-- No database tables defined
-- No page routes created
-- No API endpoints (except health check)
-- No real-time features
+**Purpose:** Manage wedding guest RSVPs with token-based guest landing pages and admin dashboard.
+
+**Guest Page Route:** `#/rsvp/:token`
+
+**Components:**
+- Guest page: `rsvp-hero`, `rsvp-event-details`, `rsvp-couple-story`, `rsvp-form`, `rsvp-thank-you`
+- Admin dashboard: `rsvp-stats-bar`, `rsvp-settings-form`, `rsvp-generate-links`, `rsvp-qr-modal`, `rsvp-response-table`, `rsvp-export-actions`
+
+**Database Table:** `rsvp_invitations` (10 cols: id, user_id, guest_name, token, status, plus_ones, dietary, message, responded_at, created_at)
+
+**API Endpoints:**
+- `POST/GET /api/rsvp` — Bulk create + fetch by token
+- `POST /api/rsvp/respond` — One-time atomic response submission
+- `GET /api/rsvp/list` — Dashboard listing (rate-limited)
+
+**State:** `WeddingState.rsvpSettings: RsvpSettings`, `Guest.rsvpToken?: string`, localStorage v14

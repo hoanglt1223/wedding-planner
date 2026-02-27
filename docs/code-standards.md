@@ -158,6 +158,51 @@ All secrets in `.env.local`. See `.env.example` for required keys:
 - `DATABASE_URL` - Neon PostgreSQL
 - `UPSTASH_REDIS_REST_URL` - Redis REST endpoint
 - `UPSTASH_REDIS_REST_TOKEN` - Redis auth token
+- `Z_AI_KEY` - ZhipuAI API key (server-side only)
+- `ADMIN_PASSWORD` - Admin panel password
+
+## Rate Limiting Pattern
+
+Use `@upstash/ratelimit` with sliding window algorithm for API endpoints:
+
+```typescript
+import { Ratelimit } from "@upstash/ratelimit";
+import { createRedis } from "@/lib/redis";
+
+const ratelimit = new Ratelimit({
+  redis: createRedis(),
+  limiter: Ratelimit.slidingWindow(30, "1 m"), // 30 req/min
+});
+
+const { success } = await ratelimit.limit(clientId);
+if (!success) return new Response("Too many requests", { status: 429 });
+```
+
+## Atomic Operations
+
+For one-time actions (RSVP responses), use database transactions to prevent duplicates:
+
+```typescript
+await db.transaction(async (tx) => {
+  const existing = await tx.select().from(table).where(eq(token, id));
+  if (existing.length > 0) throw new Error("Already responded");
+  await tx.insert(table).values(data);
+});
+```
+
+## XSS Prevention
+
+Sanitize user inputs before rendering in HTML:
+- Escape venue map links with `encodeURI()`
+- Use React's built-in escaping for text content
+- Validate URLs before rendering in `href` attributes
+
+## CSV Export Security
+
+Prevent formula injection in exported data:
+- Prefix cells starting with `=`, `+`, `@`, `-` with single quote (`'`)
+- Use standard CSV formatting (proper quoting, escaped quotes)
+- Example: `'=HYPERLINK(...)` becomes `'=HYPERLINK(...)` in output
 
 ## Linting
 

@@ -8,6 +8,7 @@ import {
   uuid,
   real,
   boolean,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const userSessions = pgTable("user_sessions", {
@@ -45,3 +46,18 @@ export const adminSessions = pgTable("admin_sessions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   expiresAt: timestamp("expires_at").notNull(),
 });
+
+export const rsvpInvitations = pgTable("rsvp_invitations", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  guestName: text("guest_name").notNull(),
+  token: text("token").notNull().unique(),
+  status: text("status").notNull().default("pending"),
+  plusOnes: integer("plus_ones").notNull().default(0),
+  dietary: text("dietary"),
+  message: text("message"),
+  respondedAt: timestamp("responded_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("rsvp_invitations_user_id_idx").on(table.userId),
+]);

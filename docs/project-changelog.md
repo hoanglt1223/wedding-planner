@@ -2,6 +2,87 @@
 
 All notable changes are documented here.
 
+## [0.5.0] - 2026-02-27
+
+### Added
+
+- **RSVP System — Guest RSVP Landing Page & Planner Dashboard**
+  - Guest-facing RSVP landing page at `#/rsvp/:token` with unique per-guest links
+  - PostgreSQL table `rsvp_invitations` (10 columns): id, userId, guestName, token, status, plusOnes, dietary, message, respondedAt, createdAt
+  - Data migration: wp_v13 → wp_v14 with `rsvpSettings` object (welcomeMessage, venue, venueAddress, venueMapLink, coupleStory)
+  - Guest interface extended with optional `rsvpToken` field
+  - Three core API endpoints:
+    - POST /api/rsvp — Bulk token generation using nanoid (12-char unguessable tokens)
+    - GET /api/rsvp?token=X — Fetch invitation + planner's event details (theme, lang, couple info, venue, story)
+    - POST /api/rsvp/respond — Submit RSVP response (one-time guard via atomic responded_at check)
+    - GET /api/rsvp/list?userId=X — Dashboard list for planner
+  - Guest landing page components:
+    - `src/pages/rsvp-landing-page.tsx` — Main orchestrator with state machine (loading, error, form, submitted, already-responded)
+    - `src/components/rsvp/rsvp-hero.tsx` — Themed hero with couple names, date, welcome message
+    - `src/components/rsvp/rsvp-event-details.tsx` — Venue, address, map link (external, noopener)
+    - `src/components/rsvp/rsvp-couple-story.tsx` — Optional couple story section
+    - `src/components/rsvp/rsvp-form.tsx` — Attendance (accept/decline), plus-ones counter (0-10), dietary requirements, message, submit button
+    - `src/components/rsvp/rsvp-thank-you.tsx` — Post-submit confirmation with response summary
+  - Planner RSVP dashboard (new "RSVP" tab in GuestPanel):
+    - `src/components/guests/rsvp-dashboard.tsx` — Main dashboard orchestrator
+    - `src/components/guests/rsvp-settings-form.tsx` — Edit welcome message, venue, address, map link, couple story (auto-synced via useSync)
+    - `src/components/guests/rsvp-generate-links.tsx` — Bulk token generation button with loading state
+    - `src/components/guests/rsvp-stats-bar.tsx` — Colored badge counts (accepted, declined, pending)
+    - `src/components/guests/rsvp-response-table.tsx` — Sortable table of guest responses with status badges
+    - `src/components/guests/rsvp-qr-modal.tsx` — Per-guest QR code modal (client-side qrcode rendering)
+    - `src/components/guests/rsvp-export-actions.tsx` — Copy all links + CSV export with formula injection prevention
+  - API helper: `src/lib/rsvp-api.ts` — Centralized RSVP endpoint wrappers
+  - Store callbacks in `useWeddingStore`:
+    - `setRsvpSettings()` — Update rsvpSettings (auto-synced)
+    - `updateGuestRsvpToken()` — Link token to guest after generation
+  - Security features:
+    - Rate limiting: POST /api/rsvp (10 req/min per userId), POST /api/rsvp/respond (20 req/min per IP)
+    - One-time response guard: atomic UPDATE with `responded_at IS NOT NULL` check prevents duplicate submissions
+    - XSS protection: form input max lengths (500 chars for dietary/message, 10 for plus-ones)
+    - CSV formula injection prevention: leading `=` removed from exported values
+    - Token uniqueness: nanoid + unique constraint prevents collisions
+  - Theme application: Guest page inherits planner's themeId, applies CSS variables at runtime
+  - Internationalization: ~35 new translation keys for RSVP flow, settings, dashboard, guest page (Vietnamese + English)
+  - Responsive design: Mobile-first (375px tested), table horizontal scroll on mobile, form fields stack vertically
+
+### Dependencies Added
+
+- `nanoid` ^3.x — URL-safe token generation
+- `qrcode` ^1.x — Client-side QR code rendering
+- `@types/qrcode` (dev) — TypeScript types for qrcode
+
+### Database Schema
+
+New table: `rsvp_invitations`
+- Columns: id (serial PK), userId (text FK), guestName (text), token (text unique), status (text default 'pending'), plusOnes (int), dietary (text), message (text), respondedAt (timestamp nullable), createdAt (timestamp default now)
+- Index on userId for dashboard queries
+- Unique constraint on token for integrity
+
+### Type Additions
+
+- `RsvpSettings` — Welcome message, venue info, couple story fields
+- Extended `Guest` — Added optional `rsvpToken` field
+- Extended `WeddingState` — Added `rsvpSettings: RsvpSettings`
+- `RsvpInvitation` — Full DB row type for dashboard queries
+
+### Performance Notes
+
+- Tokens generated server-side with nanoid (no client-side generation)
+- Bulk insertion batches up to 500 guests per request
+- QR codes rendered client-side (lazy per guest, no server overhead)
+- State migration one-time on app load (existing users unaffected)
+- API requests to /api/rsvp/list cached client-side while dashboard is open
+
+### Architecture Updates
+
+- New API file structure: `api/rsvp.ts` (POST create + GET fetch), `api/rsvp/respond.ts` (POST submit), `api/rsvp/list.ts` (GET list)
+- RSVP landing page completely isolated from WeddingState (no localStorage dependency for guests)
+- Theme colors passed from planner → API → guest page via CSS variables
+- Language selection (vi/en) passed from planner → API → guest page
+- Admin panel updated to include new rsvp_invitations table in system stats
+
+---
+
 ## [0.4.0] - 2026-02-23
 
 ### Added

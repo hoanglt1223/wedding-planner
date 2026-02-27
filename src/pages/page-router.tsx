@@ -13,9 +13,10 @@ interface PageRouterProps {
   store: WeddingStore;
   progress: { done: number; total: number; pct: number };
   onGoAI: (hint: string) => void;
+  userId?: string;
 }
 
-export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) {
+export function PageRouter({ state, store, progress, onGoAI, userId }: PageRouterProps) {
   const lang = state.lang;
 
   switch (state.page) {
@@ -26,6 +27,7 @@ export function PageRouter({ state, store, progress, onGoAI }: PageRouterProps) 
           store={store}
           progress={progress}
           onGoAI={onGoAI}
+          userId={userId}
         />
       );
 

@@ -117,6 +117,7 @@ function App() {
           store={store}
           progress={progress}
           onGoAI={handleGoAI}
+          userId={userId}
         />
       </div>
       <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} lang={state.lang} />

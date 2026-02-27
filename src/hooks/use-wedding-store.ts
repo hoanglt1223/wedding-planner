@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -8,7 +8,7 @@ import { migrateState } from "@/lib/migrate-state";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v13";
+const STORAGE_KEY = "wp_v14";
 
 /** A step is enabled if enabledSteps is empty/undefined (all enabled) or the step's value is not false */
 export function isStepEnabled(enabledSteps: Record<string, boolean> | undefined, stepId: string): boolean {
@@ -175,6 +175,20 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, onboardingComplete: true }));
   }, [setState]);
 
+  const setRsvpSettings = useCallback((settings: Partial<RsvpSettings>) => {
+    setState((prev) => ({
+      ...prev,
+      rsvpSettings: { ...(prev.rsvpSettings || { welcomeMessage: "", venue: "", venueAddress: "", venueMapLink: "", coupleStory: "" }), ...settings },
+    }));
+  }, [setState]);
+
+  const updateGuestRsvpToken = useCallback((guestId: number, token: string) => {
+    setState((prev) => ({
+      ...prev,
+      guests: prev.guests.map((g) => g.id === guestId ? { ...g, rsvpToken: token } : g),
+    }));
+  }, [setState]);
+
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
@@ -226,6 +240,8 @@ export function useWeddingStore() {
     setEnabledSteps,
     completeOnboarding,
     getProgress,
+    setRsvpSettings,
+    updateGuestRsvpToken,
   };
 }
 

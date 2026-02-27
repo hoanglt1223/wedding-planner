@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { LandingPage } from './pages/landing-page.tsx'
 import { SharedPreviewPage } from './pages/shared-preview-page.tsx'
+import { RsvpLandingPage } from './pages/rsvp-landing-page.tsx'
 
 const AdminApp = lazy(() => import('./pages/admin/admin-app.tsx'))
 
@@ -24,6 +25,10 @@ function Root() {
   }, []);
 
   if (hash === '#/app' || hash.startsWith('#/app/')) return <App />;
+  if (hash.startsWith('#/rsvp/')) {
+    const rsvpToken = hash.slice('#/rsvp/'.length).split('/')[0];
+    return <RsvpLandingPage token={rsvpToken} />;
+  }
   if (hash.startsWith('#/shared/')) {
     const shareId = hash.replace('#/shared/', '');
     return <SharedPreviewPage shareId={shareId} />;

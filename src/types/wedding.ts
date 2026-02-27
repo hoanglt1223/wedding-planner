@@ -98,6 +98,15 @@ export interface Guest {
   side: string;
   tableGroup: string;
   id: number;
+  rsvpToken?: string;
+}
+
+export interface RsvpSettings {
+  welcomeMessage: string;
+  venue: string;
+  venueAddress: string;
+  venueMapLink: string;
+  coupleStory: string;
 }
 
 export interface WeddingState {
@@ -125,6 +134,7 @@ export interface WeddingState {
   stepStartTimes: Record<string, string>;
   enabledSteps: Record<string, boolean>;
   onboardingComplete: boolean;
+  rsvpSettings: RsvpSettings;
 }
 
 export interface WeddingEvent {
