@@ -1,4 +1,5 @@
 import { getWeddingSteps } from "@/data/resolve-data";
+import { CountdownWidget } from "@/components/countdown/countdown-widget";
 import { StatsGrid } from "@/components/wedding/stats-grid";
 import { TabNavigation } from "@/components/wedding/tab-navigation";
 import { PanelRouter } from "@/components/wedding/panel-router";
@@ -21,6 +22,13 @@ export function PlanningPage({ state, store, progress, onGoAI, userId }: Plannin
 
   return (
     <>
+      <CountdownWidget
+        weddingDate={state.info.date}
+        progress={progress}
+        dismissedReminders={state.dismissedReminders || []}
+        onDismiss={store.dismissReminder}
+        lang={lang}
+      />
       <StatsGrid
         totalSteps={filteredCount}
         done={progress.done}

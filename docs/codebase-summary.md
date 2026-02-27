@@ -28,12 +28,20 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | `src/components/calendar/` | Auspicious date picker | 4 components (calendar, day-cell, detail-modal, couple-compatibility) |
 | `src/components/rsvp/` | RSVP guest landing page | 5 components (hero, event-details, couple-story, form, thank-you) |
 | `src/components/guests/` | Guest management dashboard | 7 components (stats-bar, settings-form, generate-links, qr-modal, response-table, export-actions, dashboard) |
-| `src/pages/` | Route-based pages | Empty (TBD) |
-| `src/hooks/` | Custom React hooks | use-wedding-store, use-local-storage, use-ai-reading |
+| `src/components/timeline/` | Timeline CRUD interface | 4 components (entry-form, entry-list, entry-card, header) |
+| `src/components/gifts/` | Gift/cash tracker UI | 5 components (entry-form, entry-list, entry-row, summary-bar, csv-export) |
+| `src/components/photo-wall/` | Guest photo upload & gallery | 6 components (upload-form, upload-link, qr-generator, gallery-dashboard, masonry-grid, photo-card) |
+| `src/components/tasks/` | Collaborative task board | 7 components (form, board-dashboard, card, list-view, assignee-view, assignee-links, progress-bar) |
+| `src/components/website/` | Wedding website builder | 6 components (hero, gallery, rsvp-cta, settings-panel, slug-input, section-toggles) |
+| `src/components/cards/` | Card-based UI components | photo-board |
+| `src/components/print/` | Print-optimized components | event-timeline |
+| `src/pages/` | Route-based pages | 8 pages (gift, photo-upload, task-landing, timeline, wedding-website, admin, rsvp-landing, page-router) |
+| `src/hooks/` | Custom React hooks | use-wedding-store, use-local-storage, use-ai-reading, use-user-id, use-sync, use-tracking |
 | `src/lib/utils.ts` | Tailwind merge utility | Active |
 | `src/lib/i18n.ts` | Translation function: `t(key, lang)` | Active |
 | `src/lib/format.ts` | Locale utilities & formatting with lang parameter | Active |
-| `src/types/` | TypeScript definitions | wedding.ts with WeddingState, Region, RegionalContent types |
+| `src/lib/rsvp-api.ts` | RSVP API wrapper functions | Active |
+| `src/types/` | TypeScript definitions | wedding.ts with WeddingState, Region, RegionalContent, all Phase 2 types |
 | `src/index.css` | Global styles + custom utilities (text-2xs) + print styles | Active |
 | `public/` | Static assets | Empty |
 
@@ -45,8 +53,11 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | `api/rsvp.ts` | Bulk create & fetch RSVP invitations | Active |
 | `api/rsvp/respond.ts` | One-time atomic RSVP response submission | Active |
 | `api/rsvp/list.ts` | Dashboard: fetch all responses (rate-limited) | Active |
+| `api/photos.ts` | Guest photo upload via Vercel Blob | Active |
+| `api/tasks.ts` | Collaborative task CRUD + progress tracking | Active |
+| `api/website.ts` | Wedding website data endpoint | Active |
 | `src/db/index.ts` | Database factory function | Active |
-| `src/db/schema.ts` | Drizzle table definitions (includes rsvp_invitations) | Active |
+| `src/db/schema.ts` | Drizzle table definitions (6 tables + wedding_photos, wedding_tasks) | Active |
 | `src/lib/redis.ts` | Redis factory function | Active |
 
 ## Configuration Files
@@ -148,3 +159,57 @@ English and Vietnamese language support with centralized translation system.
 - `GET /api/rsvp/list` — Dashboard listing (rate-limited)
 
 **State:** `WeddingState.rsvpSettings: RsvpSettings`, `Guest.rsvpToken?: string`, localStorage v14
+
+## Phase 2 Features (Countdown, Timeline, Gifts, Photos, Tasks, Website)
+
+**Purpose:** Six core features for planning, tracking, collaboration, and public sharing.
+
+### Countdown + Smart Reminders
+- Countdown widget on planning page showing days until wedding
+- Milestone-based reminders at 90d/60d/30d/14d/7d/1d before wedding
+- State: `WeddingState.remindersSent: Record<string, boolean>`
+
+### Wedding Day Timeline
+- CRUD for `TimelineEntry[]` with time, activity, notes, category
+- Filter by category (ceremony, reception, meals, activities)
+- Template generation from wedding steps
+- Component: `timeline-page.tsx` + timeline subcomponents
+
+### Gift/Cash Tracker (Phong Bì)
+- Manage gifts/cash received with guest linking
+- Side filtering by bride/groom attribution
+- CSV export with formula injection prevention
+- Component: `gift-page.tsx` + gift subcomponents
+- Export uses `@index` prefix escaping
+
+### Guest Photo Wall
+- Vercel Blob storage for guest photos
+- Guest upload via QR code / token link (#/photos/:token)
+- Moderation dashboard with approval workflow
+- Component: `photo-upload-page.tsx` + photo-wall subcomponents
+- Database table: `wedding_photos` (8 cols: id, userId, guestName, photoUrl, status, uploadedAt, approvedAt, createdAt)
+
+### Collaborative Task Board
+- Family task delegation with token-based links (#/tasks/:token)
+- Assignee progress tracking (assigned, in-progress, completed)
+- Task board with filtering by status/assignee
+- Component: `task-landing-page.tsx` + task subcomponents
+- Database table: `wedding_tasks` (11 cols: id, userId, title, description, assignee, assigneeToken, status, dueDate, priority, createdAt, updatedAt)
+
+### Wedding Website
+- Public #/w/:slug page with couple info, theme, timeline, gallery, venue, RSVP CTA
+- Website settings panel to toggle sections (gallery, timeline, venue, rsvp)
+- Slug management (publish/unpublish)
+- Component: `wedding-website-page.tsx` + website subcomponents
+- Stored in `WeddingState.website: WebsiteSettings`
+
+**State Migration:** wp_v14 → wp_v15 with new fields:
+- `countdown: boolean` (enable/disable)
+- `remindersSent: Record<string, boolean>` (milestone tracking)
+- `timeline: TimelineEntry[]` (timeline events)
+- `gifts: GiftEntry[]` (gift tracker)
+- `website: WebsiteSettings` (site config)
+
+**Dependencies Added:** `@vercel/blob` for Blob storage operations
+
+**Environment Variables:** `BLOB_READ_WRITE_TOKEN` for Vercel Blob access

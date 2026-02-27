@@ -109,6 +109,61 @@ export interface RsvpSettings {
   coupleStory: string;
 }
 
+// --- Phase 2 types ---
+
+export interface TimelineEntry {
+  id: number;
+  time: string;           // "HH:mm" format
+  title: string;
+  location?: string;
+  responsible?: string;
+  notes?: string;
+  category: "ceremony" | "reception" | "prep" | "other";
+}
+
+export interface GiftEntry {
+  id: number;
+  guestId?: number;
+  guestName: string;
+  type: "cash" | "gift";
+  amount?: number;
+  description?: string;
+  side: "groom" | "bride" | "other";
+  tableGroup?: string;
+  thankYouSent: boolean;
+}
+
+export interface WebsiteSettings {
+  enabled: boolean;
+  slug: string;
+  sections: {
+    story: boolean;
+    timeline: boolean;
+    gallery: boolean;
+    venue: boolean;
+    rsvp: boolean;
+  };
+  heroImage?: string;
+  customMessage?: string;
+  storyText?: string;
+}
+
+export interface PhotoWallSettings {
+  enabled: boolean;
+  maxPhotos: number;
+  autoApprove: boolean;
+}
+
+export interface TaskBoardSettings {
+  enabled: boolean;
+  categories: string[];
+}
+
+export interface ReminderPreference {
+  id: string;
+  dismissed: boolean;
+}
+
 export interface WeddingState {
   page: string;
   tab: number;
@@ -135,6 +190,16 @@ export interface WeddingState {
   enabledSteps: Record<string, boolean>;
   onboardingComplete: boolean;
   rsvpSettings: RsvpSettings;
+
+  // Phase 2 additions
+  timelineEntries: TimelineEntry[];
+  timelineIdCounter: number;
+  gifts: GiftEntry[];
+  giftIdCounter: number;
+  websiteSettings: WebsiteSettings;
+  photoWallSettings: PhotoWallSettings;
+  taskBoardSettings: TaskBoardSettings;
+  dismissedReminders: string[];
 }
 
 export interface WeddingEvent {

@@ -7,6 +7,9 @@ import { SharedPreviewPage } from './pages/shared-preview-page.tsx'
 import { RsvpLandingPage } from './pages/rsvp-landing-page.tsx'
 
 const AdminApp = lazy(() => import('./pages/admin/admin-app.tsx'))
+const WeddingWebsitePage = lazy(() => import('./pages/wedding-website-page.tsx'))
+const PhotoUploadPage = lazy(() => import('./pages/photo-upload-page.tsx'))
+const TaskLandingPage = lazy(() => import('./pages/task-landing-page.tsx'))
 
 // Register service worker for PWA
 if ('serviceWorker' in navigator) {
@@ -32,6 +35,30 @@ function Root() {
   if (hash.startsWith('#/shared/')) {
     const shareId = hash.replace('#/shared/', '');
     return <SharedPreviewPage shareId={shareId} />;
+  }
+  if (hash.startsWith('#/w/')) {
+    const slug = hash.slice('#/w/'.length).split('/')[0];
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <WeddingWebsitePage slug={slug} />
+      </Suspense>
+    );
+  }
+  if (hash.startsWith('#/photos/')) {
+    const photoToken = hash.slice('#/photos/'.length).split('/')[0];
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <PhotoUploadPage token={photoToken} />
+      </Suspense>
+    );
+  }
+  if (hash.startsWith('#/tasks/')) {
+    const taskToken = hash.slice('#/tasks/'.length).split('/')[0];
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <TaskLandingPage token={taskToken} />
+      </Suspense>
+    );
   }
   if (hash.startsWith('#/admin')) {
     return (

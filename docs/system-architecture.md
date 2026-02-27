@@ -77,6 +77,9 @@ TypeScript → Vite Bundle → Vercel Edge → Browser
 - `rsvp.ts` - Bulk create RSVP invitations + fetch by token
 - `rsvp/respond.ts` - One-time atomic RSVP response submission
 - `rsvp/list.ts` - Fetch all RSVP responses for dashboard (rate-limited)
+- `photos.ts` - Guest photo upload to Vercel Blob + list/approve operations
+- `tasks.ts` - Task CRUD + status updates + assignee progress tracking
+- `website.ts` - Wedding website data retrieval (timeline, gallery, venue, couple info)
 - `admin/auth.ts` - Admin authentication (login, logout, verify session)
 - `admin/data.ts` - Admin data endpoints (dashboard, users, analytics, system)
 
@@ -108,6 +111,8 @@ export default { async fetch(req) { ... } }
 - `analytics_events` - Auto-increment PK, user_id FK, event_type text, event_data jsonb, created_at
 - `admin_sessions` - Text PK, created_at, expires_at (24h)
 - `rsvp_invitations` - UUID PK, user_id FK, guest_name, token (unique), status (pending/accepted/declined), plus_ones int, dietary text, message text, responded_at, created_at. Index: user_id
+- `wedding_photos` - UUID PK, user_id FK, guest_name, photo_url (Vercel Blob), status (pending/approved/rejected), uploaded_at, approved_at, created_at. Index: user_id
+- `wedding_tasks` - UUID PK, user_id FK, title, description, assignee, assignee_token (unique), status (assigned/in-progress/completed), due_date, priority (low/medium/high), created_at, updated_at. Indexes: user_id, assignee_token
 
 **Factory:**
 ```typescript
@@ -416,15 +421,62 @@ GET /api/rsvp/list           — All responses (rate-limited 30 req/min)
 
 **Dependencies:** nanoid (token gen), qrcode (QR rendering)
 
+## Blob Storage (Vercel Blob)
+
+**Purpose:** Scalable image storage for guest photos
+
+**Configuration:**
+- Host: Vercel Blob serverless storage
+- Auth: Token-based (`BLOB_READ_WRITE_TOKEN` env var)
+- Use case: Store guest photos with metadata (user_id, guest_name, approval status)
+
+**API Integration:**
+- `POST /api/photos` — Upload photo to Blob, store metadata in wedding_photos table
+- `GET /api/photos` — Retrieve guest photos with approval status
+- `PUT /api/photos/:id` — Approve/reject photo by planner
+
+## Phase 2: Extended Features
+
+### Hash Routes
+- `#/w/:slug` - Wedding website (public-facing)
+- `#/photos/:token` - Guest photo upload link (token-based, no auth required)
+- `#/tasks/:token` - Family task board link (token-based, no auth required)
+
+### Pages
+- `wedding-website-page.tsx` — Public wedding website with timeline, gallery, RSVP CTA
+- `photo-upload-page.tsx` — Guest photo upload with progress tracking
+- `task-landing-page.tsx` — Family task board with assignee-specific views
+- `timeline-page.tsx` — Wedding timeline CRUD and management
+- `gift-page.tsx` — Phong bì tracker with CSV export
+
+### State Extensions (v15)
+- `countdown: boolean` — Enable/disable countdown display
+- `remindersSent: Record<string, boolean>` — Track milestone reminders (90d, 60d, 30d, 14d, 7d, 1d)
+- `timeline: TimelineEntry[]` — Wedding day timeline entries
+- `gifts: GiftEntry[]` — Gift/cash received tracking
+- `website: WebsiteSettings` — Public website config (slug, published, sections visibility)
+
+### New i18n Keys (70+)
+- Countdown labels and milestone names
+- Timeline CRUD operations and categories
+- Gift tracker fields and export labels
+- Photo upload prompts and moderation statuses
+- Task board labels and priority levels
+- Website sections and public page copy
+
 ## Monitoring
 
 - `/api/health` endpoint for deployment checks
 - `/api/sync` rate limit and payload metrics
 - `/api/track` rate limit and event counts
 - `/api/rsvp/list` rate limit metrics
+- `/api/photos` Vercel Blob upload metrics
+- `/api/tasks` task creation and update metrics
+- `/api/website` page views and engagement
 - `/api/admin/auth/verify` session validation
 - Vercel Analytics dashboard
 - ZhipuAI API usage dashboard (cost tracking)
+- Vercel Blob usage dashboard (storage and bandwidth)
 - Redis command monitoring (Upstash dashboard)
 - Database query logs (Neon console)
 - Admin panel system page for real-time health checks

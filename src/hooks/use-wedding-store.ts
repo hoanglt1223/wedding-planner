@@ -4,11 +4,12 @@ import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpS
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
+import { usePhase2Methods } from "./use-wedding-store-phase2";
 
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v14";
+const STORAGE_KEY = "wp_v15";
 
 /** A step is enabled if enabledSteps is empty/undefined (all enabled) or the step's value is not false */
 export function isStepEnabled(enabledSteps: Record<string, boolean> | undefined, stepId: string): boolean {
@@ -189,6 +190,8 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const phase2 = usePhase2Methods(setState);
+
   const getProgress = useCallback(() => {
     let total = 0;
     let done = 0;
@@ -213,35 +216,14 @@ export function useWeddingStore() {
   return {
     state,
     setState,
-    setPage,
-    setTab,
-    setSubTab,
-    toggleCheck,
-    setBudget,
-    setCategoryPercent,
-    setExpense,
-    updateInfo,
-    addGuest,
-    removeGuest,
-    clearGuests,
-    importGuests,
-    setApiKey,
-    setAiResponse,
-    setTheme,
-    setNotes,
-    addVendor,
-    removeVendor,
-    addPhoto,
-    removePhoto,
-    setLang,
-    setRegion,
-    setPartyTime,
-    setStepStartTime,
-    setEnabledSteps,
-    completeOnboarding,
-    getProgress,
-    setRsvpSettings,
-    updateGuestRsvpToken,
+    setPage, setTab, setSubTab, toggleCheck,
+    setBudget, setCategoryPercent, setExpense,
+    updateInfo, addGuest, removeGuest, clearGuests, importGuests,
+    setApiKey, setAiResponse, setTheme, setNotes,
+    addVendor, removeVendor, addPhoto, removePhoto,
+    setLang, setRegion, setPartyTime, setStepStartTime, setEnabledSteps,
+    completeOnboarding, getProgress, setRsvpSettings, updateGuestRsvpToken,
+    ...phase2,
   };
 }
 

@@ -8,6 +8,7 @@ const V11_KEY = "wp_v11";
 const V12_KEY = "wp_v12";
 const V13_KEY = "wp_v13";
 const V14_KEY = "wp_v14";
+const V15_KEY = "wp_v15";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -61,8 +62,32 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest v14 — no-op
-  if (localStorage.getItem(V14_KEY)) return;
+  // Already on latest v15 — no-op
+  if (localStorage.getItem(V15_KEY)) return;
+
+  // v14→v15 migration: add Phase 2 fields
+  const v14Raw = localStorage.getItem(V14_KEY);
+  if (v14Raw) {
+    try {
+      const v14 = JSON.parse(v14Raw);
+      const v15 = {
+        ...v14,
+        timelineEntries: v14.timelineEntries ?? [],
+        timelineIdCounter: v14.timelineIdCounter ?? 0,
+        gifts: v14.gifts ?? [],
+        giftIdCounter: v14.giftIdCounter ?? 0,
+        websiteSettings: v14.websiteSettings ?? {
+          enabled: false, slug: "", sections: { story: true, timeline: true, gallery: true, venue: true, rsvp: true },
+          heroImage: "", customMessage: "", storyText: "",
+        },
+        photoWallSettings: v14.photoWallSettings ?? { enabled: false, maxPhotos: 100, autoApprove: true },
+        taskBoardSettings: v14.taskBoardSettings ?? { enabled: false, categories: [] },
+        dismissedReminders: v14.dismissedReminders ?? [],
+      };
+      localStorage.setItem(V15_KEY, JSON.stringify(v15));
+    } catch { /* corrupt */ }
+    return;
+  }
 
   // v13→v14 migration: add rsvpSettings
   const v13Raw = localStorage.getItem(V13_KEY);

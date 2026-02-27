@@ -156,45 +156,52 @@
 
 ---
 
-### Phase 2: Core Features (TBD)
+### Phase 2: Core Planning Features (COMPLETE)
 
-**Estimated Duration:** 4-6 weeks
+**Status:** Complete (Feb 28, 2026)
 
-**Priority Features:**
-- User authentication (sign up/login)
-- User profile management
-- Wedding event CRUD operations
-- Guest list management
-- Basic timeline/checklist features
+**Deliverables:**
+- **Countdown + Smart Reminders** — Widget on planning page with milestone-based reminders (90d/60d/30d/14d/7d/1d)
+- **Wedding Timeline** — CRUD for timeline entries with category filters and template generation from wedding steps
+- **Gift/Cash Tracker** — Phong bì manager with guest linking, side filtering (bride/groom), CSV export with formula injection prevention
+- **Guest Photo Wall** — Vercel Blob storage with guest upload via QR/token (#/photos/:token) and moderation dashboard
+- **Collaborative Task Board** — Family task delegation with token-based links (#/tasks/:token) and assignee progress tracking
+- **Wedding Website** — Public #/w/:slug page assembling couple info, theme, timeline, gallery, venue, RSVP CTA
 
-**Deliverables (TBD):**
-- Database schema (users, weddings, guests, events)
-- Authentication API endpoints
-- User dashboard page
-- Guest management UI
-- Event creation/editing forms
+**Architecture Updates:**
+- State migration: wp_v14 → wp_v15 with new fields (countdown, remindersSent, timeline, gifts, website)
+- 2 new database tables: wedding_photos, wedding_tasks
+- 3 new hash routes: #/w/:slug, #/photos/:token, #/tasks/:token
+- 5 new pages: timeline-page, gift-page, photo-upload-page, task-landing-page, wedding-website-page
+- 25+ new components across timeline, gifts, photos, tasks, website directories
+- 3 new API endpoints: /api/photos, /api/tasks, /api/website
+- 70+ new i18n keys for full bilingual support
+- Vercel Blob integration for image storage
 
-**Success Criteria (TBD):**
-- 95%+ test coverage
-- All endpoints documented
-- Authentication working end-to-end
+**Dependencies Added:**
+- `@vercel/blob` — Blob storage API
+
+**Environment Variables:**
+- `BLOB_READ_WRITE_TOKEN` — Vercel Blob access token
+
+**Metrics:** All 7 phases completed, 6 features operational, public website generation working, family collaboration enabled.
 
 ---
 
-### Phase 3: Advanced Features (TBD)
+### Phase 3: Advanced Features (PLANNED)
 
 **Estimated Duration:** 6-8 weeks
 
 **Priority Features:**
-- Budget tracking system
-- Vendor database + communications
-- Real-time notifications
-- Multi-user collaboration
-- Data export (PDF, CSV)
+- Budget tracking and expense logging
+- Vendor database and communication
+- Real-time collaborative editing
+- Notification system (email/SMS)
+- Data export (PDF, advanced CSV)
 
 ---
 
-### Phase 4: Polish & Launch (TBD)
+### Phase 4: Polish & Launch (PLANNED)
 
 **Estimated Duration:** 2-3 weeks
 
@@ -217,7 +224,8 @@
 | Vietnamese Wedding Content Expansion | Feb 23, 2026 | Done |
 | User Data Tracking & Admin Panel | Feb 23, 2026 | Done |
 | RSVP System | Feb 27, 2026 | Done |
-| Core Features | TBD | Planned |
+| Core Planning Features | Feb 28, 2026 | Done |
+| Advanced Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |
 

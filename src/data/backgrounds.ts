@@ -69,6 +69,8 @@ export const EXTRA_TABS = [
   "📝 Ghi Chú",
   "🗺️ Vendor",
   "📅 Ngày Tốt",
+  "⏱️ Lịch Trình",
+  "🎁 Phong Bì",
 ] as const;
 
 export const DEFAULT_STATE: WeddingState = {
@@ -117,4 +119,28 @@ export const DEFAULT_STATE: WeddingState = {
     venueMapLink: "",
     coupleStory: "",
   },
+
+  // Phase 2 additions
+  timelineEntries: [],
+  timelineIdCounter: 0,
+  gifts: [],
+  giftIdCounter: 0,
+  websiteSettings: {
+    enabled: false,
+    slug: "",
+    sections: { story: true, timeline: true, gallery: true, venue: true, rsvp: true },
+    heroImage: "",
+    customMessage: "",
+    storyText: "",
+  },
+  photoWallSettings: {
+    enabled: false,
+    maxPhotos: 100,
+    autoApprove: true,
+  },
+  taskBoardSettings: {
+    enabled: false,
+    categories: [],
+  },
+  dismissedReminders: [],
 };

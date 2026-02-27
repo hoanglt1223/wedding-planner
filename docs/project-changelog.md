@@ -2,6 +2,66 @@
 
 All notable changes are documented here.
 
+## [0.6.0] - 2026-02-28
+
+### Added
+
+- **Phase 2: Core Planning Features — Countdown, Timeline, Gifts, Photos, Tasks, Website**
+  - **Countdown + Smart Reminders**: Countdown widget on planning page showing days until wedding, milestone-based reminders at 90d/60d/30d/14d/7d/1d
+  - **Wedding Timeline**: CRUD for TimelineEntry[] with time, activity, notes, category; filter by category (ceremony, reception, meals, activities); template generation from wedding steps
+  - **Gift/Cash Tracker (Phong Bì)**: Manager for gifts/cash received with guest linking, side filtering (bride/groom), CSV export with formula injection prevention (@index prefix escaping)
+  - **Guest Photo Wall**: Vercel Blob storage for guest photos with upload via QR code / token link (#/photos/:token), moderation dashboard with approval workflow
+  - **Collaborative Task Board**: Family task delegation with token-based links (#/tasks/:token), assignee progress tracking (assigned/in-progress/completed), filtering by status/assignee
+  - **Wedding Website**: Public #/w/:slug page assembling couple info, theme, timeline, gallery, venue, RSVP CTA; website settings panel to toggle sections; slug management
+  - Data migration: wp_v14 → wp_v15 with countdown, remindersSent, timeline, gifts, website fields
+  - 2 new database tables: wedding_photos (8 cols), wedding_tasks (11 cols)
+  - 3 new hash routes: #/w/:slug, #/photos/:token, #/tasks/:token
+  - 5 new pages: timeline-page, gift-page, photo-upload-page, task-landing-page, wedding-website-page
+  - 25+ new components across timeline, gifts, photo-wall, tasks, website, cards, print directories
+  - 3 new API endpoints: /api/photos (upload/list/approve), /api/tasks (CRUD), /api/website (data retrieval)
+  - 70+ new i18n keys for full Vietnamese/English support
+  - Vercel Blob integration for scalable image storage
+  - Security: XSS protection, token-based auth for photo/task links, formula injection prevention in CSV export
+
+### Dependencies Added
+
+- `@vercel/blob` — Blob storage API for photo uploads
+
+### Environment Variables
+
+- `BLOB_READ_WRITE_TOKEN` — Vercel Blob access token (required)
+
+### Database Schema
+
+**New Tables:**
+- `wedding_photos` — UUID PK, user_id FK, guest_name, photo_url (Blob), status (pending/approved/rejected), uploaded_at, approved_at, created_at. Index: user_id
+- `wedding_tasks` — UUID PK, user_id FK, title, description, assignee, assignee_token (unique), status (assigned/in-progress/completed), due_date, priority (low/medium/high), created_at, updated_at. Indexes: user_id, assignee_token
+
+### Type Additions
+
+- `TimelineEntry` — Time, activity, notes, category (ceremony/reception/meals/activities)
+- `GiftEntry` — Guest name, amount, attribution (bride/groom), notes
+- `WebsiteSettings` — Slug, published, sections visibility
+- Extended `WeddingState` — countdown, remindersSent, timeline, gifts, website fields
+
+### Performance Notes
+
+- Photo uploads async to Vercel Blob (no blocking)
+- Timeline and gift data stored in WeddingState (no additional API calls for CRUD)
+- Task and photo metadata cached client-side during active dashboard sessions
+- Website generation happens on-demand (no pre-rendering)
+- CSV exports calculated client-side to reduce server load
+
+### Architecture Updates
+
+- New API file structure: `api/photos.ts`, `api/tasks.ts`, `api/website.ts`
+- Photo/task landing pages isolated from WeddingState (no localStorage dependency for token-based links)
+- Theme colors passed from planner → API → public website via CSS variables
+- Language selection (vi/en) passed through API for public pages
+- Admin panel updated to monitor new tables (wedding_photos, wedding_tasks) in system stats
+
+---
+
 ## [0.5.0] - 2026-02-27
 
 ### Added

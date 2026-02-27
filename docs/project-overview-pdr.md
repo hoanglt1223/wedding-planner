@@ -6,7 +6,7 @@ Wedding Planner is a full-stack web application for managing wedding events, gue
 
 ## Current Status
 
-Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready tech stack and deployment pipeline configured.
+Phase 2: Core Planning Features Complete. All six features operational (Countdown, Timeline, Gifts, Photos, Tasks, Website) with full Vietnamese/English support and Vercel Blob integration.
 
 ## Core Objectives
 
@@ -31,6 +31,8 @@ Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready 
 
 ### Completed Features
 
+**Phase 1: Wedding Content & Internationalization**
+
 **Vietnamese Wedding Content**
 - 8-phase ceremony structure with 40+ ceremony steps
 - Regional variations (North/Central/South Vietnam)
@@ -45,7 +47,7 @@ Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready 
 - 12 zodiac profiles with personality traits and compatibility
 - 5 element profiles (Wood, Fire, Earth, Metal, Water)
 - Yearly forecasts for 2026
-- AI-powered astrological readings (OpenAI gpt-4o-mini)
+- AI-powered astrological readings (ZhipuAI glm-5, server-side)
 - Redis caching (300-day TTL) and rate limiting (5 req/IP/day)
 
 **Internationalization**
@@ -54,20 +56,58 @@ Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready 
 - Format utilities per language (currency, numbers)
 - Language toggle in Settings
 
+**RSVP System**
+- Guest-facing RSVP landing pages at #/rsvp/:token
+- Planner RSVP dashboard with link generation, QR codes, CSV export
+- Atomic one-time response guard
+- Rate limiting and security features
+
 **Theming**
 - 4 pre-configured themes (Traditional Red, Blush Pink, Navy Blue, Sage Green)
 - Dynamic CSS variable application
 
-### In Development (TBD)
+---
 
-- User authentication and multi-user accounts
-- Guest management (RSVP tracking, dietary requirements)
-- Timeline and task management
+**Phase 2: Core Planning Features**
+
+**Countdown + Smart Reminders**
+- Countdown widget on planning page
+- Milestone-based reminders (90d, 60d, 30d, 14d, 7d, 1d)
+
+**Wedding Timeline**
+- CRUD for timeline entries with time, activity, notes, category
+- Category filtering (ceremony, reception, meals, activities)
+- Template generation from wedding steps
+
+**Gift/Cash Tracker (Phong Bì)**
+- Guest-linked gift/cash tracking
+- Side filtering by bride/groom attribution
+- CSV export with formula injection prevention
+
+**Guest Photo Wall**
+- Vercel Blob storage for guest uploads
+- Token-based guest upload links (#/photos/:token)
+- Moderation dashboard with approval workflow
+
+**Collaborative Task Board**
+- Family task delegation with token-based links (#/tasks/:token)
+- Status tracking (assigned, in-progress, completed)
+- Assignee progress visibility
+
+**Wedding Website**
+- Public #/w/:slug page
+- Section toggles (timeline, gallery, venue, RSVP)
+- Couple info, theme, RSVP CTA
+
+### Planned Features (Phase 3+)
+
 - Budget tracking and expense logging
 - Vendor database and communication
-- Real-time notifications
-- Data export (PDF, CSV)
-- Mobile-responsive design improvements
+- Real-time collaborative editing
+- Notification system (email/SMS)
+- Advanced data export (PDF with designs)
+- Mobile-responsive design refinements
+- User profiles and multi-couple accounts
 
 ## Non-Functional Requirements (TBD)
 
@@ -94,6 +134,28 @@ Phase 1: Bootstrap Complete. Project scaffold initialized with production-ready 
 - Upstash Redis account
 - Vercel project linked
 
+## Database Tables
+
+**Core Tables:**
+1. `user_sessions` — Wedding state + extracted columns for queries
+2. `analytics_events` — User engagement tracking
+3. `admin_sessions` — Admin panel authentication (24h expiry)
+4. `rsvp_invitations` — RSVP guest invitations and responses
+5. `wedding_photos` — Guest photos stored in Vercel Blob
+6. `wedding_tasks` — Family tasks with assignee tracking
+
+**Total:** 6 tables, fully optimized for query performance with strategic indexes.
+
+## API Endpoints (23 total)
+
+**Public Endpoints:** health, rsvp, photos, tasks, website
+**Admin Endpoints:** auth (3), data (4)
+**Sync Endpoints:** sync, track
+**AI Endpoints:** ai/chat
+**Utility Endpoints:** share, admin health monitoring
+
+All endpoints implement rate limiting, input validation, and error handling.
+
 ## Next Phase
 
-Define feature roadmap, create user stories, and begin database schema design for Phase 2 (Core Features).
+Phase 3 will focus on budget tracking, vendor management, and real-time collaboration features.

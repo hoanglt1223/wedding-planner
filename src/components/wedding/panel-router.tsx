@@ -1,4 +1,8 @@
+import { lazy, Suspense } from "react";
 import { getWeddingSteps } from "@/data/resolve-data";
+
+const TimelinePage = lazy(() => import("@/pages/timeline-page"));
+const GiftPage = lazy(() => import("@/pages/gift-page"));
 import { StepPanel } from "@/components/wedding/step-panel";
 import { BudgetPanel } from "@/components/budget/budget-panel";
 import { GuestPanel } from "@/components/guests/guest-panel";
@@ -105,6 +109,22 @@ export function PanelRouter({ state, store, onGoAI, userId }: PanelRouterProps) 
         betrothalDate={state.info.betrothalDate}
         engagementDate={state.info.engagementDate}
       />
+    );
+  }
+
+  if (tab === stepCount + 5) {
+    return (
+      <Suspense fallback={null}>
+        <TimelinePage state={state} store={store} />
+      </Suspense>
+    );
+  }
+
+  if (tab === stepCount + 6) {
+    return (
+      <Suspense fallback={null}>
+        <GiftPage state={state} store={store} />
+      </Suspense>
     );
   }
 

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { PlanningPage } from "./planning-page";
 import { AstrologyPage } from "./astrology-page";
 import { CardsPanel } from "@/components/cards/cards-panel";
@@ -7,6 +8,9 @@ import { IdeasPanel } from "@/components/ideas/ideas-panel";
 import { getWeddingSteps } from "@/data/resolve-data";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
+
+const TaskBoardDashboard = lazy(() => import("@/components/tasks/task-board-dashboard"));
+const WebsiteSettingsPanel = lazy(() => import("@/components/website/website-settings-panel"));
 
 interface PageRouterProps {
   state: WeddingState;
@@ -81,6 +85,20 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
             if (tab !== undefined) store.setTab(tab);
           }}
         />
+      );
+
+    case "tasks":
+      return (
+        <Suspense fallback={null}>
+          <TaskBoardDashboard state={state} store={store} userId={userId} />
+        </Suspense>
+      );
+
+    case "website":
+      return (
+        <Suspense fallback={null}>
+          <WebsiteSettingsPanel state={state} store={store} />
+        </Suspense>
       );
 
     default:
