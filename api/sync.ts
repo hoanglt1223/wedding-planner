@@ -66,17 +66,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { apiKey: _ak, aiResponse: _ar, ...safeData } = data ?? {} as Record<string, unknown>;
 
     // Extract profile fields
-    const groomName = data?.info?.groom ?? null;
-    const brideName = data?.info?.bride ?? null;
-    const groomBirthDate = data?.info?.groomBirthDate ?? null;
-    const brideBirthDate = data?.info?.brideBirthDate ?? null;
-    const weddingDate = data?.info?.date ?? null;
-    const region = data?.region ?? null;
-    const lang = data?.lang ?? null;
-    const guestCount = data?.guests?.length ?? 0;
-    const budget = data?.budget ?? 0;
-    const onboardingComplete = data?.onboardingComplete ?? false;
-    const checklistProgress = typeof progress === "number" ? progress : 0;
+    const fields = {
+      groomName: data?.info?.groom ?? null,
+      brideName: data?.info?.bride ?? null,
+      groomBirthDate: data?.info?.groomBirthDate ?? null,
+      brideBirthDate: data?.info?.brideBirthDate ?? null,
+      weddingDate: data?.info?.date ?? null,
+      engagementDate: data?.info?.engagementDate ?? null,
+      partyTime: data?.partyTime ?? null,
+      region: data?.region ?? null,
+      lang: data?.lang ?? null,
+      guestCount: data?.guests?.length ?? 0,
+      vendorCount: data?.vendors?.length ?? 0,
+      photoCount: data?.photos?.length ?? 0,
+      checklistProgress: typeof progress === "number" ? progress : 0,
+      budget: data?.budget ?? 0,
+      onboardingComplete: data?.onboardingComplete ?? false,
+    };
 
     // Upsert user_sessions
     const db = createDb();
@@ -85,34 +91,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .values({
         id: userId,
         weddingData: safeData as unknown as Record<string, unknown>,
-        groomName,
-        brideName,
-        groomBirthDate,
-        brideBirthDate,
-        weddingDate,
-        region,
-        lang,
-        guestCount,
-        checklistProgress,
-        budget,
-        onboardingComplete,
+        ...fields,
         updatedAt: new Date(),
       })
       .onConflictDoUpdate({
         target: userSessions.id,
         set: {
           weddingData: safeData as unknown as Record<string, unknown>,
-          groomName,
-          brideName,
-          groomBirthDate,
-          brideBirthDate,
-          weddingDate,
-          region,
-          lang,
-          guestCount,
-          checklistProgress,
-          budget,
-          onboardingComplete,
+          ...fields,
           updatedAt: new Date(),
         },
       });

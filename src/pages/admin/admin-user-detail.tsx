@@ -14,9 +14,13 @@ interface UserDetail {
   groomBirthDate: string | null;
   brideBirthDate: string | null;
   weddingDate: string | null;
+  engagementDate: string | null;
+  partyTime: string | null;
   region: string | null;
   lang: string | null;
   guestCount: number | null;
+  vendorCount: number | null;
+  photoCount: number | null;
   checklistProgress: number | null;
   budget: number | null;
   onboardingComplete: boolean | null;
@@ -67,18 +71,32 @@ export function AdminUserDetail({ userId, onClose }: AdminUserDetailProps) {
         <span>{user.groomName ?? "—"}</span>
         <span className="text-muted-foreground">Bride</span>
         <span>{user.brideName ?? "—"}</span>
+        <span className="text-muted-foreground">Groom Birth</span>
+        <span>{user.groomBirthDate ?? "—"}</span>
+        <span className="text-muted-foreground">Bride Birth</span>
+        <span>{user.brideBirthDate ?? "—"}</span>
         <span className="text-muted-foreground">Wedding Date</span>
         <span>{user.weddingDate ?? "—"}</span>
+        <span className="text-muted-foreground">Party/Engagement</span>
+        <span>{user.engagementDate ?? "—"}</span>
         <span className="text-muted-foreground">Region</span>
         <span>{user.region ?? "—"}</span>
+        <span className="text-muted-foreground">Party Time</span>
+        <span>{user.partyTime ?? "—"}</span>
         <span className="text-muted-foreground">Language</span>
         <span>{user.lang ?? "—"}</span>
         <span className="text-muted-foreground">Guests</span>
         <span>{user.guestCount ?? 0}</span>
+        <span className="text-muted-foreground">Vendors</span>
+        <span>{user.vendorCount ?? 0}</span>
+        <span className="text-muted-foreground">Photos</span>
+        <span>{user.photoCount ?? 0}</span>
         <span className="text-muted-foreground">Budget</span>
         <span>{user.budget ? user.budget.toLocaleString() : "—"}</span>
         <span className="text-muted-foreground">Progress</span>
         <span>{pct}%</span>
+        <span className="text-muted-foreground">Created</span>
+        <span>{new Date(user.createdAt).toLocaleString()}</span>
         <span className="text-muted-foreground">Onboarded</span>
         <span>
           <Badge variant={user.onboardingComplete ? "default" : "secondary"}>

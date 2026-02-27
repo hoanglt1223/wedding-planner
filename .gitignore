@@ -45,5 +45,8 @@ coverage/
 # Vercel
 .vercel/
 
-# Drizzle
-drizzle/
+# Drizzle (keep migration SQL files tracked)
+# drizzle/
+
+.vercel
+.env*.local
