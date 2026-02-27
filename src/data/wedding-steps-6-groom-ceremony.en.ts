@@ -4,12 +4,12 @@ import { RECEPTION_EXTRAS_EN } from "./wedding-steps-reception-extras.en";
 
 export const STEP_GROOM_CEREMONY_EN: WeddingStep = {
   id: "groom-ceremony",
-  tab: "🎊 Groom Ceremony",
-  title: "Step 6: Groom's Family Reception (Tiec Nha Trai)",
-  formalName: "Groom's Family Wedding Reception (Le Thanh Hon / Tiec Chinh)",
+  tab: "🎊 Tan Hon",
+  title: "Step 6: Le Tan Hon (Groom's Ceremony)",
+  formalName: "Le Tan Hon (Southern) / Le Thanh Hon (Northern) — Groom's Reception",
   icon: "🎊",
-  description: "The official and grandest wedding celebration — announcing the marriage to the broader community of family, friends, and colleagues.",
-  meaning: "The groom's family reception is the pinnacle of the entire Vietnamese wedding journey — the culmination of months of preparation. This is when both families officially introduce the couple to their largest audience: relatives, friends, colleagues, and neighbors. It encompasses the most important ceremonies: the groom's ancestral ritual (the bride officially becomes a member of the groom's family), the ring exchange (an eternal commitment), cake cutting (sharing life's sweetness), and the first dance (the most romantic moment). It marks the official start of married life before both the law and the community.",
+  description: "Le Tan Hon (or Le Thanh Hon) is the official and grandest wedding celebration at the groom's home — announcing the marriage to the broader community. This name is traditionally printed on the groom's family banners and invitations.",
+  meaning: "Le Tan Hon is the pinnacle of the entire Vietnamese wedding journey — the culmination of months of preparation. This is when both families officially introduce the couple to their largest audience: relatives, friends, colleagues, and neighbors. It encompasses the most important ceremonies: the groom's ancestral ritual (the bride officially becomes a member of the groom's family), the ring exchange (an eternal commitment), cake cutting (sharing life's sweetness), and the first dance. Key distinction: the bride's side calls it 'Le Vu Quy', while the groom's side calls it 'Le Tan Hon' (popular in the South) or 'Le Thanh Hon' (popular in the North). Invitations from the groom's family typically read 'Le Tan Hon' or 'Le Thanh Hon'.",
   notes: [
     "Always have a backup timeline — wedding receptions almost always run 15-30 minutes behind schedule",
     "Prepare the honeymoon suite in advance: fresh flowers, candles, gifts, new red bedsheets",

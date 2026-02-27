@@ -4,12 +4,12 @@ import { RECEPTION_EXTRAS } from "./wedding-steps-reception-extras";
 
 export const STEP_GROOM_CEREMONY: WeddingStep = {
   id: "groom-ceremony",
-  tab: "🎊 Nhà Trai",
-  title: "Bước 6: Tiệc Nhà Trai",
-  formalName: "Tiệc Cưới Nhà Trai (Lễ Thành Hôn / Tiệc Chính)",
+  tab: "🎊 Tân Hôn",
+  title: "Bước 6: Lễ Tân Hôn",
+  formalName: "Lễ Tân Hôn (miền Nam) / Lễ Thành Hôn (miền Bắc) — Tiệc Nhà Trai",
   icon: "🎊",
-  description: "Tiệc cưới chính thức và long trọng nhất — công bố hôn nhân trước cộng đồng, bạn bè, đồng nghiệp.",
-  meaning: "Tiệc nhà trai là đỉnh cao của toàn bộ nghi lễ cưới hỏi Việt Nam — kết tinh mọi tháng ngày chuẩn bị. Đây là lúc hai gia đình chính thức giới thiệu cặp đôi trước cộng đồng rộng lớn nhất: họ hàng, bạn bè, đồng nghiệp, hàng xóm. Bao gồm các nghi thức quan trọng nhất: gia tiên nhà trai (cô dâu chính thức thành thành viên gia đình chồng), trao nhẫn cưới (cam kết vĩnh cửu), cắt bánh (chia sẻ ngọt ngào), first dance (khoảnh khắc lãng mạn). Đánh dấu sự khởi đầu chính thức của cuộc sống vợ chồng trước pháp luật và cộng đồng.",
+  description: "Lễ Tân Hôn (hoặc Lễ Thành Hôn) là tiệc cưới chính thức và long trọng nhất tại nhà trai — công bố hôn nhân trước cộng đồng, bạn bè, đồng nghiệp. Thường được ghi trên phông rạp và thiệp mời tại nhà trai.",
+  meaning: "Lễ Tân Hôn là đỉnh cao của toàn bộ nghi lễ cưới hỏi Việt Nam — kết tinh mọi tháng ngày chuẩn bị. Đây là lúc hai gia đình chính thức giới thiệu cặp đôi trước cộng đồng rộng lớn nhất: họ hàng, bạn bè, đồng nghiệp, hàng xóm. Bao gồm các nghi thức quan trọng nhất: gia tiên nhà trai (cô dâu chính thức thành thành viên gia đình chồng), trao nhẫn cưới (cam kết vĩnh cửu), cắt bánh (chia sẻ ngọt ngào), first dance (khoảnh khắc lãng mạn). Phân biệt: nhà gái gọi là 'Lễ Vu Quy', nhà trai gọi là 'Lễ Tân Hôn' (phổ biến miền Nam) hoặc 'Lễ Thành Hôn' (phổ biến miền Bắc). Thiệp mời nhà trai thường in 'Lễ Tân Hôn' hoặc 'Lễ Thành Hôn'.",
   notes: [
     "Luôn có timeline dự phòng — tiệc cưới LUÔN trễ 15-30 phút so với kế hoạch",
     "Phòng tân hôn chuẩn bị sẵn: hoa tươi, nến, quà tặng, ga giường đỏ mới",

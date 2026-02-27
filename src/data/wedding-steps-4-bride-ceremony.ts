@@ -3,12 +3,12 @@ import { RECEPTION_EXTRAS } from "./wedding-steps-reception-extras";
 
 export const STEP_BRIDE_CEREMONY: WeddingStep = {
   id: "bride-ceremony",
-  tab: "🏡 Nhà Gái",
-  title: "Bước 4: Tiệc Nhà Gái",
-  formalName: "Tiệc Cưới Nhà Gái (Tiệc Đãi Họ Nhà Gái)",
+  tab: "🏡 Vu Quy",
+  title: "Bước 4: Lễ Vu Quy",
+  formalName: "Lễ Vu Quy (Lễ Đưa Dâu — Tiệc Nhà Gái)",
   icon: "🏡",
-  description: "Tiệc do nhà gái tổ chức — đãi họ hàng phía cô dâu, cũng là dịp cô dâu tạ ơn cha mẹ trước khi về nhà chồng.",
-  meaning: "Tiệc nhà gái mang ý nghĩa đặc biệt trong văn hóa Việt Nam: đây là lần cuối cô dâu với tư cách 'con gái nhà' chiêu đãi họ hàng, bạn bè. Bao gồm lễ gia tiên thiêng liêng — cô dâu thắp hương tổ tiên nhà mình, xin phép tổ tiên cho con được xuất giá, tạ ơn cha mẹ đã sinh thành dưỡng dục. Khoảnh khắc cô dâu khóc tạ ơn mẹ luôn là giây phút xúc động nhất trong toàn bộ đám cưới — chuẩn bị sẵn khăn tay cho mọi người. Từ sau tiệc nhà gái, cô dâu chính thức sẵn sàng về nhà chồng.",
+  description: "Lễ Vu Quy là nghi lễ tiễn con gái về nhà chồng — thể hiện lòng hiếu thảo của cô dâu đối với cha mẹ và sự kính trọng tổ tiên. Thường được ghi trên phông rạp và thiệp mời tại nhà gái.",
+  meaning: "Lễ Vu Quy (hay lễ đưa dâu) là buổi lễ báo cáo gia tiên và mời quan khách hai họ trước khi cô dâu về nhà chồng. Bao gồm lễ gia tiên thiêng liêng — cô dâu thắp hương tổ tiên nhà mình, xin phép tổ tiên cho con được xuất giá, tạ ơn cha mẹ đã sinh thành dưỡng dục. Khoảnh khắc cô dâu khóc tạ ơn mẹ luôn là giây phút xúc động nhất trong toàn bộ đám cưới — chuẩn bị sẵn khăn tay cho mọi người. Phân biệt: nhà gái gọi là 'Lễ Vu Quy', nhà trai gọi là 'Lễ Tân Hôn' (miền Nam) hoặc 'Lễ Thành Hôn' (miền Bắc).",
   notes: [
     "Nhiều gia đình hiện nay gộp tiệc nhà gái và nhà trai cùng ngày/cùng nhà hàng — tiết kiệm chi phí",
     "Nếu tổ chức riêng: tiệc nhà gái thường 1-2 ngày TRƯỚC tiệc nhà trai",

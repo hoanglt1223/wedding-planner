@@ -3,12 +3,12 @@ import { RECEPTION_EXTRAS_EN } from "./wedding-steps-reception-extras.en";
 
 export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
   id: "bride-ceremony",
-  tab: "🏡 Bride Ceremony",
-  title: "Step 4: Bride's Family Reception (Tiec Nha Gai)",
-  formalName: "Bride's Family Wedding Reception (Tiec Cuoi Nha Gai)",
+  tab: "🏡 Vu Quy",
+  title: "Step 4: Le Vu Quy (Bride's Ceremony)",
+  formalName: "Le Vu Quy (Bride's Sending-Off Ceremony)",
   icon: "🏡",
-  description: "A reception hosted by the bride's family — celebrating with the bride's relatives, and a moment for the bride to honor her parents before joining her husband's home.",
-  meaning: "The bride's family reception carries special meaning in Vietnamese culture: this is the last time the bride hosts guests as 'her family's daughter.' It includes the sacred ancestral ceremony — the bride lights incense at her own family altar, asks the ancestors' permission for her to leave home (xuat gia), and expresses gratitude to her parents for raising her. The moment the bride tearfully thanks her mother is always the most emotional in the entire wedding — make sure everyone has a handkerchief nearby. After this reception, the bride is officially ready to join her husband's family.",
+  description: "Le Vu Quy is the ceremony of sending the bride to her husband's home — expressing the bride's filial piety toward her parents and reverence for ancestors. This name is traditionally printed on the bride's family banners and invitations.",
+  meaning: "Le Vu Quy (the bride's sending-off ceremony) is the ritual of reporting to ancestors and hosting guests from both families before the bride leaves for her husband's home. It includes the sacred ancestral ceremony — the bride lights incense at her own family altar, asks the ancestors' permission to leave home (xuat gia), and expresses gratitude to her parents. The moment the bride tearfully thanks her mother is always the most emotional in the entire wedding. Key distinction: the bride's side calls it 'Le Vu Quy', while the groom's side calls it 'Le Tan Hon' (Southern) or 'Le Thanh Hon' (Northern).",
   notes: [
     "Many families today combine the bride's and groom's receptions on the same day or same venue — saves costs",
     "If held separately: bride's reception is usually 1-2 days BEFORE the groom's reception",
