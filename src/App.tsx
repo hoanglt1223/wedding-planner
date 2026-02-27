@@ -119,7 +119,7 @@ function App() {
           onGoAI={handleGoAI}
         />
       </div>
-      <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} />
+      <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} lang={state.lang} />
       <SaveToast visible={showSave} />
       <IosInstallPrompt />
     </div>

@@ -48,6 +48,8 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Thêm": { vi: "Thêm", en: "Add" },
   "Xóa tất cả?": { vi: "Xóa tất cả?", en: "Delete all?" },
   "Xóa": { vi: "Xóa", en: "Delete" },
+  "Xóa dữ liệu": { vi: "Xóa dữ liệu", en: "Reset data" },
+  "Xác nhận xóa?": { vi: "Xác nhận xóa?", en: "Confirm reset?" },
   "Tổng khách:": { vi: "Tổng khách:", en: "Total guests:" },
   "Nhập CSV": { vi: "Nhập CSV", en: "Import CSV" },
   "Xuất CSV": { vi: "Xuất CSV", en: "Export CSV" },
