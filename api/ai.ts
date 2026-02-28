@@ -1,4 +1,4 @@
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 60 };
 
 import { Ratelimit } from "@upstash/ratelimit";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
@@ -7,7 +7,9 @@ import { buildAstrologyPrompt } from "../src/lib/astrology-prompt.js";
 import type { ReadingInput } from "../src/lib/astrology-prompt.js";
 
 const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
-const FETCH_TIMEOUT_MS = 25_000;
+const ZHIPU_MODEL = "glm-4.7-flash";
+const ZHIPU_FALLBACK = "glm-4.5-flash";
+const FETCH_TIMEOUT_MS = 55_000;
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -19,7 +21,7 @@ function setCors(res: VercelResponse): void {
   for (const [k, v] of Object.entries(CORS_HEADERS)) res.setHeader(k, v);
 }
 
-async function callZhipu(messages: { role: string; content: string }[], maxTokens: number, temp: number): Promise<Response> {
+async function callZhipu(model: string, messages: { role: string; content: string }[], maxTokens: number, temp: number): Promise<Response> {
   const apiKey = process.env.Z_AI_KEY;
   if (!apiKey) throw Object.assign(new Error("ai_not_configured"), { status: 503 });
   const controller = new AbortController();
@@ -28,7 +30,7 @@ async function callZhipu(messages: { role: string; content: string }[], maxToken
     return await fetch(ZHIPU_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({ model: "glm-5", messages, max_tokens: maxTokens, temperature: temp }),
+      body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: temp }),
       signal: controller.signal,
     });
   } catch (err) {
@@ -37,20 +39,50 @@ async function callZhipu(messages: { role: string; content: string }[], maxToken
   } finally { clearTimeout(timer); }
 }
 
+/** Try primary model, fallback to secondary on rate limit / balance errors */
+async function callWithFallback(messages: { role: string; content: string }[], maxTokens: number, temp: number): Promise<Response> {
+  const aiRes = await callZhipu(ZHIPU_MODEL, messages, maxTokens, temp);
+  if (aiRes.ok) return aiRes;
+
+  const text = await aiRes.text();
+  const retriable = text.includes("1302") || text.includes("1113");
+  if (!retriable) return new Response(text, { status: aiRes.status, headers: aiRes.headers });
+
+  return callZhipu(ZHIPU_FALLBACK, messages, maxTokens, temp);
+}
+
+function handleAiError(aiRes: Response, text: string, lang: string, res: VercelResponse) {
+  if (text.includes("1113")) {
+    return res.status(503).json({
+      error: lang === "en"
+        ? "AI service is temporarily unavailable. Please try again later."
+        : "Dịch vụ AI tạm thời không khả dụng. Vui lòng thử lại sau.",
+    });
+  }
+  if (text.includes("1302")) {
+    return res.status(429).json({
+      error: lang === "en"
+        ? "Too many requests. Please wait a moment and try again."
+        : "Quá nhiều yêu cầu. Vui lòng chờ một chút và thử lại.",
+    });
+  }
+  return res.status(502).json({ error: `ZhipuAI API ${aiRes.status}` });
+}
+
 // action=chat — Wedding consultation chat
 async function handleChat(req: VercelRequest, res: VercelResponse) {
   const body = req.body as { prompt?: string; budget?: string; lang?: string };
   const { prompt, budget, lang = "vi" } = body ?? {};
   if (!prompt) return res.status(400).json({ error: "Missing prompt" });
 
-  const aiRes = await callZhipu([
+  const aiRes = await callWithFallback([
     { role: "system", content: lang === "en"
       ? `Expert Vietnamese wedding consultant with 20 years of experience across all 3 regions of Vietnam. Provide detailed advice with VND pricing. Respond in English. Budget: ${budget}.`
       : `Chuyên gia đám cưới VN 20 năm kinh nghiệm. 3 miền. Chi tiết, có giá VNĐ. Budget: ${budget}.` },
     { role: "user", content: prompt },
   ], 2000, 1.0);
 
-  if (!aiRes.ok) return res.status(502).json({ error: `ZhipuAI API ${aiRes.status}: ${await aiRes.text()}` });
+  if (!aiRes.ok) return handleAiError(aiRes, await aiRes.text(), lang, res);
   return res.status(200).json(await aiRes.json());
 }
 
@@ -88,12 +120,12 @@ async function handleAstrology(req: VercelRequest, res: VercelResponse) {
   }
 
   const prompt = buildAstrologyPrompt(body);
-  const aiRes = await callZhipu([
+  const aiRes = await callWithFallback([
     { role: "system", content: prompt.system },
     { role: "user", content: prompt.user },
   ], 800, 0.7);
 
-  if (!aiRes.ok) return res.status(502).json({ error: "generation_failed" });
+  if (!aiRes.ok) return handleAiError(aiRes, await aiRes.text(), lang, res);
   const data = (await aiRes.json()) as { choices?: { message?: { content?: string } }[] };
   const text = data.choices?.[0]?.message?.content ?? "";
   if (!text) return res.status(500).json({ error: "empty_response" });
@@ -109,8 +141,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const action = (Array.isArray(req.query.action) ? req.query.action[0] : req.query.action) ?? "";
-    if (action === "chat") return handleChat(req, res);
-    if (action === "astrology") return handleAstrology(req, res);
+    if (action === "chat") return await handleChat(req, res);
+    if (action === "astrology") return await handleAstrology(req, res);
     return res.status(400).json({ error: "invalid_action" });
   } catch (err: unknown) {
     const status = (err as { status?: number })?.status;

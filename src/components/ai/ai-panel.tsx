@@ -69,7 +69,7 @@ export function AiPanel({ aiResponse, budget, onSetAiResponse, lang = "vi" }: Ai
 
         {/* Model info */}
         <div className="text-xs text-muted-foreground/60">
-          Model: glm-5 | API key configured server-side (Z_AI_KEY)
+          Model: glm-4.7-flash | API key configured server-side (Z_AI_KEY)
         </div>
 
         {/* Quick prompts */}
