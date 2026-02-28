@@ -26,7 +26,7 @@ export const STEP_MEETING: WeddingStep = {
   ceremonies: [
     {
       name: "☕ Gặp Mặt Thân Mật",
-      required: 1,
+      required: 0,
       description: "Hai gia đình gặp lần đầu, không nghi lễ.",
       steps: [
         { text: "Chọn thời gian phù hợp cả hai", cost: 0, categoryKey: "other", checkable: true },
@@ -45,7 +45,7 @@ export const STEP_MEETING: WeddingStep = {
     },
     {
       name: "📝 Bàn Bạc Nội Bộ",
-      required: 1,
+      required: 0,
       description: "2 bạn tổng hợp, lên kế hoạch.",
       steps: [
         { text: "Tổng hợp ý kiến bố mẹ", cost: 0, categoryKey: "other", checkable: true },

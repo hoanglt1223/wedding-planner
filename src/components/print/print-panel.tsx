@@ -65,7 +65,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
               </h2>
               {step.optional && (
                 <span className="text-2xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
-                  {lang === "en" ? "Optional" : "Tuy chon"}
+                  {lang === "en" ? "Optional" : "Tùy chọn"}
                 </span>
               )}
             </div>

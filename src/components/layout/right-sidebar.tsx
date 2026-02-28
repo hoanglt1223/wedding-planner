@@ -74,7 +74,7 @@ function DataButtons({ state, onSetState, lang = "vi" }: {
       const data = await readJsonFile(file);
       onSetState(() => data);
     } catch {
-      alert(en ? "Invalid file!" : "File khong hop le!");
+      alert(en ? "Invalid file!" : "File không hợp lệ!");
     }
     if (fileRef.current) fileRef.current.value = "";
   };
@@ -86,7 +86,7 @@ function DataButtons({ state, onSetState, lang = "vi" }: {
         className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
       >
         <span className="text-base leading-none">📥</span>
-        <span>{en ? "Export data" : "Xuat du lieu"}</span>
+        <span>{en ? "Export data" : "Xuất dữ liệu"}</span>
       </button>
       {onSetState && (
         <>
@@ -95,7 +95,7 @@ function DataButtons({ state, onSetState, lang = "vi" }: {
             className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
           >
             <span className="text-base leading-none">📤</span>
-            <span>{en ? "Import data" : "Nhap du lieu"}</span>
+            <span>{en ? "Import data" : "Nhập dữ liệu"}</span>
           </button>
           <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
         </>
@@ -174,7 +174,7 @@ function SidebarContent({
           {/* Data Export/Import */}
           <div>
             <p className="text-2xs text-muted-foreground font-medium mb-2 px-1">
-              {en ? "Data" : "Du lieu"}
+              {en ? "Data" : "Dữ liệu"}
             </p>
             <DataButtons state={state} onSetState={onSetState} lang={lang} />
           </div>

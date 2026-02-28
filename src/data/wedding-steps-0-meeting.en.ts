@@ -26,7 +26,7 @@ export const STEP_MEETING_EN: WeddingStep = {
   ceremonies: [
     {
       name: "☕ Informal Family Introduction",
-      required: 1,
+      required: 0,
       description: "Both families meet for the first time — no ceremony, just friendly conversation.",
       steps: [
         { text: "Choose a time that works for everyone", cost: 0, categoryKey: "other", checkable: true },
@@ -45,7 +45,7 @@ export const STEP_MEETING_EN: WeddingStep = {
     },
     {
       name: "📝 Internal Planning",
-      required: 1,
+      required: 0,
       description: "The couple consolidates feedback and makes a plan.",
       steps: [
         { text: "Compile feedback from both sets of parents", cost: 0, categoryKey: "other", checkable: true },
