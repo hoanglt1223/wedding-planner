@@ -6,7 +6,8 @@ import { useTracking } from "@/hooks/use-tracking";
 import { useOnlineStatus } from "@/hooks/use-online-status";
 import { Navbar } from "@/components/layout/header";
 import { BottomNav } from "@/components/layout/bottom-nav";
-import { MenuDrawer } from "@/components/layout/menu-drawer";
+import { LeftSidebar } from "@/components/layout/left-sidebar";
+import { RightSidebar } from "@/components/layout/right-sidebar";
 import { Footer } from "@/components/layout/footer";
 import { SaveToast } from "@/components/wedding/save-toast";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
@@ -26,7 +27,8 @@ function App() {
   const isOnline = useOnlineStatus();
   const theme = THEMES.find((t) => t.id === (state.themeId || DEFAULT_THEME_ID)) || THEMES[0];
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [leftOpen, setLeftOpen] = useState(false);
+  const [rightOpen, setRightOpen] = useState(false);
   const [showSave, setShowSave] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const mountRef = useRef(false);
@@ -43,7 +45,7 @@ function App() {
     return () => clearTimeout(timerRef.current);
   }, [state]);
 
-  // Track state-change events (only fires for values that actually changed)
+  // Track state-change events
   const prevSnap = useRef({
     page: state.page, lang: state.lang, region: state.region, themeId: state.themeId,
     budget: state.budget, guestCount: state.guests.length, onboarded: state.onboardingComplete,
@@ -84,7 +86,7 @@ function App() {
 
   return (
     <div
-      className="min-h-screen text-[#2c1810]"
+      className="min-h-screen flex flex-col text-[#2c1810]"
       style={{
         backgroundColor: theme.bg,
         "--theme-primary": theme.primary,
@@ -102,48 +104,75 @@ function App() {
         "--primary-foreground": theme.primaryForegroundHSL,
       } as React.CSSProperties}
     >
+      {/* Full-width header */}
       <Navbar
         activePage={state.page}
-        onPageChange={store.setPage}
+        lang={state.lang}
+        weddingDate={state.info.date}
+        state={state}
+        isOnline={isOnline}
+        onLeftSidebarOpen={() => setLeftOpen(true)}
+        onRightSidebarOpen={() => setRightOpen(true)}
+      />
+
+      {/* Body: left sidebar + content + right sidebar */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left sidebar */}
+        <LeftSidebar
+          activePage={state.page}
+          onPageChange={store.setPage}
+          lang={state.lang}
+          progressPct={progress.pct}
+          done={progress.done}
+          total={progress.total}
+          mobileOpen={leftOpen}
+          onMobileOpenChange={setLeftOpen}
+        />
+
+        {/* Main content - centered */}
+        <main className="flex-1 overflow-y-auto">
+          <div
+            key={state.page}
+            className="page-transition-enter max-w-[920px] mx-auto px-3 sm:px-4 pt-2 pb-20 md:pb-4"
+          >
+            <PageRouter
+              state={state}
+              store={store}
+              progress={progress}
+              onGoAI={handleGoAI}
+              userId={userId}
+            />
+          </div>
+
+          {/* Full-width footer */}
+          <Footer lang={state.lang} />
+        </main>
+      </div>
+
+      {/* Flying right sidebar */}
+      <RightSidebar
         lang={state.lang}
         onSetLang={store.setLang}
         region={state.region}
         onSetRegion={store.setRegion}
-        progressPct={progress.pct}
-        done={progress.done}
-        total={progress.total}
         weddingDate={state.info.date}
         info={state.info}
         state={state}
+        activeTheme={state.themeId || DEFAULT_THEME_ID}
+        onSelectTheme={store.setTheme}
         isOnline={isOnline}
+        mobileOpen={rightOpen}
+        onMobileOpenChange={setRightOpen}
       />
-      <div key={state.page} className="page-transition-enter max-w-[920px] mx-auto px-3 sm:px-2 pt-2 pb-20 md:pb-0">
-        <PageRouter
-          state={state}
-          store={store}
-          progress={progress}
-          onGoAI={handleGoAI}
-          userId={userId}
-        />
-      </div>
-      <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} lang={state.lang} />
+
+      {/* Mobile bottom nav */}
       <BottomNav
         activePage={state.page}
         onPageChange={store.setPage}
-        onMenuOpen={() => setMenuOpen(true)}
+        onMenuOpen={() => setLeftOpen(true)}
         lang={state.lang}
       />
-      <MenuDrawer
-        open={menuOpen}
-        onOpenChange={setMenuOpen}
-        lang={state.lang}
-        onPageChange={(page) => { store.setPage(page); setMenuOpen(false); }}
-        region={state.region}
-        onSetRegion={store.setRegion}
-        onSetLang={store.setLang}
-        activeTheme={state.themeId || DEFAULT_THEME_ID}
-        onSelectTheme={store.setTheme}
-      />
+
       <SaveToast visible={showSave} />
       <InstallPrompt lang={state.lang} />
     </div>
