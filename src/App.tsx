@@ -158,6 +158,7 @@ function App() {
         weddingDate={state.info.date}
         info={state.info}
         state={state}
+        onSetState={store.setState}
         activeTheme={state.themeId || DEFAULT_THEME_ID}
         onSelectTheme={store.setTheme}
         isOnline={isOnline}

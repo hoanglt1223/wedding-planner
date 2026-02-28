@@ -6,7 +6,7 @@ interface QuickActionsProps {
 const ACTIONS = [
   { page: "guests", icon: "👥", vi: "Khách mời", en: "Guests" },
   { page: "planning", icon: "💒", vi: "Kế hoạch", en: "Planning" },
-  { page: "tools", icon: "🤖", vi: "AI Chat", en: "AI Chat" },
+  { page: "ai", icon: "🤖", vi: "AI Chat", en: "AI Chat" },
   { page: "website", icon: "🌐", vi: "Website", en: "Website" },
 ];
 

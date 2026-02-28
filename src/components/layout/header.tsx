@@ -50,11 +50,9 @@ export function Navbar({
     cards: "Thiệp",
     ai: "AI",
     handbook: "Sổ Tay",
-    ideas: "Ý Tưởng",
     tasks: "Công Việc",
     website: "Website",
     guests: "Khách Mời",
-    tools: "Công Cụ",
   };
 
   return (
@@ -69,29 +67,18 @@ export function Navbar({
           <Menu className="h-5 w-5" />
         </button>
 
-        {/* Logo */}
-        <span
-          className="text-sm font-bold shrink-0 hidden md:block"
-          style={{ color: "var(--theme-primary)" }}
-        >
-          Wedding Planner
-        </span>
-
         {/* Mobile logo */}
         <span
           className="text-sm font-bold shrink-0 md:hidden"
           style={{ color: "var(--theme-primary)" }}
         >
-          Wedding
+          Wedding Planner
         </span>
 
         {/* Current page breadcrumb (desktop) */}
-        <div className="hidden md:flex items-center gap-1.5 text-sm text-muted-foreground">
-          <span>/</span>
-          <span className="font-medium text-foreground">
-            {t(PAGE_LABELS[activePage] || activePage, lang)}
-          </span>
-        </div>
+        <span className="hidden md:inline text-sm font-medium text-foreground">
+          {t(PAGE_LABELS[activePage] || activePage, lang)}
+        </span>
 
         <div className="flex-1" />
 

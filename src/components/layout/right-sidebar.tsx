@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Settings, X } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -8,6 +8,7 @@ import { getCountdown } from "@/lib/countdown";
 import { getLangLabel, t } from "@/lib/i18n";
 import { THEMES } from "@/data/themes";
 import { createShareLink } from "@/lib/share";
+import { exportToJson, readJsonFile } from "@/lib/export";
 import type { CoupleInfo, WeddingState, Region } from "@/types/wedding";
 
 interface RightSidebarProps {
@@ -18,6 +19,7 @@ interface RightSidebarProps {
   weddingDate: string;
   info: CoupleInfo;
   state: WeddingState;
+  onSetState?: (fn: (prev: WeddingState) => WeddingState) => void;
   activeTheme: string;
   onSelectTheme: (id: string) => void;
   isOnline?: boolean;
@@ -57,6 +59,51 @@ function ShareButton({ state }: { state: WeddingState }) {
   );
 }
 
+function DataButtons({ state, onSetState, lang = "vi" }: {
+  state: WeddingState;
+  onSetState?: (fn: (prev: WeddingState) => WeddingState) => void;
+  lang?: string;
+}) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const en = lang === "en";
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !onSetState) return;
+    try {
+      const data = await readJsonFile(file);
+      onSetState(() => data);
+    } catch {
+      alert(en ? "Invalid file!" : "File khong hop le!");
+    }
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
+  return (
+    <div className="space-y-1">
+      <button
+        onClick={() => exportToJson(state)}
+        className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+      >
+        <span className="text-base leading-none">📥</span>
+        <span>{en ? "Export data" : "Xuat du lieu"}</span>
+      </button>
+      {onSetState && (
+        <>
+          <button
+            onClick={() => fileRef.current?.click()}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+          >
+            <span className="text-base leading-none">📤</span>
+            <span>{en ? "Import data" : "Nhap du lieu"}</span>
+          </button>
+          <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
+        </>
+      )}
+    </div>
+  );
+}
+
 function SidebarContent({
   lang = "vi",
   onSetLang,
@@ -65,6 +112,7 @@ function SidebarContent({
   weddingDate,
   info,
   state,
+  onSetState,
   activeTheme,
   onSelectTheme,
   isOnline,
@@ -121,6 +169,14 @@ function SidebarContent({
               {en ? "Share" : "Chia sẻ"}
             </p>
             <ShareButton state={state} />
+          </div>
+
+          {/* Data Export/Import */}
+          <div>
+            <p className="text-2xs text-muted-foreground font-medium mb-2 px-1">
+              {en ? "Data" : "Du lieu"}
+            </p>
+            <DataButtons state={state} onSetState={onSetState} lang={lang} />
           </div>
 
           {/* Region */}

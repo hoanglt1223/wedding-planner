@@ -16,7 +16,7 @@ const PAGE_MAP: Record<string, string> = {
   tuvi: "astrology",
   thiep: "cards",
   sotay: "handbook",
-  ytuong: "ideas",
+  ytuong: "home",
   ai: "ai",
 };
 

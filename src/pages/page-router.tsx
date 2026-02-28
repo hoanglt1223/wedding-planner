@@ -2,12 +2,10 @@ import { lazy, Suspense } from "react";
 import { PlanningPage } from "./planning-page";
 import { HomePage } from "./home-page";
 import { GuestsPage } from "./guests-page";
-import { ToolsPage } from "./tools-page";
 import { AstrologyPage } from "./astrology-page";
 import { CardsPanel } from "@/components/cards/cards-panel";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { PrintPanel } from "@/components/print/print-panel";
-import { IdeasPanel } from "@/components/ideas/ideas-panel";
 import { getWeddingSteps } from "@/data/resolve-data";
 import type { WeddingState } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
@@ -32,9 +30,6 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
 
     case "guests":
       return <GuestsPage state={state} store={store} userId={userId} />;
-
-    case "tools":
-      return <ToolsPage state={state} store={store} onGoAI={onGoAI} userId={userId} />;
 
     case "planning":
       return (
@@ -87,18 +82,6 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
         />
       );
 
-    case "ideas":
-      return (
-        <IdeasPanel
-          state={state}
-          onSetState={store.setState}
-          onNavigate={(page, tab) => {
-            store.setPage(page);
-            if (tab !== undefined) store.setTab(tab);
-          }}
-        />
-      );
-
     case "tasks":
       return (
         <Suspense fallback={null}>
@@ -114,6 +97,6 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
       );
 
     default:
-      return null;
+      return <HomePage state={state} store={store} progress={progress} />;
   }
 }

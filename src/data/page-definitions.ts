@@ -12,11 +12,9 @@ export const PAGES: PageDef[] = [
   { id: "cards", label: "🖼️ Thiệp", icon: "🖼️" },
   { id: "ai", label: "🤖 AI", icon: "🤖" },
   { id: "handbook", label: "📖 Sổ Tay", icon: "📖" },
-  { id: "ideas", label: "💡 Ý Tưởng", icon: "💡" },
   { id: "tasks", label: "📋 Công Việc", icon: "📋" },
   { id: "website", label: "🌐 Website", icon: "🌐" },
   { id: "guests", label: "👥 Khách Mời", icon: "👥", shortLabel: "Khách mời" },
-  { id: "tools", label: "🔧 Công Cụ", icon: "🔧", shortLabel: "Công cụ" },
 ];
 
 export const DEFAULT_PAGE = "home";
