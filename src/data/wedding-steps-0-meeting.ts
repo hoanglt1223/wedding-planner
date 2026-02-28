@@ -6,6 +6,8 @@ export const STEP_MEETING: WeddingStep = {
   title: "Bước 1: Gặp Mặt Hai Gia Đình",
   formalName: "Lễ Giáp Mặt / Buổi Ra Mắt",
   icon: "☕",
+  optional: true,
+  optionalHint: "Nếu hai gia đình đã biết nhau hoặc hai bạn quen lâu, có thể bỏ qua bước này và tiến thẳng đến Dạm Ngõ. Sau dạm ngõ, nếu cần có thể mời nhà gái qua thăm nhà trai.",
   description: "Buổi gặp không chính thức đầu tiên — hai nhà làm quen, tìm hiểu hoàn cảnh gia đình.",
   meaning: "Đây là bước mở đầu quan trọng trong hôn nhân Việt Nam — tuy không phải nghi lễ chính thức nhưng quyết định toàn bộ không khí cưới hỏi sau này. Hai gia đình gặp nhau lần đầu để làm quen, tìm hiểu hoàn cảnh, thăm dò ý kiến về việc cưới hỏi. Ấn tượng đầu tiên rất quan trọng: nếu hai nhà hòa thuận từ đầu, mọi bước sau sẽ thuận lợi. Cô dâu chú rể đóng vai 'cầu nối' — giúp hai bên hiểu nhau, tạo thiện cảm.",
   notes: [

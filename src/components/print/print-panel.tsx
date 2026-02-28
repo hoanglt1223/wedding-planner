@@ -59,9 +59,16 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
         {/* Steps with unified steps rendering */}
         {steps.map((step) => (
           <div key={step.id} className="rounded-xl bg-white p-3 sm:p-4 shadow print-clean">
-            <h2 className="mb-1 text-sm sm:text-base font-bold border-b border-gray-200 pb-1">
-              {step.icon} {step.title}
-            </h2>
+            <div className="flex items-center gap-2 mb-1 border-b border-gray-200 pb-1">
+              <h2 className="text-sm sm:text-base font-bold">
+                {step.icon} {step.title}
+              </h2>
+              {step.optional && (
+                <span className="text-2xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                  {lang === "en" ? "Optional" : "Tuy chon"}
+                </span>
+              )}
+            </div>
             {step.formalName && (
               <div className="text-2xs text-gray-400 italic mb-1.5">
                 {t("Tên chính thức:", lang)} {step.formalName}

@@ -32,16 +32,6 @@ function SidebarContent({
 
   return (
     <div className="flex flex-col h-full">
-      {/* Logo */}
-      <div className="h-12 flex items-center px-4 border-b border-[var(--theme-border)] shrink-0">
-        <span
-          className="text-sm font-bold truncate"
-          style={{ color: "var(--theme-primary)" }}
-        >
-          Wedding Planner
-        </span>
-      </div>
-
       {/* Progress */}
       <div className="px-4 py-3 border-b border-[var(--theme-border)]">
         <div className="flex items-center justify-between mb-1.5">

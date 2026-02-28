@@ -6,6 +6,8 @@ export const STEP_MEETING_EN: WeddingStep = {
   title: "Step 1: Family Meeting (Gap Mat)",
   formalName: "First Family Introduction (Le Giap Mat)",
   icon: "☕",
+  optional: true,
+  optionalHint: "If both families already know each other or the couple has been together a long time, you can skip this step and go straight to the Engagement (Dam Ngo). The bride's family can visit the groom's home after the engagement if needed.",
   description: "The first informal get-together — both families meet, get to know each other, and share backgrounds.",
   meaning: "This is the crucial opening step in Vietnamese wedding tradition — not a formal ceremony, but it sets the tone for everything that follows. Both families meet for the first time to get acquainted, learn about each other's backgrounds, and gauge thoughts on the upcoming union. First impressions matter enormously: when both families connect warmly from the start, every subsequent step flows smoothly. The bride and groom serve as 'bridges' — helping both sides understand each other and build goodwill.",
   notes: [

@@ -46,6 +46,8 @@ export interface WeddingStep {
   description: string;
   meaning?: string;        // Cultural significance
   notes?: string[];        // General notes/warnings for this step
+  optional?: boolean;      // Step can be skipped
+  optionalHint?: string;   // Explanation of when to skip
   timeline: string;
   aiHint: string;
   ceremonies: Ceremony[];

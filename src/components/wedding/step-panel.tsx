@@ -85,15 +85,27 @@ export function StepPanel({
     <div className="space-y-2">
       {/* Overview card */}
       <div className="bg-[var(--theme-surface)] rounded-xl p-3 shadow-sm border border-[var(--theme-border)]">
-        <h2 className="text-base font-bold text-gray-900 mb-0.5">
-          {step.icon} {step.title}
-        </h2>
+        <div className="flex items-center gap-2 mb-0.5">
+          <h2 className="text-base font-bold text-gray-900">
+            {step.icon} {step.title}
+          </h2>
+          {step.optional && (
+            <span className="text-2xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+              {lang === "en" ? "Optional" : "Tuy chon"}
+            </span>
+          )}
+        </div>
         {step.formalName && (
           <div className="text-xs text-gray-400 italic mb-1.5">
             {lang === "en" ? "Formal name:" : "Tên chính thức:"} {step.formalName}
           </div>
         )}
         <p className="text-xs text-gray-500 mb-2 leading-relaxed">{step.description}</p>
+        {step.optionalHint && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-2.5 mb-2">
+            <p className="text-xs text-blue-700 leading-relaxed">💡 {step.optionalHint}</p>
+          </div>
+        )}
 
         {/* Meaning section */}
         {step.meaning && (

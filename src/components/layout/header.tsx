@@ -67,18 +67,21 @@ export function Navbar({
           <Menu className="h-5 w-5" />
         </button>
 
-        {/* Mobile logo */}
+        {/* Logo */}
         <span
-          className="text-sm font-bold shrink-0 md:hidden"
+          className="text-sm font-bold shrink-0"
           style={{ color: "var(--theme-primary)" }}
         >
           Wedding Planner
         </span>
 
         {/* Current page breadcrumb (desktop) */}
-        <span className="hidden md:inline text-sm font-medium text-foreground">
-          {t(PAGE_LABELS[activePage] || activePage, lang)}
-        </span>
+        <div className="hidden md:flex items-center gap-1.5 text-sm text-muted-foreground">
+          <span>/</span>
+          <span className="font-medium text-foreground">
+            {t(PAGE_LABELS[activePage] || activePage, lang)}
+          </span>
+        </div>
 
         <div className="flex-1" />
 
