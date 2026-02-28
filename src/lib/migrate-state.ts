@@ -9,6 +9,7 @@ const V12_KEY = "wp_v12";
 const V13_KEY = "wp_v13";
 const V14_KEY = "wp_v14";
 const V15_KEY = "wp_v15";
+const V16_KEY = "wp_v16";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -62,8 +63,23 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest v15 — no-op
-  if (localStorage.getItem(V15_KEY)) return;
+  // Already on latest v16 — no-op
+  if (localStorage.getItem(V16_KEY)) return;
+
+  // v15→v16 migration: add expense tracking fields
+  const v15Raw = localStorage.getItem(V15_KEY);
+  if (v15Raw) {
+    try {
+      const v15 = JSON.parse(v15Raw);
+      const v16 = {
+        ...v15,
+        expenseLog: v15.expenseLog ?? [],
+        expenseIdCounter: v15.expenseIdCounter ?? 0,
+      };
+      localStorage.setItem(V16_KEY, JSON.stringify(v16));
+    } catch { /* corrupt */ }
+    return;
+  }
 
   // v14→v15 migration: add Phase 2 fields
   const v14Raw = localStorage.getItem(V14_KEY);

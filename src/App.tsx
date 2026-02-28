@@ -3,10 +3,13 @@ import { useWeddingStore } from "@/hooks/use-wedding-store";
 import { useUserId } from "@/hooks/use-user-id";
 import { useSync } from "@/hooks/use-sync";
 import { useTracking } from "@/hooks/use-tracking";
+import { useOnlineStatus } from "@/hooks/use-online-status";
 import { Navbar } from "@/components/layout/header";
+import { BottomNav } from "@/components/layout/bottom-nav";
+import { MenuDrawer } from "@/components/layout/menu-drawer";
 import { Footer } from "@/components/layout/footer";
 import { SaveToast } from "@/components/wedding/save-toast";
-import { IosInstallPrompt } from "@/components/pwa/ios-install-prompt";
+import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 import { PageRouter } from "@/pages/page-router";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
@@ -20,8 +23,10 @@ function App() {
   useSync({ userId, state, progress: progress.pct });
   const { track } = useTracking(userId);
 
+  const isOnline = useOnlineStatus();
   const theme = THEMES.find((t) => t.id === (state.themeId || DEFAULT_THEME_ID)) || THEMES[0];
 
+  const [menuOpen, setMenuOpen] = useState(false);
   const [showSave, setShowSave] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const mountRef = useRef(false);
@@ -110,8 +115,9 @@ function App() {
         weddingDate={state.info.date}
         info={state.info}
         state={state}
+        isOnline={isOnline}
       />
-      <div className="max-w-[920px] mx-auto px-3 sm:px-2 pt-2">
+      <div key={state.page} className="page-transition-enter max-w-[920px] mx-auto px-3 sm:px-2 pt-2 pb-20 md:pb-0">
         <PageRouter
           state={state}
           store={store}
@@ -121,8 +127,25 @@ function App() {
         />
       </div>
       <Footer activeTheme={state.themeId || DEFAULT_THEME_ID} onSelectTheme={store.setTheme} lang={state.lang} />
+      <BottomNav
+        activePage={state.page}
+        onPageChange={store.setPage}
+        onMenuOpen={() => setMenuOpen(true)}
+        lang={state.lang}
+      />
+      <MenuDrawer
+        open={menuOpen}
+        onOpenChange={setMenuOpen}
+        lang={state.lang}
+        onPageChange={(page) => { store.setPage(page); setMenuOpen(false); }}
+        region={state.region}
+        onSetRegion={store.setRegion}
+        onSetLang={store.setLang}
+        activeTheme={state.themeId || DEFAULT_THEME_ID}
+        onSelectTheme={store.setTheme}
+      />
       <SaveToast visible={showSave} />
-      <IosInstallPrompt />
+      <InstallPrompt lang={state.lang} />
     </div>
   );
 }

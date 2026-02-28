@@ -23,25 +23,35 @@ Production-ready React + Vercel serverless full-stack scaffold. All tech stack c
 | `src/data/themes.ts` | Theme definitions (AppTheme interface + 4 themes) | Active |
 | `src/data/regions.ts` | Region type system (North/Central/South + `RegionalContent<T>` helper) | Active |
 | `src/components/ui/` | shadcn/ui components | 6 components ready |
-| `src/components/layout/` | Layout wrappers | 7 components (header, footer, root, region-selector, theme-picker, topbar, scrollable-tab-bar) |
+| `src/components/layout/` | Layout wrappers | 10 components (header, footer, root, region-selector, theme-picker, topbar, scrollable-tab-bar, bottom-nav, menu-drawer, reminders) |
 | `src/components/wedding/` | Wedding-specific UI | 13 components (ceremony, steps, checklist, family-roles, collapsible-detail, etc.) |
 | `src/components/calendar/` | Auspicious date picker | 4 components (calendar, day-cell, detail-modal, couple-compatibility) |
 | `src/components/rsvp/` | RSVP guest landing page | 5 components (hero, event-details, couple-story, form, thank-you) |
-| `src/components/guests/` | Guest management dashboard | 7 components (stats-bar, settings-form, generate-links, qr-modal, response-table, export-actions, dashboard) |
+| `src/components/guests/` | Guest management dashboard | 8 components (stats-bar, settings-form, generate-links, qr-modal, response-table, export-actions, dashboard, seating-chart) |
 | `src/components/timeline/` | Timeline CRUD interface | 4 components (entry-form, entry-list, entry-card, header) |
 | `src/components/gifts/` | Gift/cash tracker UI | 5 components (entry-form, entry-list, entry-row, summary-bar, csv-export) |
 | `src/components/photo-wall/` | Guest photo upload & gallery | 6 components (upload-form, upload-link, qr-generator, gallery-dashboard, masonry-grid, photo-card) |
 | `src/components/tasks/` | Collaborative task board | 7 components (form, board-dashboard, card, list-view, assignee-view, assignee-links, progress-bar) |
 | `src/components/website/` | Wedding website builder | 6 components (hero, gallery, rsvp-cta, settings-panel, slug-input, section-toggles) |
-| `src/components/cards/` | Card-based UI components | photo-board |
-| `src/components/print/` | Print-optimized components | event-timeline |
-| `src/pages/` | Route-based pages | 8 pages (gift, photo-upload, task-landing, timeline, wedding-website, admin, rsvp-landing, page-router) |
-| `src/hooks/` | Custom React hooks | use-wedding-store, use-local-storage, use-ai-reading, use-user-id, use-sync, use-tracking |
+| `src/components/cards/` | Card-based UI components | 6 components (photo-board, background-grid, cards-panel, couple-info-form, invitation-grid, rsvp-section) |
+| `src/components/print/` | Print-optimized components | event-timeline, print-panel |
+| `src/components/home/` | Home page dashboard | 4 components (progress-ring, quick-actions, daily-tip, recent-activity) |
+| `src/components/budget/` | Expense tracker UI | 7 components (expense-tracker, budget-overview, budget-summary, category-breakdown, expense-form, expense-list, budget-category-row) |
+| `src/components/onboarding/` | Onboarding wizard | 6 components (welcome, names, date-region, confirm, preview, wizard) |
+| `src/components/progress/` | Achievement system | 2 components (badge-display, section-progress) |
+| `src/components/pwa/` | PWA install UI | 2 components (install-prompt, ios-install-prompt) |
+| `src/pages/` | Route-based pages | 9 pages (home, planning, tools, gift, photo-upload, task-landing, timeline, wedding-website, rsvp-landing, guests, astrology, landing, shared-preview, admin, page-router) |
+| `src/hooks/` | Custom React hooks | use-wedding-store, use-local-storage, use-user-id, use-sync, use-tracking, use-online-status |
 | `src/lib/utils.ts` | Tailwind merge utility | Active |
 | `src/lib/i18n.ts` | Translation function: `t(key, lang)` | Active |
 | `src/lib/format.ts` | Locale utilities & formatting with lang parameter | Active |
 | `src/lib/rsvp-api.ts` | RSVP API wrapper functions | Active |
-| `src/types/` | TypeScript definitions | wedding.ts with WeddingState, Region, RegionalContent, all Phase 2 types |
+| `src/lib/progress-calculator.ts` | Badge/achievement system calculation | Active |
+| `src/lib/countdown.ts` | Countdown timer utility | Active |
+| `src/types/` | TypeScript definitions | wedding.ts with WeddingState, Region, RegionalContent, Phase 2 & Phase 3 types |
+| `src/data/nav-sections.ts` | Navigation menu structure & routing config | Active |
+| `src/data/badges.ts` / `badges.en.ts` | Achievement badge definitions (vi/en) | Active |
+| `src/data/expense-categories.ts` / `expense-categories.en.ts` | Budget expense categories (vi/en) | Active |
 | `src/index.css` | Global styles + custom utilities (text-2xs) + print styles | Active |
 | `public/` | Static assets | Empty |
 
@@ -203,13 +213,70 @@ English and Vietnamese language support with centralized translation system.
 - Component: `wedding-website-page.tsx` + website subcomponents
 - Stored in `WeddingState.website: WebsiteSettings`
 
-**State Migration:** wp_v14 → wp_v15 with new fields:
+**State Migration:** wp_v15 → wp_v16 with new fields:
 - `countdown: boolean` (enable/disable)
 - `remindersSent: Record<string, boolean>` (milestone tracking)
 - `timeline: TimelineEntry[]` (timeline events)
 - `gifts: GiftEntry[]` (gift tracker)
 - `website: WebsiteSettings` (site config)
+- `expenseLog: ExpenseEntry[]` (budget expense tracking)
+- `expenseIdCounter: number` (expense ID counter)
 
-**Dependencies Added:** `@vercel/blob` for Blob storage operations
+**Dependencies Added:** `@vercel/blob` for Blob storage operations, `vite-plugin-pwa` for PWA support
 
 **Environment Variables:** `BLOB_READ_WRITE_TOKEN` for Vercel Blob access
+
+## Phase 3 Features (Home Dashboard, Budget Tracker, Onboarding, PWA)
+
+**Purpose:** Enhanced engagement, expense tracking, PWA capability, and streamlined onboarding.
+
+### Home Dashboard
+- Central landing page with progress ring, quick actions, daily tips, recent activity
+- Components: `progress-ring.tsx`, `quick-actions.tsx`, `daily-tip.tsx`, `recent-activity.tsx`
+- Displays wedding countdown, completion progress, next actions
+
+### Budget Expense Tracker
+- Per-category expense logging with date, vendor name, payment status
+- Category breakdown chart and monthly summaries
+- CSV export capability
+- Components: `expense-tracker.tsx`, `budget-overview.tsx`, `expense-form.tsx`, `expense-list.tsx`, `category-breakdown.tsx`
+
+### 5-Step Onboarding Wizard
+- Welcome, couple names, wedding date + region, preview, confirmation
+- Modal-based flow with step progression
+- Components: `onboarding-wizard.tsx`, `onboarding-welcome.tsx`, `onboarding-names.tsx`, `onboarding-date-region.tsx`, `onboarding-confirm.tsx`, `onboarding-preview.tsx`
+- State: `WeddingState.onboardingComplete` (boolean)
+
+### Achievement Badge System
+- Unlock badges based on planning progress across ceremony phases
+- Badge display on home dashboard
+- Calculated from `WeddingState` checklist completion
+- Components: `badge-display.tsx`, `section-progress.tsx`
+- Data: `badges.ts` / `badges.en.ts` with badge definitions and criteria
+
+### PWA Support
+- Service worker for offline capability
+- Install prompts (Android + iOS)
+- Components: `install-prompt.tsx`, `ios-install-prompt.tsx`
+- Build plugin: `vite-plugin-pwa` for manifest generation
+
+### Navigation Redesign
+- Bottom nav (mobile) + header tabs (desktop) layout
+- Menu drawer for secondary pages (cards, handbook, ideas, website)
+- Components: `bottom-nav.tsx`, `menu-drawer.tsx`, `footer.tsx`
+- Data: `nav-sections.ts` defines navigation structure and page routing
+
+### Page Structure
+- **Home Page** (`home-page.tsx`) - Dashboard with progress, quick actions, tips
+- **Planning Page** (`planning-page.tsx`) - Wedding steps and checklists
+- **Tools Page** (`tools-page.tsx`) - Budget, timeline, guests, tasks
+
+### New i18n Keys (80+)
+- Home dashboard labels, quick action titles, daily tip format
+- Budget expense categories, form labels, export headers
+- Onboarding step text, confirmation messages, button labels
+- Badge unlock messages and criteria descriptions
+- PWA install prompts for Android/iOS
+- Navigation menu labels and page titles
+
+**State Extensions:** wp_v16 adds expense tracking and refined navigation data

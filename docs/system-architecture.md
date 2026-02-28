@@ -435,6 +435,42 @@ GET /api/rsvp/list           — All responses (rate-limited 30 req/min)
 - `GET /api/photos` — Retrieve guest photos with approval status
 - `PUT /api/photos/:id` — Approve/reject photo by planner
 
+## Routing Architecture
+
+### Hash-Based SPA Routes
+```
+#/ or empty           → LandingPage (marketing, public)
+#/app                 → App (main wedding planner)
+  → Home (default)    → HomePage (dashboard)
+  → Planning          → PlanningPage (wedding steps)
+  → Tools             → ToolsPage (budget, timeline, guests)
+  → Astrology         → AstrologyPage (zodiac readings)
+  → Cards             → CardsPanel (invitation cards)
+  → Handbook          → IdeasPanel (planning ideas)
+  → AI Chat           → AiPanel (ZhipuAI consultant)
+  → Print             → PrintPanel (print-friendly views)
+
+#/shared/:id          → SharedPreviewPage (shared zodiac cards)
+#/rsvp/:token         → RsvpLandingPage (guest RSVP landing)
+#/photos/:token       → PhotoUploadPage (guest photo upload)
+#/tasks/:token        → TaskLandingPage (family task board)
+#/w/:slug             → WeddingWebsitePage (public wedding website)
+#/admin               → AdminApp (lazy-loaded admin dashboard)
+```
+
+### Page Router
+`src/pages/page-router.tsx` switches between main app pages based on `state.page`:
+- `home` → HomePage (dashboard with progress, tips, quick actions)
+- `planning` → PlanningPage (wedding ceremony steps & checklists)
+- `tools` → ToolsPage (budget tracker, timeline, guests, tasks)
+- `astrology` → AstrologyPage (zodiac compatibility, readings, forecasts)
+- Cards/Handbook/AI/Print handled via lazy-loaded panels
+
+### Navigation UI
+**Desktop:** Header tabs (Planning, Tools, Astrology) + menu drawer for secondary pages
+**Mobile:** Bottom navigation (Home, Planning, Tools) + menu drawer for secondary pages
+Navigation structure defined in `src/data/nav-sections.ts`
+
 ## Phase 2: Extended Features
 
 ### Hash Routes
@@ -456,13 +492,115 @@ GET /api/rsvp/list           — All responses (rate-limited 30 req/min)
 - `gifts: GiftEntry[]` — Gift/cash received tracking
 - `website: WebsiteSettings` — Public website config (slug, published, sections visibility)
 
-### New i18n Keys (70+)
-- Countdown labels and milestone names
-- Timeline CRUD operations and categories
-- Gift tracker fields and export labels
-- Photo upload prompts and moderation statuses
-- Task board labels and priority levels
-- Website sections and public page copy
+## Phase 3: Engagement & Polish
+
+### New Pages
+- `home-page.tsx` — Central dashboard (now default landing for `#/app`)
+- `planning-page.tsx` — Wedding steps with progress tracking
+- `tools-page.tsx` — Budget, timeline, guests, tasks consolidated
+
+### Navigation Changes
+- Bottom nav for mobile (home, planning, tools) with active state
+- Menu drawer for secondary pages (cards, handbook, ideas, website, print, ai)
+- Header tabs for desktop layout
+- Navigation data structure: `src/data/nav-sections.ts`
+
+### Home Dashboard Features
+- **Progress Ring:** Visual progress across all wedding phases (0-100%)
+- **Quick Actions:** Shortcuts to planning steps, budget, guests, timeline
+- **Daily Tips:** Rotating planning tips from `data/` files
+- **Recent Activity:** Last 5 state changes (checklist, budget, guests updates)
+- Components: `progress-ring.tsx`, `quick-actions.tsx`, `daily-tip.tsx`, `recent-activity.tsx`
+
+### Budget Expense Tracking
+- Per-category expense log with date, vendor name, amount, payment status
+- Category breakdown with spending vs budget comparison
+- CSV export with formula injection prevention
+- Components: `expense-tracker.tsx`, `budget-overview.tsx`, `expense-form.tsx`, `expense-list.tsx`
+- Data: `expense-categories.ts` / `expense-categories.en.ts` (vi/en)
+
+### 5-Step Onboarding Wizard
+- **Step 1:** Welcome message + app overview
+- **Step 2:** Couple names (bride/groom)
+- **Step 3:** Wedding date (lunar), region selection (north/central/south)
+- **Step 4:** Preview of selected data
+- **Step 5:** Confirmation & app access unlock
+- Modal-based flow with navigation buttons
+- Components: `onboarding-wizard.tsx`, `onboarding-welcome/names/date-region/confirm/preview.tsx`
+
+### Achievement Badge System
+- Unlock badges based on ceremony phase completion (50%, 75%, 100%)
+- 12+ badges for major milestones (engagement prep, dress shopping, invitations, etc.)
+- Display on home dashboard and progress page
+- Data: `badges.ts` / `badges.en.ts` with unlock criteria
+- Calculation: `src/lib/progress-calculator.ts` evaluates state against badge rules
+
+### PWA Support
+- Service worker registration via `vite-plugin-pwa`
+- Web app manifest (name, icons, theme colors)
+- Install prompts: Android (native) + iOS (custom UI)
+- Offline capability: cached UI + API responses
+- Components: `install-prompt.tsx`, `ios-install-prompt.tsx`
+
+### State Extensions (v16)
+- `expenseLog: ExpenseEntry[]` — Budget expense tracking
+- `expenseIdCounter: number` — Expense ID generator
+- Navigation data persisted via `nav-sections.ts` config
+
+### New i18n Keys (80+)
+- Home page: dashboard labels, quick action titles, tip format
+- Budget: expense categories, form labels, export headers, chart labels
+- Onboarding: step titles, instructions, confirm messages
+- Badges: unlock criteria, descriptions, achievement names
+- Navigation: page titles, drawer labels, menu items
+- PWA: install prompts, offline messages
+
+### Page Transition Animations
+- CSS fade-in animations for page switches
+- Smooth transitions between home/planning/tools pages
+- Drawer slide animation for menu toggle
+
+### Online Status Hook
+- `useOnlineStatus()` — Detects network connectivity
+- Displays banner when offline (cached data available)
+- Used for sync retry logic and API error handling
+
+**State Version:** wp_v16 with expense tracking and refined navigation architecture
+
+## Front-End Patterns & Hooks
+
+### State Management Hook
+`useWeddingStore()` — Central state management without context provider
+- Returns: `{ state, setPage(), setTab(), setLanguage(), ... }`
+- Uses `useLocalStorage` with storage key `wp_v16`
+- Persists all WeddingState changes automatically
+- Debounced sync to backend via `useSync` hook (5s, visibility-based, 5min heartbeat)
+
+### Data Synchronization
+`useSync()` — Smart backend sync
+- Debounces state changes (5s interval)
+- Triggers immediate sync on visibility change (tab focus)
+- 5-minute heartbeat to keep sessions alive
+- Sends final sync via sendBeacon on unload
+- Rate-limited to 30 req/min on server-side
+
+### Tracking Hook
+`useTracking()` — Event batching
+- Batches events in memory
+- Auto-flushes every 30s or at 50-event buffer limit
+- Rate-limited to 10 req/min on server-side
+
+### Online Status
+`useOnlineStatus()` — Network connectivity detection
+- Monitors `online` / `offline` events
+- Used to display connectivity banners
+- Guides sync retry logic (skip when offline)
+
+### Custom ID Generation
+`useUserId()` — Anonymous user session
+- Generates UUID on first load
+- Persists in localStorage (wp_user_id)
+- Used for event tracking and session correlation
 
 ## Monitoring
 
@@ -480,3 +618,4 @@ GET /api/rsvp/list           — All responses (rate-limited 30 req/min)
 - Redis command monitoring (Upstash dashboard)
 - Database query logs (Neon console)
 - Admin panel system page for real-time health checks
+- PWA install metrics (number of installations, app usage stats)

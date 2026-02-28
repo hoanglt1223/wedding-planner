@@ -1,17 +1,22 @@
 export interface PageDef {
   id: string;
   label: string;
+  icon?: string;
+  shortLabel?: string;
 }
 
 export const PAGES: PageDef[] = [
-  { id: "planning", label: "💒 Kế Hoạch" },
-  { id: "astrology", label: "🔮 Tử Vi" },
-  { id: "cards", label: "🖼️ Thiệp" },
-  { id: "ai", label: "🤖 AI" },
-  { id: "handbook", label: "📖 Sổ Tay" },
-  { id: "ideas", label: "💡 Ý Tưởng" },
-  { id: "tasks", label: "📋 Công Việc" },
-  { id: "website", label: "🌐 Website" },
+  { id: "home", label: "🏠 Trang Chủ", icon: "🏠", shortLabel: "Trang chủ" },
+  { id: "planning", label: "💒 Kế Hoạch", icon: "💒", shortLabel: "Kế hoạch" },
+  { id: "astrology", label: "🔮 Tử Vi", icon: "🔮" },
+  { id: "cards", label: "🖼️ Thiệp", icon: "🖼️" },
+  { id: "ai", label: "🤖 AI", icon: "🤖" },
+  { id: "handbook", label: "📖 Sổ Tay", icon: "📖" },
+  { id: "ideas", label: "💡 Ý Tưởng", icon: "💡" },
+  { id: "tasks", label: "📋 Công Việc", icon: "📋" },
+  { id: "website", label: "🌐 Website", icon: "🌐" },
+  { id: "guests", label: "👥 Khách Mời", icon: "👥", shortLabel: "Khách mời" },
+  { id: "tools", label: "🔧 Công Cụ", icon: "🔧", shortLabel: "Công cụ" },
 ];
 
-export const DEFAULT_PAGE = "planning";
+export const DEFAULT_PAGE = "home";

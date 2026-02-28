@@ -20,6 +20,7 @@ interface NavbarProps {
   weddingDate: string;
   info: CoupleInfo;
   state?: WeddingState;
+  isOnline?: boolean;
 }
 
 export function Navbar({
@@ -35,6 +36,7 @@ export function Navbar({
   weddingDate,
   info,
   state,
+  isOnline,
 }: NavbarProps) {
   const [countdown, setCountdown] = useState<CountdownResult | null>(() =>
     getCountdown(weddingDate)
@@ -80,16 +82,41 @@ export function Navbar({
   return (
     <header className="h-12 sticky top-0 z-50 border-b bg-[var(--theme-surface)]/95 backdrop-blur-sm flex items-center">
       <div className="max-w-[920px] mx-auto px-3 w-full flex items-center gap-2 h-full">
-        {/* Title */}
+        {/* Mobile header: app name + countdown + share */}
+        <div className="flex md:hidden items-center gap-2 w-full">
+          <span className="text-sm font-bold" style={{ color: "var(--theme-primary)" }}>
+            💒 Wedding
+          </span>
+          <div className="flex-1" />
+          {isOnline === false && (
+            <span className="offline-badge text-2xs font-semibold px-1.5 py-0.5 rounded-full bg-red-100 text-red-600">
+              Offline
+            </span>
+          )}
+          {countdownLabel && (
+            <span
+              className={`text-2xs font-semibold px-1.5 py-0.5 rounded-full ${
+                countdown?.passed
+                  ? "bg-green-100 text-green-700"
+                  : "bg-[var(--theme-primary-light)] text-[var(--theme-primary)]"
+              }`}
+            >
+              {countdownLabel}
+            </span>
+          )}
+          {state && <ShareButton state={state} />}
+        </div>
+
+        {/* Desktop: title */}
         <span
-          className="text-sm font-bold shrink-0 hidden sm:block"
+          className="text-sm font-bold shrink-0 hidden md:block"
           style={{ color: "var(--theme-primary)" }}
         >
           💒 Wedding
         </span>
 
-        {/* Nav tabs with gradient fade */}
-        <div className="relative flex-1 flex items-center overflow-hidden h-full">
+        {/* Desktop: nav tabs with gradient fade */}
+        <div className="relative flex-1 hidden md:flex items-center overflow-hidden h-full">
           {showLeftFade && (
             <div className="absolute left-0 top-0 h-full w-6 z-10 pointer-events-none bg-gradient-to-r from-[var(--theme-surface)]/95 to-transparent" />
           )}
@@ -120,8 +147,8 @@ export function Navbar({
           )}
         </div>
 
-        {/* Progress + countdown */}
-        <div className="hidden sm:flex items-center gap-2 shrink-0">
+        {/* Desktop: progress + countdown + controls */}
+        <div className="hidden md:flex items-center gap-2 shrink-0">
           <div className="flex items-center gap-1.5">
             <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
               <div
@@ -147,28 +174,20 @@ export function Navbar({
               {countdownLabel}
             </span>
           )}
+          {state && <ShareButton state={state} />}
+          {onSetRegion && (
+            <RegionSelector region={region} onRegionChange={onSetRegion} lang={lang} />
+          )}
+          {onSetLang && (
+            <button
+              onClick={() => onSetLang(lang === "vi" ? "en" : "vi")}
+              className="shrink-0 h-7 px-2 rounded-full text-2xs font-semibold bg-[var(--theme-primary-light)] text-[var(--theme-primary)] hover:opacity-80 transition-opacity"
+            >
+              {getLangLabel(lang)}
+            </button>
+          )}
+          <RemindersBell info={info} />
         </div>
-
-        {/* Share button */}
-        {state && <ShareButton state={state} />}
-
-        {/* Region selector */}
-        {onSetRegion && (
-          <RegionSelector region={region} onRegionChange={onSetRegion} lang={lang} />
-        )}
-
-        {/* Language toggle */}
-        {onSetLang && (
-          <button
-            onClick={() => onSetLang(lang === "vi" ? "en" : "vi")}
-            className="shrink-0 h-7 px-2 rounded-full text-2xs font-semibold bg-[var(--theme-primary-light)] text-[var(--theme-primary)] hover:opacity-80 transition-opacity"
-          >
-            {getLangLabel(lang)}
-          </button>
-        )}
-
-        {/* Reminders bell */}
-        <RemindersBell info={info} />
       </div>
     </header>
   );
@@ -204,5 +223,4 @@ function ShareButton({ state }: { state: WeddingState }) {
   );
 }
 
-// Keep Header alias for any remaining references
 export { Navbar as Header };

@@ -164,6 +164,18 @@ export interface ReminderPreference {
   dismissed: boolean;
 }
 
+// --- Phase 3 types ---
+
+export interface ExpenseEntry {
+  id: number;
+  category: string;       // budget category key
+  description: string;
+  amount: number;          // VND amount
+  vendorName?: string;
+  date: string;            // YYYY-MM-DD
+  paid: boolean;
+}
+
 export interface WeddingState {
   page: string;
   tab: number;
@@ -200,6 +212,10 @@ export interface WeddingState {
   photoWallSettings: PhotoWallSettings;
   taskBoardSettings: TaskBoardSettings;
   dismissedReminders: string[];
+
+  // Phase 3 additions
+  expenseLog: ExpenseEntry[];
+  expenseIdCounter: number;
 }
 
 export interface WeddingEvent {

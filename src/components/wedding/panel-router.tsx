@@ -4,7 +4,7 @@ import { getWeddingSteps } from "@/data/resolve-data";
 const TimelinePage = lazy(() => import("@/pages/timeline-page"));
 const GiftPage = lazy(() => import("@/pages/gift-page"));
 import { StepPanel } from "@/components/wedding/step-panel";
-import { BudgetPanel } from "@/components/budget/budget-panel";
+import { ExpenseTracker } from "@/components/budget/expense-tracker";
 import { GuestPanel } from "@/components/guests/guest-panel";
 import { NotesPanel } from "@/components/notes/notes-panel";
 import { VendorPanel } from "@/components/vendors/vendor-panel";
@@ -47,17 +47,7 @@ export function PanelRouter({ state, store, onGoAI, userId }: PanelRouterProps) 
   }
 
   if (tab === stepCount) {
-    return (
-      <BudgetPanel
-        budget={state.budget}
-        categoryOverrides={state.budgetOverrides}
-        expenses={state.expenses || {}}
-        onSetBudget={store.setBudget}
-        onSetCategoryPercent={store.setCategoryPercent}
-        onSetExpense={store.setExpense}
-        lang={lang}
-      />
-    );
+    return <ExpenseTracker state={state} store={store} />;
   }
 
   if (tab === stepCount + 1) {

@@ -18,7 +18,7 @@ export function Footer({ activeTheme, onSelectTheme, lang = "vi" }: FooterProps)
   };
 
   return (
-    <footer className="mt-4 border-t border-amber-100">
+    <footer className="mt-4 mb-20 md:mb-0 border-t border-amber-100">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <p className="text-xs text-muted-foreground">
           Wedding Planner &copy; {new Date().getFullYear()}

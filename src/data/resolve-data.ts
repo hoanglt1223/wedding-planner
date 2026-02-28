@@ -12,7 +12,10 @@ import { ELEMENT_PROFILES } from "./astrology-element-profiles";
 import { ELEMENT_PROFILES_EN } from "./astrology-element-profiles.en";
 import { YEARLY_FORECASTS } from "./astrology-yearly-forecast";
 import { YEARLY_FORECASTS_EN } from "./astrology-yearly-forecast.en";
+import { EXPENSE_CATEGORIES } from "./expense-categories";
+import { EXPENSE_CATEGORIES_EN } from "./expense-categories.en";
 import type { WeddingStep, BudgetCategory, AiPrompt } from "@/types/wedding";
+import type { ExpenseCategoryDef } from "./expense-categories";
 import type { Region } from "@/data/regions";
 import type { IdeaItemExt } from "./ideas";
 import type { ZodiacProfile } from "./astrology-zodiac-profiles";
@@ -45,6 +48,10 @@ export function getElementProfiles(lang: string): ElementProfile[] {
 
 export function getYearlyForecasts(lang: string): YearlyForecast[] {
   return lang === "en" ? YEARLY_FORECASTS_EN : YEARLY_FORECASTS;
+}
+
+export function getExpenseCategories(lang: string): ExpenseCategoryDef[] {
+  return lang === "en" ? EXPENSE_CATEGORIES_EN : EXPENSE_CATEGORIES;
 }
 
 export type { Region };

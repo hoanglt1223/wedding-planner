@@ -1,5 +1,8 @@
 import { lazy, Suspense } from "react";
 import { PlanningPage } from "./planning-page";
+import { HomePage } from "./home-page";
+import { GuestsPage } from "./guests-page";
+import { ToolsPage } from "./tools-page";
 import { AstrologyPage } from "./astrology-page";
 import { CardsPanel } from "@/components/cards/cards-panel";
 import { AiPanel } from "@/components/ai/ai-panel";
@@ -24,6 +27,15 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
   const lang = state.lang;
 
   switch (state.page) {
+    case "home":
+      return <HomePage state={state} store={store} progress={progress} />;
+
+    case "guests":
+      return <GuestsPage state={state} store={store} userId={userId} />;
+
+    case "tools":
+      return <ToolsPage state={state} store={store} onGoAI={onGoAI} userId={userId} />;
+
     case "planning":
       return (
         <PlanningPage

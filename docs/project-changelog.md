@@ -2,6 +2,67 @@
 
 All notable changes are documented here.
 
+## [0.7.0] - 2026-02-28
+
+### Added
+
+- **Phase 3: Engagement + Polish — PWA, Navigation, Budget Tracker, Onboarding**
+  - **PWA Infrastructure**: Production-ready PWA with Workbox caching, web manifest, install prompt, online status detection hook
+  - **Navigation Architecture**: Mobile-first bottom navigation bar (5 sections: Home, Planning, Guests, Tools, Settings), menu drawer for overflow items, minimal header redesign, Vietnamese region selector
+  - **Section Page Containers**: Home page (dashboard), Guests page (RSVP/photos/gifts), Tools page (AI/astrology/tasks), updated Planning page with Budget tab integration
+  - **Home Dashboard**: Progress ring (SVG, percentage-based), quick action cards (Add Guest, Set Budget, View Timeline, AI Chat), daily tips carousel, recent activity feed
+  - **Budget & Expense Tracker**: Full expense tracking with individual ExpenseEntry CRUD, category breakdown visualization, spending summary cards, CSV export with formula injection prevention, v15 → v16 state migration
+  - **Onboarding Revamp**: 5-step wizard (welcome, names, date/region, ceremony, get started), milestone badge system with 8 achievement badges, per-section progress calculator
+  - **Polish + Integration**: CSS page transition animations, offline badge in header (PWA integration), touch target audit (44px minimum), theme variable consistency audit, responsive testing on mobile viewports
+  - Data migration: wp_v15 → wp_v16 with `expenseEntries` field
+  - State structure optimized for offline-first experience with localStorage persistence
+  - Mobile-optimized UI: bottom nav fixed positioning, touch-friendly buttons, stackable layouts
+  - Full Vietnamese/English support for all new components and features (~60 new i18n keys)
+
+### Architecture Updates
+
+- New page routing: PageRouter handles home, planning, guests, tools pages
+- App.tsx orchestrates: Header (minimal) + PageRouter + BottomNav + MenuDrawer + Footer
+- PWA service worker managed by vite-plugin-pwa (Workbox automatic caching)
+- Expense tracking: client-side state management (no new API endpoints, fits Vercel Hobby limit)
+- Home page as new default landing (was planning page)
+- Mobile-first breakpoint strategy: bottom nav mobile, header tabs desktop
+
+### Performance Notes
+
+- Precache bundle ~2MB (JS+CSS+HTML only, under 5MB target)
+- Offline capability: all assets cached, reads work without network
+- API calls degrade gracefully with 5s timeout when offline
+- State migration runs once on app load
+- PWA install prompt triggers after 2 visits (configurable)
+
+### Dependencies Added
+
+- `vite-plugin-pwa` — Automated PWA manifest and service worker generation
+
+### Type Additions
+
+- `ExpenseEntry` — Amount, vendor, date, category, paid status, notes
+- Extended `WeddingState` — expenseEntries array, structure for offline-first design
+- Badge system types (static, derived from state)
+
+### Responsive Design
+
+- Bottom nav: 60px fixed bar on mobile (md:hidden)
+- Planning section: tab-based layout (Budget tab added)
+- Dashboard: single-column on mobile, multi-column on desktop
+- Expense form: vertical stack on mobile, horizontal on desktop
+- All interactive elements: 44px+ touch targets
+
+### Testing Coverage
+
+- Offline functionality: assets load, reads work, API calls degrade gracefully
+- State migration: v15 → v16 preserves existing data
+- Navigation: all 5 sections accessible, bottom nav and drawer work
+- Responsive: tested at 375px (mobile), 1024px (tablet), 1440px (desktop)
+
+---
+
 ## [0.6.0] - 2026-02-28
 
 ### Added

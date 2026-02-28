@@ -11,13 +11,6 @@ const WeddingWebsitePage = lazy(() => import('./pages/wedding-website-page.tsx')
 const PhotoUploadPage = lazy(() => import('./pages/photo-upload-page.tsx'))
 const TaskLandingPage = lazy(() => import('./pages/task-landing-page.tsx'))
 
-// Register service worker for PWA
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
-
 function Root() {
   const [hash, setHash] = useState(window.location.hash);
 

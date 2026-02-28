@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "Bash(cd:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(node:*)",
+      "Bash(npm run *)",
+      "Bash(pnpm *)",
+      "Bash(git commit *)",
+      "Bash(git * main)",
+      "Bash(* --version)",
+      "Bash(* --help *)",
+      "Bash(npx shadcn@latest add:*)",
+      "Bash(npm install:*)",
+      "Bash(git add:*)"
     ]
   }
 }

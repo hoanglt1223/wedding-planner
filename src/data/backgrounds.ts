@@ -74,7 +74,7 @@ export const EXTRA_TABS = [
 ] as const;
 
 export const DEFAULT_STATE: WeddingState = {
-  page: "planning",
+  page: "home",
   tab: 0,
   subTabs: {},
   checkedItems: {},
@@ -143,4 +143,8 @@ export const DEFAULT_STATE: WeddingState = {
     categories: [],
   },
   dismissedReminders: [],
+
+  // Phase 3 additions
+  expenseLog: [],
+  expenseIdCounter: 0,
 };

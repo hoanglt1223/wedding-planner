@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -9,7 +9,7 @@ import { usePhase2Methods } from "./use-wedding-store-phase2";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v15";
+const STORAGE_KEY = "wp_v16";
 
 /** A step is enabled if enabledSteps is empty/undefined (all enabled) or the step's value is not false */
 export function isStepEnabled(enabledSteps: Record<string, boolean> | undefined, stepId: string): boolean {
@@ -190,6 +190,28 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const addExpense = useCallback((entry: Omit<ExpenseEntry, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      expenseIdCounter: (prev.expenseIdCounter || 0) + 1,
+      expenseLog: [...(prev.expenseLog || []), { ...entry, id: (prev.expenseIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const updateExpense = useCallback((id: number, updates: Partial<ExpenseEntry>) => {
+    setState((prev) => ({
+      ...prev,
+      expenseLog: (prev.expenseLog || []).map((e) => e.id === id ? { ...e, ...updates } : e),
+    }));
+  }, [setState]);
+
+  const removeExpense = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      expenseLog: (prev.expenseLog || []).filter((e) => e.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -223,6 +245,7 @@ export function useWeddingStore() {
     addVendor, removeVendor, addPhoto, removePhoto,
     setLang, setRegion, setPartyTime, setStepStartTime, setEnabledSteps,
     completeOnboarding, getProgress, setRsvpSettings, updateGuestRsvpToken,
+    addExpense, updateExpense, removeExpense,
     ...phase2,
   };
 }

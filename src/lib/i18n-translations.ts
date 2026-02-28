@@ -2,12 +2,16 @@ type Lang = "vi" | "en";
 
 export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   // Nav labels
+  "🏠 Trang Chủ": { vi: "🏠 Trang Chủ", en: "🏠 Home" },
   "💒 Kế Hoạch": { vi: "💒 Kế Hoạch", en: "💒 Planning" },
   "🔮 Tử Vi": { vi: "🔮 Tử Vi", en: "🔮 Fortune" },
   "🖼️ Thiệp": { vi: "🖼️ Thiệp", en: "🖼️ Cards" },
   "🤖 AI": { vi: "🤖 AI", en: "🤖 AI" },
   "📖 Sổ Tay": { vi: "📖 Sổ Tay", en: "📖 Handbook" },
   "💡 Ý Tưởng": { vi: "💡 Ý Tưởng", en: "💡 Ideas" },
+  "🔧 Công Cụ": { vi: "🔧 Công Cụ", en: "🔧 Tools" },
+  "Trang Chủ": { vi: "Trang Chủ", en: "Home" },
+  "Tổng quan kế hoạch cưới": { vi: "Tổng quan kế hoạch cưới", en: "Wedding plan overview" },
 
   // Onboarding
   "Kế Hoạch Đám Cưới": { vi: "Kế Hoạch Đám Cưới", en: "Wedding Planner" },
@@ -238,6 +242,40 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Âm lịch": { vi: "Âm lịch", en: "Lunar date" },
   "Dương lịch": { vi: "Dương lịch", en: "Solar date" },
   "Xem chi tiết": { vi: "Xem chi tiết", en: "View details" },
+
+  // Expense tracker
+  "Tổng ngân sách": { vi: "Tổng ngân sách", en: "Total Budget" },
+  "Đã chi": { vi: "Đã chi", en: "Spent" },
+  "Còn lại": { vi: "Còn lại", en: "Remaining" },
+  "Vượt ngân sách": { vi: "Vượt ngân sách", en: "Over Budget" },
+  "Đã thanh toán": { vi: "Đã thanh toán", en: "Paid" },
+  "Chưa thanh toán": { vi: "Chưa thanh toán", en: "Unpaid" },
+  "Chi tiết theo hạng mục": { vi: "Chi tiết theo hạng mục", en: "By Category" },
+  "Chưa có chi phí": { vi: "Chưa có chi phí", en: "No expenses yet" },
+  "Thêm chi phí": { vi: "Thêm chi phí", en: "Add Expense" },
+  "Sửa chi phí": { vi: "Sửa chi phí", en: "Edit Expense" },
+  "Mô tả": { vi: "Mô tả", en: "Description" },
+  "Nhà cung cấp": { vi: "Nhà cung cấp", en: "Vendor" },
+  "Ngày": { vi: "Ngày", en: "Date" },
+  "Đã TT": { vi: "Đã TT", en: "Paid" },
+  "Chưa TT": { vi: "Chưa TT", en: "Unpaid" },
+  "Sắp xếp theo": { vi: "Sắp xếp theo", en: "Sort by" },
+  "Tất cả": { vi: "Tất cả", en: "All" },
+  "Xem phân bổ ngân sách": { vi: "Xem phân bổ ngân sách", en: "View budget allocation" },
+  "Ẩn phân bổ ngân sách": { vi: "Ẩn phân bổ ngân sách", en: "Hide budget allocation" },
+  "Tổng quan ngân sách": { vi: "Tổng quan ngân sách", en: "Budget Overview" },
+  "Ngân sách:": { vi: "Ngân sách:", en: "Budget:" },
+  "Vượt ngân sách:": { vi: "Vượt ngân sách:", en: "Over budget:" },
+  "Còn lại:": { vi: "Còn lại:", en: "Remaining:" },
+  "Danh sách chi phí": { vi: "Danh sách chi phí", en: "Expense List" },
+  "Hạng mục": { vi: "Hạng mục", en: "Category" },
+  "Chưa có chi phí nào": { vi: "Chưa có chi phí nào", en: "No expenses recorded" },
+  "Cập nhật": { vi: "Cập nhật", en: "Update" },
+  "Số tiền (VND)": { vi: "Số tiền (VND)", en: "Amount (VND)" },
+
+  // Home progress
+  "hoàn thành": { vi: "hoàn thành", en: "completed" },
+  "Thành tựu": { vi: "Thành tựu", en: "Achievements" },
 
   // Misc
   "Lưu": { vi: "Lưu", en: "Save" },
