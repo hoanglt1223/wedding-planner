@@ -19,12 +19,25 @@ export function LandingHero() {
       </p>
       <a
         href="#/app"
-        className="inline-flex items-center justify-center h-12 px-8 text-lg font-semibold text-white rounded-full shadow-lg transition-colors animate-pulse"
-        style={{ backgroundColor: BRAND.accent }}
-        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = BRAND.primaryDark)}
-        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = BRAND.accent)}
+        className="group relative inline-flex items-center justify-center h-14 px-10 text-lg font-bold text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
+        style={{
+          background: `linear-gradient(135deg, ${BRAND.accent}, ${BRAND.primaryDark})`,
+          boxShadow: `0 8px 24px ${BRAND.accent}40`,
+        }}
+        onMouseOver={(e) => {
+          e.currentTarget.style.background = `linear-gradient(135deg, ${BRAND.primaryDark}, ${BRAND.accent})`;
+          e.currentTarget.style.boxShadow = `0 12px 32px ${BRAND.accent}60`;
+        }}
+        onMouseOut={(e) => {
+          e.currentTarget.style.background = `linear-gradient(135deg, ${BRAND.accent}, ${BRAND.primaryDark})`;
+          e.currentTarget.style.boxShadow = `0 8px 24px ${BRAND.accent}40`;
+        }}
       >
-        Bắt Đầu Ngay →
+        <span className="relative z-10">Bắt Đầu Ngay →</span>
+        <span
+          className="absolute inset-0 rounded-full animate-ping opacity-20"
+          style={{ backgroundColor: BRAND.accent }}
+        />
       </a>
       <p className="mt-4 text-xs text-[#8a7060]">
         Thay thế Excel & sổ tay bằng ứng dụng thông minh
