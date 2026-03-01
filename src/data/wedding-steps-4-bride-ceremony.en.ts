@@ -1,5 +1,50 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
 import { RECEPTION_EXTRAS_EN } from "./wedding-steps-reception-extras.en";
+
+// ===== Prayers & speeches for LE VU QUY (Bride's Ceremony) =====
+const VU_QUY_PRAYERS_EN: PrayerItem[] = [
+  {
+    emoji: "🕯️",
+    title: "Ancestor prayer — Le Vu Quy (Bride's farewell)",
+    occasion: "Vu Quy — wedding morning, before the reception",
+    type: "prayer",
+    note: "Bride's father or mother recites. The couple lights incense and bows 3 times. This is the LAST time the bride bows at her own family altar as 'their daughter' — deeply emotional. Have handkerchiefs ready.",
+    text: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to Heaven and Earth, and all divine spirits.
+We respectfully bow to the City God, the Land God, and the Kitchen God.
+We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+At [BRIDE'S HOME ADDRESS],
+
+Our granddaughter [BRIDE'S NAME], born in [BIRTH YEAR], is to be married to [GROOM'S NAME], son of Mr./Mrs. [GROOM'S PARENTS' NAMES].
+
+Today is her Vu Quy day — she officially departs for her husband's home.
+We humbly report to the ancestors and ask for their blessing:
+— A safe and smooth journey to her new home
+— A lifetime of harmony and happiness as husband and wife
+— Both in-law families in peace and prosperity
+
+Namo Amitabha Buddha (3 times)`,
+  },
+  {
+    emoji: "👨",
+    title: "Father's farewell speech to his daughter",
+    occasion: "Vu Quy — after the ancestral ceremony, before the bride gets into the wedding car",
+    type: "speech",
+    note: "The bride's father speaks. This is the MOST EMOTIONAL moment — photographer must be ready. Keep it brief, from the heart. If you can't finish because of tears — that's completely normal.",
+    text: `My dearest daughter,
+
+Today you officially leave for your husband's home. Your mother and I have raised you from a little girl to this day — through joy and hardship — and we have always been happy because of you.
+
+Son-in-law [GROOM'S NAME], I entrust my daughter to you. I trust you will love her, protect her, and build a happy home together.
+
+My dear girl — this home will forever be your home. You can always come back, anytime.
+
+We wish you both a lifetime of happiness.`,
+  },
+];
 
 export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
   id: "bride-ceremony",
@@ -89,6 +134,7 @@ export const STEP_BRIDE_CEREMONY_EN: WeddingStep = {
         { text: "Parents give their blessings and embrace their daughter", time: "07:20", responsible: "Bride's Parents" },
         { text: "Family photo before the altar — a sacred keepsake", time: "07:25", responsible: "Photographer" },
       ],
+      prayers: VU_QUY_PRAYERS_EN,
       people: [
         { name: "Bride & Groom", role: "Light incense, bow to ancestors", avatar: "💑" },
         { name: "Bride's Parents", role: "Pray, lead ceremony", avatar: "👫" },

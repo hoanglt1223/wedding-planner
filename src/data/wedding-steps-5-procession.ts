@@ -1,4 +1,40 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
+
+// ===== Lời phát biểu trong LỄ RƯỚC DÂU =====
+const PROCESSION_PRAYERS: PrayerItem[] = [
+  {
+    emoji: "🗣️",
+    title: "Lời chú rể cam kết trước nhà gái",
+    occasion: "Rước dâu — sau khi vượt chặn cổng, trước khi đón cô dâu lên xe",
+    type: "speech",
+    note: "Chú rể tự nói — chân thành hơn nhờ người khác. Ngắn gọn, từ trái tim. Nếu run quá — viết sẵn vài dòng cầm theo.",
+    text: `Kính thưa bố mẹ (nhạc phụ, nhạc mẫu) và gia đình nhà gái,
+
+Con xin chân thành cảm ơn bố mẹ đã tin tưởng giao [TÊN CÔ DÂU] cho con.
+
+Con hứa sẽ yêu thương, tôn trọng, và cùng [TÊN CÔ DÂU] xây dựng gia đình hạnh phúc. Con cũng hứa sẽ hiếu thảo với bố mẹ hai bên như con ruột trong nhà.
+
+Con xin phép đón [TÊN CÔ DÂU] về nhà.
+
+Con cảm ơn bố mẹ.`,
+  },
+  {
+    emoji: "👰",
+    title: "Lời cô dâu tạ ơn cha mẹ trước khi lên xe hoa",
+    occasion: "Rước dâu — khoảnh khắc cô dâu rời nhà",
+    type: "speech",
+    note: "Cô dâu nói hoặc chỉ ôm mẹ khóc — không cần bài bản. Đây là khoảnh khắc tự nhiên nhất, xúc động nhất. Photographer PHẢI bắt được.",
+    text: `Bố mẹ ơi,
+
+Con cảm ơn bố mẹ đã nuôi con khôn lớn, cho con ăn học, dạy con nên người.
+
+Hôm nay con về nhà chồng nhưng con sẽ luôn nhớ bố mẹ, luôn là con gái của bố mẹ.
+
+Con hứa sẽ sống tốt, giữ nếp nhà, làm cho bố mẹ tự hào.
+
+Con thương bố mẹ nhiều lắm. 🥹`,
+  },
+];
 
 export const STEP_PROCESSION: WeddingStep = {
   id: "procession",
@@ -61,6 +97,7 @@ export const STEP_PROCESSION: WeddingStep = {
         { text: "Đoàn xe đi đường KHÁC về nhà chồng", time: "08:35", responsible: "Lái xe hoa" },
         { text: "Đến nhà trai, mẹ chồng đón dâu ở cửa", time: "09:00", responsible: "Mẹ chồng" },
       ],
+      prayers: PROCESSION_PRAYERS,
       people: [
         { name: "Chú rể", role: "Đón dâu, cầm hoa", avatar: "🤵" },
         { name: "Phù dâu", role: "Chặn cổng, hỗ trợ cô dâu", avatar: "👧" },

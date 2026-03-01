@@ -1,4 +1,53 @@
-import type { Ceremony } from "@/types/wedding";
+import type { Ceremony, PrayerItem } from "@/types/wedding";
+
+// ===== Prayers for LE TAN HON (Groom's Ancestral Ceremony) =====
+const GROOM_PRAYERS_EN: PrayerItem[] = [
+  {
+    emoji: "🕯️",
+    title: "Ancestor prayer at the groom's home — Le Tan Hon",
+    occasion: "Le Tan Hon — when the bride arrives at the groom's home, before the reception",
+    type: "prayer",
+    note: "Groom's father or grandfather recites. The couple lights incense and bows 3 times. From this moment, the bride officially becomes a member of the groom's family. Must happen BEFORE the reception — quiet, solemn space.",
+    text: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to Heaven and Earth, and all divine spirits.
+We respectfully bow to the City God, the Land God, and the Kitchen God.
+We respectfully bow to our ancestors of the [GROOM'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+At [GROOM'S HOME ADDRESS],
+
+I, [GROOM'S FATHER'S NAME], residing at [ADDRESS],
+Report that our son [GROOM'S NAME], born in [BIRTH YEAR], has been joined in marriage with [BRIDE'S NAME], daughter of Mr./Mrs. [BRIDE'S PARENTS' NAMES].
+
+We sincerely report to the ancestors and ask for your blessing:
+— May they be a harmonious, respectful couple
+— May they soon be blessed with children and a prosperous family
+— May both in-law families live in peace and happiness
+
+Namo Amitabha Buddha (3 times)`,
+  },
+  {
+    emoji: "🏠",
+    title: "Prayer when the bride first enters the groom's home",
+    occasion: "Le Tan Hon — the moment the bride steps into the groom's house",
+    type: "prayer",
+    note: "The groom's mother or a senior elder recites as the bride enters. Some regions include a ritual of stepping over a charcoal brazier (Central) or a small fire pit. Brief and warm.",
+    text: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to the Land Deity, Kitchen God, and all guardian spirits of this home.
+We respectfully bow to our ancestors of the [GROOM'S FAMILY NAME] clan.
+
+Today, our new daughter-in-law [BRIDE'S NAME] officially enters this home, becoming a member of the [GROOM'S FAMILY NAME] family.
+
+We ask the Land Deity and guardian spirits to witness and bless our new daughter-in-law:
+— May she settle in well and bring harmony to the family
+— May husband and wife be united and the household prosper
+— May all enjoy good health and blessings
+
+Namo Amitabha Buddha (3 times)`,
+  },
+];
 
 // Core ceremonies for Step 6: Groom's Family Reception (groom-specific, not shared)
 export const GROOM_CEREMONIES_A_EN: Ceremony[] = [
@@ -23,6 +72,7 @@ export const GROOM_CEREMONIES_A_EN: Ceremony[] = [
       { text: "Bride pours tea and serves groom's parents and grandparents", time: "09:30", responsible: "Bride" },
       { text: "Family photo in front of the altar", time: "09:50", responsible: "Photographer" },
     ],
+    prayers: GROOM_PRAYERS_EN,
     people: [
       { name: "Bride & Groom", role: "Light incense, bow to ancestors", avatar: "💑" },
       { name: "Groom's Parents", role: "Guide ceremony, pray", avatar: "👫" },

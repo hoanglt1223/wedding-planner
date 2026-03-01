@@ -1,4 +1,53 @@
-import type { Ceremony } from "@/types/wedding";
+import type { Ceremony, PrayerItem } from "@/types/wedding";
+
+// ===== Văn khấn trong LỄ TÂN HÔN (gia tiên nhà trai) =====
+const GROOM_PRAYERS: PrayerItem[] = [
+  {
+    emoji: "🕯️",
+    title: "Văn khấn gia tiên nhà trai — Lễ tân hôn",
+    occasion: "Lễ tân hôn — khi cô dâu về đến nhà trai, trước tiệc cưới",
+    type: "prayer",
+    note: "Bố hoặc ông chú rể khấn. Đôi trẻ thắp nhang, lạy 3 lạy. Từ đây cô dâu chính thức trở thành thành viên gia đình nhà trai. Phải diễn ra TRƯỚC tiệc — không gian yên tĩnh, trang nghiêm.",
+    text: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn thần.
+Con kính lạy ngài Bản cảnh Thành hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân.
+Con kính lạy Cao tằng Tổ khảo, Cao tằng Tổ tỷ, Tiên linh nội ngoại họ [HỌ NHÀ TRAI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Tại [ĐỊA CHỈ NHÀ TRAI],
+
+Con là [TÊN BA CHÚ RỂ], ngụ tại [ĐỊA CHỈ].
+Nay con trai chúng con là [TÊN CHÚ RỂ], sinh năm ..., đã thành hôn cùng [TÊN CÔ DÂU], con ông/bà [TÊN BA MẸ CÔ DÂU].
+
+Chúng con thành tâm kính cáo, xin Tiên tổ chứng giám, phù hộ cho hai cháu:
+— Vợ chồng hòa thuận, kính trên nhường dưới
+— Sớm sinh quý tử, gia đình hưng thịnh
+— Hai nhà thông gia an khang, hạnh phúc
+
+Nam mô A Di Đà Phật (3 lần)`,
+  },
+  {
+    emoji: "🏠",
+    title: "Văn khấn nhập trạch — Cô dâu về nhà chồng",
+    occasion: "Lễ tân hôn — khoảnh khắc cô dâu bước vào nhà chồng",
+    type: "prayer",
+    note: "Mẹ chồng hoặc người lớn trong nhà đọc khi cô dâu bước qua cửa. Một số vùng có tục bước qua bếp than (miền Trung) hoặc chậu lửa nhỏ. Ngắn gọn, ấm áp.",
+    text: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Thổ Công, Táo Quân và chư vị thần linh cai quản ngôi nhà này.
+Con kính lạy Tiên tổ nội ngoại họ [HỌ NHÀ TRAI].
+
+Hôm nay con dâu mới [TÊN CÔ DÂU] chính thức bước vào nhà, trở thành thành viên của gia đình họ [HỌ NHÀ TRAI].
+
+Xin Thổ Công, thần linh chứng giám và phù hộ cho con dâu mới:
+— Sớm thích nghi, hòa thuận với gia đình
+— Vợ chồng đồng lòng, gia đạo hưng vượng
+— Mọi người khỏe mạnh, bình an
+
+Nam mô A Di Đà Phật (3 lần)`,
+  },
+];
 
 // Core ceremonies for Step 6: Cưới Trai (groom-specific, not shared)
 export const GROOM_CEREMONIES_A: Ceremony[] = [
@@ -23,6 +72,7 @@ export const GROOM_CEREMONIES_A: Ceremony[] = [
       { text: "Cô dâu rót trà mời bố mẹ chồng, ông bà", time: "09:30", responsible: "Cô dâu" },
       { text: "Chụp ảnh gia đình trước bàn thờ", time: "09:50", responsible: "Nhiếp ảnh" },
     ],
+    prayers: GROOM_PRAYERS,
     people: [
       { name: "Cô dâu & chú rể", role: "Thắp hương, lạy tổ tiên", avatar: "💑" },
       { name: "Bố mẹ chú rể", role: "Hướng dẫn nghi lễ, khấn vái", avatar: "👫" },

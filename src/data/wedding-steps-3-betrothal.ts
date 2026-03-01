@@ -1,5 +1,82 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
 import type { RegionalContent } from "@/data/regions";
+
+// ===== Văn khấn & lời phát biểu trong LỄ ĂN HỎI =====
+const BETROTHAL_PRAYERS: PrayerItem[] = [
+  {
+    emoji: "🎤",
+    title: "Lời MC / người lớn khai mạc lễ ăn hỏi",
+    occasion: "Lễ ăn hỏi — khi hai bên đã an vị",
+    type: "speech",
+    note: "Người lớn tuổi nhất hoặc MC khai mạc. Giọng trang trọng nhưng ấm áp. Giới thiệu hai gia đình, nêu mục đích buổi lễ. 2-3 phút.",
+    text: `Kính thưa ông bà, bà con hai họ,
+
+Hôm nay, ngày lành tháng tốt, gia đình nhà trai — họ [HỌ NHÀ TRAI] — đến quý gia đình nhà gái để cử hành lễ ăn hỏi cho hai cháu [TÊN CHÚ RỂ] và [TÊN CÔ DÂU].
+
+Xin giới thiệu:
+— Phía nhà trai: ông bà [TÊN], bố mẹ chú rể, cùng đại diện gia đình.
+— Phía nhà gái: ông bà [TÊN], bố mẹ cô dâu, cùng đại diện gia đình.
+
+Xin mời đại diện nhà trai lên trình sính lễ.`,
+  },
+  {
+    emoji: "🗣️",
+    title: "Lời nhà trai trình sính lễ",
+    occasion: "Lễ ăn hỏi — sau lời khai mạc",
+    type: "speech",
+    note: "Bố chú rể hoặc ông/chú đại diện. Trang trọng, thành kính hơn lời dạm ngõ — đây là lễ chính thức. 3-5 phút. Nên viết sẵn và tập trước.",
+    text: `Kính thưa ông bà và gia đình nhà gái,
+
+Trước đây, gia đình chúng tôi đã có dịp đến dạm ngõ, xin phép cho hai cháu [TÊN CHÚ RỂ] và [TÊN CÔ DÂU] tìm hiểu nhau.
+
+Được sự đồng ý của quý gia đình, hôm nay gia đình chúng tôi mang sính lễ gồm [SỐ] mâm quả đến kính trình ông bà, xin chính thức hỏi cháu [TÊN CÔ DÂU] cho con trai chúng tôi.
+
+Sính lễ tuy mỏng nhưng thể hiện tấm lòng thành kính của gia đình nhà trai. Kính mong ông bà và gia đình nhận lễ, cho phép hai cháu nên duyên vợ chồng.
+
+Kính chúc hai gia đình sức khỏe, hạnh phúc, an khang thịnh vượng.`,
+  },
+  {
+    emoji: "🗣️",
+    title: "Lời nhà gái nhận lễ",
+    occasion: "Lễ ăn hỏi — sau lời nhà trai",
+    type: "speech",
+    note: "Bố cô dâu hoặc ông/chú đại diện. Ngắn gọn: nhận lễ, đồng ý, chúc phúc. Nếu có điều kiện gì thì nêu rõ (nhẹ nhàng).",
+    text: `Kính thưa ông bà và gia đình nhà trai,
+
+Gia đình chúng tôi rất vui mừng và cảm kích trước tấm lòng thành của quý gia đình.
+
+Chúng tôi xin nhận sính lễ và đồng ý cho cháu [TÊN CÔ DÂU] về làm dâu nhà [HỌ NHÀ TRAI]. Xin quý gia đình yên tâm — chúng tôi đã dạy dỗ cháu chu toàn, mong cháu sẽ là con dâu hiếu thảo.
+
+Bây giờ xin mời hai bên lên bàn thờ gia tiên để trình lễ, xin tổ tiên chứng giám.
+
+Kính chúc hai gia đình vạn sự như ý.`,
+  },
+  {
+    emoji: "🕯️",
+    title: "Văn khấn gia tiên — Lễ ăn hỏi",
+    occasion: "Lễ ăn hỏi — sau khi nhà gái nhận lễ, thắp hương trình tổ tiên",
+    type: "prayer",
+    note: "Bố hoặc mẹ cô dâu khấn trước bàn thờ. Đôi trẻ thắp nhang, lạy 2-4 lạy. Đây là văn khấn TRANG TRỌNG hơn nhiều so với dạm ngõ — đầy đủ thần linh, tổ tiên.",
+    text: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn thần.
+Con kính lạy ngài Bản cảnh Thành hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân.
+Con kính lạy Cao tằng Tổ khảo, Cao tằng Tổ tỷ, Tiên linh nội ngoại họ [HỌ NHÀ GÁI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Tại [ĐỊA CHỈ NHÀ GÁI],
+
+Gia đình chúng con có cháu gái là [TÊN CÔ DÂU], sinh năm ..., nay đã trưởng thành.
+Được sự đồng ý hai bên gia đình, nay gia đình họ [HỌ NHÀ TRAI] mang sính lễ đến xin hỏi cháu cho con trai là [TÊN CHÚ RỂ], con ông/bà [TÊN BA MẸ CHÚ RỂ].
+
+Chúng con thành tâm dâng lễ vật, xin kính cáo Tiên tổ chứng giám, phù hộ cho hai cháu:
+— Trăm năm hạnh phúc, thuận vợ thuận chồng
+— Gia đình hưng thịnh, con cháu đầy đàn
+— Hai nhà thông gia hòa thuận, an khang
+
+Nam mô A Di Đà Phật (3 lần)`,
+  },
+];
 
 export const STEP_BETROTHAL: WeddingStep = {
   id: "betrothal",
@@ -81,6 +158,7 @@ export const STEP_BETROTHAL: WeddingStep = {
         { text: "Nhà gái mời cơm/tiệc thân mật", time: "10:00", responsible: "Gia đình nhà gái" },
         { text: "Tiệc kết thúc, nhà trai nhận lại quả ra về", time: "11:00", responsible: "Đội bê tráp" },
       ],
+      prayers: BETROTHAL_PRAYERS,
       gifts: [
         { name: "Mâm trầu cau", quantity: "105 quả cau + trầu", cost: 800000 },
         { name: "Trà sen", quantity: "2-4 hộp trà sen Tây Hồ", cost: 800000 },

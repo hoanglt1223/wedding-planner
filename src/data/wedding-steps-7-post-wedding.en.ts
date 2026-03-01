@@ -1,4 +1,27 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
+
+// ===== Prayer for LE LAI MAT (Post-wedding return visit) =====
+const POST_WEDDING_PRAYERS_EN: PrayerItem[] = [
+  {
+    emoji: "🕯️",
+    title: "Return visit ancestor prayer (Le Lai Mat)",
+    occasion: "Le Lai Mat — 3 days after the wedding, when the couple visits the bride's family",
+    type: "prayer",
+    note: "The couple lights incense at the bride's family altar, reporting to the ancestors as husband and wife. Bride's parents or grandparents recite. Brief and warm.",
+    text: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+Daughter [BRIDE'S NAME] and son-in-law [GROOM'S NAME] have returned home to light incense and report to the ancestors.
+
+The two are now husband and wife. We humbly ask the ancestors to bear witness and bless them:
+— A harmonious marriage and lasting happiness
+— Both families in peace and prosperity
+
+Namo Amitabha Buddha (3 times)`,
+  },
+];
 
 export const STEP_POST_WEDDING_EN: WeddingStep = {
   id: "post-wedding",
@@ -46,6 +69,7 @@ export const STEP_POST_WEDDING_EN: WeddingStep = {
         { text: "Share a meal together with the bride's family", time: "10:00", responsible: "Everyone" },
         { text: "Warm conversation, take family photos", time: "11:00", responsible: "Bride & Groom" },
       ],
+      prayers: POST_WEDDING_PRAYERS_EN,
       people: [
         { name: "Bride & Groom", role: "Visit bride's family", avatar: "💑" },
         { name: "Groom's Parents", role: "Accompany (if available)", avatar: "👫" },

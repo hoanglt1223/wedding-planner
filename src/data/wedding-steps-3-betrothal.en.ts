@@ -1,5 +1,82 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
 import type { RegionalContent } from "@/data/regions";
+
+// ===== Prayers & speeches for the BETROTHAL CEREMONY (An Hoi) =====
+const BETROTHAL_PRAYERS_EN: PrayerItem[] = [
+  {
+    emoji: "🎤",
+    title: "MC / Elder opening the betrothal ceremony",
+    occasion: "Betrothal ceremony — after both families are seated",
+    type: "speech",
+    note: "The most senior elder or MC opens the ceremony. Formal yet warm tone. Introduce both families and state the purpose. 2-3 minutes.",
+    text: `Dear grandparents, elders, and members of both families,
+
+Today, on this auspicious day, the groom's family — the [GROOM'S FAMILY NAME] clan — has come to the bride's family to perform the Betrothal Ceremony for [GROOM'S NAME] and [BRIDE'S NAME].
+
+Allow me to introduce:
+— From the groom's family: Mr. and Mrs. [NAME], the groom's parents, along with family representatives.
+— From the bride's family: Mr. and Mrs. [NAME], the bride's parents, along with family representatives.
+
+I now invite the groom's family representative to present the betrothal gifts.`,
+  },
+  {
+    emoji: "🗣️",
+    title: "Groom's family presents betrothal gifts",
+    occasion: "Betrothal ceremony — after opening",
+    type: "speech",
+    note: "Groom's father or senior uncle. More formal and solemn than the engagement visit — this is the official ceremony. 3-5 minutes. Write it down and rehearse.",
+    text: `Dear grandparents and the bride's esteemed family,
+
+Previously, our family had the honor of visiting to request permission for our children to court each other.
+
+With your kind approval, today our family brings [NUMBER] ceremonial gift trays to formally ask for the hand of [BRIDE'S NAME] for our son [GROOM'S NAME].
+
+Though humble, these gifts represent the sincere respect and devotion of the groom's family. We humbly ask you to accept our betrothal gifts and bless the union of our two children.
+
+We wish both families health, happiness, and prosperity.`,
+  },
+  {
+    emoji: "🗣️",
+    title: "Bride's family accepts the betrothal gifts",
+    occasion: "Betrothal ceremony — after groom's family speech",
+    type: "speech",
+    note: "Bride's father or senior uncle. Brief: accept the gifts, agree to the union, bless the couple. State any conditions gently if needed.",
+    text: `Dear grandparents and the groom's esteemed family,
+
+Our family is deeply moved and grateful for your sincerity.
+
+We accept the betrothal gifts and agree to give our daughter [BRIDE'S NAME] in marriage to the [GROOM'S FAMILY NAME] family. Please be assured — we have raised her well, and we trust she will be a devoted daughter-in-law.
+
+Let us now proceed to the ancestral altar to present the gifts and ask the ancestors to bear witness.
+
+We wish both families all the best.`,
+  },
+  {
+    emoji: "🕯️",
+    title: "Ancestor prayer — Betrothal ceremony",
+    occasion: "Betrothal ceremony — after gifts are accepted, incense is lit at the altar",
+    type: "prayer",
+    note: "Bride's father or mother recites at the altar. The couple lights incense and bows 2-4 times. This is significantly more formal than the engagement visit prayer — invoking all deities and ancestors.",
+    text: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to Heaven and Earth, and all divine spirits.
+We respectfully bow to the City God, the Land God, and the Kitchen God.
+We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+At [BRIDE'S HOME ADDRESS],
+
+Our family's granddaughter [BRIDE'S NAME], born in [BIRTH YEAR], has now come of age.
+With the agreement of both families, the [GROOM'S FAMILY NAME] family has brought betrothal gifts to formally request her hand in marriage for their son [GROOM'S NAME], son of Mr./Mrs. [GROOM'S PARENTS' NAMES].
+
+We sincerely present these offerings and ask the ancestors to bear witness and bless the couple:
+— A lifetime of harmony and happiness
+— A prosperous family with many descendants
+— Both in-law families in peace and good fortune
+
+Namo Amitabha Buddha (3 times)`,
+  },
+];
 
 export const STEP_BETROTHAL_EN: WeddingStep = {
   id: "betrothal",
@@ -81,6 +158,7 @@ export const STEP_BETROTHAL_EN: WeddingStep = {
         { text: "Bride's family hosts informal meal", time: "10:00", responsible: "Bride's Family" },
         { text: "Meal concludes; groom's party receives return gifts and departs", time: "11:00", responsible: "Gift Bearer Team" },
       ],
+      prayers: BETROTHAL_PRAYERS_EN,
       gifts: [
         { name: "Betel nut tray", quantity: "105 betel nuts + leaves", cost: 800000 },
         { name: "Lotus tea", quantity: "2-4 boxes of West Lake lotus tea", cost: 800000 },

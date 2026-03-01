@@ -1,4 +1,27 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
+
+// ===== Văn khấn trong LỄ LẠI MẶT =====
+const POST_WEDDING_PRAYERS: PrayerItem[] = [
+  {
+    emoji: "🕯️",
+    title: "Văn khấn lại mặt — Về thăm nhà gái sau cưới",
+    occasion: "Lễ lại mặt — 3 ngày sau cưới, khi vợ chồng về thăm nhà gái",
+    type: "prayer",
+    note: "Vợ chồng thắp nhang trước bàn thờ nhà gái, báo cáo tổ tiên rằng hai người đã thành vợ chồng. Bố mẹ cô dâu hoặc ông bà khấn. Ngắn gọn, ấm áp.",
+    text: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Tiên tổ nội ngoại họ [HỌ NHÀ GÁI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Con gái [TÊN CÔ DÂU] cùng con rể [TÊN CHÚ RỂ] trở về nhà thắp nhang, kính báo tổ tiên.
+
+Hai cháu nay đã thành vợ thành chồng. Xin kính lạy tổ tiên chứng giám, phù hộ cho hai cháu:
+— Vợ chồng hòa thuận, hạnh phúc bền lâu
+— Gia đình hai bên an khang, thịnh vượng
+
+Nam mô A Di Đà Phật (3 lần)`,
+  },
+];
 
 export const STEP_POST_WEDDING: WeddingStep = {
   id: "post-wedding",
@@ -48,6 +71,7 @@ export const STEP_POST_WEDDING: WeddingStep = {
         { text: "Ăn cơm cùng gia đình nhà gái", time: "10:00", responsible: "Cả nhà" },
         { text: "Trò chuyện thân mật, chụp ảnh gia đình", time: "11:00", responsible: "Cô dâu & chú rể" },
       ],
+      prayers: POST_WEDDING_PRAYERS,
       people: [
         { name: "Cô dâu & chú rể", role: "Về thăm nhà gái", avatar: "💑" },
         { name: "Ba mẹ chú rể", role: "Đi cùng (nếu có)", avatar: "👫" },

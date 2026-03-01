@@ -1,5 +1,50 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
 import { RECEPTION_EXTRAS } from "./wedding-steps-reception-extras";
+
+// ===== Văn khấn & lời phát biểu trong LỄ VU QUY =====
+const VU_QUY_PRAYERS: PrayerItem[] = [
+  {
+    emoji: "🕯️",
+    title: "Văn khấn gia tiên nhà gái — Lễ vu quy",
+    occasion: "Lễ vu quy — sáng ngày cưới, trước khi đón tiệc",
+    type: "prayer",
+    note: "Bố hoặc mẹ cô dâu khấn. Đôi trẻ thắp nhang, lạy 3 lạy. Đây là lần cuối cô dâu lạy tổ tiên nhà mình với tư cách 'con gái nhà' — rất xúc động. Chuẩn bị khăn tay.",
+    text: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn thần.
+Con kính lạy ngài Bản cảnh Thành hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân.
+Con kính lạy Cao tằng Tổ khảo, Cao tằng Tổ tỷ, Tiên linh nội ngoại họ [HỌ NHÀ GÁI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Tại [ĐỊA CHỈ NHÀ GÁI],
+
+Gia đình chúng con có cháu gái là [TÊN CÔ DÂU], sinh năm ..., nay được gả cho [TÊN CHÚ RỂ], con ông/bà [TÊN BA MẸ CHÚ RỂ].
+
+Hôm nay là ngày vu quy — cháu chính thức xuất giá về nhà chồng.
+Chúng con thành tâm kính cáo, xin Tiên tổ chứng giám, phù hộ cho cháu:
+— Đường về nhà chồng bình an, thuận lợi
+— Vợ chồng hòa thuận, hạnh phúc trọn đời
+— Hai nhà thông gia an khang thịnh vượng
+
+Nam mô A Di Đà Phật (3 lần)`,
+  },
+  {
+    emoji: "👨",
+    title: "Lời bố tiễn con gái về nhà chồng",
+    occasion: "Lễ vu quy — sau lễ gia tiên, trước khi cô dâu lên xe hoa",
+    type: "speech",
+    note: "Bố cô dâu nói. Đây là khoảnh khắc XÚC ĐỘNG NHẤT — photographer phải sẵn sàng. Ngắn gọn, từ trái tim. Nếu không đọc được vì khóc — hoàn toàn bình thường.",
+    text: `Con gái yêu của bố,
+
+Hôm nay con chính thức về nhà chồng. Bố mẹ nuôi con từ nhỏ đến ngày hôm nay — vui có, khổ có, nhưng bố mẹ luôn hạnh phúc vì có con.
+
+Con rể [TÊN CHÚ RỂ], bố giao con gái bố cho con. Bố tin con sẽ yêu thương, che chở, cùng con gái bố xây dựng gia đình hạnh phúc.
+
+Con gái à — nhà này mãi mãi là nhà con. Bất cứ lúc nào cũng có thể về.
+
+Bố mẹ chúc hai con trăm năm hạnh phúc.`,
+  },
+];
 
 export const STEP_BRIDE_CEREMONY: WeddingStep = {
   id: "bride-ceremony",
@@ -89,6 +134,7 @@ export const STEP_BRIDE_CEREMONY: WeddingStep = {
         { text: "Bố mẹ chúc phúc, ôm con gái", time: "07:20", responsible: "Bố mẹ cô dâu" },
         { text: "Chụp ảnh gia đình trước bàn thờ — kỷ niệm thiêng liêng", time: "07:25", responsible: "Nhiếp ảnh" },
       ],
+      prayers: VU_QUY_PRAYERS,
       people: [
         { name: "Cô dâu & chú rể", role: "Thắp hương, lạy tổ tiên", avatar: "💑" },
         { name: "Bố mẹ cô dâu", role: "Khấn vái, dẫn lễ", avatar: "👫" },

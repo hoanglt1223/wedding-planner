@@ -1,4 +1,40 @@
-import type { WeddingStep } from "@/types/wedding";
+import type { WeddingStep, PrayerItem } from "@/types/wedding";
+
+// ===== Speeches for the WEDDING PROCESSION (Ruoc Dau) =====
+const PROCESSION_PRAYERS_EN: PrayerItem[] = [
+  {
+    emoji: "🗣️",
+    title: "Groom's pledge to the bride's parents",
+    occasion: "Procession — after passing the gate, before escorting the bride to the car",
+    type: "speech",
+    note: "The groom should speak himself — more sincere than having someone else speak. Brief, from the heart. If too nervous, write a few lines and keep them handy.",
+    text: `Dear Father and Mother (in-law) and the bride's family,
+
+I sincerely thank you for trusting me with [BRIDE'S NAME].
+
+I promise to love, respect, and build a happy family with her. I also promise to be a devoted son to both sets of parents, just as your own child.
+
+I humbly ask your permission to take [BRIDE'S NAME] home.
+
+Thank you, Father and Mother.`,
+  },
+  {
+    emoji: "👰",
+    title: "Bride's farewell to her parents before departing",
+    occasion: "Procession — the moment the bride leaves her home",
+    type: "speech",
+    note: "The bride speaks or simply hugs her mother in tears — no script needed. This is the most natural and emotional moment. The photographer MUST capture it.",
+    text: `Dear Mom and Dad,
+
+Thank you for raising me, for giving me everything, for teaching me to be who I am.
+
+Today I leave for my husband's home, but I will always remember you, and I will always be your daughter.
+
+I promise to live well, uphold our family values, and make you proud.
+
+I love you so much. 🥹`,
+  },
+];
 
 export const STEP_PROCESSION_EN: WeddingStep = {
   id: "procession",
@@ -61,6 +97,7 @@ export const STEP_PROCESSION_EN: WeddingStep = {
         { text: "Procession departs via a DIFFERENT route to the groom's home", time: "08:35", responsible: "Wedding Car Driver" },
         { text: "Arrive at groom's home; mother-in-law greets the bride at the door", time: "09:00", responsible: "Mother-in-law" },
       ],
+      prayers: PROCESSION_PRAYERS_EN,
       people: [
         { name: "Groom", role: "Pick up bride, carry bouquet", avatar: "🤵" },
         { name: "Bridesmaids", role: "Gate blocking, support bride", avatar: "👧" },
