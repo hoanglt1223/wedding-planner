@@ -27,6 +27,13 @@ export interface GiftItem {
   cost: number;
 }
 
+export interface DiscussionItem {
+  emoji: string;
+  question: string;
+  detail: string;
+  tips?: string[];
+}
+
 export interface Ceremony {
   name: string;
   required: number;         // 1=required, 0=optional
@@ -34,6 +41,7 @@ export interface Ceremony {
   steps: CeremonyStep[];
   people: Person[];
   gifts?: GiftItem[];
+  discussions?: DiscussionItem[];  // Questions/ideas for families to discuss
   regionalNotes?: RegionalContent<string[]>;  // Region-specific notes
 }
 

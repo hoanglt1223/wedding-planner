@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { CeremonySteps } from "./ceremony-steps";
 import { PeopleGrid } from "./people-grid";
 import { GiftsTable } from "./gifts-table";
+import { DiscussionsList } from "./discussions-list";
 import { t } from "@/lib/i18n";
 
 interface CeremonySectionProps {
@@ -59,6 +60,11 @@ export function CeremonySection({
           onToggle={onToggleCheck}
           timeOffset={timeOffset}
         />
+      )}
+
+      {/* Family discussion topics */}
+      {ceremony.discussions && ceremony.discussions.length > 0 && (
+        <DiscussionsList discussions={ceremony.discussions} lang={lang} />
       )}
 
       {/* Gifts table */}

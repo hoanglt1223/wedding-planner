@@ -170,6 +170,8 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Phụ trách": { vi: "Phụ trách", en: "Person" },
   "Lễ vật:": { vi: "Lễ vật:", en: "Offerings:" },
   "🎁 Lễ Vật": { vi: "🎁 Lễ Vật", en: "🎁 Offerings" },
+  "💬 Hai Nhà Cần Bàn": { vi: "💬 Hai Nhà Cần Bàn", en: "💬 Family Discussion Topics" },
+  "Gợi ý": { vi: "Gợi ý", en: "Tips" },
   "Tên": { vi: "Tên", en: "Name" },
   "SL": { vi: "SL", en: "Qty" },
   "Giá": { vi: "Giá", en: "Price" },
