@@ -42,6 +42,16 @@ export function DiscussionsList({ discussions, lang = "vi" }: DiscussionsListPro
                       </div>
                     </div>
                   )}
+                  {item.sampleText && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 mt-2">
+                      <div className="text-xs font-semibold text-amber-800 mb-1.5">
+                        📜 {item.sampleTextLabel || t("Văn mẫu tham khảo", lang)}
+                      </div>
+                      <div className="text-xs text-amber-900 leading-relaxed whitespace-pre-line italic">
+                        {item.sampleText}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

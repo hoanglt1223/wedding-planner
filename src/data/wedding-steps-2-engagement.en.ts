@@ -56,126 +56,63 @@ export const STEP_ENGAGEMENT_EN: WeddingStep = {
         { text: "Wrap up — confirm all agreements before departing", time: "11:30", responsible: "Both Families" },
       ],
       discussions: [
+        { emoji: "📅", question: "When should the betrothal and wedding be held?", detail: "Agree on a timeframe for the betrothal ceremony and the wedding day. Consider the couple's zodiac compatibility, auspicious dates, and avoid unlucky periods (e.g., lunar 7th month).", tips: ["Pick 2-3 backup dates for flexibility with venue/vendor bookings", "Betrothal is usually 1-3 months before the wedding (North) or 2-4 weeks (South)", "Consult a fortune teller or the Vietnamese lunar almanac for auspicious dates"] },
+        { emoji: "🕐", question: "Auspicious hours: bride pickup, arrival, ancestor prayers?", detail: "Agree on key ceremony times: when the groom's entourage departs, arrives at the bride's home, picks up the bride, and when the ancestor altar prayer begins. These are 'golden hours' that need careful selection.", tips: ["The bride pickup time and arrival time (at groom's home) are the two most critical hours", "Work backwards: arrival time → subtract travel time → get pickup time", "Common auspicious hours: 6am, 8am, 10am (even numbers, avoid unlucky hours)", "Buffer 15-30 minutes for traffic and minor delays"] },
+        { emoji: "🎁", question: "How many gift trays for the betrothal? What goes in each?", detail: "Agree on the number of gift trays (traditionally an odd number: 5, 7, 9, or 11). Discuss what each tray contains, the quantities, and presentation requirements.", tips: ["Northern style: 5-7 trays (betel, wine, tea, green bean cakes, fruits, wedding cakes...)", "Southern style: 5-11 trays, often including a roasted pig and sticky rice", "Central style: similar to the North, may include regional specialties", "The bride's family should state requirements clearly; the groom's family shouldn't haggle — this shows sincerity"] },
+        { emoji: "🎊", question: "Gift tray decoration: cloth cover, flowers, arrangement?", detail: "Gift trays need to be beautifully decorated. Discuss: red cloth or cellophane cover? Fresh flowers? Who arranges and decorates? Hire a service or DIY?", tips: ["Red/gold cloth covers are most common — can rent or buy", "Fresh flowers (roses, chrysanthemums) on each tray add an elegant touch", "Decoration service: 500k-2M VND depending on quantity and elaborateness", "DIY: saves money but needs someone experienced, prepare the day before"] },
+        { emoji: "🐷", question: "Whole roasted pig: who provides it, how many?", detail: "Many Vietnamese weddings (especially Southern) require whole roasted pigs as part of the betrothal gifts or bridal procession. Discuss: how many, who orders, who pays.", tips: ["Southern style: very common, 1-2 roasted pigs as part of the gift trays", "Northern/Central style: less common, may substitute with suckling pig or skip entirely", "Cost: 3-7 million VND per pig depending on size and vendor", "After the ceremony: split between both families or bride's family keeps it? — decide in advance"] },
+        { emoji: "🎀", question: "How to split the betrothal gifts after the ceremony?", detail: "After the bride's family accepts the gift trays, tradition requires 'chia le' (splitting the gifts) — returning a portion to the groom's family as 'lai qua'. Discuss: how much to return, what items, how to present them.", tips: ["General rule: split roughly in half, or return a small portion to the groom's side (never keep all, never return all)", "Betel nuts: split into odd numbers (1, 3, or 5 pieces) to 'keep the luck'", "Cakes, tea, wine: open and split, each side keeps a portion", "Bride price: some bride's families return part of it inside the return envelopes", "Return items in red bags/trays — NEVER return an empty tray"] },
+        { emoji: "🧧", question: "Red envelopes (li xi) for the gift bearer team?", detail: "The gift bearer team (groom's side) and the receiving team (bride's side) should receive red envelopes. Discuss: how much per person, who prepares the envelopes, who distributes.", tips: ["Bride's family gives red envelopes to the groom's gift bearers (when receiving trays)", "Groom's family gives red envelopes to the bride's receiving team (varies by region)", "Common amount: 100k-500k VND per person depending on family's means", "Prepare red envelopes in advance — don't scramble to find them at the last minute"] },
+        { emoji: "💰", question: "How much is the bride price (tien nap tai)?", detail: "The bride price is a sum the groom's family presents to the bride's family as a token of respect for raising their daughter. The amount varies greatly by region and family.", tips: ["Northern Vietnam: often waived or purely symbolic (a few million VND)", "Southern Vietnam: more common, ranging from a few million to tens of millions VND", "Central Vietnam: flexible, depends on mutual agreement", "Discuss openly and honestly — this is about becoming family, not a transaction", "Some bride's families return all or part of it — best to ask their intentions early"] },
+        { emoji: "💍", question: "Wedding jewelry: rings, gold, and when to present them?", detail: "Who buys the wedding rings? How much gold does the groom's family gift the bride? Does the bride's family gift anything back? When in the ceremony is gold presented?", tips: ["Wedding rings: usually chosen by the couple or provided by the groom's family", "Gold for the bride: depends on financial capacity, no need to compare", "Some bride's families gift gold/presents to the groom — discuss early", "Gold is the bride's property — the groom's family should NEVER ask for it back", "Timing: usually presented during the betrothal or bride pickup ceremony"] },
+        { emoji: "🏛️", question: "Which regional customs should we follow?", detail: "If the two families are from different regions, agree on which customs to follow. Which ceremonies are mandatory, which are flexible, and which can be skipped.", tips: ["Same region: follow local traditions", "Different regions: usually follow the bride's family customs (since ceremonies are held at the bride's home)", "List clearly: which ceremonies are required, optional, or skipped", "If the family follows a religion (Buddhist, Catholic, Protestant...), discuss additional religious rites"] },
+        { emoji: "⛪", question: "Different religions/beliefs: how to handle?", detail: "If the families follow different religions (Buddhism, Catholicism, Protestantism, none...), discuss religious ceremonies, altar arrangements, and mutual respect.", tips: ["Catholic families: often require a church wedding, may need catechism classes", "Buddhist families: may add a temple blessing ceremony (Le Hang Thuan)", "Ancestral altar: Catholic families typically don't have one — agree on alternative rituals", "Core principle: mutual respect — never pressure the other side to convert or abandon their faith"] },
         {
-          emoji: "📅",
-          question: "When should the betrothal and wedding be held?",
-          detail: "Agree on a timeframe for the betrothal ceremony and the wedding day. Consider the couple's zodiac compatibility, auspicious dates, and avoid unlucky periods (e.g., lunar 7th month).",
+          emoji: "🗣️",
+          question: "Who represents the groom's family in the formal request speech? What to say?",
+          detail: "During the betrothal, a representative from the groom's family (usually the father or a senior uncle) delivers a formal speech requesting the bride's family's permission for the marriage. Discuss: who speaks, what to say.",
           tips: [
-            "Pick 2-3 backup dates for flexibility with venue/vendor bookings",
-            "Betrothal is usually 1-3 months before the wedding (North) or 2-4 weeks (South)",
-            "Consult a fortune teller or the Vietnamese lunar almanac for auspicious dates",
+            "Speaker: groom's father, or a senior uncle/grandfather if the father is unavailable",
+            "Content: introduce the family → express wishes → request permission → present gifts",
+            "Tone: sincere, clear, not too long (3-5 minutes)",
+            "Write it down beforehand and practice 1-2 times",
           ],
+          sampleTextLabel: "📜 Sample speech — Groom's family formal request",
+          sampleText: `Dear grandparents, elders, and the bride's esteemed family,
+
+Today, on this auspicious day, our family — the [GROOM'S FAMILY NAME] clan — respectfully comes to your home to speak about an important matter.
+
+Our son [GROOM'S NAME] and your daughter [BRIDE'S NAME] have been together for [DURATION]. They are deeply in love and wish to proceed toward marriage.
+
+Our family brings these humble symbolic gifts to present to your family, and we respectfully ask for your permission to allow the two young ones to formally court and proceed toward the wedding.
+
+We sincerely hope you will accept our request. Thank you very much.`,
         },
         {
-          emoji: "🕐",
-          question: "Auspicious hours: bride pickup, arrival, ancestor prayers?",
-          detail: "Agree on key ceremony times: when the groom's entourage departs, arrives at the bride's home, picks up the bride, and when the ancestor altar prayer begins. These are 'golden hours' that need careful selection.",
+          emoji: "🗣️",
+          question: "Who represents the bride's family in the response? What to say?",
+          detail: "After the groom's family speaks, a representative from the bride's family (usually the father or a senior elder) responds — accepting or setting conditions. Discuss: who responds, what to say.",
           tips: [
-            "The bride pickup time and arrival time (at groom's home) are the two most critical hours",
-            "Work backwards: arrival time → subtract travel time → get pickup time",
-            "Common auspicious hours: 6am, 8am, 10am (even numbers, avoid unlucky hours)",
-            "Consult a fortune teller or the Vietnamese almanac for 'hoang dao' (auspicious) hours",
-            "Buffer 15-30 minutes for traffic and minor delays",
+            "Speaker: bride's father, or a senior uncle/grandfather as substitute",
+            "Content: express gratitude → agree → state any conditions (if applicable) → bless the couple",
+            "Keep it brief — sincerity is what matters",
+            "Prepare in advance to avoid being flustered",
           ],
-        },
-        {
-          emoji: "🎁",
-          question: "How many gift trays for the betrothal? What goes in each?",
-          detail: "Agree on the number of gift trays (traditionally an odd number: 5, 7, 9, or 11). Discuss what each tray contains, the quantities, and presentation requirements.",
-          tips: [
-            "Northern style: 5-7 trays (betel, wine, tea, green bean cakes, fruits, wedding cakes...)",
-            "Southern style: 5-11 trays, often including a roasted pig and sticky rice",
-            "Central style: similar to the North, may include regional specialties",
-            "The bride's family should state requirements clearly; the groom's family shouldn't haggle — this shows sincerity",
-          ],
-        },
-        {
-          emoji: "🐷",
-          question: "Whole roasted pig: who provides it, how many?",
-          detail: "Many Vietnamese weddings (especially Southern) require whole roasted pigs as part of the betrothal gifts or bridal procession. Discuss: how many, who orders, who pays.",
-          tips: [
-            "Southern style: very common, 1-2 roasted pigs as part of the gift trays",
-            "Northern/Central style: less common, may substitute with suckling pig or skip entirely",
-            "Cost: 3-7 million VND per pig depending on size and vendor",
-            "Order 1-2 weeks early, especially during peak wedding season (lunar months 10-12)",
-            "After the ceremony: split between both families or bride's family keeps it? — decide in advance",
-          ],
-        },
-        {
-          emoji: "🎀",
-          question: "How to split the betrothal gifts after the ceremony?",
-          detail: "After the bride's family accepts the gift trays, tradition requires 'chia le' (splitting the gifts) — returning a portion to the groom's family as 'lai qua'. Discuss: how much to return, what items, how to present them.",
-          tips: [
-            "General rule: split roughly in half, or return a small portion to the groom's side (never keep all, never return all)",
-            "Betel nuts: split into odd numbers (1, 3, or 5 pieces) to 'keep the luck'",
-            "Cakes, tea, wine: open and split, each side keeps a portion",
-            "Bride price: some bride's families return part of it inside the return envelopes",
-            "Southern style: tend to share more generously, may distribute to relatives and neighbors",
-            "Return items in red bags/trays — NEVER return an empty tray",
-          ],
-        },
-        {
-          emoji: "🧧",
-          question: "Red envelopes (li xi) for the gift bearer team?",
-          detail: "The gift bearer team (groom's side) and the receiving team (bride's side) should receive red envelopes. Discuss: how much per person, who prepares the envelopes, who distributes.",
-          tips: [
-            "Bride's family gives red envelopes to the groom's gift bearers (when receiving trays)",
-            "Groom's family gives red envelopes to the bride's receiving team (varies by region)",
-            "Common amount: 100k-500k VND per person depending on family's means",
-            "Number of bearers = number of gift trays (one bearer per tray)",
-            "Prepare red envelopes in advance — don't scramble to find them at the last minute",
-          ],
-        },
-        {
-          emoji: "💰",
-          question: "How much is the bride price (tien nap tai)?",
-          detail: "The bride price is a sum the groom's family presents to the bride's family as a token of respect for raising their daughter. The amount varies greatly by region and family.",
-          tips: [
-            "Northern Vietnam: often waived or purely symbolic (a few million VND)",
-            "Southern Vietnam: more common, ranging from a few million to tens of millions VND",
-            "Central Vietnam: flexible, depends on mutual agreement",
-            "Discuss openly and honestly — this is about becoming family, not a transaction",
-            "Some bride's families return all or part of it — best to ask their intentions early",
-          ],
-        },
-        {
-          emoji: "💍",
-          question: "Wedding jewelry: rings, gold, and when to present them?",
-          detail: "Who buys the wedding rings? How much gold does the groom's family gift the bride? Does the bride's family gift anything back? When in the ceremony is gold presented?",
-          tips: [
-            "Wedding rings: usually chosen by the couple or provided by the groom's family",
-            "Gold for the bride: depends on financial capacity, no need to compare",
-            "Some bride's families gift gold/presents to the groom — discuss early",
-            "Gold is the bride's property — the groom's family should NEVER ask for it back",
-            "Timing: usually presented during the betrothal or bride pickup ceremony at the bride's home",
-          ],
-        },
-        {
-          emoji: "🏛️",
-          question: "Which regional customs should we follow?",
-          detail: "If the two families are from different regions, agree on which customs to follow. Which ceremonies are mandatory, which are flexible, and which can be skipped.",
-          tips: [
-            "Same region: follow local traditions",
-            "Different regions: usually follow the bride's family customs (since ceremonies are held at the bride's home)",
-            "List clearly: which ceremonies are required, optional, or skipped",
-            "If the family follows a religion (Buddhist, Catholic, Protestant...), discuss additional religious rites",
-          ],
-        },
-        {
-          emoji: "⛪",
-          question: "Different religions/beliefs: how to handle?",
-          detail: "If the families follow different religions (Buddhism, Catholicism, Protestantism, none...), discuss religious ceremonies, altar arrangements, and mutual respect.",
-          tips: [
-            "Catholic families: often require a church wedding, may need catechism classes",
-            "Buddhist families: may add a temple blessing ceremony (Le Hang Thuan)",
-            "Ancestral altar: Catholic families typically don't have one — agree on alternative rituals",
-            "Core principle: mutual respect — never pressure the other side to convert or abandon their faith",
-          ],
+          sampleTextLabel: "📜 Sample response — Bride's family acceptance",
+          sampleText: `Dear grandparents and the groom's esteemed family,
+
+Our family is delighted and honored to welcome you today.
+
+We have known about the relationship between [BRIDE'S NAME] and [GROOM'S NAME] for some time, and we are very happy to see them together.
+
+Our family agrees and accepts your family's kind request. We gladly receive your gifts and look forward to discussing the next steps so the two young ones may soon be united.
+
+We wish both families health and happiness. May the couple enjoy a lifetime of love and joy.`,
         },
         {
           emoji: "🕯️",
           question: "Ancestor altar ceremony: incense, bowing, protocol?",
-          detail: "The ancestor prayer is the most important ritual — the couple lights incense and bows before the family altar. Discuss: who guides the couple, how many bows, the order of rituals.",
+          detail: "The ancestor prayer is the most important ritual — the couple lights incense and bows before the family altar. Discuss: who guides the couple, how many bows, who recites the prayer.",
           tips: [
             "Typical order: couple lights incense → 2 or 4 bows → parents witness and bless",
             "Northern style: usually 4 bows (2 half-bows + 2 full bows), very formal",
@@ -184,11 +121,31 @@ export const STEP_ENGAGEMENT_EN: WeddingStep = {
             "Prepare in advance: incense, candles, fresh flowers, fruit tray on the altar",
             "Practice 1-2 times beforehand so the couple isn't awkward during the real ceremony",
           ],
+          sampleTextLabel: "📜 Sample ancestor prayer — Betrothal at bride's home",
+          sampleText: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to Heaven and Earth, and all divine spirits.
+We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+At [BRIDE'S HOME ADDRESS],
+
+Our family's daughter is [BRIDE'S NAME], born in [BIRTH YEAR].
+Today, the [GROOM'S FAMILY NAME] family has come to request her hand in marriage for their son [GROOM'S NAME], born in [BIRTH YEAR].
+
+The two young ones are deeply in love and wish to be united in marriage.
+
+We humbly light this incense and present it to our ancestors, asking for your blessing and protection:
+— May they be a harmonious husband and wife
+— May they enjoy lasting happiness and a prosperous family
+— May both families live in peace and harmony as in-laws
+
+Namo Amitabha Buddha (3 times)`,
         },
         {
           emoji: "👰",
           question: "Bride handover ceremony: who speaks, what happens?",
-          detail: "The bride handover is when the bride's family officially entrusts their daughter to the groom's family. Who gives the speech? What is said? Who walks the bride out? Discuss carefully for a smooth, emotional moment.",
+          detail: "The bride handover is when the bride's family officially entrusts their daughter to the groom's family. Who gives the speech? What is said? Who walks the bride out?",
           tips: [
             "Typically: bride's father gives a short speech → walks his daughter to the groom",
             "If parents are absent: the most senior family member substitutes",
@@ -196,43 +153,75 @@ export const STEP_ENGAGEMENT_EN: WeddingStep = {
             "The groom should bow and thank the bride's parents formally",
             "This is the most emotional moment — have the videographer ready",
           ],
+          sampleTextLabel: "📜 Sample handover speech — Bride's father",
+          sampleText: `Dear grandparents and both families,
+
+Today is the most important day for my daughter — [BRIDE'S NAME].
+
+We raised her with all our love, and now the time has come for her to start her own family. Though we feel a tug at our hearts, we are truly happy that she has found a wonderful life partner.
+
+Son-in-law [GROOM'S NAME], I entrust my daughter to you. We trust that you will love, protect, and build a happy home with her.
+
+May you both enjoy a lifetime of love and happiness together.
+
+My dear daughter — always remember, our home is always your home.`,
         },
         {
-          emoji: "🚗",
-          question: "Bridal procession: cars, route, entourage?",
-          detail: "Both families need to agree on transportation for the bride pickup, number of cars, route there and back, and who's in the entourage.",
+          emoji: "🙏",
+          question: "Groom's response after receiving the bride: what to say?",
+          detail: "After the bride's father hands over the bride, the groom (or the groom's family representative) should respond — showing gratitude and commitment.",
           tips: [
-            "Number of cars is usually even (4, 6, or 8)",
-            "Book wedding cars early during peak season",
-            "Route: avoid passing cemeteries or religious sites of a different faith (varies by region)",
-            "Entourage includes: groom's parents, representative elders, groomsmen — odd number (becomes even with bride)",
-            "Factor in travel time + traffic to arrive at the auspicious hour",
+            "The groom should speak himself — it's more sincere than having someone else speak",
+            "Content: thank the bride's parents → promise to love and care → promise filial piety to both families",
+            "Keep it brief, no need for fancy words — just speak from the heart",
+            "If too nervous: write a few lines and keep them handy",
           ],
+          sampleTextLabel: "📜 Sample response — Groom receiving the bride",
+          sampleText: `Dear Father and Mother (in-law), dear both families,
+
+I sincerely thank you for trusting me with [BRIDE'S NAME].
+
+I promise to love, respect, and build a happy family with [BRIDE'S NAME]. I also promise to be a devoted son to both sets of parents, just as your own child.
+
+I accept [BRIDE'S NAME] as my wife, and I will walk this journey of life together with her.
+
+Thank you, Father and Mother.`,
         },
         {
-          emoji: "🎎",
-          question: "Gift bearers, bridesmaids & groomsmen: how many?",
-          detail: "Number of gift bearers = number of gift trays. How many bridesmaids and groomsmen? Who chooses them? Requirements (unmarried, same gender...)?",
+          emoji: "🕯️",
+          question: "Ancestor prayer at the groom's home when the bride arrives?",
+          detail: "When the bride arrives at the groom's home, the couple lights incense at the groom's family altar — presenting themselves to the ancestors and asking for blessings. Who recites the prayer? What to say?",
           tips: [
-            "Gift bearers: male (groom's side carries) + female (bride's side receives) — equal numbers",
-            "Tradition: bearers should be unmarried (but this is flexible nowadays)",
-            "Bridesmaids: 2-6 people, usually bride's close friends, assist throughout the ceremony",
-            "Groomsmen: same number as bridesmaids",
-            "Discuss early: who provides outfits for bearers, bridesmaids, and groomsmen?",
+            "Usually recited by the groom's father/mother or grandparents",
+            "The couple lights incense and bows 2-4 times",
+            "Should be done before the wedding reception begins",
+            "Prepare the altar: flowers, fruits, incense, candles, a small offering tray",
           ],
+          sampleTextLabel: "📜 Sample ancestor prayer — Groom's home receiving bride",
+          sampleText: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to Heaven and Earth, and all divine spirits.
+We respectfully bow to our ancestors of the [GROOM'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+At [GROOM'S HOME ADDRESS],
+
+Our son [GROOM'S NAME], born in [BIRTH YEAR],
+Today officially welcomes [BRIDE'S NAME], born in [BIRTH YEAR], daughter of the [BRIDE'S FAMILY NAME] family, as his bride.
+
+We humbly light this incense and present it to our ancestors, asking for your blessing and protection:
+— May husband and wife live in harmony, loving and respecting each other
+— May they soon be blessed with children and a prosperous household
+— May both families live in peace and happiness as in-laws
+
+Namo Amitabha Buddha (3 times)`,
         },
-        {
-          emoji: "👗",
-          question: "Ceremony attire: couple, both families, gift bearers?",
-          detail: "Agree on attire for all ceremonies (betrothal + bride pickup + ancestor prayer). Traditional ao dai or modern suits? Coordinated colors?",
-          tips: [
-            "Bride: red/pink ao dai for ceremonies, white gown for reception (most common)",
-            "Groom: matching ao dai or suit — should coordinate with the bride",
-            "Both sets of parents: matching color tones (usually ao dai in blue, red, or gold)",
-            "Gift bearer team + bridesmaids: matching ao dai in the same color — discuss who covers the cost",
-            "Budget attire from the start — rent or custom-made, how many outfits for the bride",
-          ],
-        },
+        { emoji: "🏮", question: "Decorating the bride's home on betrothal day?", detail: "The bride's home needs decorations to welcome the groom's family. Discuss: flower arch, backdrop/tent, altar arrangement, guest seating area, hire a decorator or DIY?", tips: ["Flower arch: 2-5M VND depending on size and flower type", "Guest backdrop/tent: rent or DIY, 1-3M VND", "Ancestral altar: clean thoroughly, fresh flowers, new fruit offerings", "Guest tea table: teacups, sweet cakes, bottled water", "Minimal decorations: banner, flowers, lights — no need to overdo it"] },
+        { emoji: "🏮", question: "Decorating the groom's home for bride's arrival?", detail: "The groom's home also needs decorations to welcome the bride. Discuss: flower arch, backdrop/tent, bridal chamber, altar preparation.", tips: ["Flower arch at groom's home: recommended, doesn't need to be as grand as bride's", "Bridal chamber: tidy up, simple decor (flowers, candles, new bedding)", "Ancestral altar: prepare flowers, fruits, incense, candles for the ancestor prayer", "Guest area and tea service for the bride's family entourage (if they come along)"] },
+        { emoji: "🚗", question: "Bridal procession: cars, route, entourage?", detail: "Both families need to agree on transportation for the bride pickup, number of cars, route there and back, and who's in the entourage.", tips: ["Number of cars is usually even (4, 6, or 8)", "Book wedding cars early during peak season", "Route: avoid passing cemeteries or religious sites of a different faith (varies by region)", "Entourage: groom's parents, representative elders, groomsmen — odd number (becomes even with bride)", "Factor in travel time + traffic to arrive at the auspicious hour"] },
+        { emoji: "🎎", question: "Gift bearers, bridesmaids & groomsmen: how many?", detail: "Number of gift bearers = number of gift trays. How many bridesmaids and groomsmen? Who chooses them? Requirements (unmarried, same gender...)?", tips: ["Gift bearers: male (groom's side carries) + female (bride's side receives) — equal numbers", "Tradition: bearers should be unmarried (but this is flexible nowadays)", "Bridesmaids: 2-6 people, usually bride's close friends", "Groomsmen: same number as bridesmaids", "Discuss early: who provides outfits for bearers, bridesmaids, and groomsmen?"] },
+        { emoji: "👗", question: "Ceremony attire: couple, both families, gift bearers?", detail: "Agree on attire for all ceremonies (betrothal + bride pickup + ancestor prayer). Traditional ao dai or modern suits? Coordinated colors?", tips: ["Bride: red/pink ao dai for ceremonies, white gown for reception (most common)", "Groom: matching ao dai or suit — should coordinate with the bride", "Both sets of parents: matching color tones (usually ao dai in blue, red, or gold)", "Gift bearer team + bridesmaids: matching ao dai in the same color — discuss who covers the cost", "Budget attire from the start — rent or custom-made, how many outfits for the bride"] },
+        { emoji: "🍵", question: "Tea ceremony: pouring tea for both families?", detail: "During the betrothal or wedding, the couple pours tea for parents, grandparents, and senior relatives from both sides — showing respect and gratitude. Discuss: will you hold a tea ceremony, who to serve, in what order?", tips: ["Order: grandparents → parents → senior aunts/uncles → younger aunts/uncles", "Pouring tea for parents: kneel down or bow (varies by region)", "After receiving tea: parents/grandparents usually give red envelopes or gold to the couple", "Tea: use good quality tea, brewed in a nice tea set", "Common in Northern and Central regions; Southern style is more flexible"] },
         {
           emoji: "🔄",
           question: "Post-wedding visit (Le Lai Mat — returning to bride's home)?",
@@ -242,20 +231,21 @@ export const STEP_ENGAGEMENT_EN: WeddingStep = {
             "Southern style: can be the next day or after 3 days, more flexible",
             "The groom should attend to show respect for the bride's family",
             "Gifts: boiled chicken, sticky rice, fruits, wine — varies by region",
-            "If living far away: be flexible with timing, no need to be rigid",
           ],
+          sampleTextLabel: "📜 Sample prayer — Post-wedding visit (Le Lai Mat)",
+          sampleText: `Namo Amitabha Buddha (3 times)
+
+We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
+
+Today, [LUNAR DATE],
+Daughter [BRIDE'S NAME] and son-in-law [GROOM'S NAME] have returned home to light incense and report to the ancestors.
+
+The two young ones are now husband and wife. They have come back to pay their respects, and humbly ask for the ancestors' blessing for a harmonious marriage and a happy family.
+
+Namo Amitabha Buddha (3 times)`,
         },
-        {
-          emoji: "⚠️",
-          question: "Any special family circumstances to be aware of?",
-          detail: "Divorced parents, family in mourning, seriously ill relatives... all affect ceremony logistics. Discuss beforehand to handle sensitively and avoid surprises.",
-          tips: [
-            "Divorced parents: who represents the family at the ceremony? Are both present?",
-            "Family in mourning: tradition says no wedding during mourning — but flexibility exists depending on severity",
-            "Ill relatives: arrange substitute roles in the ceremony",
-            "Being upfront is better than hiding — the other family will understand if told in advance",
-          ],
-        },
+        { emoji: "⚠️", question: "Any special family circumstances to be aware of?", detail: "Divorced parents, family in mourning, seriously ill relatives... all affect ceremony logistics. Discuss beforehand to handle sensitively and avoid surprises.", tips: ["Divorced parents: who represents the family at the ceremony? Are both present?", "Family in mourning: tradition says no wedding during mourning — but flexibility exists depending on severity", "Ill relatives: arrange substitute roles in the ceremony", "Being upfront is better than hiding — the other family will understand if told in advance"] },
+        { emoji: "👴", question: "Should clan elders or patriarchs be invited?", detail: "Some clans have patriarchs or clan elders — they may need to be consulted or invited to attend the ceremony. Not inviting them could cause offense.", tips: ["Ask your parents: does our clan have an active patriarch?", "If yes: invite them to the betrothal ceremony, or at least inform them", "The patriarch may be asked to give a speech or serve as a witness", "A wedding is a joyful clan occasion — better to invite broadly than to leave someone out"] },
       ],
       gifts: [
         { name: "Betel nuts & leaves", quantity: "1 bunch betel nuts + leaves", cost: 200000 },

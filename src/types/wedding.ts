@@ -32,6 +32,8 @@ export interface DiscussionItem {
   question: string;
   detail: string;
   tips?: string[];
+  sampleText?: string;       // Sample prayer/speech text (văn khấn, lời phát biểu mẫu)
+  sampleTextLabel?: string;  // Label for the sample text block
 }
 
 export interface Ceremony {

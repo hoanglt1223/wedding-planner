@@ -56,206 +56,196 @@ export const STEP_ENGAGEMENT: WeddingStep = {
         { text: "Tổng kết, xác nhận lại các thỏa thuận trước khi ra về", time: "11:30", responsible: "Hai họ" },
       ],
       discussions: [
+        { emoji: "📅", question: "Ngày ăn hỏi và ngày cưới dự kiến?", detail: "Thống nhất khung thời gian tổ chức lễ ăn hỏi và lễ cưới. Cần xem tuổi cô dâu chú rể, xem ngày lành tháng tốt, tránh tháng 7 âm lịch.", tips: ["Nên chọn 2-3 ngày dự phòng để linh hoạt đặt dịch vụ", "Lễ ăn hỏi thường trước cưới 1-3 tháng (Bắc) hoặc 2-4 tuần (Nam)", "Tham khảo thầy xem ngày hoặc lịch vạn niên"] },
+        { emoji: "🕐", question: "Giờ đón dâu, giờ nhập trạch, giờ bái gia tiên?", detail: "Thống nhất các mốc giờ quan trọng: giờ đoàn nhà trai xuất phát, giờ đến nhà gái, giờ rước dâu về nhà trai, giờ làm lễ gia tiên.", tips: ["Giờ đón dâu và giờ nhập trạch là 2 giờ quan trọng nhất", "Tính ngược: giờ nhập trạch → trừ di chuyển → ra giờ rước dâu", "Giờ đẹp thường: 6h, 8h, 10h sáng (số chẵn)", "Dự phòng thêm 15-30 phút cho tắc đường"] },
+        { emoji: "🎁", question: "Số mâm quả lễ ăn hỏi? Gồm những gì?", detail: "Thống nhất số mâm quả (thường số lẻ: 5, 7, 9, 11 mâm). Bàn cụ thể từng mâm gồm gì, số lượng, yêu cầu trình bày.", tips: ["Miền Bắc: 5-7 tráp (trầu cau, rượu, chè, bánh cốm, hoa quả, bánh phu thê...)", "Miền Nam: 5-11 tráp, thường có thêm heo quay, xôi gấc", "Miền Trung: tương tự Bắc, có thể kèm đặc sản vùng", "Nhà gái nên nói rõ yêu cầu, nhà trai không nên mặc cả"] },
+        { emoji: "🎊", question: "Trang trí mâm quả: khăn phủ, hoa, cách sắp xếp?", detail: "Mâm quả cần được trang trí đẹp mắt. Bàn: dùng khăn đỏ hay giấy kiếng? Có cắm hoa tươi không? Ai sắp xếp, trang trí? Thuê dịch vụ hay tự làm?", tips: ["Khăn phủ đỏ/vàng là phổ biến nhất — có thể thuê hoặc mua", "Hoa tươi (hồng, cúc) cắm trên mỗi tráp tạo điểm nhấn", "Dịch vụ trang trí mâm quả: 500k-2tr tùy số lượng và độ cầu kỳ", "Tự trang trí: tiết kiệm nhưng cần người có kinh nghiệm, làm trước 1 ngày"] },
+        { emoji: "🐷", question: "Heo quay nguyên con: bên nào lo, mấy con?", detail: "Nhiều đám cưới Việt (đặc biệt miền Nam) yêu cầu heo quay nguyên con. Cần bàn: mấy con, bên nào đặt, chi phí ai chịu.", tips: ["Miền Nam: rất phổ biến, 1-2 con heo quay trong mâm quả", "Miền Bắc/Trung: ít phổ biến, có thể thay bằng lợn sữa hoặc bỏ", "Chi phí: 3-7 triệu/con tùy size", "Heo quay sau lễ: chia cho hai họ hay nhà gái giữ? — bàn trước"] },
+        { emoji: "🎀", question: "Chia lễ vật sau lễ ăn hỏi thế nào (lại quả)?", detail: "Sau khi nhà gái nhận mâm quả, phong tục yêu cầu 'chia lễ' — lấy ra một phần trả lại nhà trai (gọi là 'lại quả'). Bàn: chia bao nhiêu, chia gì, cách trình bày.", tips: ["Nguyên tắc: chia đôi hoặc lấy ra 1 phần nhỏ trả lại (không trả hết, không giữ hết)", "Trầu cau: chia lẻ (1, 3, 5 quả) để 'giữ lộc'", "Bánh, trà, rượu: mở ra chia, mỗi bên giữ một phần", "Tiền nạp tài: một số nhà gái trả lại 1 phần trong phong bì lại quả", "Chia xong: sắp vào khay/túi đỏ — KHÔNG bao giờ trả khay rỗng"] },
+        { emoji: "🧧", question: "Phong bì lì xì cho đội bê tráp?", detail: "Đội bê tráp (nhà trai) và đội đón tráp (nhà gái) cần được lì xì. Bàn: mỗi người bao nhiêu, ai chuẩn bị phong bì, ai phát.", tips: ["Nhà gái lì xì cho đội bê tráp nhà trai (khi nhận tráp)", "Nhà trai lì xì cho đội đón tráp nhà gái (tùy vùng)", "Mức phổ biến: 100k-500k/người tùy điều kiện", "Chuẩn bị phong bì đỏ sẵn — đừng để đến lúc phát mới tìm"] },
+        { emoji: "💰", question: "Tiền nạp tài (tiền đen) bao nhiêu?", detail: "Tiền nạp tài là khoản tiền nhà trai gửi nhà gái theo phong tục, mang ý nghĩa tượng trưng cho sự trân trọng công ơn sinh thành.", tips: ["Miền Bắc: thường bỏ qua hoặc tượng trưng (vài triệu)", "Miền Nam: phổ biến hơn, vài triệu đến vài chục triệu tùy gia đình", "Miền Trung: linh hoạt, tùy thỏa thuận hai nhà", "Nên bàn thẳng thắn — hai nhà làm sui chứ không mua bán", "Một số nhà gái trả lại toàn bộ hoặc một phần"] },
+        { emoji: "💍", question: "Trang sức cưới: nhẫn cưới, vàng cho cô dâu?", detail: "Ai mua nhẫn cưới? Nhà trai tặng vàng cho cô dâu bao nhiêu? Nhà gái có tặng lại cho chú rể không? Trao vào lúc nào?", tips: ["Nhẫn cưới: thường đôi trẻ tự chọn hoặc nhà trai lo", "Vàng tặng cô dâu: tùy điều kiện, không so sánh", "Một số nhà gái tặng vàng/quà cho chú rể — nên bàn trước", "Vàng là tài sản cô dâu — nhà trai KHÔNG nên đòi lại", "Thời điểm trao: thường trong lễ ăn hỏi hoặc rước dâu"] },
+        { emoji: "🏛️", question: "Theo phong tục vùng nào? Giữ nghi lễ gì?", detail: "Nếu hai nhà khác vùng miền, cần thống nhất theo phong tục nào. Nghi lễ nào bắt buộc, nghi lễ nào linh hoạt hoặc bỏ.", tips: ["Nếu cùng vùng: theo phong tục địa phương", "Nếu khác vùng: thường theo phong tục nhà gái", "Liệt kê rõ: lễ nào bắt buộc, tùy chọn, bỏ", "Gia đình có theo đạo thì cần bàn thêm nghi lễ tôn giáo"] },
+        { emoji: "⛪", question: "Khác tôn giáo/tín ngưỡng: xử lý thế nào?", detail: "Nếu hai gia đình theo tôn giáo khác nhau, cần bàn rõ nghi lễ tôn giáo, bàn thờ, thờ cúng.", tips: ["Công giáo: có thể cần hôn phối nhà thờ, học giáo lý", "Phật giáo: có thể thêm lễ hằng thuận tại chùa", "Bàn thờ gia tiên: nhà Công giáo thường không có — cần thống nhất nghi thức thay thế", "Tôn trọng, không ép đối phương bỏ đạo hay theo đạo"] },
         {
-          emoji: "📅",
-          question: "Ngày ăn hỏi và ngày cưới dự kiến?",
-          detail: "Thống nhất khung thời gian tổ chức lễ ăn hỏi và lễ cưới. Cần xem tuổi cô dâu chú rể, xem ngày lành tháng tốt, tránh tháng 7 âm lịch và các ngày xấu.",
+          emoji: "🗣️",
+          question: "Ai đại diện nhà trai phát biểu xin phép? Nói gì?",
+          detail: "Trong lễ ăn hỏi, đại diện nhà trai (thường là bố chú rể hoặc ông/chú lớn tuổi) sẽ phát biểu xin phép nhà gái cho đôi trẻ tiến tới hôn nhân. Cần bàn: ai nói, nội dung gì.",
           tips: [
-            "Nên chọn 2-3 ngày dự phòng để linh hoạt đặt dịch vụ",
-            "Lễ ăn hỏi thường trước cưới 1-3 tháng (miền Bắc) hoặc 2-4 tuần (miền Nam)",
-            "Tham khảo thầy xem ngày hoặc lịch vạn niên",
+            "Người phát biểu: bố chú rể, hoặc ông/chú đại diện nếu bố không có mặt",
+            "Nội dung: giới thiệu gia đình → bày tỏ mong muốn → xin phép → trình lễ vật",
+            "Giọng nói: chân thành, rõ ràng, không cần quá dài (3-5 phút)",
+            "Nên viết sẵn ra giấy và tập nói trước 1-2 lần",
           ],
+          sampleTextLabel: "📜 Lời phát biểu mẫu — Nhà trai xin phép",
+          sampleText: `Kính thưa ông bà, bác và toàn thể gia đình nhà gái,
+
+Hôm nay, nhân ngày lành tháng tốt, gia đình chúng tôi — họ [HỌ NHÀ TRAI] — xin phép được đến quý gia đình để thưa chuyện.
+
+Con trai chúng tôi là [TÊN CHÚ RỂ] và con gái quý gia đình là [TÊN CÔ DÂU] đã tìm hiểu nhau được [THỜI GIAN]. Hai cháu tâm đầu ý hợp và mong muốn tiến tới hôn nhân.
+
+Gia đình chúng tôi xin mang chút lễ vật tượng trưng đến trình ông bà và gia đình, kính xin được phép cho hai cháu chính thức tìm hiểu và tiến tới lễ cưới.
+
+Rất mong ông bà và gia đình chấp thuận. Xin chân thành cảm ơn.`,
         },
         {
-          emoji: "🕐",
-          question: "Giờ đón dâu, giờ nhập trạch, giờ bái gia tiên?",
-          detail: "Thống nhất các mốc giờ quan trọng: giờ đoàn nhà trai xuất phát, giờ đến nhà gái, giờ rước dâu về nhà trai, giờ làm lễ gia tiên. Đây là các giờ 'đẹp' cần xem kỹ.",
+          emoji: "🗣️",
+          question: "Ai đại diện nhà gái đáp lời? Nội dung thế nào?",
+          detail: "Sau khi nhà trai phát biểu, đại diện nhà gái (thường là bố cô dâu hoặc ông/chú) đáp lời — đồng ý hoặc nêu điều kiện. Cần bàn: ai đáp, nói gì.",
           tips: [
-            "Giờ đón dâu và giờ nhập trạch (về đến nhà trai) là 2 giờ quan trọng nhất",
-            "Tính ngược: giờ nhập trạch → trừ thời gian di chuyển → ra giờ rước dâu",
-            "Giờ đẹp thường: 6h, 8h, 10h sáng (số chẵn, tránh giờ xấu)",
-            "Nên hỏi thầy xem ngày hoặc tham khảo lịch vạn niên cho giờ hoàng đạo",
-            "Dự phòng thêm 15-30 phút cho tắc đường, sự cố nhỏ",
+            "Người đáp: bố cô dâu, hoặc ông/chú đại diện",
+            "Nội dung: cảm ơn → đồng ý → nêu thỏa thuận (nếu có) → chúc phúc",
+            "Không cần quá dài — chân thành là được",
+            "Nên chuẩn bị trước, tránh lúng túng",
           ],
-        },
-        {
-          emoji: "🎁",
-          question: "Số mâm quả lễ ăn hỏi? Gồm những gì?",
-          detail: "Thống nhất số mâm quả (thường số lẻ: 5, 7, 9, 11 mâm). Bàn bạc cụ thể từng mâm gồm gì, số lượng, yêu cầu trình bày.",
-          tips: [
-            "Miền Bắc: 5-7 tráp (trầu cau, rượu, chè, bánh cốm, hoa quả, bánh phu thê...)",
-            "Miền Nam: 5-11 tráp, thường có thêm heo quay, xôi gấc",
-            "Miền Trung: tương tự Bắc, có thể kèm đặc sản vùng",
-            "Nhà gái nên nói rõ yêu cầu, nhà trai không nên mặc cả — đây là thể hiện thành ý",
-          ],
-        },
-        {
-          emoji: "🐷",
-          question: "Heo quay nguyên con: bên nào lo, mấy con?",
-          detail: "Nhiều đám cưới Việt (đặc biệt miền Nam) yêu cầu heo quay nguyên con trong lễ ăn hỏi hoặc rước dâu. Cần bàn: mấy con, bên nào đặt, chi phí ai chịu.",
-          tips: [
-            "Miền Nam: rất phổ biến, 1-2 con heo quay trong mâm quả",
-            "Miền Bắc/Trung: ít phổ biến hơn, có thể thay bằng lợn sữa hoặc bỏ qua",
-            "Chi phí: 3-7 triệu/con tùy size và nơi đặt",
-            "Đặt sớm 1-2 tuần, đặc biệt vào mùa cưới (tháng 10-12 âm lịch)",
-            "Heo quay sau lễ: chia cho hai họ hay để nhà gái giữ? — nên bàn trước",
-          ],
-        },
-        {
-          emoji: "🎀",
-          question: "Chia lễ vật sau lễ ăn hỏi thế nào?",
-          detail: "Sau khi nhà gái nhận mâm quả, phong tục yêu cầu 'chia lễ' — lấy ra một phần trả lại nhà trai (gọi là 'lại quả'). Cần bàn: chia bao nhiêu, chia gì, cách trình bày.",
-          tips: [
-            "Nguyên tắc: chia đôi hoặc lấy ra 1 phần nhỏ trả lại nhà trai (không trả hết, không giữ hết)",
-            "Trầu cau: chia lẻ (số lẻ — 1, 3, 5 quả) để 'giữ lộc'",
-            "Bánh, trà, rượu: mở ra chia, mỗi bên giữ một phần",
-            "Tiền nạp tài: một số nhà gái trả lại 1 phần trong phong bì lại quả",
-            "Miền Nam: thường chia rộng rãi hơn, có thể phát thêm cho họ hàng, hàng xóm",
-            "Chia xong: sắp vào khay/túi đỏ đẹp trả lại nhà trai — KHÔNG bao giờ trả khay rỗng",
-          ],
-        },
-        {
-          emoji: "🧧",
-          question: "Phong bì lì xì cho đội bê tráp?",
-          detail: "Đội bê tráp (nhà trai) và đội đón tráp (nhà gái) cần được lì xì. Bàn trước: mỗi người bao nhiêu, ai chuẩn bị phong bì, ai phát.",
-          tips: [
-            "Nhà gái lì xì cho đội bê tráp nhà trai (khi nhận tráp)",
-            "Nhà trai lì xì cho đội đón tráp nhà gái (tùy vùng)",
-            "Mức phổ biến: 100k-500k/người tùy điều kiện gia đình",
-            "Số lượng bê tráp = số mâm quả (mỗi người bê 1 tráp)",
-            "Chuẩn bị phong bì đỏ sẵn — đừng để đến lúc phát mới tìm",
-          ],
-        },
-        {
-          emoji: "💰",
-          question: "Tiền nạp tài (tiền đen) bao nhiêu?",
-          detail: "Tiền nạp tài là khoản tiền nhà trai gửi nhà gái theo phong tục, mang ý nghĩa tượng trưng cho sự trân trọng công ơn sinh thành. Mỗi vùng miền có mức khác nhau.",
-          tips: [
-            "Miền Bắc: thường bỏ qua hoặc tượng trưng (vài triệu)",
-            "Miền Nam: phổ biến hơn, từ vài triệu đến vài chục triệu tùy gia đình",
-            "Miền Trung: linh hoạt, tùy thỏa thuận hai nhà",
-            "Nên bàn thẳng thắn, tránh ngại ngùng — hai nhà làm sui chứ không mua bán",
-            "Một số nhà gái trả lại toàn bộ hoặc một phần — nên hỏi trước ý kiến",
-          ],
-        },
-        {
-          emoji: "💍",
-          question: "Trang sức cưới: nhẫn cưới, vàng cho cô dâu?",
-          detail: "Ai mua nhẫn cưới? Nhà trai tặng vàng cho cô dâu bao nhiêu? Nhà gái có tặng lại cho chú rể không? Trao vàng vào lúc nào trong lễ?",
-          tips: [
-            "Nhẫn cưới: thường đôi trẻ tự chọn hoặc nhà trai lo",
-            "Vàng tặng cô dâu: tùy điều kiện, không so sánh",
-            "Một số nhà gái tặng vàng/quà cho chú rể — nên bàn trước",
-            "Vàng là tài sản cô dâu — nhà trai KHÔNG nên đòi lại",
-            "Thời điểm trao: thường trong lễ ăn hỏi hoặc lễ rước dâu tại nhà gái",
-          ],
-        },
-        {
-          emoji: "🏛️",
-          question: "Theo phong tục vùng nào? Giữ nghi lễ gì?",
-          detail: "Nếu hai nhà khác vùng miền, cần thống nhất theo phong tục nào. Những nghi lễ nào bắt buộc giữ, những gì có thể linh hoạt hoặc bỏ qua.",
-          tips: [
-            "Nếu cùng vùng: theo phong tục địa phương",
-            "Nếu khác vùng: thường theo phong tục nhà gái (vì tổ chức tại nhà gái)",
-            "Liệt kê rõ: lễ nào bắt buộc, lễ nào tùy chọn, lễ nào bỏ",
-            "Gia đình có theo đạo (Phật, Công giáo, Tin lành...) thì cần bàn thêm nghi lễ tôn giáo",
-          ],
-        },
-        {
-          emoji: "⛪",
-          question: "Khác tôn giáo/tín ngưỡng: xử lý thế nào?",
-          detail: "Nếu hai gia đình theo tôn giáo khác nhau (Phật giáo, Công giáo, Tin lành, không tôn giáo...), cần bàn rõ nghi lễ tôn giáo, thờ cúng, bàn thờ.",
-          tips: [
-            "Công giáo: thường yêu cầu hôn phối trong nhà thờ, có thể cần học giáo lý",
-            "Phật giáo: có thể thêm lễ hằng thuận tại chùa",
-            "Bàn thờ gia tiên: nhà có đạo Công giáo thường không có — cần thống nhất nghi thức thay thế",
-            "Tinh thần chung: tôn trọng, không ép đối phương bỏ đạo hay theo đạo",
-          ],
+          sampleTextLabel: "📜 Lời đáp mẫu — Nhà gái đồng ý",
+          sampleText: `Kính thưa ông bà và toàn thể gia đình nhà trai,
+
+Gia đình chúng tôi rất vui mừng và hân hạnh được đón tiếp quý gia đình ngày hôm nay.
+
+Chúng tôi đã biết chuyện tình cảm của hai cháu [TÊN CÔ DÂU] và [TÊN CHÚ RỂ] từ lâu, và rất mừng thấy hai cháu hạnh phúc bên nhau.
+
+Gia đình chúng tôi đồng ý và chấp thuận lời thỉnh cầu của quý gia đình. Xin nhận lễ vật và cùng bàn bạc các bước tiếp theo để hai cháu sớm nên duyên.
+
+Kính chúc hai gia đình sức khỏe, hạnh phúc. Chúc hai cháu trăm năm hạnh phúc.`,
         },
         {
           emoji: "🕯️",
           question: "Nghi thức thắp hương, lạy bàn thờ gia tiên?",
-          detail: "Lễ gia tiên là phần quan trọng nhất — cô dâu chú rể thắp hương, lạy trước bàn thờ tổ tiên. Cần bàn: ai hướng dẫn, lạy mấy lạy, thứ tự nghi thức.",
+          detail: "Lễ gia tiên là phần quan trọng nhất — cô dâu chú rể thắp hương, lạy trước bàn thờ tổ tiên. Cần bàn: ai hướng dẫn, lạy mấy lạy, ai khấn.",
           tips: [
             "Thông thường: đôi trẻ thắp hương → lạy 2 hoặc 4 lạy → bố mẹ chứng kiến",
             "Miền Bắc: thường lạy 4 lạy (2 vái + 2 lạy), trang trọng",
-            "Miền Nam: linh hoạt hơn, có thể 2 lạy hoặc theo hướng dẫn ông bà",
-            "Nếu nhà theo Công giáo không có bàn thờ: thay bằng nghi thức cầu nguyện",
+            "Miền Nam: linh hoạt hơn, 2 lạy hoặc theo hướng dẫn ông bà",
+            "Nếu nhà Công giáo không có bàn thờ: thay bằng nghi thức cầu nguyện",
             "Chuẩn bị sẵn: nhang, nến, hoa tươi, mâm ngũ quả trên bàn thờ",
             "Nên tập trước 1-2 lần để đôi trẻ không lúng túng",
           ],
+          sampleTextLabel: "📜 Văn khấn gia tiên mẫu — Lễ ăn hỏi tại nhà gái",
+          sampleText: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn Thần.
+Con kính lạy Tổ Tiên nội ngoại họ [HỌ NHÀ GÁI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Tại [ĐỊA CHỈ NHÀ GÁI],
+
+Gia đình chúng con có con gái là [TÊN CÔ DÂU], sinh năm [NĂM SINH],
+Nay được gia đình họ [HỌ NHÀ TRAI] đến xin phép cầu hôn cho con trai là [TÊN CHÚ RỂ], sinh năm [NĂM SINH].
+
+Hai cháu tâm đầu ý hợp, nguyện kết tóc se duyên.
+
+Chúng con kính dâng nén hương, xin trình ông bà Tổ Tiên chứng giám, phù hộ cho hai cháu:
+— Thuận vợ thuận chồng, tát biển Đông cũng cạn
+— Hạnh phúc bền lâu, con cháu đầy nhà
+— Hai gia đình hòa thuận, sui gia êm ấm
+
+Nam mô A Di Đà Phật (3 lần)`,
         },
         {
           emoji: "👰",
           question: "Nghi thức trao dâu diễn ra thế nào?",
-          detail: "Lễ trao dâu là lúc nhà gái chính thức giao con gái cho nhà trai. Ai phát biểu? Nói gì? Ai dắt cô dâu ra? Cần bàn kỹ để buổi lễ suôn sẻ, xúc động.",
+          detail: "Lễ trao dâu là lúc nhà gái chính thức giao con gái cho nhà trai. Ai phát biểu? Nói gì? Ai dắt cô dâu ra?",
           tips: [
-            "Thường: bố cô dâu phát biểu vài lời → dắt con gái trao cho chú rể",
+            "Thường: bố cô dâu phát biểu → dắt con gái trao cho chú rể",
             "Bố mẹ không có mặt: người lớn nhất trong họ thay thế",
-            "Lời phát biểu: ngắn gọn, chân thành — không cần dài (3-5 phút)",
+            "Lời phát biểu: ngắn gọn, chân thành (3-5 phút)",
             "Chú rể nên cúi đầu nhận, nói lời cảm ơn bố mẹ vợ",
             "Đây là khoảnh khắc xúc động nhất — nên có người quay phim sẵn",
           ],
+          sampleTextLabel: "📜 Lời trao dâu mẫu — Bố cô dâu",
+          sampleText: `Kính thưa ông bà và hai họ,
+
+Hôm nay là ngày trọng đại của con gái tôi — [TÊN CÔ DÂU].
+
+Bố mẹ nuôi con lớn khôn, giờ đến lúc con lập gia đình riêng. Tuy trong lòng có chút bịn rịn, nhưng bố mẹ rất vui vì con đã tìm được người bạn đời tốt.
+
+Con rể [TÊN CHÚ RỂ] ơi, bố giao con gái cho con. Bố mẹ tin tưởng con sẽ yêu thương, che chở và cùng con gái bố xây dựng gia đình hạnh phúc.
+
+Chúc hai con trăm năm hạnh phúc, thuận vợ thuận chồng.
+
+Con gái, hãy luôn nhớ — nhà bố mẹ luôn là nhà của con.`,
         },
         {
-          emoji: "🚗",
-          question: "Đám rước dâu: xe cộ, lộ trình, đoàn rước?",
-          detail: "Hai nhà cần bàn phương tiện đón dâu, số lượng xe, lộ trình đi và về, ai đi trong đoàn rước.",
+          emoji: "🙏",
+          question: "Chú rể đáp lời nhận dâu: nói gì?",
+          detail: "Sau khi bố cô dâu trao dâu, chú rể (hoặc đại diện nhà trai) nên đáp lời — thể hiện sự trân trọng và cam kết.",
           tips: [
-            "Số xe thường số chẵn (4, 6, 8 xe)",
-            "Xe hoa nên đặt sớm nếu cưới mùa cao điểm",
-            "Lộ trình: tránh đi qua nghĩa trang, nhà thờ/chùa khác tôn giáo (tùy vùng)",
-            "Đoàn rước gồm: bố mẹ chú rể, cô chú đại diện, phù rể — số người lẻ (để về thành chẵn có cô dâu)",
-            "Tính thời gian di chuyển + ùn tắc để đến đúng giờ đẹp",
+            "Chú rể nên tự nói — chân thành hơn là nhờ người khác",
+            "Nội dung: cảm ơn bố mẹ vợ → hứa yêu thương → hứa hiếu thảo hai bên",
+            "Ngắn gọn, không cần quá hoa mỹ — thật lòng là đủ",
+            "Nếu chú rể quá hồi hộp: viết sẵn vài dòng cầm theo",
           ],
+          sampleTextLabel: "📜 Lời đáp mẫu — Chú rể nhận dâu",
+          sampleText: `Kính thưa bố mẹ (vợ), kính thưa hai họ,
+
+Con xin chân thành cảm ơn bố mẹ đã tin tưởng giao [TÊN CÔ DÂU] cho con.
+
+Con hứa sẽ yêu thương, tôn trọng và cùng [TÊN CÔ DÂU] xây dựng gia đình hạnh phúc. Con cũng xin hứa hiếu thảo với bố mẹ hai bên như con ruột trong nhà.
+
+Con xin nhận [TÊN CÔ DÂU] làm vợ, cùng nhau đi hết cuộc đời.
+
+Con cảm ơn bố mẹ ạ.`,
         },
         {
-          emoji: "🎎",
-          question: "Đội bê tráp & phù dâu phù rể: bao nhiêu người?",
-          detail: "Số người bê tráp = số mâm quả. Phù dâu phù rể nên bao nhiêu? Ai chọn? Yêu cầu gì (chưa lập gia đình, cùng giới...)?",
+          emoji: "🕯️",
+          question: "Văn khấn gia tiên nhà trai khi rước dâu về?",
+          detail: "Khi cô dâu về đến nhà trai, đôi trẻ thắp hương bàn thờ gia tiên nhà trai — trình diện tổ tiên, xin phù hộ. Ai khấn? Nội dung khấn gì?",
           tips: [
-            "Bê tráp: nam (nhà trai bê sang) + nữ (nhà gái đón nhận) — số lượng bằng nhau",
-            "Truyền thống: bê tráp phải chưa kết hôn (nhưng ngày nay linh hoạt hơn)",
-            "Phù dâu: 2-6 người, nên là bạn thân cô dâu, hỗ trợ trong suốt lễ",
-            "Phù rể: số lượng tương đương phù dâu",
-            "Bàn trước: ai lo trang phục cho đội bê tráp, phù dâu phù rể?",
+            "Thường do bố/mẹ chú rể hoặc ông bà khấn",
+            "Đôi trẻ thắp hương, lạy 2-4 lạy",
+            "Nên khấn trước khi vào tiệc cưới",
+            "Chuẩn bị sẵn bàn thờ: hoa, quả, nhang, nến, mâm cúng nhỏ",
           ],
+          sampleTextLabel: "📜 Văn khấn gia tiên mẫu — Nhà trai đón dâu",
+          sampleText: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn Thần.
+Con kính lạy Tổ Tiên nội ngoại họ [HỌ NHÀ TRAI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Tại [ĐỊA CHỈ NHÀ TRAI],
+
+Con trai chúng con là [TÊN CHÚ RỂ], sinh năm [NĂM SINH],
+Hôm nay chính thức đón [TÊN CÔ DÂU], sinh năm [NĂM SINH], con gái họ [HỌ NHÀ GÁI], về làm dâu.
+
+Chúng con kính dâng nén hương, xin trình ông bà Tổ Tiên chứng giám, phù hộ cho hai cháu:
+— Vợ chồng hòa thuận, tương kính như tân
+— Sớm sinh quý tử, gia đạo hưng thịnh
+— Hai gia đình sui gia hòa thuận, an khang
+
+Nam mô A Di Đà Phật (3 lần)`,
         },
-        {
-          emoji: "👗",
-          question: "Trang phục cho nghi lễ: cô dâu chú rể, hai họ, bê tráp?",
-          detail: "Thống nhất trang phục cho các nghi lễ (ăn hỏi + rước dâu + lễ gia tiên). Áo dài truyền thống hay vest/đầm? Màu sắc đồng bộ?",
-          tips: [
-            "Cô dâu: áo dài đỏ/hồng cho lễ, váy trắng cho tiệc (phổ biến nhất)",
-            "Chú rể: áo dài nam hoặc vest — nên đồng bộ với cô dâu",
-            "Bố mẹ hai bên: nên cùng tông màu (thường áo dài xanh, đỏ, hoặc vàng)",
-            "Đội bê tráp + phù dâu: đồng phục áo dài cùng màu — ai lo trang phục cần bàn",
-            "Budget trang phục tính từ đầu — thuê hay may riêng, mấy bộ cho cô dâu",
-          ],
-        },
+        { emoji: "🏮", question: "Trang trí nhà gái ngày ăn hỏi?", detail: "Nhà gái cần trang trí để đón nhà trai. Bàn: cổng hoa, phông bạt, bàn thờ, bàn tiếp khách, có thuê dịch vụ trang trí không?", tips: ["Cổng hoa: 2-5 triệu tùy size và loại hoa", "Phông bạt tiếp khách: thuê hoặc tự dựng, 1-3 triệu", "Bàn thờ gia tiên: dọn dẹp sạch sẽ, hoa tươi, quả mới", "Bàn trà tiếp khách: chén trà, bánh ngọt, nước suối", "Trang trí tối thiểu: băng-rôn, hoa, đèn — không cần quá cầu kỳ"] },
+        { emoji: "🏮", question: "Trang trí nhà trai ngày rước dâu về?", detail: "Nhà trai cũng cần trang trí để đón cô dâu về. Bàn: cổng hoa, phông bạt, phòng tân hôn, bàn thờ.", tips: ["Cổng hoa nhà trai: nên có, không cần to bằng nhà gái", "Phòng tân hôn: dọn dẹp, trang trí đơn giản (hoa, nến, ga giường mới)", "Bàn thờ gia tiên: chuẩn bị sẵn hoa, quả, nhang, nến cho lễ gia tiên", "Bàn tiếp khách, trà nước cho đoàn nhà gái đi theo cô dâu (nếu có)"] },
+        { emoji: "🚗", question: "Đám rước dâu: xe cộ, lộ trình, đoàn rước?", detail: "Hai nhà cần bàn phương tiện đón dâu, số lượng xe, lộ trình đi và về, ai đi trong đoàn rước.", tips: ["Số xe thường số chẵn (4, 6, 8 xe)", "Xe hoa nên đặt sớm nếu cưới mùa cao điểm", "Lộ trình: tránh nghĩa trang, nhà thờ/chùa khác tôn giáo (tùy vùng)", "Đoàn rước: bố mẹ chú rể, cô chú đại diện, phù rể — số người lẻ (về thành chẵn có cô dâu)", "Tính thời gian di chuyển + ùn tắc để đến đúng giờ đẹp"] },
+        { emoji: "🎎", question: "Đội bê tráp & phù dâu phù rể: bao nhiêu người?", detail: "Số người bê tráp = số mâm quả. Phù dâu phù rể nên bao nhiêu? Ai chọn? Yêu cầu gì?", tips: ["Bê tráp: nam (nhà trai bê sang) + nữ (nhà gái đón) — số lượng bằng nhau", "Truyền thống: bê tráp phải chưa kết hôn (ngày nay linh hoạt hơn)", "Phù dâu: 2-6 người, bạn thân cô dâu", "Phù rể: số lượng tương đương phù dâu", "Bàn trước: ai lo trang phục cho đội bê tráp, phù dâu phù rể?"] },
+        { emoji: "👗", question: "Trang phục cho nghi lễ: cô dâu chú rể, hai họ, bê tráp?", detail: "Thống nhất trang phục cho các nghi lễ (ăn hỏi + rước dâu + lễ gia tiên). Áo dài truyền thống hay vest/đầm? Màu sắc đồng bộ?", tips: ["Cô dâu: áo dài đỏ/hồng cho lễ, váy trắng cho tiệc", "Chú rể: áo dài nam hoặc vest — đồng bộ với cô dâu", "Bố mẹ hai bên: nên cùng tông màu", "Đội bê tráp + phù dâu: đồng phục áo dài cùng màu", "Budget trang phục tính từ đầu — thuê hay may riêng"] },
+        { emoji: "🍵", question: "Nghi thức rót trà mời hai họ?", detail: "Trong lễ ăn hỏi hoặc lễ cưới, cô dâu chú rể rót trà mời bố mẹ, ông bà, cô chú hai bên — thể hiện lòng kính trọng. Bàn: có làm lễ rót trà không, mời ai, thứ tự.", tips: ["Thứ tự: ông bà → bố mẹ → cô chú lớn → cô chú nhỏ", "Rót trà cho bố mẹ: quỳ xuống hoặc cúi người (tùy vùng)", "Sau khi rót trà: bố mẹ/ông bà thường lì xì hoặc tặng vàng cho đôi trẻ", "Trà: nên dùng trà ngon, pha sẵn trong bộ ấm chén đẹp", "Phổ biến ở miền Bắc và Trung, miền Nam linh hoạt hơn"] },
         {
           emoji: "🔄",
           question: "Lễ lại mặt (về nhà gái sau cưới 3 ngày)?",
-          detail: "Theo phong tục, sau cưới 3 ngày (hoặc 1 ngày tùy vùng), đôi trẻ về thăm nhà gái mang lễ vật. Cần thống nhất ngày, mang gì, ai đi cùng.",
+          detail: "Sau cưới 3 ngày (hoặc 1 ngày tùy vùng), đôi trẻ về thăm nhà gái mang lễ vật. Cần thống nhất ngày, mang gì, ai đi cùng.",
           tips: [
             "Miền Bắc: thường sau 3 ngày, mang gà, xôi, trái cây",
-            "Miền Nam: có thể ngay hôm sau hoặc 3 ngày sau, linh hoạt hơn",
-            "Chú rể nên đi cùng, thể hiện sự tôn trọng nhà vợ",
+            "Miền Nam: có thể ngay hôm sau hoặc 3 ngày sau",
+            "Chú rể nên đi cùng, thể hiện sự tôn trọng",
             "Lễ vật: gà luộc, xôi, trái cây, rượu — tùy vùng",
-            "Nếu ở xa: có thể linh hoạt ngày, không cần quá gò bó",
           ],
+          sampleTextLabel: "📜 Văn khấn mẫu — Lễ lại mặt",
+          sampleText: `Nam mô A Di Đà Phật (3 lần)
+
+Con kính lạy Tổ Tiên nội ngoại họ [HỌ NHÀ GÁI].
+
+Hôm nay ngày ... tháng ... năm ... (âm lịch),
+Con gái [TÊN CÔ DÂU] cùng con rể [TÊN CHÚ RỂ] về thăm nhà, thắp nén nhang kính báo Tổ Tiên.
+
+Hai cháu đã thành vợ thành chồng, nay trở về trình diện ông bà, mong được phù hộ cho gia đạo thuận hòa, vợ chồng hạnh phúc.
+
+Nam mô A Di Đà Phật (3 lần)`,
         },
-        {
-          emoji: "⚠️",
-          question: "Gia đình có hoàn cảnh đặc biệt cần lưu ý?",
-          detail: "Bố mẹ ly hôn, gia đình có tang, người thân bệnh nặng... ảnh hưởng đến nghi lễ. Nên bàn trước để xử lý tinh tế, tránh bất ngờ.",
-          tips: [
-            "Bố mẹ ly hôn: ai đại diện trong lễ? Cả hai có mặt không?",
-            "Gia đình có tang: theo tục không cưới trong tang — nhưng có thể linh hoạt tùy mức độ",
-            "Người thân bệnh nặng: sắp xếp vai trò thay thế trong nghi lễ",
-            "Nói thẳng còn hơn giấu — đối phương sẽ thông cảm nếu biết trước",
-          ],
-        },
+        { emoji: "⚠️", question: "Gia đình có hoàn cảnh đặc biệt cần lưu ý?", detail: "Bố mẹ ly hôn, gia đình có tang, người thân bệnh nặng... ảnh hưởng đến nghi lễ. Nên bàn trước để xử lý tinh tế.", tips: ["Bố mẹ ly hôn: ai đại diện trong lễ? Cả hai có mặt không?", "Gia đình có tang: theo tục không cưới trong tang — nhưng linh hoạt tùy mức độ", "Người thân bệnh nặng: sắp xếp vai trò thay thế trong nghi lễ", "Nói thẳng còn hơn giấu — đối phương sẽ thông cảm nếu biết trước"] },
+        { emoji: "👴", question: "Có cần mời thêm trưởng họ, trưởng tộc?", detail: "Một số dòng họ có trưởng họ/trưởng tộc — cần hỏi ý kiến hoặc mời tham dự lễ. Nếu không mời có thể gây mất lòng.", tips: ["Hỏi bố mẹ: dòng họ mình có trưởng họ đang hoạt động không?", "Nếu có: nên mời dự lễ ăn hỏi hoặc ít nhất báo tin", "Trưởng họ có thể được mời phát biểu hoặc chứng kiến lễ", "Đám cưới là dịp cả họ vui — mời rộng tốt hơn mời thiếu"] },
       ],
       gifts: [
         { name: "Cau trầu", quantity: "1 buồng cau + trầu", cost: 200000 },
