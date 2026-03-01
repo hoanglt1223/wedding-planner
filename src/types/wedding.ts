@@ -32,8 +32,15 @@ export interface DiscussionItem {
   question: string;
   detail: string;
   tips?: string[];
-  sampleText?: string;       // Sample prayer/speech text (văn khấn, lời phát biểu mẫu)
-  sampleTextLabel?: string;  // Label for the sample text block
+}
+
+export interface PrayerItem {
+  emoji: string;
+  title: string;
+  occasion: string;          // When to use (e.g., "Lễ ăn hỏi tại nhà gái")
+  type: "prayer" | "speech"; // Visual distinction
+  text: string;              // Full multiline text
+  note?: string;             // Brief guidance (who recites, how)
 }
 
 export interface Ceremony {
@@ -44,6 +51,7 @@ export interface Ceremony {
   people: Person[];
   gifts?: GiftItem[];
   discussions?: DiscussionItem[];  // Questions/ideas for families to discuss
+  prayers?: PrayerItem[];          // Prayers and speeches for this ceremony
   regionalNotes?: RegionalContent<string[]>;  // Region-specific notes
 }
 

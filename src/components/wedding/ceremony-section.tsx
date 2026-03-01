@@ -5,6 +5,7 @@ import { CeremonySteps } from "./ceremony-steps";
 import { PeopleGrid } from "./people-grid";
 import { GiftsTable } from "./gifts-table";
 import { DiscussionsList } from "./discussions-list";
+import { PrayersList } from "./prayers-list";
 import { t } from "@/lib/i18n";
 
 interface CeremonySectionProps {
@@ -60,6 +61,11 @@ export function CeremonySection({
           onToggle={onToggleCheck}
           timeOffset={timeOffset}
         />
+      )}
+
+      {/* Prayers & speeches */}
+      {ceremony.prayers && ceremony.prayers.length > 0 && (
+        <PrayersList prayers={ceremony.prayers} lang={lang} />
       )}
 
       {/* Family discussion topics */}
