@@ -75,7 +75,7 @@ export function AdminSidebar({ currentRoute, onLogout }: AdminSidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-64 border-r bg-white h-screen shrink-0">
+      <aside className="hidden md:flex flex-col w-64 border-r bg-white h-full shrink-0">
         {sidebarContent}
       </aside>
 

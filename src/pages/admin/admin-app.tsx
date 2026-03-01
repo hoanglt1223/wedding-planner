@@ -61,7 +61,7 @@ export default function AdminApp() {
   }
 
   return (
-    <div className="flex h-screen bg-background text-foreground overflow-hidden">
+    <div className="flex h-app bg-background text-foreground overflow-hidden">
       <AdminSidebar
         currentRoute={currentRoute}
         onLogout={() => {

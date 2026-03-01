@@ -266,7 +266,7 @@ function DesktopFlyingSidebar(
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="hidden md:block fixed top-12 right-0 z-30 h-[calc(100vh-3rem)]">
+    <div className="hidden md:block fixed top-12 right-0 z-30" style={{ height: "calc(100dvh - 3rem)" }}>
       {/* Toggle button */}
       <button
         onClick={() => setOpen(!open)}

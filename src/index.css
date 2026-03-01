@@ -147,6 +147,12 @@
   line-height: 0.875rem;
 }
 
+/* Mobile-safe viewport height (dvh with vh fallback) */
+@utility h-app {
+  height: 100vh;
+  height: 100dvh;
+}
+
 /* === Wedding Planner Custom Styles === */
 
 /* Hide scrollbar for tab navigation */

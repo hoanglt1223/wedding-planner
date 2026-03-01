@@ -56,7 +56,9 @@ export function InstallPrompt({ lang = "vi" }: InstallPromptProps) {
   const installLabel = lang === "en" ? "Install" : "Cài đặt";
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 p-3 bg-white/95 backdrop-blur border-t shadow-lg md:hidden">
+    <div className="fixed bottom-16 inset-x-0 z-50 p-3 bg-white/95 backdrop-blur border-t shadow-lg md:hidden"
+      style={{ marginBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
       <div className="max-w-md mx-auto flex items-center gap-3">
         <div className="text-2xl">💍</div>
         <div className="flex-1 min-w-0">

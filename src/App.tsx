@@ -86,7 +86,7 @@ function App() {
 
   return (
     <div
-      className="h-screen flex flex-col text-[#2c1810] overflow-hidden"
+      className="h-app flex flex-col text-[#2c1810] overflow-hidden"
       style={{
         backgroundColor: theme.bg,
         "--theme-primary": theme.primary,
@@ -133,7 +133,7 @@ function App() {
         <main className="flex-1 overflow-y-auto">
           <div
             key={state.page}
-            className="page-transition-enter max-w-[920px] mx-auto px-3 sm:px-4 pt-2 pb-20 md:pb-4"
+            className="page-transition-enter max-w-[920px] mx-auto px-3 sm:px-4 pt-2 pb-4"
           >
             <PageRouter
               state={state}

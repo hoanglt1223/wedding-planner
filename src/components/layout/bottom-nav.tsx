@@ -12,7 +12,7 @@ export function BottomNav({ activePage, onPageChange, onMenuOpen, lang = "vi" }:
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-40 md:hidden border-t bg-[var(--theme-surface)]/95 backdrop-blur-sm"
+      className="shrink-0 z-40 md:hidden border-t bg-[var(--theme-surface)]/95 backdrop-blur-sm"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
       <div className="flex items-stretch h-16">
