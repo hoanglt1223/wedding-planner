@@ -1,193 +1,55 @@
 import type { WeddingStep, PrayerItem } from "@/types/wedding";
 import type { RegionalContent } from "@/data/regions";
 
+// ===== CHỈ các văn khấn & lời phát biểu THỰC SỰ diễn ra trong LỄ DẠM NGÕ =====
+// Ăn hỏi → Step 3, Rước dâu → Step 5, Tân hôn → Step 6, Lại mặt → Step 7
 const ENGAGEMENT_PRAYERS: PrayerItem[] = [
   {
-    emoji: "🏡",
-    title: "Văn khấn Thổ Công trước lễ",
-    occasion: "Trước khi bắt đầu nghi lễ dạm ngõ/ăn hỏi",
-    type: "prayer",
-    note: "Gia chủ (nhà gái) khấn trước bàn thờ Thổ Công/Ông Địa, xin phép thần linh cho gia đình tổ chức lễ.",
-    text: `Nam mô A Di Đà Phật (3 lần)
-
-Con kính lạy Hoàng Thiên Hậu Thổ, Thổ Địa Long Mạch Tôn Thần.
-Con kính lạy Thổ Công, Táo Quân, các vị Tôn Thần cai quản khu vực này.
-
-Hôm nay ngày ... tháng ... năm ... (âm lịch),
-Tại [ĐỊA CHỈ NHÀ GÁI],
-
-Gia đình chúng con có con gái là [TÊN CÔ DÂU], nay được gia đình họ [HỌ NHÀ TRAI] đến xin phép chuyện hôn nhân.
-
-Chúng con kính dâng lễ vật, xin Thổ Công Thổ Địa chứng giám, phù hộ cho buổi lễ được diễn ra suôn sẻ, thuận lợi, hai gia đình hòa thuận vui vẻ.
-
-Nam mô A Di Đà Phật (3 lần)`,
-  },
-  {
-    emoji: "🎤",
-    title: "Lời giới thiệu khai mạc buổi lễ",
-    occasion: "Mở đầu lễ dạm ngõ / ăn hỏi",
-    type: "speech",
-    note: "MC hoặc người lớn tuổi nhất giới thiệu hai họ, nêu lý do buổi lễ. Giọng trang trọng, ấm áp.",
-    text: `Kính thưa toàn thể hai họ,
-
-Hôm nay, nhân ngày lành tháng tốt, hai gia đình chúng ta cùng hội ngộ tại đây để chứng kiến một sự kiện trọng đại — lễ [DẠM NGÕ / ĂN HỎI] của hai cháu [TÊN CÔ DÂU] và [TÊN CHÚ RỂ].
-
-Xin trân trọng giới thiệu:
-— Về phía nhà trai: ông bà [TÊN], bố mẹ chú rể [TÊN], cùng các cô chú đại diện.
-— Về phía nhà gái: ông bà [TÊN], bố mẹ cô dâu [TÊN], cùng các cô chú đại diện.
-
-Xin kính mời đại diện nhà trai lên phát biểu.`,
-  },
-  {
     emoji: "🗣️",
-    title: "Lời phát biểu nhà trai xin phép",
-    occasion: "Lễ dạm ngõ / ăn hỏi — sau lời khai mạc",
+    title: "Lời nhà trai ngỏ ý xin phép tìm hiểu",
+    occasion: "Lễ dạm ngõ — sau khi hai bên ngồi vào bàn",
     type: "speech",
-    note: "Bố chú rể hoặc ông/chú đại diện phát biểu. Giọng chân thành, rõ ràng, 3-5 phút. Nên viết sẵn và tập nói trước.",
-    text: `Kính thưa ông bà, bác và toàn thể gia đình nhà gái,
+    note: "Bố chú rể hoặc ông/chú đại diện. Dạm ngõ đơn giản, thân mật hơn ăn hỏi — không cần MC khai mạc, không trình lễ vật long trọng. Chỉ cần chân thành, gọn gàng 2-3 phút.",
+    text: `Kính thưa ông bà và gia đình nhà gái,
 
-Hôm nay, nhân ngày lành tháng tốt, gia đình chúng tôi — họ [HỌ NHÀ TRAI] — xin phép được đến quý gia đình để thưa chuyện.
+Hôm nay gia đình chúng tôi — họ [HỌ NHÀ TRAI] — xin phép được đến quý gia đình để thưa chuyện.
 
 Con trai chúng tôi là [TÊN CHÚ RỂ] và con gái quý gia đình là [TÊN CÔ DÂU] đã tìm hiểu nhau được [THỜI GIAN]. Hai cháu tâm đầu ý hợp và mong muốn tiến tới hôn nhân.
 
-Gia đình chúng tôi xin mang chút lễ vật tượng trưng đến trình ông bà và gia đình, kính xin được phép cho hai cháu chính thức tìm hiểu và tiến tới lễ cưới.
+Gia đình chúng tôi xin mang chút lễ vật tượng trưng đến trình ông bà, kính xin phép cho hai cháu chính thức tìm hiểu và hai gia đình cùng bàn bạc chuyện cưới hỏi.
 
-Rất mong ông bà và gia đình chấp thuận. Xin chân thành cảm ơn.`,
+Rất mong ông bà và gia đình chấp thuận.`,
   },
   {
     emoji: "🗣️",
-    title: "Lời đáp nhà gái đồng ý",
-    occasion: "Lễ dạm ngõ / ăn hỏi — sau lời nhà trai",
+    title: "Lời nhà gái đáp lời đồng ý",
+    occasion: "Lễ dạm ngõ — sau lời nhà trai",
     type: "speech",
-    note: "Bố cô dâu hoặc ông/chú đại diện đáp lời. Ngắn gọn, chân thành.",
-    text: `Kính thưa ông bà và toàn thể gia đình nhà trai,
+    note: "Bố cô dâu hoặc ông/chú đại diện. Ngắn gọn, ấm áp, đồng ý cho hai cháu tiến tới — chưa nói đến lễ vật, mâm quả (đó là việc bàn bạc sau).",
+    text: `Kính thưa ông bà và gia đình nhà trai,
 
-Gia đình chúng tôi rất vui mừng và hân hạnh được đón tiếp quý gia đình ngày hôm nay.
+Gia đình chúng tôi rất vui và hân hạnh được đón tiếp quý gia đình.
 
-Chúng tôi đã biết chuyện tình cảm của hai cháu [TÊN CÔ DÂU] và [TÊN CHÚ RỂ] từ lâu, và rất mừng thấy hai cháu hạnh phúc bên nhau.
+Chúng tôi đã biết chuyện tình cảm của hai cháu [TÊN CÔ DÂU] và [TÊN CHÚ RỂ], và rất mừng thấy hai cháu hạnh phúc bên nhau.
 
-Gia đình chúng tôi đồng ý và chấp thuận lời thỉnh cầu của quý gia đình. Xin nhận lễ vật và cùng bàn bạc các bước tiếp theo để hai cháu sớm nên duyên.
+Gia đình chúng tôi đồng ý cho hai cháu chính thức tìm hiểu. Xin nhận lễ vật tượng trưng của quý gia đình, và mong hai nhà cùng bàn bạc các bước tiếp theo.
 
-Kính chúc hai gia đình sức khỏe, hạnh phúc. Chúc hai cháu trăm năm hạnh phúc.`,
+Kính chúc hai gia đình sức khỏe, hạnh phúc.`,
   },
   {
     emoji: "🕯️",
-    title: "Văn khấn gia tiên nhà gái",
-    occasion: "Lễ ăn hỏi tại nhà gái",
+    title: "Văn khấn gia tiên — Lễ dạm ngõ",
+    occasion: "Lễ dạm ngõ — sau khi hai bên đồng ý, thắp hương báo gia tiên",
     type: "prayer",
-    note: "Bố/mẹ cô dâu hoặc ông bà khấn trước bàn thờ. Đôi trẻ thắp hương, lạy 2-4 lạy.",
-    text: `Nam mô A Di Đà Phật (3 lần)
-
-Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn Thần.
-Con kính lạy Tổ Tiên nội ngoại họ [HỌ NHÀ GÁI].
-
-Hôm nay ngày ... tháng ... năm ... (âm lịch),
-Tại [ĐỊA CHỈ NHÀ GÁI],
-
-Gia đình chúng con có con gái là [TÊN CÔ DÂU], sinh năm [NĂM SINH],
-Nay được gia đình họ [HỌ NHÀ TRAI] đến xin phép cầu hôn cho con trai là [TÊN CHÚ RỂ], sinh năm [NĂM SINH].
-
-Hai cháu tâm đầu ý hợp, nguyện kết tóc se duyên.
-
-Chúng con kính dâng nén hương, xin trình ông bà Tổ Tiên chứng giám, phù hộ cho hai cháu:
-— Thuận vợ thuận chồng, tát biển Đông cũng cạn
-— Hạnh phúc bền lâu, con cháu đầy nhà
-— Hai gia đình hòa thuận, sui gia êm ấm
-
-Nam mô A Di Đà Phật (3 lần)`,
-  },
-  {
-    emoji: "👰",
-    title: "Lời trao dâu — Bố cô dâu",
-    occasion: "Lễ rước dâu tại nhà gái",
-    type: "speech",
-    note: "Bố cô dâu phát biểu rồi dắt con gái trao cho chú rể. Khoảnh khắc xúc động nhất — nên có người quay phim sẵn.",
-    text: `Kính thưa ông bà và hai họ,
-
-Hôm nay là ngày trọng đại của con gái tôi — [TÊN CÔ DÂU].
-
-Bố mẹ nuôi con lớn khôn, giờ đến lúc con lập gia đình riêng. Tuy trong lòng có chút bịn rịn, nhưng bố mẹ rất vui vì con đã tìm được người bạn đời tốt.
-
-Con rể [TÊN CHÚ RỂ] ơi, bố giao con gái cho con. Bố mẹ tin tưởng con sẽ yêu thương, che chở và cùng con gái bố xây dựng gia đình hạnh phúc.
-
-Chúc hai con trăm năm hạnh phúc, thuận vợ thuận chồng.
-
-Con gái, hãy luôn nhớ — nhà bố mẹ luôn là nhà của con.`,
-  },
-  {
-    emoji: "🙏",
-    title: "Lời đáp — Chú rể nhận dâu",
-    occasion: "Lễ rước dâu — sau lời trao dâu",
-    type: "speech",
-    note: "Chú rể nên tự nói, chân thành. Nếu quá hồi hộp: viết sẵn vài dòng cầm theo.",
-    text: `Kính thưa bố mẹ (vợ), kính thưa hai họ,
-
-Con xin chân thành cảm ơn bố mẹ đã tin tưởng giao [TÊN CÔ DÂU] cho con.
-
-Con hứa sẽ yêu thương, tôn trọng và cùng [TÊN CÔ DÂU] xây dựng gia đình hạnh phúc. Con cũng xin hứa hiếu thảo với bố mẹ hai bên như con ruột trong nhà.
-
-Con xin nhận [TÊN CÔ DÂU] làm vợ, cùng nhau đi hết cuộc đời.
-
-Con cảm ơn bố mẹ ạ.`,
-  },
-  {
-    emoji: "🕯️",
-    title: "Văn khấn gia tiên nhà trai đón dâu",
-    occasion: "Khi cô dâu về đến nhà trai",
-    type: "prayer",
-    note: "Bố/mẹ chú rể hoặc ông bà khấn. Đôi trẻ thắp hương lạy 2-4 lạy. Nên khấn trước khi vào tiệc.",
-    text: `Nam mô A Di Đà Phật (3 lần)
-
-Con kính lạy Hoàng Thiên Hậu Thổ, chư vị Tôn Thần.
-Con kính lạy Tổ Tiên nội ngoại họ [HỌ NHÀ TRAI].
-
-Hôm nay ngày ... tháng ... năm ... (âm lịch),
-Tại [ĐỊA CHỈ NHÀ TRAI],
-
-Con trai chúng con là [TÊN CHÚ RỂ], sinh năm [NĂM SINH],
-Hôm nay chính thức đón [TÊN CÔ DÂU], sinh năm [NĂM SINH], con gái họ [HỌ NHÀ GÁI], về làm dâu.
-
-Chúng con kính dâng nén hương, xin trình ông bà Tổ Tiên chứng giám, phù hộ cho hai cháu:
-— Vợ chồng hòa thuận, tương kính như tân
-— Sớm sinh quý tử, gia đạo hưng thịnh
-— Hai gia đình sui gia hòa thuận, an khang
-
-Nam mô A Di Đà Phật (3 lần)`,
-  },
-  {
-    emoji: "🏠",
-    title: "Văn khấn nhập trạch — Cô dâu về nhà chồng",
-    occasion: "Cô dâu bước vào nhà trai lần đầu tiên",
-    type: "prayer",
-    note: "Mẹ chú rể hoặc người lớn tuổi khấn khi cô dâu vừa đặt chân vào nhà. Một số vùng có tục bước qua chậu lửa hoặc lư hương.",
-    text: `Nam mô A Di Đà Phật (3 lần)
-
-Con kính lạy Thổ Công, Táo Quân, chư vị Tôn Thần cai quản ngôi nhà này.
-Con kính lạy Tổ Tiên họ [HỌ NHÀ TRAI].
-
-Hôm nay con dâu mới [TÊN CÔ DÂU] chính thức bước chân vào nhà, trở thành thành viên gia đình họ [HỌ NHÀ TRAI].
-
-Xin Thổ Công Thổ Địa chứng giám, phù hộ cho con dâu mới:
-— Nhập gia tùy tục, hòa thuận gia đình
-— Vợ chồng đồng lòng, gia đạo hưng thịnh
-— Sức khỏe dồi dào, vạn sự như ý
-
-Nam mô A Di Đà Phật (3 lần)`,
-  },
-  {
-    emoji: "🔄",
-    title: "Văn khấn lễ lại mặt",
-    occasion: "Về nhà gái sau cưới 3 ngày (hoặc 1 ngày tùy vùng)",
-    type: "prayer",
-    note: "Đôi trẻ thắp hương tại bàn thờ nhà gái, trình diện tổ tiên sau khi thành vợ chồng.",
+    note: "Không phải lễ dạm ngõ nào cũng thắp hương — tùy gia đình. Nếu có, bố/mẹ nhà gái khấn ngắn gọn trước bàn thờ, đôi trẻ thắp hương vái 2 lạy. Đơn giản hơn nhiều so với văn khấn lễ ăn hỏi.",
     text: `Nam mô A Di Đà Phật (3 lần)
 
 Con kính lạy Tổ Tiên nội ngoại họ [HỌ NHÀ GÁI].
 
 Hôm nay ngày ... tháng ... năm ... (âm lịch),
-Con gái [TÊN CÔ DÂU] cùng con rể [TÊN CHÚ RỂ] về thăm nhà, thắp nén nhang kính báo Tổ Tiên.
+Gia đình họ [HỌ NHÀ TRAI] đến nhà xin phép cho con trai [TÊN CHÚ RỂ] được tìm hiểu con gái chúng con là [TÊN CÔ DÂU].
 
-Hai cháu đã thành vợ thành chồng, nay trở về trình diện ông bà, mong được phù hộ cho gia đạo thuận hòa, vợ chồng hạnh phúc.
+Hai gia đình đã đồng ý, xin kính báo ông bà Tổ Tiên chứng giám, phù hộ cho hai cháu thuận duyên, hai nhà hòa thuận.
 
 Nam mô A Di Đà Phật (3 lần)`,
   },

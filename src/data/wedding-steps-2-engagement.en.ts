@@ -1,192 +1,55 @@
 import type { WeddingStep, PrayerItem } from "@/types/wedding";
 import type { RegionalContent } from "@/data/regions";
 
+// ===== ONLY prayers & speeches that ACTUALLY occur during the ENGAGEMENT VISIT (Dam Ngo) =====
+// Betrothal (An Hoi) → Step 3, Bride Pickup (Ruoc Dau) → Step 5, Wedding (Tan Hon) → Step 6, Post-wedding (Lai Mat) → Step 7
 const ENGAGEMENT_PRAYERS_EN: PrayerItem[] = [
   {
-    emoji: "🏡",
-    title: "Prayer to the Land Deity before the ceremony",
-    occasion: "Before the engagement/betrothal ceremony begins",
-    type: "prayer",
-    note: "The host family (bride's side) prays at the Land Deity altar, asking permission for the ceremony to proceed smoothly.",
-    text: `Namo Amitabha Buddha (3 times)
-
-We respectfully bow to Heaven and Earth, the Land Deity, and all guardian spirits of this place.
-
-Today, [LUNAR DATE],
-At [BRIDE'S HOME ADDRESS],
-
-Our family's daughter [BRIDE'S NAME] is receiving the [GROOM'S FAMILY NAME] family who have come to discuss marriage.
-
-We humbly present these offerings and ask the Land Deity to witness and bless this ceremony — may it proceed smoothly, and may both families be harmonious and joyful.
-
-Namo Amitabha Buddha (3 times)`,
-  },
-  {
-    emoji: "🎤",
-    title: "Opening introduction by MC/elder",
-    occasion: "Opening of the engagement/betrothal ceremony",
-    type: "speech",
-    note: "MC or the most senior person introduces both families and states the purpose. Tone: formal yet warm.",
-    text: `Dear members of both families,
-
-Today, on this auspicious day, our two families gather here to witness a momentous occasion — the [ENGAGEMENT / BETROTHAL] ceremony of [BRIDE'S NAME] and [GROOM'S NAME].
-
-Allow me to introduce:
-— From the groom's family: Mr. and Mrs. [NAME], the groom's parents, along with family representatives.
-— From the bride's family: Mr. and Mrs. [NAME], the bride's parents, along with family representatives.
-
-I now invite the groom's family representative to speak.`,
-  },
-  {
     emoji: "🗣️",
-    title: "Groom's family formal request speech",
-    occasion: "Engagement/betrothal — after opening introduction",
+    title: "Groom's family request to court",
+    occasion: "Engagement visit — after both families are seated",
     type: "speech",
-    note: "Groom's father or senior uncle delivers the speech. Sincere, clear, 3-5 minutes. Write it down and practice beforehand.",
-    text: `Dear grandparents, elders, and the bride's esteemed family,
+    note: "Groom's father or senior uncle/representative. Dam Ngo is simple and intimate — no MC needed, no formal gift presentation. Just be sincere, 2-3 minutes.",
+    text: `Dear grandparents and the bride's esteemed family,
 
-Today, on this auspicious day, our family — the [GROOM'S FAMILY NAME] clan — respectfully comes to your home to speak about an important matter.
+Today, our family — the [GROOM'S FAMILY NAME] clan — respectfully visits your home to discuss an important matter.
 
 Our son [GROOM'S NAME] and your daughter [BRIDE'S NAME] have been together for [DURATION]. They are deeply in love and wish to proceed toward marriage.
 
-Our family brings these humble symbolic gifts to present to your family, and we respectfully ask for your permission to allow the two young ones to formally court and proceed toward the wedding.
+Our family brings these humble symbolic gifts to present to your family, and we respectfully ask for your permission to allow the two young ones to formally court, and for both families to discuss the wedding arrangements.
 
-We sincerely hope you will accept our request. Thank you very much.`,
+We sincerely hope you will accept our request.`,
   },
   {
     emoji: "🗣️",
     title: "Bride's family acceptance response",
-    occasion: "Engagement/betrothal — after groom's family speech",
+    occasion: "Engagement visit — after groom's family speech",
     type: "speech",
-    note: "Bride's father or senior uncle responds. Keep it brief and sincere.",
+    note: "Bride's father or senior uncle/representative. Keep it brief and warm — agree to let the couple proceed. Details about gifts and trays will be discussed afterward.",
     text: `Dear grandparents and the groom's esteemed family,
 
 Our family is delighted and honored to welcome you today.
 
-We have known about the relationship between [BRIDE'S NAME] and [GROOM'S NAME] for some time, and we are very happy to see them together.
+We have known about the relationship between [BRIDE'S NAME] and [GROOM'S NAME], and we are very happy to see them together.
 
-Our family agrees and accepts your family's kind request. We gladly receive your gifts and look forward to discussing the next steps so the two young ones may soon be united.
+Our family agrees to let the two young ones formally court. We accept your symbolic gifts and look forward to discussing the next steps together.
 
-We wish both families health and happiness. May the couple enjoy a lifetime of love and joy.`,
+We wish both families health and happiness.`,
   },
   {
     emoji: "🕯️",
-    title: "Ancestor prayer at the bride's home",
-    occasion: "Betrothal ceremony at the bride's home",
+    title: "Ancestor prayer — Engagement visit",
+    occasion: "Engagement visit — after both families agree, lighting incense to inform ancestors",
     type: "prayer",
-    note: "Bride's parents or grandparents recite the prayer. The couple lights incense and bows 2-4 times.",
-    text: `Namo Amitabha Buddha (3 times)
-
-We respectfully bow to Heaven and Earth, and all divine spirits.
-We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
-
-Today, [LUNAR DATE],
-At [BRIDE'S HOME ADDRESS],
-
-Our family's daughter is [BRIDE'S NAME], born in [BIRTH YEAR].
-Today, the [GROOM'S FAMILY NAME] family has come to request her hand in marriage for their son [GROOM'S NAME], born in [BIRTH YEAR].
-
-The two young ones are deeply in love and wish to be united in marriage.
-
-We humbly light this incense and present it to our ancestors, asking for your blessing and protection:
-— May they be a harmonious husband and wife
-— May they enjoy lasting happiness and a prosperous family
-— May both families live in peace and harmony as in-laws
-
-Namo Amitabha Buddha (3 times)`,
-  },
-  {
-    emoji: "👰",
-    title: "Bride handover speech — Bride's father",
-    occasion: "Bride pickup ceremony at bride's home",
-    type: "speech",
-    note: "Bride's father speaks then walks his daughter to the groom. The most emotional moment — have the videographer ready.",
-    text: `Dear grandparents and both families,
-
-Today is the most important day for my daughter — [BRIDE'S NAME].
-
-We raised her with all our love, and now the time has come for her to start her own family. Though we feel a tug at our hearts, we are truly happy that she has found a wonderful life partner.
-
-Son-in-law [GROOM'S NAME], I entrust my daughter to you. We trust that you will love, protect, and build a happy home with her.
-
-May you both enjoy a lifetime of love and happiness together.
-
-My dear daughter — always remember, our home is always your home.`,
-  },
-  {
-    emoji: "🙏",
-    title: "Groom's response — Receiving the bride",
-    occasion: "Bride pickup — after handover speech",
-    type: "speech",
-    note: "The groom should speak himself for sincerity. If too nervous, write a few lines and keep them handy.",
-    text: `Dear Father and Mother (in-law), dear both families,
-
-I sincerely thank you for trusting me with [BRIDE'S NAME].
-
-I promise to love, respect, and build a happy family with [BRIDE'S NAME]. I also promise to be a devoted son to both sets of parents, just as your own child.
-
-I accept [BRIDE'S NAME] as my wife, and I will walk this journey of life together with her.
-
-Thank you, Father and Mother.`,
-  },
-  {
-    emoji: "🕯️",
-    title: "Ancestor prayer at the groom's home",
-    occasion: "When the bride arrives at the groom's home",
-    type: "prayer",
-    note: "Groom's parents or grandparents recite. The couple lights incense and bows 2-4 times. Should be done before the reception.",
-    text: `Namo Amitabha Buddha (3 times)
-
-We respectfully bow to Heaven and Earth, and all divine spirits.
-We respectfully bow to our ancestors of the [GROOM'S FAMILY NAME] clan.
-
-Today, [LUNAR DATE],
-At [GROOM'S HOME ADDRESS],
-
-Our son [GROOM'S NAME], born in [BIRTH YEAR],
-Today officially welcomes [BRIDE'S NAME], born in [BIRTH YEAR], daughter of the [BRIDE'S FAMILY NAME] family, as his bride.
-
-We humbly light this incense and present it to our ancestors, asking for your blessing and protection:
-— May husband and wife live in harmony, loving and respecting each other
-— May they soon be blessed with children and a prosperous household
-— May both families live in peace and happiness as in-laws
-
-Namo Amitabha Buddha (3 times)`,
-  },
-  {
-    emoji: "🏠",
-    title: "Prayer when the bride first enters the groom's home",
-    occasion: "The moment the bride steps into the groom's house",
-    type: "prayer",
-    note: "The groom's mother or a senior elder recites as the bride enters. Some regions include a ritual of stepping over a charcoal brazier or incense burner.",
-    text: `Namo Amitabha Buddha (3 times)
-
-We respectfully bow to the Land Deity, Kitchen God, and all guardian spirits of this home.
-We respectfully bow to our ancestors of the [GROOM'S FAMILY NAME] clan.
-
-Today, our new daughter-in-law [BRIDE'S NAME] officially steps into this home, becoming a member of the [GROOM'S FAMILY NAME] family.
-
-We ask the Land Deity and guardian spirits to witness and bless our new daughter-in-law:
-— May she adapt well and bring harmony to the family
-— May husband and wife be united and the household prosper
-— May all enjoy good health and blessings
-
-Namo Amitabha Buddha (3 times)`,
-  },
-  {
-    emoji: "🔄",
-    title: "Prayer for the post-wedding visit (Le Lai Mat)",
-    occasion: "Returning to the bride's family home 3 days after the wedding",
-    type: "prayer",
-    note: "The couple lights incense at the bride's family altar, reporting to the ancestors as husband and wife.",
+    note: "Not every engagement visit includes incense — it depends on the family. If they do, the bride's parent recites briefly at the altar, and the couple lights incense with 2 bows. Much simpler than the betrothal ancestor prayer.",
     text: `Namo Amitabha Buddha (3 times)
 
 We respectfully bow to our ancestors of the [BRIDE'S FAMILY NAME] clan.
 
 Today, [LUNAR DATE],
-Daughter [BRIDE'S NAME] and son-in-law [GROOM'S NAME] have returned home to light incense and report to the ancestors.
+The [GROOM'S FAMILY NAME] family has visited our home to ask permission for their son [GROOM'S NAME] to court our daughter [BRIDE'S NAME].
 
-The two young ones are now husband and wife. They have come back to pay their respects, and humbly ask for the ancestors' blessing for a harmonious marriage and a happy family.
+Both families have agreed. We humbly report this to our ancestors and ask for your blessing — may the couple be well-matched, and may both families live in harmony.
 
 Namo Amitabha Buddha (3 times)`,
   },
