@@ -15,8 +15,8 @@ export function Footer({ lang = "vi" }: FooterProps) {
   };
 
   return (
-    <footer className="mt-4 border-t border-[var(--theme-border)]">
-      <div className="w-full flex h-12 items-center justify-between px-4">
+    <footer className="mt-4 border-t border-[var(--theme-border)] pb-20 md:pb-0">
+      <div className="w-full flex h-12 items-center justify-between px-4 relative z-10">
         <p className="text-xs text-muted-foreground">
           Wedding Planner &copy; {new Date().getFullYear()}
         </p>
