@@ -16,11 +16,13 @@ const TOTAL_STEPS = 5;
 const SAMPLE_DATA_VI = {
   bride: "Nguyễn Thị Thu Thảo", groom: "Nguyễn Thanh Hoàng",
   brideFamilyName: "Họ Nguyễn", groomFamilyName: "Họ Nhà Trai",
+  brideBirthDate: "1998-05-12", groomBirthDate: "1997-08-23",
   date: "2026-03-14", engagementDate: "2026-09-15", betrothalDate: "2026-11-15",
 };
 const SAMPLE_DATA_EN = {
   bride: "Emily Nguyen", groom: "David Tran",
   brideFamilyName: "Nguyen Family", groomFamilyName: "Tran Family",
+  brideBirthDate: "1998-05-12", groomBirthDate: "1997-08-23",
   date: "2026-03-14", engagementDate: "2026-09-15", betrothalDate: "2026-11-15",
 };
 

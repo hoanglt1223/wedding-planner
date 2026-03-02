@@ -9,6 +9,7 @@ export const PAGES: PageDef[] = [
   { id: "home", label: "🏠 Trang Chủ", icon: "🏠", shortLabel: "Trang chủ" },
   { id: "planning", label: "💒 Kế Hoạch", icon: "💒", shortLabel: "Kế hoạch" },
   { id: "astrology", label: "🔮 Tử Vi", icon: "🔮" },
+  { id: "numerology", label: "🔢 Thần Số Học", icon: "🔢" },
   { id: "cards", label: "🖼️ Thiệp", icon: "🖼️" },
   { id: "ai", label: "🤖 AI", icon: "🤖" },
   { id: "handbook", label: "📖 Sổ Tay", icon: "📖" },
