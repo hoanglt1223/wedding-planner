@@ -2,6 +2,99 @@
 
 All notable changes are documented here.
 
+## [0.8.0] - 2026-03-02
+
+### Added
+
+- **Phase 3.5: Numerology Feature — Pythagorean Numerology with Wedding Focus**
+  - **Core Calculation Engine**: 8 Pythagorean numerology numbers computed from birth dates and full names
+    - Life Path, Expression, Soul Urge, Personality, Birthday, Personal Year, Maturity, Challenges
+    - Proper handling of master numbers (11, 22, 33) without reduction
+    - Vietnamese diacritic stripping before letter-to-number mapping
+    - `src/lib/numerology.ts` (~150 lines) with pure functional exports
+  - **Couple Compatibility Scoring**: Multi-factor weighted algorithm
+    - Life Path (40%), Expression (20%), Soul Urge (20%), Birthday (10%), Personal Year (10%)
+    - Compatibility levels: "excellent" (80-100), "good" (60-79), "moderate" (40-59), "challenging" (<40)
+    - `src/lib/numerology-compatibility.ts` with breakdown per factor
+  - **Vietnamese Interpretation Data**: 12 Life Path profiles (numbers 1-9, 11, 22, 33)
+    - Each profile: name (Vietnamese), keywords, traits, strengths, weaknesses, marriage disposition, lucky attributes
+    - `src/data/numerology-profiles.ts` with `getNumerologyProfile()` lookup
+  - **Harmony Reference Data**: Number pair compatibility matrix
+    - All 78 possible number combinations (symmetric)
+    - Harmony scores with Vietnamese descriptive labels
+    - `src/data/numerology-compatibility.ts`
+  - **Wedding Date Meanings**: Universal Day Number interpretations
+    - 9 Universal Day meanings for wedding planning
+    - Suitability ratings: excellent/good/neutral/avoid
+    - `src/data/numerology-wedding.ts` with tips for each day type
+  - **Five-Tab UI Component Architecture**:
+    - **Tab 1: Personal Profile (Ho So)** — Full-name input, Life Path + 7 core number display, traits/strengths/weaknesses cards, marriage disposition
+    - **Tab 2: Compatibility (Tuong Hop)** — Score visualization, breakdown by factor (40/20/20/10/10 weights), overall assessment
+    - **Tab 3: Wedding Dates (Ngay Cuoi)** — Month selector, calendar grid with color-coded suitability (excellent/good/neutral/avoid), date detail modal
+    - **Tab 4: Yearly Forecast (Du Bao)** — Personal Year number + meaning for current/selected year, yearly themes and advice
+    - **Tab 5: Lucky Attributes (May Man)** — Lucky numbers as badges, lucky colors as swatches, career suggestions, wedding-specific advice
+    - Each tab under 200 lines, responsive mobile-first design
+    - Bride/groom toggle on Personal Profile and Yearly Forecast tabs
+  - **AI Deep Reading Integration**: Optional ZhipuAI analysis
+    - `src/lib/numerology-prompt.ts` — Prompt builder (Vietnamese context, 8 core numbers, wedding focus)
+    - `api/ai.ts` — New `action=numerology` case in existing AI handler
+    - Shared rate limiting (5 req/IP/day) and Redis caching (300-day TTL)
+    - AI card component with loading state, error handling, cached indicator
+  - **Full-Name Input System**: Optional bride/groom full names
+    - Input fields in Personal Profile tab
+    - Fallback to `CoupleInfo.bride`/`CoupleInfo.groom` when empty
+    - No WeddingState persistence (page-level state only)
+  - **Page & Navigation**:
+    - `src/pages/numerology-page.tsx` — Main orchestrator (~120 lines)
+    - Tab navigation (5 tabs: Ho So, Tuong Hop, Ngay Cuoi, Du Bao, May Man)
+    - Route key: `state.page === "numerology"` in PageRouter
+    - Menu drawer entry: "🔢 Than So Hoc" via nav-sections.ts
+  - **File Organization**:
+    - `src/lib/numerology*.ts` — 2 files, calculation + compatibility
+    - `src/data/numerology-*.ts` — 3 files, profiles + compatibility + wedding
+    - `src/pages/numerology-page.tsx` — 1 page
+    - `src/components/numerology/` — 6 files (5 tabs + AI card)
+
+### Architecture Updates
+
+- PageRouter: Added "numerology" case in page switch
+- nav-sections.ts: Added numerology menu entry (menu section)
+- api/ai.ts: Added `action=numerology` handler with caching
+- No state migration needed (feature uses existing CoupleInfo.bride/groom birth dates)
+
+### Performance Notes
+
+- All calculation functions are pure/stateless
+- Compatibility scoring O(1) lookup
+- Wedding date scoring uses 9-number lookup table
+- AI requests cached 300 days per unique combination
+- No new dependencies added (uses existing ZhipuAI, Redis infrastructure)
+
+### Code Quality
+
+- All new files under 200 lines
+- `npm run build` passes with zero TypeScript errors
+- No ESLint warnings in new code
+- Vietnamese diacritics handled correctly throughout
+- Master number edge cases validated
+
+### Type Additions
+
+- `NumerologyProfile` — 8 core numbers + aggregate data
+- `NumerologyNumberProfile` — Life Path profile data (traits, strengths, careers, etc.)
+- `CompatibilityResult` — Score, level, breakdown factors
+- `NumberPairHarmony` — Pair harmony with description
+- `WeddingDayMeaning` — Universal Day interpretation
+
+### Responsive Design
+
+- Tab navigation: horizontal scroll pills on mobile, inline on desktop
+- Calendar grid: responsive cell sizing
+- Cards: single-column on mobile, multi-column on desktop
+- Form inputs: full-width on mobile, side-by-side on desktop
+
+---
+
 ## [0.7.0] - 2026-02-28
 
 ### Added

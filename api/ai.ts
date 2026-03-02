@@ -5,6 +5,8 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createRedis } from "../src/lib/redis.js";
 import { buildAstrologyPrompt } from "../src/lib/astrology-prompt.js";
 import type { ReadingInput } from "../src/lib/astrology-prompt.js";
+import { buildNumerologyPrompt } from "../src/lib/numerology-prompt.js";
+import type { NumerologyReadingInput } from "../src/lib/numerology-prompt.js";
 
 const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
 const ZHIPU_MODEL = "glm-4.7-flash";
@@ -134,6 +136,55 @@ async function handleAstrology(req: VercelRequest, res: VercelResponse) {
   return res.status(200).json({ text, cached: false });
 }
 
+// action=numerology — Personal numerology reading
+async function handleNumerology(req: VercelRequest, res: VercelResponse) {
+  const body = req.body as NumerologyReadingInput;
+
+  // Rate limit: 5/day per IP (separate from astrology)
+  let redis: ReturnType<typeof createRedis> | null = null;
+  try { redis = createRedis(); } catch { /* unavailable */ }
+  if (redis) {
+    const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, "1 d"), prefix: "num_rl" });
+    const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ?? "anonymous";
+    const { success } = await rl.limit(ip);
+    if (!success) return res.status(429).json({
+      error: "rate_limited",
+      message: "Bạn đã hết lượt xem hôm nay. Vui lòng thử lại ngày mai.",
+    });
+  }
+
+  if (!body?.birthDate || !body.fullName) return res.status(400).json({ error: "missing_fields" });
+  if (typeof body.fullName !== "string" || body.fullName.length > 100) return res.status(400).json({ error: "invalid_name" });
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(body.birthDate)) return res.status(400).json({ error: "invalid_birth_date" });
+
+  // Cache key: hash name to avoid PII in Redis
+  function simpleHash(str: string): string {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+    return Math.abs(h).toString(36);
+  }
+  const year = new Date().getFullYear();
+  const cacheKey = `num:reading:${body.birthDate}:${simpleHash(body.fullName)}:${year}`;
+  if (redis) {
+    const cached = await redis.get<string>(cacheKey);
+    if (cached) return res.status(200).json({ text: cached, cached: true });
+  }
+
+  const prompt = buildNumerologyPrompt(body);
+  const aiRes = await callWithFallback([
+    { role: "system", content: prompt.system },
+    { role: "user", content: prompt.user },
+  ], 800, 0.7);
+
+  if (!aiRes.ok) return handleAiError(aiRes, await aiRes.text(), "vi", res);
+  const data = (await aiRes.json()) as { choices?: { message?: { content?: string } }[] };
+  const text = data.choices?.[0]?.message?.content ?? "";
+  if (!text) return res.status(500).json({ error: "empty_response" });
+
+  if (redis) await redis.set(cacheKey, text, { ex: 86400 * 300 });
+  return res.status(200).json({ text, cached: false });
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res);
   if (req.method === "OPTIONS") return res.status(204).end();
@@ -143,6 +194,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const action = (Array.isArray(req.query.action) ? req.query.action[0] : req.query.action) ?? "";
     if (action === "chat") return await handleChat(req, res);
     if (action === "astrology") return await handleAstrology(req, res);
+    if (action === "numerology") return await handleNumerology(req, res);
     return res.status(400).json({ error: "invalid_action" });
   } catch (err: unknown) {
     const status = (err as { status?: number })?.status;

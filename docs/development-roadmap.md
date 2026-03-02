@@ -192,6 +192,38 @@
 
 **Status:** Complete (Feb 28, 2026)
 
+---
+
+### Phase 3.5: Numerology Feature (COMPLETE)
+
+**Status:** Complete (Mar 2, 2026)
+
+**Deliverables:**
+- Core calculation engine: 8 Pythagorean numerology numbers (Life Path, Expression, Soul Urge, Personality, Birthday, Personal Year, Maturity, Challenges)
+- Full compatibility scoring: Multi-factor weighting across Life Path (40%), Expression (20%), Soul Urge (20%), Birthday (10%), Personal Year (10%)
+- Vietnamese interpretation data: 12 Life Path profiles (1-9, 11, 22, 33) with traits, strengths, weaknesses, marriage disposition, lucky attributes
+- Couple compatibility harmonies: Harmony levels between all number pairs with Vietnamese descriptions
+- Wedding date scoring: Universal Day Number system for auspicious wedding date selection
+- UI with 5 tabs: Personal Profile (Ho So), Compatibility (Tuong Hop), Wedding Dates (Ngay Cuoi), Yearly Forecast (Du Bao), Lucky Attributes (May Man)
+- AI integration: ZhipuAI deep reading with rate limiting (5 req/day) and Redis caching (300-day TTL)
+- Navigation: Full menu drawer integration with icon
+- Build verification: Zero TypeScript errors, all files under 200 lines
+
+**Metrics:** 13 new files created (3 lib, 3 data, 5 components, 1 page, 1 modified), npm run build passes cleanly, full feature operational end-to-end.
+
+**Files:**
+- `src/lib/numerology.ts` — Core calculation engine
+- `src/lib/numerology-compatibility.ts` — Compatibility scoring
+- `src/lib/numerology-prompt.ts` — AI prompt builder
+- `src/data/numerology-profiles.ts` — Life Path profiles
+- `src/data/numerology-compatibility.ts` — Harmony data
+- `src/data/numerology-wedding.ts` — Wedding date meanings
+- `src/pages/numerology-page.tsx` — Main page
+- `src/components/numerology/` — 5 tabs + AI card (6 files)
+- Modified: `src/pages/page-router.tsx`, `src/data/nav-sections.ts`, `api/ai.ts`
+
+---
+
 **Deliverables:**
 - **PWA Infrastructure**: Vite PWA plugin, Workbox caching, web manifest, online status hook, iOS install prompt
 - **Navigation Architecture**: Mobile-first bottom navigation (5 sections), menu drawer for overflow, header redesign, region selector
@@ -243,6 +275,7 @@
 | RSVP System | Feb 27, 2026 | Done |
 | Core Planning Features | Feb 28, 2026 | Done |
 | Engagement + Polish | Feb 28, 2026 | Done |
+| Numerology Feature | Mar 2, 2026 | Done |
 | Advanced Features | TBD | Planned |
 | Beta Launch | TBD | Planned |
 | General Availability | TBD | Planned |

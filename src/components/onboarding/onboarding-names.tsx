@@ -40,19 +40,26 @@ export function OnboardingNames(p: OnboardingNamesProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-            {en ? "Bride birthday" : "Sinh nhật cô dâu"} {opt}
-          </label>
-          <input type="date" value={p.brideBirthDate} onChange={(e) => p.onBrideBirthDate(e.target.value)} className={inputCls} />
+      <div className="space-y-1.5">
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+              {en ? "Bride birthday" : "Sinh nhật cô dâu"} {opt}
+            </label>
+            <input type="date" value={p.brideBirthDate} onChange={(e) => p.onBrideBirthDate(e.target.value)} className={inputCls} />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+              {en ? "Groom birthday" : "Sinh nhật chú rể"} {opt}
+            </label>
+            <input type="date" value={p.groomBirthDate} onChange={(e) => p.onGroomBirthDate(e.target.value)} className={inputCls} />
+          </div>
         </div>
-        <div>
-          <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
-            {en ? "Groom birthday" : "Sinh nhật chú rể"} {opt}
-          </label>
-          <input type="date" value={p.groomBirthDate} onChange={(e) => p.onGroomBirthDate(e.target.value)} className={inputCls} />
-        </div>
+        <p className="text-[11px] text-[#8a7060] text-center leading-tight">
+          {en
+            ? "🔮 Unlocks Astrology (Five Elements, Tam Tai) & Numerology (Life Path, compatibility, lucky wedding dates)"
+            : "🔮 Mở khóa Tử Vi (Ngũ Hành, Tam Tai, Kim Lâu) & Thần Số Học (Số Chủ Đạo, tương hợp, ngày cưới may mắn)"}
+        </p>
       </div>
 
       <div className="flex gap-2">

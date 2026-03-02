@@ -3,6 +3,7 @@ import { PlanningPage } from "./planning-page";
 import { HomePage } from "./home-page";
 import { GuestsPage } from "./guests-page";
 import { AstrologyPage } from "./astrology-page";
+import { NumerologyPage } from "./numerology-page";
 import { CardsPanel } from "@/components/cards/cards-panel";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { PrintPanel } from "@/components/print/print-panel";
@@ -50,6 +51,9 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
           lang={lang}
         />
       );
+
+    case "numerology":
+      return <NumerologyPage info={state.info} />;
 
     case "cards":
       return (
