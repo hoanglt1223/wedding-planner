@@ -1,4 +1,5 @@
 import { t } from "@/lib/i18n";
+import { DateInput } from "@/components/ui/date-input";
 
 interface OnboardingNamesProps {
   lang: string;
@@ -46,13 +47,13 @@ export function OnboardingNames(p: OnboardingNamesProps) {
             <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
               {en ? "Bride birthday" : "Sinh nhật cô dâu"} {opt}
             </label>
-            <input type="date" value={p.brideBirthDate} onChange={(e) => p.onBrideBirthDate(e.target.value)} className={inputCls} />
+            <DateInput value={p.brideBirthDate} onChange={p.onBrideBirthDate} className={inputCls} />
           </div>
           <div>
             <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
               {en ? "Groom birthday" : "Sinh nhật chú rể"} {opt}
             </label>
-            <input type="date" value={p.groomBirthDate} onChange={(e) => p.onGroomBirthDate(e.target.value)} className={inputCls} />
+            <DateInput value={p.groomBirthDate} onChange={p.onGroomBirthDate} className={inputCls} />
           </div>
         </div>
         <p className="text-[11px] text-[#8a7060] text-center leading-tight">

@@ -1,4 +1,5 @@
 import { t } from "@/lib/i18n";
+import { DateInput } from "@/components/ui/date-input";
 import type { Region } from "@/types/wedding";
 
 const REGIONS: { id: Region; vi: string; en: string }[] = [
@@ -38,13 +39,13 @@ export function OnboardingDateRegion(p: OnboardingDateRegionProps) {
           <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
             {en ? "Wedding date" : "Ngày cưới"} {opt}
           </label>
-          <input type="date" value={p.date} onChange={(e) => p.onDate(e.target.value)} className={inputCls} />
+          <DateInput value={p.date} onChange={p.onDate} className={inputCls} />
         </div>
         <div>
           <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
             {en ? "Engagement date" : "Ngày đám hỏi"} {opt}
           </label>
-          <input type="date" value={p.engagementDate} onChange={(e) => p.onEngagementDate(e.target.value)} className={inputCls} />
+          <DateInput value={p.engagementDate} onChange={p.onEngagementDate} className={inputCls} />
         </div>
       </div>
 

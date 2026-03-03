@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { TaskData } from "@/lib/task-api";
 import { t } from "@/lib/i18n";
+import { DateInput } from "@/components/ui/date-input";
 
 interface TaskFormProps {
   initial?: Partial<TaskData>;
@@ -64,7 +65,7 @@ export function TaskForm({ initial = {}, categories, onSave, onCancel, lang = "v
             </div>
             <div>
               <label className="text-xs font-medium text-gray-600">{t("Hạn chót", lang)}</label>
-              <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)}
+              <DateInput value={dueDate} onChange={setDueDate}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:ring-2 focus:ring-blue-300" />
             </div>
           </div>

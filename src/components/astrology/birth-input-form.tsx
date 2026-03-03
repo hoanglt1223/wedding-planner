@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { t } from "@/lib/i18n";
+import { DateInput } from "@/components/ui/date-input";
 import type { CoupleInfo } from "@/types/wedding";
 
 const BIRTH_HOURS_VI = [
@@ -52,13 +52,10 @@ export function BirthInputForm({ info, onUpdateInfo, lang = "vi" }: BirthInputFo
           {info.bride && <span className="font-normal ml-1">({info.bride})</span>}
         </label>
         <div className="grid grid-cols-2 gap-2">
-          <Input
-            type="date"
-            min="1940-01-01"
-            max="2010-12-31"
+          <DateInput
             value={info.brideBirthDate || ""}
-            onChange={(e) => onUpdateInfo("brideBirthDate", e.target.value)}
-            className="text-xs h-8 min-w-0"
+            onChange={(v) => onUpdateInfo("brideBirthDate", v)}
+            className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs min-w-0 focus:outline-none focus:ring-2 focus:ring-ring"
           />
           <select
             value={info.brideBirthHour ?? ""}
@@ -84,13 +81,10 @@ export function BirthInputForm({ info, onUpdateInfo, lang = "vi" }: BirthInputFo
           {info.groom && <span className="font-normal ml-1">({info.groom})</span>}
         </label>
         <div className="grid grid-cols-2 gap-2">
-          <Input
-            type="date"
-            min="1940-01-01"
-            max="2010-12-31"
+          <DateInput
             value={info.groomBirthDate || ""}
-            onChange={(e) => onUpdateInfo("groomBirthDate", e.target.value)}
-            className="text-xs h-8 min-w-0"
+            onChange={(v) => onUpdateInfo("groomBirthDate", v)}
+            className="w-full h-8 rounded-md border border-input bg-background px-2 text-xs min-w-0 focus:outline-none focus:ring-2 focus:ring-ring"
           />
           <select
             value={info.groomBirthHour ?? ""}

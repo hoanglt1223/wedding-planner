@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { t } from "@/lib/i18n";
+import { DateInput } from "@/components/ui/date-input";
 import { getExpenseCategories } from "@/data/resolve-data";
 import type { ExpenseEntry } from "@/types/wedding";
 
@@ -85,7 +86,7 @@ export function ExpenseForm({ lang, editing, onSubmit, onUpdate, onCancel }: Exp
         onChange={(e) => setVendorName(e.target.value)}
       />
 
-      <input className={inputCls} type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+      <DateInput value={date} onChange={setDate} className={inputCls} />
 
       <label className="flex items-center gap-2 text-sm cursor-pointer">
         <input type="checkbox" checked={paid} onChange={(e) => setPaid(e.target.checked)} className="rounded" />

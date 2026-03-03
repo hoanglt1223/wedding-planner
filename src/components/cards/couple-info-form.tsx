@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DateInput } from "@/components/ui/date-input";
 import type { CoupleInfo } from "@/types/wedding";
 
 interface CoupleInfoFormProps {
@@ -54,29 +55,26 @@ export function CoupleInfoForm({ info, onUpdateInfo }: CoupleInfoFormProps) {
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         <div>
           <Label className="text-xs font-semibold">Ngày dạm ngõ</Label>
-          <Input
-            type="date"
+          <DateInput
             value={info.engagementDate}
-            onChange={(e) => onUpdateInfo("engagementDate", e.target.value)}
-            className="mt-0.5"
+            onChange={(v) => onUpdateInfo("engagementDate", v)}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-0.5"
           />
         </div>
         <div>
           <Label className="text-xs font-semibold">Ngày hỏi</Label>
-          <Input
-            type="date"
+          <DateInput
             value={info.betrothalDate}
-            onChange={(e) => onUpdateInfo("betrothalDate", e.target.value)}
-            className="mt-0.5"
+            onChange={(v) => onUpdateInfo("betrothalDate", v)}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-0.5"
           />
         </div>
         <div className="col-span-2 sm:col-span-1">
           <Label className="text-xs font-semibold">Ngày cưới</Label>
-          <Input
-            type="date"
+          <DateInput
             value={info.date}
-            onChange={(e) => onUpdateInfo("date", e.target.value)}
-            className="mt-0.5"
+            onChange={(v) => onUpdateInfo("date", v)}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-0.5"
           />
         </div>
       </div>
