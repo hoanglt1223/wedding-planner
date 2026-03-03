@@ -5,14 +5,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Dev Commands
 
 ```bash
-npm run dev          # Start Vite dev server
-npm run build        # TypeScript check + Vite production build (tsc -b && vite build)
-npm run lint         # ESLint
-npm run preview      # Preview production build locally
-npm run db:generate  # Generate Drizzle migration files
-npm run db:migrate   # Run Drizzle migrations against Neon
-npm run db:studio    # Open Drizzle Studio GUI
-npx vercel           # Deploy to Vercel
+pnpm dev          # Start Vite dev server
+pnpm build        # TypeScript check + Vite production build (tsc -b && vite build)
+pnpm lint         # ESLint
+pnpm preview      # Preview production build locally
+pnpm db:generate  # Generate Drizzle migration files
+pnpm db:migrate   # Drizzle migrations against Neon
+pnpm db:studio    # Open Drizzle Studio GUI
+npx vercel        # Deploy to Vercel
 ```
 
 No test framework is configured. `.npmrc` sets `legacy-peer-deps=true`.

@@ -9,6 +9,7 @@ import { TabLuckyAttributes } from "@/components/numerology/tab-lucky-attributes
 
 interface NumerologyPageProps {
   info: CoupleInfo;
+  onUpdateInfo: (field: string, value: string | number | null) => void;
 }
 
 const TAB_IDS = [
@@ -19,10 +20,10 @@ const TAB_IDS = [
   { id: "lucky", label: "🍀 May Mắn" },
 ];
 
-export function NumerologyPage({ info }: NumerologyPageProps) {
+export function NumerologyPage({ info, onUpdateInfo }: NumerologyPageProps) {
   const [activeTab, setActiveTab] = useState("profile");
-  const [brideFullName, setBrideFullName] = useState("");
-  const [groomFullName, setGroomFullName] = useState("");
+  const [brideFullName, setBrideFullName] = useState(info.bride || "");
+  const [groomFullName, setGroomFullName] = useState(info.groom || "");
   const [showNames, setShowNames] = useState(false);
 
   const fullNames = { bride: brideFullName, groom: groomFullName };
@@ -74,17 +75,42 @@ export function NumerologyPage({ info }: NumerologyPageProps) {
         )}
       </div>
 
-      {!hasData ? (
-        <div className="flex flex-col items-center py-12 text-center">
-          <div className="w-24 h-24 rounded-2xl bg-muted flex items-center justify-center mb-4">
-            <span className="text-4xl">🔢</span>
+      {!hasData && (
+        <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4 space-y-3">
+          <div className="text-center">
+            <h3 className="text-base font-semibold mb-1">📅 Nhập ngày sinh để bắt đầu</h3>
+            <p className="text-xs text-muted-foreground">
+              Cần ngày sinh của cả hai để phân tích thần số học
+            </p>
           </div>
-          <h3 className="text-base font-semibold mb-1">Khám phá thần số học đôi bạn</h3>
-          <p className="text-sm text-muted-foreground max-w-xs">
-            Nhập ngày sinh của cô dâu và chú rể ở trang Tử Vi để xem phân tích thần số học chi tiết
-          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                Cô dâu {info.bride ? `(${info.bride})` : ""}
+              </label>
+              <input
+                type="date"
+                value={info.brideBirthDate || ""}
+                onChange={(e) => onUpdateInfo("brideBirthDate", e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-[var(--theme-border)] bg-background text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                Chú rể {info.groom ? `(${info.groom})` : ""}
+              </label>
+              <input
+                type="date"
+                value={info.groomBirthDate || ""}
+                onChange={(e) => onUpdateInfo("groomBirthDate", e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-[var(--theme-border)] bg-background text-sm"
+              />
+            </div>
+          </div>
         </div>
-      ) : (
+      )}
+
+      {hasData && (
         <>
           <div className="flex items-center gap-2 text-muted-foreground/40">
             <div className="h-px flex-1 bg-border" />

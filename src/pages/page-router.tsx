@@ -53,7 +53,7 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
       );
 
     case "numerology":
-      return <NumerologyPage info={state.info} />;
+      return <NumerologyPage info={state.info} onUpdateInfo={store.updateInfo} />;
 
     case "cards":
       return (
