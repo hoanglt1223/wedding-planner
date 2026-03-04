@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import type { CoupleInfo, WeddingStep } from "@/types/wedding";
 import { getLocale } from "@/lib/format";
 import { t } from "@/lib/i18n";
@@ -12,6 +12,13 @@ interface PrintPanelProps {
   lang?: string;
 }
 
+interface ChapterPage {
+  stepIndex: number;
+  ceremonyIndex: number;
+  isFirst: boolean;
+  isLast: boolean;
+}
+
 export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
   const locale = getLocale(lang);
   const [currentPage, setCurrentPage] = useState(0);
@@ -20,8 +27,42 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
   const [exportProgress, setExportProgress] = useState("");
   const bookRef = useRef<HTMLDivElement>(null);
 
-  // Pages: cover(0), toc(1), timeline(2), steps(3..N+2), notes(N+3)
-  const totalPages = 3 + steps.length + 1;
+  // Build flat list: one entry per ceremony
+  const chapterPages = useMemo(() => {
+    const pages: ChapterPage[] = [];
+    steps.forEach((step, si) => {
+      const cers = step.ceremonies;
+      if (cers.length === 0) {
+        // Step with no ceremonies → single page
+        pages.push({ stepIndex: si, ceremonyIndex: -1, isFirst: true, isLast: true });
+      } else {
+        cers.forEach((_, ci) => {
+          pages.push({
+            stepIndex: si,
+            ceremonyIndex: ci,
+            isFirst: ci === 0,
+            isLast: ci === cers.length - 1,
+          });
+        });
+      }
+    });
+    return pages;
+  }, [steps]);
+
+  // Fixed pages: cover(0), toc(1), timeline(2), then chapterPages, then notes
+  const FIXED_BEFORE = 3;
+  const totalPages = FIXED_BEFORE + chapterPages.length + 1; // +1 for notes
+
+  // Map: stepIndex → first page index (for TOC navigation)
+  const stepFirstPage = useMemo(() => {
+    const map: Record<number, number> = {};
+    chapterPages.forEach((cp, i) => {
+      if (!(cp.stepIndex in map)) {
+        map[cp.stepIndex] = FIXED_BEFORE + i;
+      }
+    });
+    return map;
+  }, [chapterPages]);
 
   const goTo = useCallback(
     (p: number) => {
@@ -46,12 +87,12 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
     return () => window.removeEventListener("keydown", handler);
   }, [totalPages]);
 
-  // TOC entries
+  // TOC entries (one per step, pointing to first sub-page)
   const tocEntries = [
     { label: t("Lịch Trình Sự Kiện", lang), page: 2, icon: "🎬" },
     ...steps.map((s, i) => ({
       label: s.title,
-      page: 3 + i,
+      page: stepFirstPage[i] ?? FIXED_BEFORE,
       icon: s.icon,
     })),
     { label: t("Ghi Chú", lang), page: totalPages - 1, icon: "📝" },
@@ -64,11 +105,8 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
     setExporting(true);
     setExportProgress(lang === "en" ? "Preparing..." : "Đang chuẩn bị...");
 
-    // Temporarily show all pages for capture
     const container = bookRef.current;
     container.setAttribute("data-export-all", "true");
-
-    // Small delay for DOM to update
     await new Promise((r) => setTimeout(r, 100));
 
     try {
@@ -97,7 +135,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
 
   return (
     <div className="p-3 sm:p-4 max-w-4xl mx-auto">
-      {/* Toolbar — hidden when printing */}
+      {/* Toolbar */}
       <div className="no-print mb-4 flex flex-wrap items-center gap-2">
         <button
           onClick={handlePrint}
@@ -142,9 +180,9 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
             >
               📋 {lang === "en" ? "Table of Contents" : "Mục lục"}
             </button>
-            {tocEntries.map((entry) => (
+            {tocEntries.map((entry, i) => (
               <button
-                key={entry.page}
+                key={i}
                 onClick={() => goTo(entry.page)}
                 className={`block w-full text-left text-xs px-2 py-1 rounded truncate transition-colors ${currentPage === entry.page ? "bg-purple-100 text-purple-700 font-semibold" : "hover:bg-gray-100"}`}
               >
@@ -165,9 +203,9 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
               <button onClick={() => goTo(0)} className="block w-full text-left text-sm px-2 py-1.5 rounded hover:bg-gray-100">
                 📕 {lang === "en" ? "Cover" : "Bìa"}
               </button>
-              {tocEntries.map((entry) => (
+              {tocEntries.map((entry, i) => (
                 <button
-                  key={entry.page}
+                  key={i}
                   onClick={() => goTo(entry.page)}
                   className="block w-full text-left text-sm px-2 py-1.5 rounded hover:bg-gray-100"
                 >
@@ -203,9 +241,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
                   {t("Ngày cưới:", lang)} {fmDate(info.date)}
                 </div>
               )}
-              <div className="mt-8 text-xs text-gray-300">
-                Vietnamese Wedding Planner
-              </div>
+              <div className="mt-8 text-xs text-gray-300">Vietnamese Wedding Planner</div>
             </div>
             <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">1</div>
           </div>
@@ -237,10 +273,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
                 ))}
                 {/* Print-only static TOC */}
                 {tocEntries.map((entry, i) => (
-                  <div
-                    key={`p-${i}`}
-                    className="hidden print:flex items-center w-full"
-                  >
+                  <div key={`p-${i}`} className="hidden print:flex items-center w-full">
                     <span className="text-base mr-2">{entry.icon}</span>
                     <span className="text-sm font-medium">{entry.label}</span>
                     <span className="flex-1 border-b border-dotted border-gray-300 mx-2 mt-1" />
@@ -264,20 +297,47 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
             <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">3</div>
           </div>
 
-          {/* === CHAPTER PAGES (one per step) === */}
-          {steps.map((step, i) => (
-            <div
-              key={step.id}
-              className={`mt-4 ${currentPage !== 3 + i ? "book-page-hidden" : ""}`}
-            >
-              <HandbookPage
-                step={step}
-                chapterNum={i + 1}
-                pageNum={4 + i}
-                lang={lang}
-              />
-            </div>
-          ))}
+          {/* === CHAPTER PAGES (one per ceremony) === */}
+          {chapterPages.map((cp, i) => {
+            const pageIndex = FIXED_BEFORE + i;
+            const step = steps[cp.stepIndex];
+            const ceremony = cp.ceremonyIndex >= 0 ? step.ceremonies[cp.ceremonyIndex] : undefined;
+            return (
+              <div
+                key={`${cp.stepIndex}-${cp.ceremonyIndex}`}
+                className={`mt-4 ${currentPage !== pageIndex ? "book-page-hidden" : ""}`}
+              >
+                {ceremony ? (
+                  <HandbookPage
+                    step={step}
+                    chapterNum={cp.stepIndex + 1}
+                    ceremony={ceremony}
+                    ceremonyIndex={cp.ceremonyIndex}
+                    isFirst={cp.isFirst}
+                    isLast={cp.isLast}
+                    pageNum={pageIndex + 1}
+                    lang={lang}
+                  />
+                ) : (
+                  /* Step with no ceremonies — just the header */
+                  <div
+                    data-book-page
+                    className="book-page bg-white relative rounded-xl shadow-md overflow-hidden"
+                  >
+                    <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
+                    <div className="px-8 py-6 sm:px-12 sm:py-8 text-center">
+                      <div className="text-xs uppercase tracking-[0.3em] text-gray-400 mb-1">
+                        {lang === "en" ? `Chapter ${cp.stepIndex + 1}` : `Chương ${cp.stepIndex + 1}`}
+                      </div>
+                      <div className="text-3xl mb-2">{step.icon}</div>
+                      <h2 className="text-xl sm:text-2xl font-bold font-serif">{step.title}</h2>
+                    </div>
+                    <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">{pageIndex + 1}</div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           {/* === NOTES PAGE === */}
           <div
@@ -298,7 +358,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
             <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">{totalPages}</div>
           </div>
 
-          {/* Footer / page indicator */}
+          {/* Footer */}
           <div className="text-center text-xs text-gray-400 pt-3 pb-1 print:hidden">
             Vietnamese Wedding Planner —{" "}
             {lang === "en" ? "Printed" : "In ngày"}{" "}
@@ -307,7 +367,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
         </div>
       </div>
 
-      {/* Navigation — hidden when printing */}
+      {/* Navigation */}
       <div className="no-print mt-4 flex items-center justify-center gap-3">
         <button
           onClick={() => goTo(currentPage - 1)}
