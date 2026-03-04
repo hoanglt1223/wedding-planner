@@ -36,6 +36,13 @@
       "when": 1772210607086,
       "tag": "0004_mighty_cable",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1772592485781,
+      "tag": "0005_long_maverick",
+      "breakpoints": true
     }
   ]
 }
