@@ -96,7 +96,7 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
     d ? new Date(d + "T00:00:00").toLocaleDateString(locale) : "";
 
   return (
-    <div className="p-3 sm:p-4 max-w-2xl mx-auto">
+    <div className="p-3 sm:p-4 max-w-4xl mx-auto">
       {/* Toolbar — hidden when printing */}
       <div className="no-print mb-4 flex flex-wrap items-center gap-2">
         <button
@@ -184,10 +184,9 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
           <div
             data-book-page
             className={`book-page bg-white rounded-xl shadow-md overflow-hidden ${currentPage !== 0 ? "book-page-hidden" : ""}`}
-            style={{ minHeight: "min(85vh, 1000px)" }}
           >
             <div className="absolute inset-4 border-2 border-gray-200 rounded-lg pointer-events-none" />
-            <div className="relative flex flex-col items-center justify-center h-full px-8 py-16 text-center" style={{ minHeight: "min(85vh, 1000px)" }}>
+            <div className="relative flex flex-col items-center justify-center px-8 py-16 text-center" style={{ minHeight: 420 }}>
               <div className="text-5xl mb-4">💒</div>
               <h1 className="text-2xl sm:text-3xl font-bold font-serif tracking-wide mb-2">
                 {t("SỔ TAY ĐÁM CƯỚI", lang)}
@@ -215,7 +214,6 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
           <div
             data-book-page
             className={`book-page bg-white rounded-xl shadow-md overflow-hidden mt-4 ${currentPage !== 1 ? "book-page-hidden" : ""}`}
-            style={{ minHeight: "min(85vh, 1000px)" }}
           >
             <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
             <div className="px-8 py-10 sm:px-12">
@@ -258,7 +256,6 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
           <div
             data-book-page
             className={`book-page bg-white rounded-xl shadow-md overflow-hidden mt-4 ${currentPage !== 2 ? "book-page-hidden" : ""}`}
-            style={{ minHeight: "min(85vh, 1000px)" }}
           >
             <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
             <div className="px-6 py-8">
@@ -286,7 +283,6 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
           <div
             data-book-page
             className={`book-page bg-white rounded-xl shadow-md overflow-hidden mt-4 ${currentPage !== totalPages - 1 ? "book-page-hidden" : ""}`}
-            style={{ minHeight: "min(85vh, 1000px)" }}
           >
             <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
             <div className="px-8 py-10 sm:px-12">

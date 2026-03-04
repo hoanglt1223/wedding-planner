@@ -18,7 +18,6 @@ export function HandbookPage({ step, chapterNum, pageNum, lang }: HandbookPagePr
     <div
       data-book-page
       className="book-page bg-white relative rounded-xl shadow-md overflow-hidden"
-      style={{ minHeight: "min(90vh, 1100px)" }}
     >
       {/* Decorative border */}
       <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
