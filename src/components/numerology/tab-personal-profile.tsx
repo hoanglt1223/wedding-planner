@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import type { CoupleInfo } from "@/types/wedding";
 import { calcFullProfile } from "@/lib/numerology";
 import { getNumerologyProfile } from "@/data/numerology-profiles";
+import { NUMBER_POSITION_INFO, getNumberMeaning } from "@/data/numerology-meanings";
 import { AiNumerologyCard } from "./ai-numerology-card";
 import { ToggleBtn } from "./toggle-btn";
 
@@ -10,8 +11,11 @@ interface TabPersonalProfileProps {
   fullNames: { bride: string; groom: string };
 }
 
+type NumberKey = "lifePath" | "expression" | "soulUrge" | "personality" | "birthday" | "personalYear" | "personalMonth" | "maturity" | "challenge";
+
 export function TabPersonalProfile({ info, fullNames }: TabPersonalProfileProps) {
   const [active, setActive] = useState<"bride" | "groom">("bride");
+  const [expanded, setExpanded] = useState<NumberKey | null>(null);
 
   const birthDate = active === "bride" ? info.brideBirthDate : info.groomBirthDate;
   const displayName = active === "bride"
@@ -24,20 +28,29 @@ export function TabPersonalProfile({ info, fullNames }: TabPersonalProfileProps)
   const profile = useMemo(() => calcFullProfile(birthDate, fullName), [birthDate, fullName]);
   const numProfile = useMemo(() => getNumerologyProfile(profile.lifePath), [profile.lifePath]);
 
-  const LABELS: [string, number][] = [
-    ["Chủ Đạo", profile.lifePath], ["Biểu Đạt", profile.expression],
-    ["Linh Hồn", profile.soulUrge], ["Nhân Cách", profile.personality],
-    ["Ngày Sinh", profile.birthday], ["Năm", profile.personalYear],
-    ["Trưởng Thành", profile.maturity], ["Thử Thách", profile.challenges[0]],
+  const LABELS: { key: NumberKey; val: number }[] = [
+    { key: "lifePath", val: profile.lifePath },
+    { key: "expression", val: profile.expression },
+    { key: "soulUrge", val: profile.soulUrge },
+    { key: "personality", val: profile.personality },
+    { key: "birthday", val: profile.birthday },
+    { key: "personalYear", val: profile.personalYear },
+    { key: "personalMonth", val: profile.personalMonth },
+    { key: "maturity", val: profile.maturity },
+    { key: "challenge", val: profile.challenges[0] },
   ];
+
+  const handleToggle = (key: NumberKey) => {
+    setExpanded(expanded === key ? null : key);
+  };
 
   return (
     <div className="space-y-3">
       {/* Toggle */}
       <div className="flex gap-2">
-        <ToggleBtn active={active === "bride"} onClick={() => setActive("bride")}
+        <ToggleBtn active={active === "bride"} onClick={() => { setActive("bride"); setExpanded(null); }}
           label={fullNames.bride || info.bride || "Cô dâu"} />
-        <ToggleBtn active={active === "groom"} onClick={() => setActive("groom")}
+        <ToggleBtn active={active === "groom"} onClick={() => { setActive("groom"); setExpanded(null); }}
           label={fullNames.groom || info.groom || "Chú rể"} />
       </div>
 
@@ -55,15 +68,31 @@ export function TabPersonalProfile({ info, fullNames }: TabPersonalProfileProps)
         </div>
       </div>
 
-      {/* 8-number grid */}
-      <div className="grid grid-cols-4 gap-2">
-        {LABELS.map(([label, val]) => (
-          <div key={label} className="bg-[var(--theme-surface)] rounded-lg border border-[var(--theme-border)] p-2 text-center">
-            <div className="text-lg font-bold text-primary">{val}</div>
-            <div className="text-[10px] text-muted-foreground leading-tight">{label}</div>
-          </div>
-        ))}
+      {/* Number grid — tappable */}
+      <div className="text-xs text-muted-foreground text-center">Nhấn vào từng số để xem giải thích chi tiết</div>
+      <div className="grid grid-cols-3 gap-2">
+        {LABELS.map(({ key, val }) => {
+          const pos = NUMBER_POSITION_INFO[key];
+          const isOpen = expanded === key;
+          return (
+            <button
+              key={key}
+              onClick={() => handleToggle(key)}
+              className={`bg-[var(--theme-surface)] rounded-lg border p-2 text-center transition-colors ${
+                isOpen ? "border-primary ring-1 ring-primary/30" : "border-[var(--theme-border)] hover:border-primary/50"
+              }`}
+            >
+              <div className="text-lg font-bold text-primary">{val}</div>
+              <div className="text-[10px] text-muted-foreground leading-tight">{pos?.icon} {pos?.label ?? key}</div>
+            </button>
+          );
+        })}
       </div>
+
+      {/* Expanded explanation */}
+      {expanded && (
+        <ExpandedCard numberKey={expanded} value={LABELS.find(l => l.key === expanded)!.val} />
+      )}
 
       {/* Traits */}
       <Card title="🎯 Đặc điểm tính cách">
@@ -91,6 +120,40 @@ export function TabPersonalProfile({ info, fullNames }: TabPersonalProfileProps)
 
       {/* AI Card */}
       <AiNumerologyCard birthDate={birthDate} fullName={fullName} lifePath={profile.lifePath} />
+    </div>
+  );
+}
+
+function ExpandedCard({ numberKey, value }: { numberKey: NumberKey; value: number }) {
+  const pos = NUMBER_POSITION_INFO[numberKey];
+  const meaning = getNumberMeaning(value);
+
+  return (
+    <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-primary/30 p-4 space-y-3 animate-in fade-in-0 slide-in-from-top-2 duration-200">
+      <div className="flex items-center gap-2">
+        <span className="text-2xl">{pos?.icon}</span>
+        <div>
+          <h4 className="text-sm font-bold">{pos?.label} — Số {value}</h4>
+          <p className="text-xs text-muted-foreground">{pos?.desc}</p>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div>
+          <h5 className="text-xs font-semibold text-primary mb-0.5">🔢 Ý nghĩa số {value}</h5>
+          <p className="text-xs text-foreground/80 leading-relaxed">{meaning.general}</p>
+        </div>
+        <div>
+          <h5 className="text-xs font-semibold text-pink-600 mb-0.5">💕 Trong tình yêu</h5>
+          <p className="text-xs text-foreground/80 leading-relaxed">{meaning.inLove}</p>
+        </div>
+        {(numberKey === "personalMonth") && (
+          <div>
+            <h5 className="text-xs font-semibold text-blue-600 mb-0.5">🗓️ Ảnh hưởng tháng này</h5>
+            <p className="text-xs text-foreground/80 leading-relaxed">{meaning.monthInfluence}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
