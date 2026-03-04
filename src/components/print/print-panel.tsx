@@ -64,6 +64,22 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
     return map;
   }, [chapterPages]);
 
+  // Map: stepIndex → list of { ceremonyIndex, pageIndex, name } for sub-tab rendering
+  const stepCeremonyPages = useMemo(() => {
+    const map: Record<number, { ci: number; page: number; name: string }[]> = {};
+    chapterPages.forEach((cp, i) => {
+      if (cp.ceremonyIndex < 0) return;
+      const step = steps[cp.stepIndex];
+      if (!map[cp.stepIndex]) map[cp.stepIndex] = [];
+      map[cp.stepIndex].push({
+        ci: cp.ceremonyIndex,
+        page: FIXED_BEFORE + i,
+        name: step.ceremonies[cp.ceremonyIndex].name,
+      });
+    });
+    return map;
+  }, [chapterPages, steps]);
+
   const goTo = useCallback(
     (p: number) => {
       setCurrentPage(Math.max(0, Math.min(p, totalPages - 1)));
@@ -302,11 +318,33 @@ export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
             const pageIndex = FIXED_BEFORE + i;
             const step = steps[cp.stepIndex];
             const ceremony = cp.ceremonyIndex >= 0 ? step.ceremonies[cp.ceremonyIndex] : undefined;
+            const siblings = stepCeremonyPages[cp.stepIndex];
+            const showSubTabs = siblings && siblings.length > 1;
+
             return (
               <div
                 key={`${cp.stepIndex}-${cp.ceremonyIndex}`}
                 className={`mt-4 ${currentPage !== pageIndex ? "book-page-hidden" : ""}`}
               >
+                {/* Sub-tab bar: ceremony tabs within this step */}
+                {showSubTabs && (
+                  <div className="no-print flex gap-1 overflow-x-auto mb-2 px-1 scrollbar-hide">
+                    {siblings.map((s) => (
+                      <button
+                        key={s.ci}
+                        onClick={() => goTo(s.page)}
+                        className={`shrink-0 text-xs px-3 py-1.5 rounded-full transition-colors ${
+                          s.ci === cp.ceremonyIndex
+                            ? "bg-purple-600 text-white font-semibold"
+                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        }`}
+                      >
+                        {s.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
                 {ceremony ? (
                   <HandbookPage
                     step={step}
