@@ -122,6 +122,7 @@ export interface NumerologyProfile {
   personality: number;
   birthday: number;
   personalYear: number;
+  personalMonth: number;
   maturity: number;
   challenges: number[];
 }
@@ -137,9 +138,18 @@ export function calcFullProfile(birthDate: string, fullName: string, year?: numb
     personality: calcPersonality(fullName),
     birthday: calcBirthday(birthDate),
     personalYear: calcPersonalYear(birthDate, year),
+    personalMonth: calcPersonalMonth(birthDate, year),
     maturity: calcMaturity(lifePath, expression),
     challenges: calcChallenge(birthDate),
   };
+}
+
+/** Personal Month: Personal Year + calendar month, reduced */
+export function calcPersonalMonth(birthDate: string, year?: number, month?: number): number {
+  const targetYear = year ?? new Date().getFullYear();
+  const targetMonth = month ?? (new Date().getMonth() + 1);
+  const py = calcPersonalYear(birthDate, targetYear);
+  return reduceToSingleDigit(py + reduceToSingleDigit(targetMonth));
 }
 
 /** Universal Day Number: reduce full date (day + month + year) */

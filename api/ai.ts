@@ -23,7 +23,7 @@ function setCors(res: VercelResponse): void {
   for (const [k, v] of Object.entries(CORS_HEADERS)) res.setHeader(k, v);
 }
 
-async function callZhipu(model: string, messages: { role: string; content: string }[], maxTokens: number, temp: number): Promise<Response> {
+async function callZhipu(model: string, messages: { role: string; content: string }[], maxTokens: number, temp: number, stream = false): Promise<Response> {
   const apiKey = process.env.Z_AI_KEY;
   if (!apiKey) throw Object.assign(new Error("ai_not_configured"), { status: 503 });
   const controller = new AbortController();
@@ -32,7 +32,7 @@ async function callZhipu(model: string, messages: { role: string; content: strin
     return await fetch(ZHIPU_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: temp }),
+      body: JSON.stringify({ model, messages, max_tokens: maxTokens, temperature: temp, stream }),
       signal: controller.signal,
     });
   } catch (err) {
@@ -42,15 +42,15 @@ async function callZhipu(model: string, messages: { role: string; content: strin
 }
 
 /** Try primary model, fallback to secondary on rate limit / balance errors */
-async function callWithFallback(messages: { role: string; content: string }[], maxTokens: number, temp: number): Promise<Response> {
-  const aiRes = await callZhipu(ZHIPU_MODEL, messages, maxTokens, temp);
+async function callWithFallback(messages: { role: string; content: string }[], maxTokens: number, temp: number, stream = false): Promise<Response> {
+  const aiRes = await callZhipu(ZHIPU_MODEL, messages, maxTokens, temp, stream);
   if (aiRes.ok) return aiRes;
 
   const text = await aiRes.text();
   const retriable = text.includes("1302") || text.includes("1113");
   if (!retriable) return new Response(text, { status: aiRes.status, headers: aiRes.headers });
 
-  return callZhipu(ZHIPU_FALLBACK, messages, maxTokens, temp);
+  return callZhipu(ZHIPU_FALLBACK, messages, maxTokens, temp, stream);
 }
 
 function handleAiError(aiRes: Response, text: string, lang: string, res: VercelResponse) {
@@ -73,19 +73,50 @@ function handleAiError(aiRes: Response, text: string, lang: string, res: VercelR
 
 // action=chat — Wedding consultation chat
 async function handleChat(req: VercelRequest, res: VercelResponse) {
-  const body = req.body as { prompt?: string; budget?: string; lang?: string };
-  const { prompt, budget, lang = "vi" } = body ?? {};
+  const body = req.body as { prompt?: string; budget?: string; lang?: string; stream?: boolean; max_tokens?: number };
+  const { prompt, budget, lang = "vi", stream = false } = body ?? {};
   if (!prompt) return res.status(400).json({ error: "Missing prompt" });
 
-  const aiRes = await callWithFallback([
+  const maxTokens = Math.max(100, Math.min(4000, Number(body?.max_tokens) || 1024));
+
+  const messages = [
     { role: "system", content: lang === "en"
       ? `Expert Vietnamese wedding consultant with 20 years of experience across all 3 regions of Vietnam. Provide detailed advice with VND pricing. Respond in English. Budget: ${budget}.`
       : `Chuyên gia đám cưới VN 20 năm kinh nghiệm. 3 miền. Chi tiết, có giá VNĐ. Budget: ${budget}.` },
     { role: "user", content: prompt },
-  ], 2000, 1.0);
+  ];
 
+  if (!stream) {
+    const aiRes = await callWithFallback(messages, maxTokens, 1.0);
+    if (!aiRes.ok) return handleAiError(aiRes, await aiRes.text(), lang, res);
+    return res.status(200).json(await aiRes.json());
+  }
+
+  // Streaming SSE path
+  const aiRes = await callWithFallback(messages, maxTokens, 1.0, true);
   if (!aiRes.ok) return handleAiError(aiRes, await aiRes.text(), lang, res);
-  return res.status(200).json(await aiRes.json());
+
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
+  const reader = aiRes.body?.getReader();
+  if (!reader) return res.status(500).json({ error: "no_stream_body" });
+
+  const decoder = new TextDecoder();
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      res.write(chunk);
+    }
+  } catch {
+    // Client disconnected or upstream error — just close
+  } finally {
+    res.write("data: [DONE]\n\n");
+    res.end();
+  }
 }
 
 // action=astrology — Personal astrology reading

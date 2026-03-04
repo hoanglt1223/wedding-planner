@@ -411,4 +411,6 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Xem trước": { vi: "Xem trước", en: "Preview" },
   "Link website": { vi: "Link website", en: "Website Link" },
   "Lời chào mừng": { vi: "Lời chào mừng", en: "Welcome Message" },
+  "Độ dài tối đa": { vi: "Độ dài tối đa", en: "Max length" },
+  "⏹ Dừng": { vi: "⏹ Dừng", en: "⏹ Stop" },
 };
