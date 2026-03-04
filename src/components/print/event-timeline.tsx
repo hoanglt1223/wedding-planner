@@ -24,8 +24,8 @@ export function EventTimeline({ info, lang = "vi" }: EventTimelineProps) {
   if (events.length === 0) return null;
 
   return (
-    <div className="rounded-xl bg-white p-4 shadow print-clean">
-      <h2 className="text-sm sm:text-base font-bold mb-3 border-b border-gray-200 pb-1">
+    <div className="rounded-xl bg-white p-4 shadow print-clean book-page-inner">
+      <h2 className="text-sm sm:text-base font-bold font-serif mb-3 border-b border-gray-200 pb-1">
         {t("🎬 Lịch Trình Sự Kiện", lang)}
       </h2>
       <div className="relative pl-6">

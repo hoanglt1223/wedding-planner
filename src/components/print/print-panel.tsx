@@ -1,7 +1,10 @@
+import { useState, useCallback, useEffect, useRef } from "react";
 import type { CoupleInfo, WeddingStep } from "@/types/wedding";
-import { getLocale, getCurrencySymbol } from "@/lib/format";
+import { getLocale } from "@/lib/format";
 import { t } from "@/lib/i18n";
 import { EventTimeline } from "./event-timeline";
+import { HandbookPage } from "./handbook-page";
+import { exportHandbookPDF } from "./pdf-export";
 
 interface PrintPanelProps {
   info: CoupleInfo;
@@ -11,222 +14,322 @@ interface PrintPanelProps {
 
 export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
   const locale = getLocale(lang);
-  const cur = getCurrencySymbol(lang);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [showToc, setShowToc] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState("");
+  const bookRef = useRef<HTMLDivElement>(null);
 
-  const totalItems = steps.reduce(
-    (sum, s) => sum + s.ceremonies.reduce((cs, c) => cs + c.steps.filter((st) => st.checkable).length, 0),
-    0,
+  // Pages: cover(0), toc(1), timeline(2), steps(3..N+2), notes(N+3)
+  const totalPages = 3 + steps.length + 1;
+
+  const goTo = useCallback(
+    (p: number) => {
+      setCurrentPage(Math.max(0, Math.min(p, totalPages - 1)));
+      setShowToc(false);
+    },
+    [totalPages],
   );
 
-  const fmCost = (n: number) => `${n.toLocaleString(locale)}${cur}`;
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        setCurrentPage((p) => Math.min(p + 1, totalPages - 1));
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        setCurrentPage((p) => Math.max(p - 1, 0));
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [totalPages]);
+
+  // TOC entries
+  const tocEntries = [
+    { label: t("Lịch Trình Sự Kiện", lang), page: 2, icon: "🎬" },
+    ...steps.map((s, i) => ({
+      label: s.title,
+      page: 3 + i,
+      icon: s.icon,
+    })),
+    { label: t("Ghi Chú", lang), page: totalPages - 1, icon: "📝" },
+  ];
+
+  const handlePrint = () => window.print();
+
+  const handleExportPDF = async () => {
+    if (!bookRef.current || exporting) return;
+    setExporting(true);
+    setExportProgress(lang === "en" ? "Preparing..." : "Đang chuẩn bị...");
+
+    // Temporarily show all pages for capture
+    const container = bookRef.current;
+    container.setAttribute("data-export-all", "true");
+
+    // Small delay for DOM to update
+    await new Promise((r) => setTimeout(r, 100));
+
+    try {
+      const groom = info.groom || "groom";
+      const bride = info.bride || "bride";
+      const filename = `so-tay-dam-cuoi-${groom}-${bride}.pdf`
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+
+      await exportHandbookPDF(container, filename, (cur, total) => {
+        setExportProgress(
+          lang === "en"
+            ? `Rendering page ${cur}/${total}...`
+            : `Đang xuất trang ${cur}/${total}...`,
+        );
+      });
+    } finally {
+      container.removeAttribute("data-export-all");
+      setExporting(false);
+      setExportProgress("");
+    }
+  };
+
+  const fmDate = (d: string) =>
+    d ? new Date(d + "T00:00:00").toLocaleDateString(locale) : "";
 
   return (
-    <div className="p-3 sm:p-4">
-      {/* Print button - hidden when printing */}
-      <div className="no-print mb-4 rounded-xl bg-white p-4 shadow">
-        <h2 className="mb-1 text-lg font-bold">{t("Sổ Tay In", lang)}</h2>
-        <p className="mb-3 text-xs text-gray-500">
-          {steps.length} {t("bước", lang)} · {totalItems} checklist items
-        </p>
+    <div className="p-3 sm:p-4 max-w-2xl mx-auto">
+      {/* Toolbar — hidden when printing */}
+      <div className="no-print mb-4 flex flex-wrap items-center gap-2">
         <button
-          onClick={() => window.print()}
-          className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-500"
+          onClick={handlePrint}
+          className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-semibold hover:bg-gray-200 transition-colors"
         >
-          {t("In Sổ Tay", lang)}
+          🖨️ {t("In Sổ Tay", lang)}
         </button>
+        <button
+          onClick={handleExportPDF}
+          disabled={exporting}
+          className="rounded-lg bg-purple-600 px-3 py-2 text-sm font-semibold text-white hover:bg-purple-500 disabled:opacity-50 transition-colors"
+        >
+          📄 {lang === "en" ? "Export PDF" : "Xuất PDF"}
+        </button>
+        <button
+          onClick={() => setShowToc((v) => !v)}
+          className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-semibold hover:bg-gray-200 transition-colors sm:hidden"
+        >
+          📖 {lang === "en" ? "TOC" : "Mục lục"}
+        </button>
+        {exportProgress && (
+          <span className="text-xs text-purple-600 animate-pulse">{exportProgress}</span>
+        )}
       </div>
 
-      {/* Handbook content - print-friendly */}
-      <div className="space-y-3 print-clean">
-        {/* Header */}
-        <div className="rounded-xl bg-white p-4 text-center shadow print-clean">
-          <h2 className="text-lg sm:text-xl font-bold">{t("SỔ TAY ĐÁM CƯỚI", lang)}</h2>
-          <div className="mt-1 text-base font-bold text-primary">
-            {info.groom} &amp; {info.bride}
-          </div>
-          <div className="text-sm text-gray-500">
-            {info.groomFamilyName} ♥ {info.brideFamilyName}
-          </div>
-          {info.date && (
-            <div className="mt-1 text-xs text-gray-400">
-              {t("Ngày cưới:", lang)} {new Date(info.date + "T00:00:00").toLocaleDateString(locale)}
+      <div className="flex gap-4">
+        {/* TOC sidebar — desktop */}
+        <div className="no-print hidden sm:block w-44 shrink-0">
+          <div className="sticky top-4 rounded-lg bg-white shadow p-3 space-y-0.5">
+            <div className="text-xs font-bold text-gray-500 uppercase mb-2">
+              {lang === "en" ? "Contents" : "Mục lục"}
             </div>
-          )}
+            <button
+              onClick={() => goTo(0)}
+              className={`block w-full text-left text-xs px-2 py-1 rounded transition-colors ${currentPage === 0 ? "bg-purple-100 text-purple-700 font-semibold" : "hover:bg-gray-100"}`}
+            >
+              📕 {lang === "en" ? "Cover" : "Bìa"}
+            </button>
+            <button
+              onClick={() => goTo(1)}
+              className={`block w-full text-left text-xs px-2 py-1 rounded transition-colors ${currentPage === 1 ? "bg-purple-100 text-purple-700 font-semibold" : "hover:bg-gray-100"}`}
+            >
+              📋 {lang === "en" ? "Table of Contents" : "Mục lục"}
+            </button>
+            {tocEntries.map((entry) => (
+              <button
+                key={entry.page}
+                onClick={() => goTo(entry.page)}
+                className={`block w-full text-left text-xs px-2 py-1 rounded truncate transition-colors ${currentPage === entry.page ? "bg-purple-100 text-purple-700 font-semibold" : "hover:bg-gray-100"}`}
+              >
+                {entry.icon} {entry.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <EventTimeline info={info} lang={lang} />
-
-        {/* Steps with unified steps rendering */}
-        {steps.map((step) => (
-          <div key={step.id} className="rounded-xl bg-white p-3 sm:p-4 shadow print-clean">
-            <div className="flex items-center gap-2 mb-1 border-b border-gray-200 pb-1">
-              <h2 className="text-sm sm:text-base font-bold">
-                {step.icon} {step.title}
-              </h2>
-              {step.optional && (
-                <span className="text-2xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
-                  {lang === "en" ? "Optional" : "Tùy chọn"}
-                </span>
-              )}
+        {/* Mobile TOC dropdown */}
+        {showToc && (
+          <div className="no-print fixed inset-0 z-50 bg-black/30 sm:hidden" onClick={() => setShowToc(false)}>
+            <div
+              className="absolute top-16 left-3 right-3 bg-white rounded-xl shadow-xl p-4 max-h-[70vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-sm font-bold mb-3">{lang === "en" ? "Table of Contents" : "Mục lục"}</div>
+              <button onClick={() => goTo(0)} className="block w-full text-left text-sm px-2 py-1.5 rounded hover:bg-gray-100">
+                📕 {lang === "en" ? "Cover" : "Bìa"}
+              </button>
+              {tocEntries.map((entry) => (
+                <button
+                  key={entry.page}
+                  onClick={() => goTo(entry.page)}
+                  className="block w-full text-left text-sm px-2 py-1.5 rounded hover:bg-gray-100"
+                >
+                  {entry.icon} {entry.label}
+                </button>
+              ))}
             </div>
-            {step.formalName && (
-              <div className="text-2xs text-gray-400 italic mb-1.5">
-                {t("Tên chính thức:", lang)} {step.formalName}
+          </div>
+        )}
+
+        {/* Book container */}
+        <div ref={bookRef} className="flex-1 min-w-0">
+          {/* === COVER PAGE === */}
+          <div
+            data-book-page
+            className={`book-page bg-white rounded-xl shadow-md overflow-hidden ${currentPage !== 0 ? "book-page-hidden" : ""}`}
+            style={{ minHeight: "min(85vh, 1000px)" }}
+          >
+            <div className="absolute inset-4 border-2 border-gray-200 rounded-lg pointer-events-none" />
+            <div className="relative flex flex-col items-center justify-center h-full px-8 py-16 text-center" style={{ minHeight: "min(85vh, 1000px)" }}>
+              <div className="text-5xl mb-4">💒</div>
+              <h1 className="text-2xl sm:text-3xl font-bold font-serif tracking-wide mb-2">
+                {t("SỔ TAY ĐÁM CƯỚI", lang)}
+              </h1>
+              <div className="w-16 h-0.5 bg-gray-300 my-4" />
+              <div className="text-xl sm:text-2xl font-bold text-primary mb-1">
+                {info.groom || "?"} & {info.bride || "?"}
               </div>
-            )}
-            {step.meaning && (
-              <div className="mb-2 rounded border border-amber-200 bg-amber-50 p-2">
-                <div className="text-2xs font-semibold text-amber-800 mb-0.5">{t("Ý nghĩa", lang)}</div>
-                <p className="text-2xs text-amber-700 leading-relaxed">{step.meaning}</p>
+              <div className="text-sm text-gray-500">
+                {info.groomFamilyName} ♥ {info.brideFamilyName}
               </div>
-            )}
-            {step.ceremonies.map((cer, ci) => {
-              const checkable = cer.steps.filter((s) => s.checkable);
-              const sequence = cer.steps.filter((s) => !s.checkable);
-              const hasTimed = sequence.some((s) => s.time);
-
-              return (
-                <div key={ci} className="mb-4 last:mb-0">
-                  <h3 className="text-xs sm:text-sm font-semibold mb-1.5 flex items-center gap-1.5 flex-wrap">
-                    <span>{cer.name}</span>
-                    <span className={`text-2xs px-1.5 py-0.5 rounded ${
-                      cer.required
-                        ? "bg-primary/10 text-primary"
-                        : "bg-gray-100 text-gray-500"
-                    }`}>
-                      {cer.required ? t("BẮT BUỘC", lang) : t("TÙY CHỌN", lang)}
-                    </span>
-                  </h3>
-
-                  {/* Printable checklist */}
-                  {checkable.length > 0 && (
-                    <div className="space-y-1 ml-1">
-                      {checkable.map((item, ii) => (
-                        <div key={ii} className="text-xs">
-                          <div className="flex items-start gap-2">
-                            <span className="inline-block w-3.5 h-3.5 border-2 border-gray-400 rounded-sm flex-shrink-0 mt-0.5 print:border-gray-600" />
-                            <span className="flex-1">
-                              {item.text}
-                              {item.cost != null && item.cost > 0 && (
-                                <span className="ml-1 text-gray-400">
-                                  ({fmCost(item.cost)})
-                                </span>
-                              )}
-                            </span>
-                          </div>
-                          {item.detail && (
-                            <div className="ml-6 text-2xs text-gray-500 leading-relaxed mt-0.5">
-                              {item.detail}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Ceremony sequence */}
-                  {sequence.length > 0 && hasTimed ? (
-                    <div className="mt-2 ml-1">
-                      <div className="text-2xs font-semibold text-gray-500 mb-1 uppercase">
-                        {t("Lịch trình chi tiết:", lang)}
-                      </div>
-                      <table className="w-full text-2xs">
-                        <thead>
-                          <tr className="border-b border-gray-200">
-                            <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">{t("Giờ", lang)}</th>
-                            <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold">{t("Hoạt động", lang)}</th>
-                            <th className="text-left py-0.5 text-gray-500 font-semibold w-16">{t("Phụ trách", lang)}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {sequence.map((s, ti) => (
-                            <tr key={ti} className="border-b border-gray-50">
-                              <td className="py-0.5 pr-2 font-mono font-semibold text-primary align-top whitespace-nowrap">{s.time || ""}</td>
-                              <td className="py-0.5 pr-2 text-gray-700 align-top">
-                                {s.text}
-                                {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
-                              </td>
-                              <td className="py-0.5 text-gray-500 align-top">{s.responsible || ""}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  ) : sequence.length > 0 ? (
-                    <div className="mt-2 ml-1">
-                      <div className="text-2xs font-semibold text-gray-500 mb-1 uppercase">
-                        {t("Lịch trình chi tiết:", lang)}
-                      </div>
-                      <table className="w-full text-2xs">
-                        <thead>
-                          <tr className="border-b border-gray-200">
-                            <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold w-10">{t("Bước", lang)}</th>
-                            <th className="text-left py-0.5 pr-2 text-gray-500 font-semibold">{t("Hoạt động", lang)}</th>
-                            <th className="text-left py-0.5 text-gray-500 font-semibold w-16">{t("Phụ trách", lang)}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {sequence.map((s, ri) => (
-                            <tr key={ri} className="border-b border-gray-50">
-                              <td className="py-0.5 pr-2 font-mono font-semibold text-primary align-top whitespace-nowrap">{ri + 1}</td>
-                              <td className="py-0.5 pr-2 text-gray-700 align-top">
-                                {s.text}
-                                {s.note && <span className="text-gray-400 ml-1">({s.note})</span>}
-                              </td>
-                              <td className="py-0.5 text-gray-500 align-top">{s.responsible || ""}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  ) : null}
-
-                  {/* Gifts/offerings */}
-                  {cer.gifts && cer.gifts.length > 0 && (
-                    <div className="mt-2 ml-1">
-                      <div className="text-2xs font-semibold text-gray-500 mb-1 uppercase">
-                        {t("Lễ vật:", lang)}
-                      </div>
-                      <div className="space-y-0.5">
-                        {cer.gifts.map((gift, gi) => (
-                          <div key={gi} className="flex items-start gap-2 text-xs">
-                            <span className="inline-block w-3.5 h-3.5 border-2 border-gray-400 rounded-sm flex-shrink-0 mt-0.5 print:border-gray-600" />
-                            <span className="flex-1">
-                              {gift.name}
-                              {gift.quantity && <span className="text-gray-400"> x{gift.quantity}</span>}
-                              {gift.cost > 0 && (
-                                <span className="ml-1 text-gray-400">
-                                  ({fmCost(gift.cost)})
-                                </span>
-                              )}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
+              {info.date && (
+                <div className="mt-4 text-sm text-gray-400">
+                  {t("Ngày cưới:", lang)} {fmDate(info.date)}
                 </div>
-              );
-            })}
+              )}
+              <div className="mt-8 text-xs text-gray-300">
+                Vietnamese Wedding Planner
+              </div>
+            </div>
+            <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">1</div>
+          </div>
 
-            {step.notes && step.notes.length > 0 && (
-              <div className="mt-2 rounded border border-blue-200 bg-blue-50 p-2">
-                <div className="text-2xs font-semibold text-blue-800 mb-0.5">{t("Lưu ý quan trọng", lang)}</div>
-                {step.notes.map((note, ni) => (
-                  <div key={ni} className="text-2xs text-blue-700 leading-relaxed">• {note}</div>
+          {/* === TOC PAGE === */}
+          <div
+            data-book-page
+            className={`book-page bg-white rounded-xl shadow-md overflow-hidden mt-4 ${currentPage !== 1 ? "book-page-hidden" : ""}`}
+            style={{ minHeight: "min(85vh, 1000px)" }}
+          >
+            <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
+            <div className="px-8 py-10 sm:px-12">
+              <h2 className="text-xl font-bold font-serif text-center mb-8">
+                {lang === "en" ? "Table of Contents" : "Mục Lục"}
+              </h2>
+              <div className="space-y-3">
+                {tocEntries.map((entry, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(entry.page)}
+                    className="no-print flex items-center w-full group text-left"
+                  >
+                    <span className="text-base mr-2">{entry.icon}</span>
+                    <span className="text-sm font-medium group-hover:text-primary transition-colors">
+                      {entry.label}
+                    </span>
+                    <span className="flex-1 border-b border-dotted border-gray-300 mx-2 mt-1" />
+                    <span className="text-sm text-gray-400 font-mono">{entry.page + 1}</span>
+                  </button>
+                ))}
+                {/* Print-only static TOC */}
+                {tocEntries.map((entry, i) => (
+                  <div
+                    key={`p-${i}`}
+                    className="hidden print:flex items-center w-full"
+                  >
+                    <span className="text-base mr-2">{entry.icon}</span>
+                    <span className="text-sm font-medium">{entry.label}</span>
+                    <span className="flex-1 border-b border-dotted border-gray-300 mx-2 mt-1" />
+                    <span className="text-sm text-gray-400 font-mono">{entry.page + 1}</span>
+                  </div>
                 ))}
               </div>
-            )}
+            </div>
+            <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">2</div>
           </div>
-        ))}
 
-        {/* Footer note */}
-        <div className="text-center text-xs text-gray-400 pt-2 print-clean">
-          Vietnamese Wedding Planner —{" "}
-          {lang === "en" ? "Printed" : "In ngày"}{" "}
-          {new Date().toLocaleDateString(locale)}
+          {/* === EVENT TIMELINE PAGE === */}
+          <div
+            data-book-page
+            className={`book-page bg-white rounded-xl shadow-md overflow-hidden mt-4 ${currentPage !== 2 ? "book-page-hidden" : ""}`}
+            style={{ minHeight: "min(85vh, 1000px)" }}
+          >
+            <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
+            <div className="px-6 py-8">
+              <EventTimeline info={info} lang={lang} />
+            </div>
+            <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">3</div>
+          </div>
+
+          {/* === CHAPTER PAGES (one per step) === */}
+          {steps.map((step, i) => (
+            <div
+              key={step.id}
+              className={`mt-4 ${currentPage !== 3 + i ? "book-page-hidden" : ""}`}
+            >
+              <HandbookPage
+                step={step}
+                chapterNum={i + 1}
+                pageNum={4 + i}
+                lang={lang}
+              />
+            </div>
+          ))}
+
+          {/* === NOTES PAGE === */}
+          <div
+            data-book-page
+            className={`book-page bg-white rounded-xl shadow-md overflow-hidden mt-4 ${currentPage !== totalPages - 1 ? "book-page-hidden" : ""}`}
+            style={{ minHeight: "min(85vh, 1000px)" }}
+          >
+            <div className="absolute inset-3 border border-gray-200 rounded pointer-events-none" />
+            <div className="px-8 py-10 sm:px-12">
+              <h2 className="text-xl font-bold font-serif text-center mb-6">
+                📝 {t("Ghi Chú", lang)}
+              </h2>
+              <div className="space-y-4">
+                {Array.from({ length: 18 }).map((_, i) => (
+                  <div key={i} className="border-b border-gray-200 pb-4" />
+                ))}
+              </div>
+            </div>
+            <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-gray-300">{totalPages}</div>
+          </div>
+
+          {/* Footer / page indicator */}
+          <div className="text-center text-xs text-gray-400 pt-3 pb-1 print:hidden">
+            Vietnamese Wedding Planner —{" "}
+            {lang === "en" ? "Printed" : "In ngày"}{" "}
+            {new Date().toLocaleDateString(locale)}
+          </div>
         </div>
+      </div>
+
+      {/* Navigation — hidden when printing */}
+      <div className="no-print mt-4 flex items-center justify-center gap-3">
+        <button
+          onClick={() => goTo(currentPage - 1)}
+          disabled={currentPage === 0}
+          className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-semibold hover:bg-gray-200 disabled:opacity-30 transition-colors"
+        >
+          ← {lang === "en" ? "Prev" : "Trước"}
+        </button>
+        <span className="text-sm text-gray-500 tabular-nums">
+          {lang === "en" ? "Page" : "Trang"} {currentPage + 1} / {totalPages}
+        </span>
+        <button
+          onClick={() => goTo(currentPage + 1)}
+          disabled={currentPage === totalPages - 1}
+          className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-semibold hover:bg-gray-200 disabled:opacity-30 transition-colors"
+        >
+          {lang === "en" ? "Next" : "Sau"} →
+        </button>
       </div>
     </div>
   );

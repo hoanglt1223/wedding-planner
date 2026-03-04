@@ -204,6 +204,22 @@
   animation: offline-pulse 2s infinite;
 }
 
+/* Book page styles */
+.book-page {
+  position: relative;
+}
+.book-page-hidden {
+  display: none;
+}
+/* Show all pages during PDF export */
+[data-export-all] .book-page-hidden {
+  display: block !important;
+}
+/* Serif headings for book feel */
+.font-serif {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
 /* Print styles */
 @media print {
   .no-print,
@@ -225,5 +241,18 @@
   /* Ensure checkbox squares print clearly */
   .print\:border-gray-600 {
     border-color: #4b5563 !important;
+  }
+  /* Book page breaks for multi-page printing */
+  .book-page {
+    page-break-before: always;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .book-page:first-child {
+    page-break-before: auto;
+  }
+  /* Show all pages when printing */
+  .book-page-hidden {
+    display: block !important;
   }
 }
