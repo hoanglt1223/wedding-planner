@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@dqcai/vn-lunar": "^1.0.1",
+    "@min98/vnlunar": "^1.0.3",
     "@neondatabase/serverless": "^1.0.2",
     "@tailwindcss/vite": "^4.2.0",
     "@upstash/ratelimit": "^2.0.8",

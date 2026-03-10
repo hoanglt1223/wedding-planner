@@ -4,6 +4,7 @@ import { HomePage } from "./home-page";
 import { GuestsPage } from "./guests-page";
 import { AstrologyPage } from "./astrology-page";
 import { NumerologyPage } from "./numerology-page";
+import { LunarPage } from "./lunar-page";
 import { CardsPanel } from "@/components/cards/cards-panel";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { PrintPanel } from "@/components/print/print-panel";
@@ -54,6 +55,9 @@ export function PageRouter({ state, store, progress, onGoAI, userId }: PageRoute
 
     case "numerology":
       return <NumerologyPage info={state.info} onUpdateInfo={store.updateInfo} />;
+
+    case "lunar":
+      return <LunarPage info={state.info} lang={lang} />;
 
     case "cards":
       return (

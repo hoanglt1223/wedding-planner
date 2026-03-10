@@ -21,6 +21,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   guests: "guests",
   astrology: "menu",
   numerology: "menu",
+  lunar: "menu",
   ai: "ai",
   tasks: "menu",
   cards: "menu",
@@ -34,5 +35,6 @@ export const MENU_ITEMS = [
   { pageId: "handbook", icon: "📖", labelVi: "Sổ Tay", labelEn: "Handbook" },
   { pageId: "astrology", icon: "🔮", labelVi: "Tử Vi", labelEn: "Fortune" },
   { pageId: "numerology", icon: "🔢", labelVi: "Thần Số Học", labelEn: "Numerology" },
+  { pageId: "lunar", icon: "🌙", labelVi: "Lịch Âm", labelEn: "Lunar Calendar" },
   { pageId: "tasks", icon: "📋", labelVi: "Công Việc", labelEn: "Tasks" },
 ];
