@@ -1,13 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
+import { useParams } from "@tanstack/react-router";
 import type { TaskData } from "@/lib/task-api";
 import { fetchAssigneeTasks, updateTaskStatus } from "@/lib/task-api";
 import { TaskAssigneeView } from "@/components/tasks/task-assignee-view";
 
-interface Props {
-  token: string;
-}
-
-export default function TaskLandingPage({ token }: Props) {
+export default function TaskLandingPage() {
+  const { token } = useParams({ strict: false }) as { token: string };
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [assigneeName, setAssigneeName] = useState("");
   const [loading, setLoading] = useState(true);

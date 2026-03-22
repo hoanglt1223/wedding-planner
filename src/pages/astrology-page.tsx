@@ -8,13 +8,7 @@ import { TabPersonal } from "@/components/astrology/tab-personal";
 import { BirthInputForm } from "@/components/astrology/birth-input-form";
 import { getBirthYear } from "@/lib/astrology";
 import { t } from "@/lib/i18n";
-import type { CoupleInfo } from "@/types/wedding";
-
-interface AstrologyPageProps {
-  info: CoupleInfo;
-  onUpdateInfo: (field: string, value: string | number | null) => void;
-  lang?: string;
-}
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
 const TAB_IDS = [
   { id: "compatibility", label: "💑 Hợp Tuổi" },
@@ -25,7 +19,12 @@ const TAB_IDS = [
   { id: "feng-shui", label: "🧭 Phong Thủy" },
 ];
 
-export function AstrologyPage({ info, onUpdateInfo, lang = "vi" }: AstrologyPageProps) {
+export function AstrologyPage() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
+  const info = state.info;
+  const onUpdateInfo = store.updateInfo;
+  const lang = state.lang;
   const [activeTab, setActiveTab] = useState("compatibility");
   const brideYear = getBirthYear(info.brideBirthDate);
   const groomYear = getBirthYear(info.groomBirthDate);

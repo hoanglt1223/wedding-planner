@@ -1,16 +1,9 @@
 import { lazy, Suspense, useState } from "react";
 import { GuestPanel } from "@/components/guests/guest-panel";
 import { PhotoGalleryDashboard } from "@/components/photo-wall/photo-gallery-dashboard";
-import type { WeddingState } from "@/types/wedding";
-import type { WeddingStore } from "@/hooks/use-wedding-store";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
 const GiftPage = lazy(() => import("./gift-page"));
-
-interface GuestsPageProps {
-  state: WeddingState;
-  store: WeddingStore;
-  userId?: string;
-}
 
 const TABS = [
   { labelVi: "👥 Khách mời", labelEn: "👥 Guests" },
@@ -18,7 +11,9 @@ const TABS = [
   { labelVi: "🎁 Quà tặng", labelEn: "🎁 Gifts" },
 ];
 
-export function GuestsPage({ state, store, userId }: GuestsPageProps) {
+export function GuestsPage() {
+  const store = useWeddingStoreContext();
+  const { state, userId } = store;
   const [activeTab, setActiveTab] = useState(0);
   const lang = state.lang;
   const en = lang === "en";

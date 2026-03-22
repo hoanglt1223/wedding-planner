@@ -1,4 +1,3 @@
-import type { CoupleInfo, PhotoItem } from "@/types/wedding";
 import { BACKGROUNDS } from "@/data/backgrounds";
 import { CoupleInfoForm } from "./couple-info-form";
 import { BackgroundGrid } from "./background-grid";
@@ -7,6 +6,7 @@ import { RsvpSection } from "./rsvp-section";
 import { PhotoBoard } from "./photo-board";
 import { getLocale } from "@/lib/format";
 import { t } from "@/lib/i18n";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
 function fmDs(d: string, lang: string) {
   return d
@@ -35,16 +35,15 @@ function getInviteMsg(eventName: string, lang: string) {
   return "Kính mời quý khách đến dự buổi lễ";
 }
 
-interface CardsPanelProps {
-  info: CoupleInfo;
-  onUpdateInfo: (field: string, value: string) => void;
-  photos: PhotoItem[];
-  onAddPhoto: (photo: Omit<PhotoItem, "id">) => void;
-  onRemovePhoto: (id: number) => void;
-  lang?: string;
-}
-
-export function CardsPanel({ info, onUpdateInfo, photos, onAddPhoto, onRemovePhoto, lang = "vi" }: CardsPanelProps) {
+export function CardsPanel() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
+  const info = state.info;
+  const onUpdateInfo = store.updateInfo;
+  const photos = state.photos || [];
+  const onAddPhoto = store.addPhoto;
+  const onRemovePhoto = store.removePhoto;
+  const lang = state.lang;
   const events = [
     { n: "Dạm Ngõ", d: info.engagementDate },
     { n: "Đám Hỏi", d: info.betrothalDate },

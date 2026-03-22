@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "@tanstack/react-router";
 import { fetchSharedData, type SharedData } from "@/lib/share";
 import { SharedProgress } from "@/components/shared/shared-progress";
 import { getLocale } from "@/lib/format";
@@ -7,12 +8,9 @@ import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 
 const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
 
-interface Props {
-  shareId: string;
-  lang?: string;
-}
-
-export function SharedPreviewPage({ shareId, lang = "vi" }: Props) {
+export function SharedPreviewPage() {
+  const { shareId } = useParams({ strict: false }) as { shareId: string };
+  const lang: string = "vi";
   const [data, setData] = useState<SharedData | null>(null);
   const [status, setStatus] = useState<"loading" | "ok" | "expired">("loading");
 

@@ -4,12 +4,8 @@ import { getMonthDays, getLunarInfo, getLunarMonthName } from "@/lib/lunar-calen
 import type { FullDateInfo } from "@/lib/lunar-calendar";
 import { LunarDayCell } from "@/components/lunar/lunar-day-cell";
 import { LunarDateDetail } from "@/components/lunar/lunar-date-detail";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import type { CoupleInfo } from "@/types/wedding";
-
-interface LunarPageProps {
-  info: CoupleInfo;
-  lang: string;
-}
 
 const DOW_VI = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
 const DOW_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -34,7 +30,10 @@ function parseSavedDates(info: CoupleInfo): Set<string> {
   return s;
 }
 
-export function LunarPage({ info, lang }: LunarPageProps) {
+export function LunarPage() {
+  const { state } = useWeddingStoreContext();
+  const info = state.info;
+  const lang = state.lang;
   const now = new Date();
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [year, setYear] = useState(now.getFullYear());

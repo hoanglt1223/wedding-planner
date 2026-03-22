@@ -1,17 +1,12 @@
 import { useState, useMemo } from "react";
-import type { CoupleInfo } from "@/types/wedding";
 import { calcFullProfile } from "@/lib/numerology";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { DateInput } from "@/components/ui/date-input";
 import { TabPersonalProfile } from "@/components/numerology/tab-personal-profile";
 import { TabCompatibility } from "@/components/numerology/tab-compatibility";
 import { TabWeddingDates } from "@/components/numerology/tab-wedding-dates";
 import { TabYearlyForecast } from "@/components/numerology/tab-yearly-forecast";
 import { TabLuckyAttributes } from "@/components/numerology/tab-lucky-attributes";
-
-interface NumerologyPageProps {
-  info: CoupleInfo;
-  onUpdateInfo: (field: string, value: string | number | null) => void;
-}
 
 const BRIDE_DEFAULT_DOB = "2000-08-09";
 const GROOM_DEFAULT_DOB = "1999-07-31";
@@ -24,7 +19,11 @@ const TAB_IDS = [
   { id: "lucky", label: "🍀 May Mắn" },
 ];
 
-export function NumerologyPage({ info, onUpdateInfo }: NumerologyPageProps) {
+export function NumerologyPage() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
+  const info = state.info;
+  const onUpdateInfo = store.updateInfo;
   const [activeTab, setActiveTab] = useState("profile");
   const [brideFullName, setBrideFullName] = useState(info.bride || "");
   const [groomFullName, setGroomFullName] = useState(info.groom || "");

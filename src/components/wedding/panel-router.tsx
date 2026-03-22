@@ -16,11 +16,10 @@ import type { WeddingStore } from "@/hooks/use-wedding-store";
 interface PanelRouterProps {
   state: WeddingState;
   store: WeddingStore;
-  onGoAI: (hint: string) => void;
   userId?: string;
 }
 
-export function PanelRouter({ state, store, onGoAI, userId }: PanelRouterProps) {
+export function PanelRouter({ state, store, userId }: PanelRouterProps) {
   const tab = state.tab;
   const lang = state.lang;
   const steps = getWeddingSteps(lang).filter((s) => isStepEnabled(state.enabledSteps || {}, s.id));
@@ -37,7 +36,6 @@ export function PanelRouter({ state, store, onGoAI, userId }: PanelRouterProps) 
         checkedKeys={state.checkedItems}
         onSubTabChange={store.setSubTab}
         onToggleCheck={store.toggleCheck}
-        onGoAI={onGoAI}
         stepStartTime={(state.stepStartTimes || {})[step.id]}
         onSetStepStartTime={store.setStepStartTime}
         lang={lang}

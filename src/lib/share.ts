@@ -25,7 +25,7 @@ export async function createShareLink(state: WeddingState): Promise<string> {
   });
   if (!res.ok) throw new Error("Failed to create share link");
   const { id } = await res.json() as { id: string };
-  return `${window.location.origin}/#/shared/${id}`;
+  return `${window.location.origin}/shared/${id}`;
 }
 
 export type SharedData = ReturnType<typeof filterState>;

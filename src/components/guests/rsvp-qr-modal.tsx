@@ -12,7 +12,7 @@ interface RsvpQrModalProps {
 
 export function RsvpQrModal({ guestName, token, open, onClose, lang = "vi" }: RsvpQrModalProps) {
   const [qrUrl, setQrUrl] = useState("");
-  const rsvpLink = `${window.location.origin}/#/rsvp/${token}`;
+  const rsvpLink = `${window.location.origin}/rsvp/${token}`;
 
   useEffect(() => {
     if (open && token) {

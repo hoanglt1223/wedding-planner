@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { LayoutDashboard, Users, BarChart3, Settings, LogOut, Menu, X } from "lucide-react";
 import { adminLogout } from "@/lib/admin-api";
 import { Button } from "@/components/ui/button";
@@ -24,14 +25,15 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ currentRoute, onLogout }: AdminSidebarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   async function handleLogout() {
     await adminLogout();
     onLogout();
   }
 
-  function navigate(route: string) {
-    window.location.hash = `#/admin/${route}`;
+  function handleNavigate(route: string) {
+    void navigate({ to: `/admin/${route}` as never });
     setMobileOpen(false);
   }
 
@@ -51,7 +53,7 @@ export function AdminSidebar({ currentRoute, onLogout }: AdminSidebarProps) {
                 ? "bg-gray-100 text-gray-900 font-medium"
                 : "text-gray-600 hover:text-gray-900"
             }`}
-            onClick={() => navigate(item.route)}
+            onClick={() => handleNavigate(item.route)}
           >
             {item.icon}
             {item.label}

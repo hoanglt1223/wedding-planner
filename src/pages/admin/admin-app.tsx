@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { adminVerify } from "@/lib/admin-api";
 import { AdminLogin } from "./admin-login";
 import { AdminSidebar } from "./admin-sidebar";
@@ -9,8 +10,8 @@ const AdminAnalytics = lazy(() => import("./admin-analytics"));
 const AdminSystem = lazy(() => import("./admin-system"));
 
 function parseAdminRoute(): string {
-  const hash = window.location.hash;
-  const sub = hash.replace("#/admin", "").replace(/^\//, "");
+  const path = window.location.pathname;
+  const sub = path.replace("/admin", "").replace(/^\//, "");
   return sub || "dashboard";
 }
 
@@ -32,6 +33,8 @@ export default function AdminApp() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [currentRoute, setCurrentRoute] = useState(parseAdminRoute);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     adminVerify().then((authenticated) => {
@@ -41,12 +44,8 @@ export default function AdminApp() {
   }, []);
 
   useEffect(() => {
-    function onHashChange() {
-      setCurrentRoute(parseAdminRoute());
-    }
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
+    setCurrentRoute(parseAdminRoute());
+  }, [location.pathname]);
 
   if (isLoading) {
     return (
@@ -66,7 +65,7 @@ export default function AdminApp() {
         currentRoute={currentRoute}
         onLogout={() => {
           setIsAuthenticated(false);
-          window.location.hash = "#/admin";
+          void navigate({ to: "/admin" });
         }}
       />
       <main className="flex-1 overflow-auto bg-gray-50">

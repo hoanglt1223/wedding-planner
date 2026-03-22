@@ -1,5 +1,6 @@
+import { useNavigate } from "@tanstack/react-router";
+
 interface QuickActionsProps {
-  onNavigate: (page: string) => void;
   lang?: string;
 }
 
@@ -10,7 +11,8 @@ const ACTIONS = [
   { page: "website", icon: "🌐", vi: "Website", en: "Website" },
 ];
 
-export function QuickActions({ onNavigate, lang = "vi" }: QuickActionsProps) {
+export function QuickActions({ lang = "vi" }: QuickActionsProps) {
+  const navigate = useNavigate();
   const en = lang === "en";
   return (
     <div>
@@ -21,7 +23,7 @@ export function QuickActions({ onNavigate, lang = "vi" }: QuickActionsProps) {
         {ACTIONS.map((a) => (
           <button
             key={a.page}
-            onClick={() => onNavigate(a.page)}
+            onClick={() => void navigate({ to: `/app/${a.page}` as never })}
             className="flex flex-col items-center gap-1 p-3 rounded-xl min-h-[44px] transition-colors hover:bg-[var(--theme-primary-light)]"
             style={{ backgroundColor: "var(--theme-surface)" }}
           >

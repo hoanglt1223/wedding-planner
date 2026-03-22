@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 
 const BRAND = THEMES.find((t) => t.id === DEFAULT_THEME_ID) || THEMES[0];
@@ -17,8 +18,8 @@ export function LandingHero() {
       <p className="text-sm text-[#8a7060] mb-8 max-w-sm mx-auto">
         Không cần đăng ký. Dữ liệu lưu trên điện thoại của bạn.
       </p>
-      <a
-        href="#/app"
+      <Link
+        to="/app/home"
         className="group relative inline-flex items-center justify-center h-14 px-10 text-lg font-bold text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
         style={{
           background: `linear-gradient(135deg, ${BRAND.accent}, ${BRAND.primaryDark})`,
@@ -38,7 +39,7 @@ export function LandingHero() {
           className="absolute inset-0 rounded-full animate-ping opacity-20"
           style={{ backgroundColor: BRAND.accent }}
         />
-      </a>
+      </Link>
       <p className="mt-4 text-xs text-[#8a7060]">
         Thay thế Excel & sổ tay bằng ứng dụng thông minh
       </p>

@@ -28,7 +28,7 @@ export function WebsiteSlugInput({ bride, groom, value, onChange, lang }: Props)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const baseUrl = `${window.location.origin}${window.location.pathname}#/w/`;
+  const baseUrl = `${window.location.origin}/w/`;
 
   const handleAutoGenerate = () => {
     const gen = generateSlug(bride, groom);

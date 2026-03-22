@@ -4,13 +4,7 @@ import { renderMarkdown } from "@/lib/markdown";
 import { AiPromptButtons } from "./ai-prompt-buttons";
 import { t } from "@/lib/i18n";
 import { getLocale, getCurrencySymbol } from "@/lib/format";
-
-interface AiPanelProps {
-  aiResponse: string;
-  budget: number;
-  onSetAiResponse: (response: string) => void;
-  lang?: string;
-}
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
 const MAX_TOKENS_OPTIONS = [256, 512, 1024, 2048, 4000] as const;
 
@@ -71,7 +65,13 @@ async function streamAI(
   }
 }
 
-export function AiPanel({ aiResponse, budget, onSetAiResponse, lang = "vi" }: AiPanelProps) {
+export function AiPanel() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
+  const aiResponse = state.aiResponse;
+  const budget = state.budget;
+  const onSetAiResponse = store.setAiResponse;
+  const lang = state.lang;
   const [isLoading, setIsLoading] = useState(false);
   const [customPrompt, setCustomPrompt] = useState("");
   const [error, setError] = useState("");
