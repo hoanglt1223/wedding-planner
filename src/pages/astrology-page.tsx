@@ -5,6 +5,7 @@ import { TabWeddingYear } from "@/components/astrology/tab-wedding-year";
 import { TabCompatibleAges } from "@/components/astrology/tab-compatible-ages";
 import { TabFengShui } from "@/components/astrology/tab-feng-shui";
 import { TabPersonal } from "@/components/astrology/tab-personal";
+import { TabWeddingDate } from "@/components/astrology/tab-wedding-date";
 import { BirthInputForm } from "@/components/astrology/birth-input-form";
 import { getBirthYear } from "@/lib/astrology";
 import { t } from "@/lib/i18n";
@@ -20,7 +21,8 @@ const TAB_IDS = [
   { id: "compatibility", label: "💑 Hợp Tuổi" },
   { id: "personal", label: "✨ Cá Nhân" },
   { id: "five-elements", label: "🔥 Ngũ Hành" },
-  { id: "wedding-year", label: "📅 Năm Cưới" },
+  { id: "wedding-date", label: "📅 Ngày Cưới" },
+  { id: "wedding-year", label: "🗓️ Năm Cưới" },
   { id: "compatible-ages", label: "🔍 Tuổi Hợp" },
   { id: "feng-shui", label: "🧭 Phong Thủy" },
 ];
@@ -99,6 +101,7 @@ export function AstrologyPage({ info, onUpdateInfo, lang = "vi" }: AstrologyPage
           {activeTab === "compatibility" && <TabCompatibility {...tabProps} />}
           {activeTab === "personal" && <TabPersonal info={info} {...tabProps} />}
           {activeTab === "five-elements" && <TabFiveElements {...tabProps} />}
+          {activeTab === "wedding-date" && <TabWeddingDate {...tabProps} />}
           {activeTab === "wedding-year" && <TabWeddingYear {...tabProps} />}
           {activeTab === "compatible-ages" && <TabCompatibleAges {...tabProps} />}
           {activeTab === "feng-shui" && <TabFengShui {...tabProps} />}

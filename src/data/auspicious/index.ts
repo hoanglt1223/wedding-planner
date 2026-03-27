@@ -60,4 +60,8 @@ export function getMonthData(month: number, year: number, lang = "vi"): MonthDat
 }
 
 export { getElement, getCompatibility, getElementEmoji, getElementNameEn } from "./ngu-hanh";
+export { getHoangDaoHours, getWeddingHours } from "./gio-hoang-dao";
+export { scoreDate, scoreMonth, getTopDates } from "./wedding-day-scoring";
 export type { DateInfo, MonthData, ElementCompatibility } from "./types";
+export type { HourInfo } from "./gio-hoang-dao";
+export type { ScoredDate, ScoringInput } from "./wedding-day-scoring";
