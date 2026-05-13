@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "@tanstack/react-router";
 import { fetchRsvpInvitation, submitRsvpResponse, type RsvpEventData } from "@/lib/rsvp-api";
 import { THEMES } from "@/data/themes";
 import { t } from "@/lib/i18n";
@@ -10,11 +11,8 @@ import { RsvpThankYou } from "@/components/rsvp/rsvp-thank-you";
 
 type PageStatus = "loading" | "error" | "form" | "submitted" | "already-responded";
 
-interface Props {
-  token: string;
-}
-
-export function RsvpLandingPage({ token }: Props) {
+export function RsvpLandingPage() {
+  const { token } = useParams({ strict: false }) as { token: string };
   const [status, setStatus] = useState<PageStatus>("loading");
   const [data, setData] = useState<RsvpEventData | null>(null);
   const [response, setResponse] = useState<{ status: string; plusOnes: number; dietary: string; message: string } | null>(null);

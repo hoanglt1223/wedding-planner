@@ -1,16 +1,11 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from "react";
-import type { CoupleInfo, WeddingStep } from "@/types/wedding";
 import { getLocale } from "@/lib/format";
 import { t } from "@/lib/i18n";
 import { EventTimeline } from "./event-timeline";
 import { HandbookPage } from "./handbook-page";
 import { exportHandbookPDF } from "./pdf-export";
-
-interface PrintPanelProps {
-  info: CoupleInfo;
-  steps: WeddingStep[];
-  lang?: string;
-}
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
+import { getWeddingSteps } from "@/data/resolve-data";
 
 interface ChapterPage {
   stepIndex: number;
@@ -19,7 +14,11 @@ interface ChapterPage {
   isLast: boolean;
 }
 
-export function PrintPanel({ info, steps, lang = "vi" }: PrintPanelProps) {
+export function PrintPanel() {
+  const { state } = useWeddingStoreContext();
+  const info = state.info;
+  const lang = state.lang;
+  const steps = getWeddingSteps(lang);
   const locale = getLocale(lang);
   const [currentPage, setCurrentPage] = useState(0);
   const [showToc, setShowToc] = useState(false);

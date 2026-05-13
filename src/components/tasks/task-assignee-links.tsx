@@ -51,7 +51,7 @@ export function TaskAssigneeLinks({ tasks, lang = "vi" }: TaskAssigneeLinksProps
   const [qrTarget, setQrTarget] = useState<AssigneeEntry | null>(null);
 
   async function handleCopy(token: string) {
-    const link = `${window.location.origin}/#/tasks/${token}`;
+    const link = `${window.location.origin}/tasks/${token}`;
     try { await navigator.clipboard.writeText(link); } catch { /* ignore */ }
     setCopied(token);
     setTimeout(() => setCopied(null), 2000);
@@ -65,7 +65,7 @@ export function TaskAssigneeLinks({ tasks, lang = "vi" }: TaskAssigneeLinksProps
     <div className="space-y-2">
       <p className="text-xs font-semibold text-gray-500 uppercase">{t("Tạo link cho thành viên", lang)}</p>
       {assignees.map((a) => {
-        const link = a.token ? `${window.location.origin}/#/tasks/${a.token}` : null;
+        const link = a.token ? `${window.location.origin}/tasks/${a.token}` : null;
         return (
           <div key={a.name} className="flex items-center gap-2 bg-gray-50 rounded-lg p-3">
             <div className="flex-1 min-w-0">
@@ -94,7 +94,7 @@ export function TaskAssigneeLinks({ tasks, lang = "vi" }: TaskAssigneeLinksProps
       {qrTarget?.token && (
         <QrModal
           name={qrTarget.name}
-          link={`${window.location.origin}/#/tasks/${qrTarget.token}`}
+          link={`${window.location.origin}/tasks/${qrTarget.token}`}
           onClose={() => setQrTarget(null)}
         />
       )}

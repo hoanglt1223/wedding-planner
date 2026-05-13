@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { PAGES } from "@/data/page-definitions";
 import { t } from "@/lib/i18n";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -5,7 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface LeftSidebarProps {
   activePage: string;
-  onPageChange: (pageId: string) => void;
   lang?: string;
   progressPct: number;
   done: number;
@@ -16,7 +16,6 @@ interface LeftSidebarProps {
 
 function SidebarContent({
   activePage,
-  onPageChange,
   lang = "vi",
   progressPct,
   done,
@@ -25,8 +24,10 @@ function SidebarContent({
 }: Omit<LeftSidebarProps, "mobileOpen" | "onMobileOpenChange"> & {
   onNavigate?: () => void;
 }) {
+  const navigate = useNavigate();
+
   const handleClick = (pageId: string) => {
-    onPageChange(pageId);
+    void navigate({ to: `/app/${pageId}` as never });
     onNavigate?.();
   };
 

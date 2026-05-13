@@ -1,20 +1,16 @@
 import { useState } from "react";
-import type { WeddingState } from "@/types/wedding";
-import type { WeddingStore } from "@/hooks/use-wedding-store";
 import { WebsiteSlugInput } from "./website-slug-input";
 import { WebsiteSectionToggles } from "./website-section-toggles";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
-interface Props {
-  state: WeddingState;
-  store: WeddingStore;
-}
-
-export default function WebsiteSettingsPanel({ state, store }: Props) {
+export default function WebsiteSettingsPanel() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
   const [copied, setCopied] = useState(false);
   const ws = state.websiteSettings;
   const lang = state.lang;
 
-  const websiteUrl = `${window.location.origin}${window.location.pathname}#/w/${ws.slug}`;
+  const websiteUrl = `${window.location.origin}/w/${ws.slug}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(websiteUrl).then(() => {
@@ -56,7 +52,7 @@ export default function WebsiteSettingsPanel({ state, store }: Props) {
         />
         {ws.slug && ws.enabled && (
           <div className="flex gap-2 pt-1">
-            <a href={`#/w/${ws.slug}`} target="_blank" rel="noopener noreferrer"
+            <a href={`/w/${ws.slug}`} target="_blank" rel="noopener noreferrer"
               className="text-xs px-3 py-1.5 border rounded-lg text-gray-700 hover:bg-white">
               {lang === "en" ? "Preview" : "Xem trước"}
             </a>

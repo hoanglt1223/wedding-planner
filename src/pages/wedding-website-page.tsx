@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "@tanstack/react-router";
 import { fetchPublicWedding, type PublicWeddingData } from "@/lib/website-api";
 import { THEMES } from "@/data/themes";
 import { WebsiteHero } from "@/components/website/website-hero";
@@ -10,11 +11,8 @@ import { WebsiteRsvpCta } from "@/components/website/website-rsvp-cta";
 
 type Status = "loading" | "not-found" | "error" | "ready";
 
-interface Props {
-  slug: string;
-}
-
-export default function WeddingWebsitePage({ slug }: Props) {
+export default function WeddingWebsitePage() {
+  const { slug } = useParams({ strict: false }) as { slug: string };
   const [status, setStatus] = useState<Status>("loading");
   const [data, setData] = useState<PublicWeddingData | null>(null);
 

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import type { WeddingState } from "@/types/wedding";
-import type { WeddingStore } from "@/hooks/use-wedding-store";
 import type { TaskData } from "@/lib/task-api";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { fetchTasks, createTask, updateTask, deleteTask } from "@/lib/task-api";
 import { TaskListView } from "./task-list-view";
 import { TaskForm } from "./task-form";
@@ -9,13 +8,9 @@ import { TaskAssigneeLinks } from "./task-assignee-links";
 import { TaskProgressBar } from "./task-progress-bar";
 import { t } from "@/lib/i18n";
 
-interface Props {
-  state: WeddingState;
-  store: WeddingStore;
-  userId?: string;
-}
-
-export default function TaskBoardDashboard({ state, store, userId }: Props) {
+export default function TaskBoardDashboard() {
+  const store = useWeddingStoreContext();
+  const { state, userId } = store;
   const lang = state.lang;
   const categories = state.taskBoardSettings?.categories ?? [];
   const [tasks, setTasks] = useState<TaskData[]>([]);

@@ -74,7 +74,6 @@ export const EXTRA_TABS = [
 ] as const;
 
 export const DEFAULT_STATE: WeddingState = {
-  page: "home",
   tab: 0,
   subTabs: {},
   checkedItems: {},

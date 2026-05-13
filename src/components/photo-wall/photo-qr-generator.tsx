@@ -9,7 +9,7 @@ interface Props {
 
 export function PhotoQrGenerator({ token, lang = "vi" }: Props) {
   const [qrUrl, setQrUrl] = useState("");
-  const uploadLink = `${window.location.origin}/#/photos/${token}`;
+  const uploadLink = `${window.location.origin}/photos/${token}`;
 
   useEffect(() => {
     if (token) {

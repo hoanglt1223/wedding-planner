@@ -1,17 +1,9 @@
 import { lazy, Suspense, useState } from "react";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { AstrologyPage } from "./astrology-page";
-import type { WeddingState } from "@/types/wedding";
-import type { WeddingStore } from "@/hooks/use-wedding-store";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
 const TaskBoardDashboard = lazy(() => import("@/components/tasks/task-board-dashboard"));
-
-interface ToolsPageProps {
-  state: WeddingState;
-  store: WeddingStore;
-  onGoAI?: (hint: string) => void;
-  userId?: string;
-}
 
 const TABS = [
   { labelVi: "🤖 AI", labelEn: "🤖 AI" },
@@ -19,7 +11,8 @@ const TABS = [
   { labelVi: "📋 Công Việc", labelEn: "📋 Tasks" },
 ];
 
-export function ToolsPage({ state, store, userId }: ToolsPageProps) {
+export function ToolsPage() {
+  const { state } = useWeddingStoreContext();
   const [activeTab, setActiveTab] = useState(0);
   const lang = state.lang;
   const en = lang === "en";
@@ -44,24 +37,11 @@ export function ToolsPage({ state, store, userId }: ToolsPageProps) {
       </div>
 
       {/* Tab content */}
-      {activeTab === 0 && (
-        <AiPanel
-          aiResponse={state.aiResponse}
-          budget={state.budget}
-          onSetAiResponse={store.setAiResponse}
-          lang={lang}
-        />
-      )}
-      {activeTab === 1 && (
-        <AstrologyPage
-          info={state.info}
-          onUpdateInfo={store.updateInfo}
-          lang={lang}
-        />
-      )}
+      {activeTab === 0 && <AiPanel />}
+      {activeTab === 1 && <AstrologyPage />}
       {activeTab === 2 && (
         <Suspense fallback={null}>
-          <TaskBoardDashboard state={state} store={store} userId={userId} />
+          <TaskBoardDashboard />
         </Suspense>
       )}
     </div>

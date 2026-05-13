@@ -1,12 +1,10 @@
 import { useState } from "react";
+import { useParams } from "@tanstack/react-router";
 import { t } from "@/lib/i18n";
 import { PhotoUploadForm } from "@/components/photo-wall/photo-upload-form";
 
-interface Props {
-  token: string;
-}
-
-export default function PhotoUploadPage({ token }: Props) {
+export default function PhotoUploadPage() {
+  const { token } = useParams({ strict: false }) as { token: string };
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
   const lang = "vi";

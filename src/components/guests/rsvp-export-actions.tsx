@@ -15,7 +15,7 @@ export function RsvpExportActions({ invitations, lang }: RsvpExportActionsProps)
 
   const handleCopyAll = async () => {
     const lines = invitations.map(
-      (inv) => `${inv.guestName}: ${window.location.origin}/#/rsvp/${inv.token}`,
+      (inv) => `${inv.guestName}: ${window.location.origin}/rsvp/${inv.token}`,
     );
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
@@ -36,7 +36,7 @@ export function RsvpExportActions({ invitations, lang }: RsvpExportActionsProps)
       inv.plusOnes,
       `"${safe(inv.dietary || "")}"`,
       `"${safe(inv.message || "")}"`,
-      `${window.location.origin}/#/rsvp/${inv.token}`,
+      `${window.location.origin}/rsvp/${inv.token}`,
     ].join(","));
     const csv = BOM + header + "\n" + rows.join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });

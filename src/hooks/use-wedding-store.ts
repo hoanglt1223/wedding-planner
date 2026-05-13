@@ -23,10 +23,6 @@ export function useWeddingStore() {
     DEFAULT_STATE,
   );
 
-  const setPage = useCallback((page: string) => {
-    setState((prev) => ({ ...prev, page }));
-  }, [setState]);
-
   const setTab = useCallback((tab: number) => {
     setState((prev) => ({ ...prev, tab }));
   }, [setState]);
@@ -238,7 +234,7 @@ export function useWeddingStore() {
   return {
     state,
     setState,
-    setPage, setTab, setSubTab, toggleCheck,
+    setTab, setSubTab, toggleCheck,
     setBudget, setCategoryPercent, setExpense,
     updateInfo, addGuest, removeGuest, clearGuests, importGuests,
     setApiKey, setAiResponse, setTheme, setNotes,

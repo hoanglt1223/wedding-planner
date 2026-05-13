@@ -1,13 +1,14 @@
+import { useNavigate } from "@tanstack/react-router";
 import { NAV_SECTIONS, PAGE_TO_SECTION } from "@/data/nav-sections";
 
 interface BottomNavProps {
   activePage: string;
-  onPageChange: (page: string) => void;
   onMenuOpen: () => void;
   lang?: string;
 }
 
-export function BottomNav({ activePage, onPageChange, onMenuOpen, lang = "vi" }: BottomNavProps) {
+export function BottomNav({ activePage, onMenuOpen, lang = "vi" }: BottomNavProps) {
+  const navigate = useNavigate();
   const activeSection = PAGE_TO_SECTION[activePage] ?? "menu";
 
   return (
@@ -25,7 +26,7 @@ export function BottomNav({ activePage, onPageChange, onMenuOpen, lang = "vi" }:
                 if (section.type === "drawer") {
                   onMenuOpen();
                 } else if (section.defaultPage) {
-                  onPageChange(section.defaultPage);
+                  void navigate({ to: `/app/${section.defaultPage}` as never });
                 }
               }}
               className={`flex-1 flex flex-col items-center justify-center gap-0.5 min-h-[44px] transition-colors ${

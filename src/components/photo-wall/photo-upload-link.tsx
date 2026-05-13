@@ -50,7 +50,7 @@ export function PhotoUploadLink({ userId, settings, onUpdateSettings, lang = "vi
 
   const handleCopy = async () => {
     if (!uploadToken) return;
-    const link = `${window.location.origin}/#/photos/${uploadToken}`;
+    const link = `${window.location.origin}/photos/${uploadToken}`;
     try { await navigator.clipboard.writeText(link); } catch { /* no-op */ }
   };
 

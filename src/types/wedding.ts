@@ -197,7 +197,6 @@ export interface ExpenseEntry {
 }
 
 export interface WeddingState {
-  page: string;
   tab: number;
   subTabs: Record<string, number>;
   checkedItems: Record<string, boolean>;

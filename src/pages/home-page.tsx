@@ -1,6 +1,5 @@
 import { t } from "@/lib/i18n";
-import type { WeddingState } from "@/types/wedding";
-import type { WeddingStore } from "@/hooks/use-wedding-store";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { CountdownWidget } from "@/components/countdown/countdown-widget";
 import { ProgressRing } from "@/components/home/progress-ring";
 import { QuickActions } from "@/components/home/quick-actions";
@@ -9,14 +8,12 @@ import { RecentActivity } from "@/components/home/recent-activity";
 import { BadgeDisplay } from "@/components/progress/badge-display";
 import { SectionProgress } from "@/components/progress/section-progress";
 
-interface HomePageProps {
-  state: WeddingState;
-  store: WeddingStore;
-  progress: { done: number; total: number; pct: number };
-}
-
-export function HomePage({ state, store, progress }: HomePageProps) {
+export function HomePage() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
+  const progress = store.getProgress();
   const lang = state.lang;
+
   return (
     <div className="space-y-4 py-2">
       <CountdownWidget
@@ -36,7 +33,7 @@ export function HomePage({ state, store, progress }: HomePageProps) {
         </div>
       </div>
 
-      <QuickActions onNavigate={store.setPage} lang={lang} />
+      <QuickActions lang={lang} />
       <SectionProgress state={state} lang={lang} />
       <BadgeDisplay state={state} progressPct={progress.pct} lang={lang} />
       <DailyTip lang={lang} />

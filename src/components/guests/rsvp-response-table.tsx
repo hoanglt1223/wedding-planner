@@ -19,7 +19,7 @@ export function RsvpResponseTable({ invitations, lang }: RsvpResponseTableProps)
   );
 
   const handleCopy = async (token: string) => {
-    const url = `${window.location.origin}/#/rsvp/${token}`;
+    const url = `${window.location.origin}/rsvp/${token}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopiedToken(token);

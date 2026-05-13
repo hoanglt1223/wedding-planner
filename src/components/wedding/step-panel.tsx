@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import type { WeddingStep } from "@/types/wedding";
 import type { Region } from "@/data/regions";
 import { Progress } from "@/components/ui/progress";
@@ -13,7 +14,6 @@ interface StepPanelProps {
   checkedKeys: Record<string, boolean>;
   onSubTabChange: (stepId: string, index: number) => void;
   onToggleCheck: (key: string) => void;
-  onGoAI: (hint: string) => void;
   stepStartTime?: string;
   onSetStepStartTime: (stepId: string, time: string) => void;
   lang?: string;
@@ -63,12 +63,12 @@ export function StepPanel({
   checkedKeys,
   onSubTabChange,
   onToggleCheck,
-  onGoAI,
   stepStartTime,
   onSetStepStartTime,
   lang = "vi",
   region = "south",
 }: StepPanelProps) {
+  const navigate = useNavigate();
   const { done, total, pct } = getStepProgress(step, checkedKeys);
 
   const baseTime = useMemo(() => getBaseTime(step), [step]);
@@ -124,7 +124,7 @@ export function StepPanel({
               size="sm"
               variant="outline"
               className="h-6 text-xs px-2 border-blue-300 text-blue-600 hover:bg-blue-50"
-              onClick={() => onGoAI(step.aiHint)}
+              onClick={() => { void navigate({ to: '/app/ai' }); }}
             >
               {t("🤖 Hỏi AI", lang)}
             </Button>
