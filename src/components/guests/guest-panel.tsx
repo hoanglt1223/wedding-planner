@@ -9,6 +9,7 @@ import {
 } from "@/lib/csv";
 import type { Guest, RsvpSettings } from "@/types/wedding";
 import { GuestTable } from "./guest-table";
+import { HeadcountSummary } from "./headcount-summary";
 import { SeatingChart } from "./seating-chart";
 import { RsvpDashboard } from "./rsvp-dashboard";
 import { TableAssignmentPanel } from "./table-assignment-panel";
@@ -92,6 +93,8 @@ export function GuestPanel({
             {t("Trai:", lang)} <b>{traiCount}</b> | {t("Gái:", lang)} <b>{gaiCount}</b> | {lang === "en" ? "Tables" : "Bàn"} ≈ <b>{tableCount}</b>
           </div>
         )}
+
+        <HeadcountSummary guests={guests} lang={lang} />
 
         <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
           <Input
@@ -217,7 +220,7 @@ export function GuestPanel({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <GuestTable guests={filteredGuests} onDelete={onRemoveGuest} lang={lang} />
+            <GuestTable guests={filteredGuests} onDelete={onRemoveGuest} onEditGuest={onUpdateGuest} lang={lang} />
           </>
         )}
         {guests.length > 0 && view === "chart" && (

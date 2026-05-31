@@ -119,6 +119,9 @@ export interface Guest {
   tableGroup: string;
   id: number;
   rsvpToken?: string;
+  dietary?: string;        // e.g. "chay" (vegetarian), "halal", allergy note
+  plusOneName?: string;    // Name of accompanying guest (+1)
+  guestNotes?: string;     // General notes about this guest
 }
 
 export interface RsvpSettings {
