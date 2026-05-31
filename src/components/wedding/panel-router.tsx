@@ -61,6 +61,7 @@ export function PanelRouter({ state, store, userId }: PanelRouterProps) {
         rsvpSettings={state.rsvpSettings}
         onSetRsvpSettings={store.setRsvpSettings}
         onUpdateGuestRsvpToken={store.updateGuestRsvpToken}
+        onUpdateGuest={store.updateGuest}
         themeId={state.themeId}
       />
     );

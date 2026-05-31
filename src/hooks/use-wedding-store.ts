@@ -84,6 +84,13 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const updateGuest = useCallback((id: number, updates: Partial<Guest>) => {
+    setState((prev) => ({
+      ...prev,
+      guests: prev.guests.map((g) => g.id === id ? { ...g, ...updates } : g),
+    }));
+  }, [setState]);
+
   const clearGuests = useCallback(() => {
     setState((prev) => ({ ...prev, guests: [] }));
   }, [setState]);
@@ -208,6 +215,16 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const toggleChecklistItem = useCallback((itemId: string) => {
+    setState((prev) => ({
+      ...prev,
+      checkedChecklistItems: {
+        ...(prev.checkedChecklistItems || {}),
+        [itemId]: !prev.checkedChecklistItems?.[itemId],
+      },
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -236,12 +253,13 @@ export function useWeddingStore() {
     setState,
     setTab, setSubTab, toggleCheck,
     setBudget, setCategoryPercent, setExpense,
-    updateInfo, addGuest, removeGuest, clearGuests, importGuests,
+    updateInfo, addGuest, removeGuest, updateGuest, clearGuests, importGuests,
     setApiKey, setAiResponse, setTheme, setNotes,
     addVendor, removeVendor, addPhoto, removePhoto,
     setLang, setRegion, setPartyTime, setStepStartTime, setEnabledSteps,
     completeOnboarding, getProgress, setRsvpSettings, updateGuestRsvpToken,
     addExpense, updateExpense, removeExpense,
+    toggleChecklistItem,
     ...phase2,
   };
 }

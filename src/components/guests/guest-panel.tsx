@@ -11,6 +11,7 @@ import type { Guest, RsvpSettings } from "@/types/wedding";
 import { GuestTable } from "./guest-table";
 import { SeatingChart } from "./seating-chart";
 import { RsvpDashboard } from "./rsvp-dashboard";
+import { TableAssignmentPanel } from "./table-assignment-panel";
 import { t } from "@/lib/i18n";
 
 interface GuestPanelProps {
@@ -24,6 +25,7 @@ interface GuestPanelProps {
   rsvpSettings?: RsvpSettings;
   onSetRsvpSettings?: (partial: Partial<RsvpSettings>) => void;
   onUpdateGuestRsvpToken?: (guestId: number, token: string) => void;
+  onUpdateGuest?: (id: number, updates: Partial<Guest>) => void;
   themeId?: string;
 }
 
@@ -38,6 +40,7 @@ export function GuestPanel({
   rsvpSettings,
   onSetRsvpSettings,
   onUpdateGuestRsvpToken,
+  onUpdateGuest,
   themeId,
 }: GuestPanelProps) {
   const [name, setName] = useState("");
@@ -45,7 +48,7 @@ export function GuestPanel({
   const [side, setSide] = useState<"trai" | "gai">("trai");
   const [group, setGroup] = useState("");
   const [search, setSearch] = useState("");
-  const [view, setView] = useState<"list" | "chart" | "rsvp">("list");
+  const [view, setView] = useState<"list" | "chart" | "assign" | "rsvp">("list");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const traiCount = guests.filter((g) => g.side === "trai").length;
@@ -173,6 +176,16 @@ export function GuestPanel({
             </button>
             <button
               className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
+                view === "assign"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+              onClick={() => setView("assign")}
+            >
+              {t("✏️ Phân bàn", lang)}
+            </button>
+            <button
+              className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
                 view === "rsvp"
                   ? "bg-primary text-primary-foreground"
                   : "text-gray-500 hover:bg-gray-100"
@@ -209,6 +222,13 @@ export function GuestPanel({
         )}
         {guests.length > 0 && view === "chart" && (
           <SeatingChart guests={guests} lang={lang} />
+        )}
+        {guests.length > 0 && view === "assign" && onUpdateGuest && (
+          <TableAssignmentPanel
+            guests={guests}
+            onUpdateGuest={onUpdateGuest}
+            lang={lang}
+          />
         )}
         {view === "rsvp" && userId && rsvpSettings && onSetRsvpSettings && onUpdateGuestRsvpToken && (
           <RsvpDashboard

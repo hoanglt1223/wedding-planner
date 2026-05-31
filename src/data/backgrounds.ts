@@ -146,4 +146,7 @@ export const DEFAULT_STATE: WeddingState = {
   // Phase 3 additions
   expenseLog: [],
   expenseIdCounter: 0,
+
+  // Planning checklist
+  checkedChecklistItems: {},
 };

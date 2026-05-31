@@ -10,6 +10,7 @@ const V13_KEY = "wp_v13";
 const V14_KEY = "wp_v14";
 const V15_KEY = "wp_v15";
 const V16_KEY = "wp_v16";
+const V17_KEY = "wp_v17";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",

@@ -11,6 +11,7 @@ import { LunarPage } from './pages/lunar-page'
 import { CardsPanel } from './components/cards/cards-panel'
 import { AiPanel } from './components/ai/ai-panel'
 import { PrintPanel } from './components/print/print-panel'
+import { ChecklistPage } from './pages/checklist-page'
 
 // Root route
 const rootRoute = createRootRoute({
@@ -111,6 +112,12 @@ const websiteRoute = createRoute({
   component: lazyRouteComponent(() => import('./components/website/website-settings-panel'), 'default'),
 })
 
+const checklistRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/checklist',
+  component: ChecklistPage,
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -171,6 +178,7 @@ const routeTree = rootRoute.addChildren([
     handbookRoute,
     tasksRoute,
     websiteRoute,
+    checklistRoute,
   ]),
   rsvpRoute,
   sharedRoute,

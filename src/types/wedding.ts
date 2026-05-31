@@ -235,6 +235,9 @@ export interface WeddingState {
   // Phase 3 additions
   expenseLog: ExpenseEntry[];
   expenseIdCounter: number;
+
+  // Planning checklist
+  checkedChecklistItems: Record<string, boolean>;
 }
 
 export interface WeddingEvent {
