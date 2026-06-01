@@ -225,6 +225,38 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const toggleKitItem = useCallback((itemId: string) => {
+    setState((prev) => ({
+      ...prev,
+      weddingDayKitChecked: {
+        ...(prev.weddingDayKitChecked || {}),
+        [itemId]: !prev.weddingDayKitChecked?.[itemId],
+      },
+    }));
+  }, [setState]);
+
+  const addCustomKitItem = useCallback((categoryId: string, textVi: string, textEn: string) => {
+    const id = `custom-${Date.now()}`;
+    setState((prev) => ({
+      ...prev,
+      weddingDayKitCustom: [
+        ...(prev.weddingDayKitCustom || []),
+        { id, categoryId, textVi, textEn, icon: "✅" },
+      ],
+    }));
+  }, [setState]);
+
+  const removeCustomKitItem = useCallback((itemId: string) => {
+    setState((prev) => ({
+      ...prev,
+      weddingDayKitCustom: (prev.weddingDayKitCustom || []).filter((i) => i.id !== itemId),
+      weddingDayKitChecked: (() => {
+        const { [itemId]: _, ...rest } = prev.weddingDayKitChecked || {};
+        return rest;
+      })(),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -260,6 +292,7 @@ export function useWeddingStore() {
     completeOnboarding, getProgress, setRsvpSettings, updateGuestRsvpToken,
     addExpense, updateExpense, removeExpense,
     toggleChecklistItem,
+    toggleKitItem, addCustomKitItem, removeCustomKitItem,
     ...phase2,
   };
 }

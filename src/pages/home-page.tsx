@@ -7,6 +7,7 @@ import { DailyTip } from "@/components/home/daily-tip";
 import { RecentActivity } from "@/components/home/recent-activity";
 import { BadgeDisplay } from "@/components/progress/badge-display";
 import { SectionProgress } from "@/components/progress/section-progress";
+import { WeddingDayKit } from "@/components/home/wedding-day-kit";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -34,6 +35,14 @@ export function HomePage() {
       </div>
 
       <QuickActions lang={lang} />
+      <WeddingDayKit
+        checkedItems={state.weddingDayKitChecked ?? {}}
+        customItems={state.weddingDayKitCustom ?? []}
+        onToggle={store.toggleKitItem}
+        onAddCustom={store.addCustomKitItem}
+        onRemoveCustom={store.removeCustomKitItem}
+        lang={lang}
+      />
       <SectionProgress state={state} lang={lang} />
       <BadgeDisplay state={state} progressPct={progress.pct} lang={lang} />
       <DailyTip lang={lang} />

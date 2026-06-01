@@ -149,4 +149,8 @@ export const DEFAULT_STATE: WeddingState = {
 
   // Planning checklist
   checkedChecklistItems: {},
+
+  // Wedding day kit
+  weddingDayKitChecked: {},
+  weddingDayKitCustom: [],
 };

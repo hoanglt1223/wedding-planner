@@ -241,6 +241,10 @@ export interface WeddingState {
 
   // Planning checklist
   checkedChecklistItems: Record<string, boolean>;
+
+  // Wedding day kit
+  weddingDayKitChecked: Record<string, boolean>;
+  weddingDayKitCustom: { id: string; categoryId: string; textVi: string; textEn: string; icon: string }[];
 }
 
 export interface WeddingEvent {
