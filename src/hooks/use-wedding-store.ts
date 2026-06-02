@@ -137,6 +137,13 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const updateVendor = useCallback((id: number, updates: Partial<Vendor>) => {
+    setState((prev) => ({
+      ...prev,
+      vendors: (prev.vendors || []).map((v) => v.id === id ? { ...v, ...updates } : v),
+    }));
+  }, [setState]);
+
   const addPhoto = useCallback((photo: Omit<PhotoItem, "id">) => {
     setState((prev) => ({
       ...prev,
@@ -340,7 +347,7 @@ export function useWeddingStore() {
     setBudget, setCategoryPercent, setExpense,
     updateInfo, addGuest, removeGuest, updateGuest, clearGuests, importGuests,
     setApiKey, setAiResponse, setTheme, setNotes,
-    addVendor, removeVendor, addPhoto, removePhoto,
+    addVendor, removeVendor, updateVendor, addPhoto, removePhoto,
     setLang, setRegion, setPartyTime, setStepStartTime, setEnabledSteps,
     completeOnboarding, getProgress, setRsvpSettings, updateGuestRsvpToken,
     addExpense, updateExpense, removeExpense,

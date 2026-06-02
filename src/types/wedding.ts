@@ -256,6 +256,8 @@ export interface WeddingEvent {
   date: string;
 }
 
+export type VendorStatus = "new" | "contacted" | "quoted" | "booked" | "confirmed" | "paid";
+
 export interface Vendor {
   id: number;
   category: string;
@@ -263,6 +265,9 @@ export interface Vendor {
   phone: string;
   address: string;
   note: string;
+  status: VendorStatus;
+  budget: number;    // Total agreed price (VND)
+  deposit: number;   // Deposit already paid (VND)
 }
 
 export interface PhotoItem {

@@ -83,6 +83,7 @@ export function PanelRouter({ state, store, userId }: PanelRouterProps) {
         vendors={state.vendors || []}
         onAddVendor={store.addVendor}
         onRemoveVendor={store.removeVendor}
+        onUpdateVendor={store.updateVendor}
         lang={lang}
       />
     );

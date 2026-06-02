@@ -8,7 +8,7 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-interface Vendor { id: number; category: string; name: string; phone: string; address: string; note: string }
+interface Vendor { id: number; category: string; name: string; phone: string; address: string; note: string; status?: string; budget?: number; deposit?: number }
 interface PhotoItem { id: number; url: string; tag: string; note: string }
 interface Guest { id: number; name: string; phone: string; side: string; tableGroup: string }
 
@@ -193,6 +193,7 @@ function GuestsSection({ guests }: { guests: Guest[] }) {
 
 function VendorsSection({ vendors }: { vendors: Vendor[] }) {
   if (!vendors.length) return <p className="text-muted-foreground">No vendors added.</p>;
+  const statusColors: Record<string, string> = { new: "#6b7280", contacted: "#2563eb", quoted: "#7c3aed", booked: "#d97706", confirmed: "#059669", paid: "#16a34a" };
   return (
     <div className="max-h-96 overflow-auto">
       <Table>
@@ -201,8 +202,11 @@ function VendorsSection({ vendors }: { vendors: Vendor[] }) {
             <TableHead>#</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
             <TableHead>Phone</TableHead>
             <TableHead>Address</TableHead>
+            <TableHead>Budget</TableHead>
+            <TableHead>Deposit</TableHead>
             <TableHead>Note</TableHead>
           </TableRow>
         </TableHeader>
@@ -212,9 +216,16 @@ function VendorsSection({ vendors }: { vendors: Vendor[] }) {
               <TableCell>{i + 1}</TableCell>
               <TableCell><Badge variant="outline">{v.category}</Badge></TableCell>
               <TableCell>{v.name}</TableCell>
+              <TableCell>
+                <Badge style={{ backgroundColor: statusColors[v.status || "new"] || "#6b7280", color: "#fff" }}>
+                  {v.status || "new"}
+                </Badge>
+              </TableCell>
               <TableCell className="font-mono text-xs">{v.phone || "—"}</TableCell>
-              <TableCell className="max-w-[200px] truncate">{v.address || "—"}</TableCell>
-              <TableCell className="max-w-[150px] truncate">{v.note || "—"}</TableCell>
+              <TableCell className="max-w-[150px] truncate">{v.address || "—"}</TableCell>
+              <TableCell className="text-xs">{v.budget ? `${(v.budget / 1_000_000).toFixed(1)}tr` : "—"}</TableCell>
+              <TableCell className="text-xs">{v.deposit ? `${(v.deposit / 1_000_000).toFixed(1)}tr` : "—"}</TableCell>
+              <TableCell className="max-w-[120px] truncate">{v.note || "—"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
