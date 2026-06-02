@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -257,6 +257,59 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Seating chart methods
+  const addSeatingTable = useCallback((table: Omit<SeatingTable, "id" | "guestIds">) => {
+    setState((prev) => ({
+      ...prev,
+      seatingTableIdCounter: (prev.seatingTableIdCounter || 0) + 1,
+      seatingTables: [
+        ...(prev.seatingTables || []),
+        { ...table, id: (prev.seatingTableIdCounter || 0) + 1, guestIds: [] },
+      ],
+    }));
+  }, [setState]);
+
+  const updateSeatingTable = useCallback((id: number, updates: Partial<Omit<SeatingTable, "id">>) => {
+    setState((prev) => ({
+      ...prev,
+      seatingTables: (prev.seatingTables || []).map((t) =>
+        t.id === id ? { ...t, ...updates } : t
+      ),
+    }));
+  }, [setState]);
+
+  const removeSeatingTable = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      seatingTables: (prev.seatingTables || []).filter((t) => t.id !== id),
+    }));
+  }, [setState]);
+
+  const assignGuestToTable = useCallback((guestId: number, tableId: number) => {
+    setState((prev) => {
+      const tables = (prev.seatingTables || []).map((t) => ({
+        ...t,
+        guestIds: t.guestIds.filter((gid) => gid !== guestId),
+      }));
+      return {
+        ...prev,
+        seatingTables: tables.map((t) =>
+          t.id === tableId ? { ...t, guestIds: [...t.guestIds, guestId] } : t
+        ),
+      };
+    });
+  }, [setState]);
+
+  const unassignGuest = useCallback((guestId: number) => {
+    setState((prev) => ({
+      ...prev,
+      seatingTables: (prev.seatingTables || []).map((t) => ({
+        ...t,
+        guestIds: t.guestIds.filter((gid) => gid !== guestId),
+      })),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -293,6 +346,8 @@ export function useWeddingStore() {
     addExpense, updateExpense, removeExpense,
     toggleChecklistItem,
     toggleKitItem, addCustomKitItem, removeCustomKitItem,
+    addSeatingTable, updateSeatingTable, removeSeatingTable,
+    assignGuestToTable, unassignGuest,
     ...phase2,
   };
 }

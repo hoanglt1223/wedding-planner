@@ -153,4 +153,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Wedding day kit
   weddingDayKitChecked: {},
   weddingDayKitCustom: [],
+
+  // Seating chart
+  seatingTables: [],
+  seatingTableIdCounter: 0,
 };

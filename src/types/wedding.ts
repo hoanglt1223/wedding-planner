@@ -245,6 +245,10 @@ export interface WeddingState {
   // Wedding day kit
   weddingDayKitChecked: Record<string, boolean>;
   weddingDayKitCustom: { id: string; categoryId: string; textVi: string; textEn: string; icon: string }[];
+
+  // Seating chart
+  seatingTables: SeatingTable[];
+  seatingTableIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -266,4 +270,11 @@ export interface PhotoItem {
   url: string;
   tag: string;
   note: string;
+}
+
+export interface SeatingTable {
+  id: number;
+  name: string;
+  capacity: number;
+  guestIds: number[];
 }
