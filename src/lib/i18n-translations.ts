@@ -434,4 +434,14 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Lời chào mừng": { vi: "Lời chào mừng", en: "Welcome Message" },
   "Độ dài tối đa": { vi: "Độ dài tối đa", en: "Max length" },
   "⏹ Dừng": { vi: "⏹ Dừng", en: "⏹ Stop" },
+
+  // Wedding contacts
+  "📞 Danh Bạ Ngày Cưới": { vi: "📞 Danh Bạ Ngày Cưới", en: "📞 Wedding Contacts" },
+  "Thêm liên hệ": { vi: "Thêm liên hệ", en: "Add Contact" },
+  "Vai trò": { vi: "Vai trò", en: "Role" },
+  "Phù dâu/phù rể": { vi: "Phù dâu/phù rể", en: "Wedding Party" },
+  "Gia đình": { vi: "Gia đình", en: "Family" },
+  "Thêm liên hệ đầu tiên": { vi: "Thêm liên hệ đầu tiên", en: "Add your first contact" },
+  "Không tìm thấy liên hệ": { vi: "Không tìm thấy liên hệ", en: "No contacts found" },
+  "Lưu liên hệ quan trọng để truy cập nhanh trong ngày cưới": { vi: "Lưu liên hệ quan trọng để truy cập nhanh trong ngày cưới", en: "Save important contacts for quick access on your wedding day" },
 };

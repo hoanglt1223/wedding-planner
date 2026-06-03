@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -317,6 +317,29 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Wedding contacts methods
+  const addContact = useCallback((contact: Omit<WeddingContact, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      contactIdCounter: (prev.contactIdCounter || 0) + 1,
+      contacts: [...(prev.contacts || []), { ...contact, id: (prev.contactIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const updateContact = useCallback((id: number, updates: Partial<WeddingContact>) => {
+    setState((prev) => ({
+      ...prev,
+      contacts: (prev.contacts || []).map((c) => c.id === id ? { ...c, ...updates } : c),
+    }));
+  }, [setState]);
+
+  const removeContact = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      contacts: (prev.contacts || []).filter((c) => c.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -355,6 +378,7 @@ export function useWeddingStore() {
     toggleKitItem, addCustomKitItem, removeCustomKitItem,
     addSeatingTable, updateSeatingTable, removeSeatingTable,
     assignGuestToTable, unassignGuest,
+    addContact, updateContact, removeContact,
     ...phase2,
   };
 }

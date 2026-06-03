@@ -249,6 +249,10 @@ export interface WeddingState {
   // Seating chart
   seatingTables: SeatingTable[];
   seatingTableIdCounter: number;
+
+  // Wedding contacts
+  contacts: WeddingContact[];
+  contactIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -282,4 +286,15 @@ export interface SeatingTable {
   name: string;
   capacity: number;
   guestIds: number[];
+}
+
+export type ContactCategory = "venue" | "vendor" | "wedding-party" | "family" | "other";
+
+export interface WeddingContact {
+  id: number;
+  name: string;
+  role: string;
+  phone: string;
+  category: ContactCategory;
+  note: string;
 }

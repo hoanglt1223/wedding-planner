@@ -157,4 +157,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Seating chart
   seatingTables: [],
   seatingTableIdCounter: 0,
+
+  // Wedding contacts
+  contacts: [],
+  contactIdCounter: 0,
 };

@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from "react";
 import { GuestPanel } from "@/components/guests/guest-panel";
 import { PhotoGalleryDashboard } from "@/components/photo-wall/photo-gallery-dashboard";
 import { SeatingChartPanel } from "@/components/guests/seating-chart-panel";
+import { ContactsPanel } from "@/components/contacts/contacts-panel";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
 const GiftPage = lazy(() => import("./gift-page"));
@@ -9,6 +10,7 @@ const GiftPage = lazy(() => import("./gift-page"));
 const TABS = [
   { labelVi: "👥 Khách mời", labelEn: "👥 Guests" },
   { labelVi: "🪑 Chỗ ngồi", labelEn: "🪑 Seating" },
+  { labelVi: "📞 Danh bạ", labelEn: "📞 Contacts" },
   { labelVi: "📸 Ảnh cưới", labelEn: "📸 Photos" },
   { labelVi: "🎁 Quà tặng", labelEn: "🎁 Gifts" },
 ];
@@ -59,10 +61,19 @@ export function GuestsPage() {
       {activeTab === 1 && (
         <SeatingChartPanel state={state} store={store} />
       )}
-      {activeTab === 2 && userId && (
+      {activeTab === 2 && (
+        <ContactsPanel
+          contacts={state.contacts || []}
+          onAdd={store.addContact}
+          onUpdate={store.updateContact}
+          onRemove={store.removeContact}
+          lang={lang}
+        />
+      )}
+      {activeTab === 3 && userId && (
         <PhotoGalleryDashboard userId={userId} state={state} store={store} />
       )}
-      {activeTab === 3 && (
+      {activeTab === 4 && (
         <Suspense fallback={null}>
           <GiftPage state={state} store={store} />
         </Suspense>
