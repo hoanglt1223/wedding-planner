@@ -8,6 +8,7 @@ import { RecentActivity } from "@/components/home/recent-activity";
 import { BadgeDisplay } from "@/components/progress/badge-display";
 import { SectionProgress } from "@/components/progress/section-progress";
 import { WeddingDayKit } from "@/components/home/wedding-day-kit";
+import { WeddingDaySchedule } from "@/components/home/wedding-day-schedule";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -35,6 +36,10 @@ export function HomePage() {
       </div>
 
       <QuickActions lang={lang} />
+      <WeddingDaySchedule
+        entries={state.timelineEntries ?? []}
+        lang={lang}
+      />
       <WeddingDayKit
         checkedItems={state.weddingDayKitChecked ?? {}}
         customItems={state.weddingDayKitCustom ?? []}
