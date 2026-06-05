@@ -161,4 +161,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Wedding contacts
   contacts: [],
   contactIdCounter: 0,
+
+  // Vendor payments
+  vendorPayments: [],
+  vendorPaymentIdCounter: 0,
 };

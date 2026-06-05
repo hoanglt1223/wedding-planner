@@ -253,6 +253,10 @@ export interface WeddingState {
   // Wedding contacts
   contacts: WeddingContact[];
   contactIdCounter: number;
+
+  // Vendor payments
+  vendorPayments: VendorPayment[];
+  vendorPaymentIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -272,6 +276,17 @@ export interface Vendor {
   status: VendorStatus;
   budget: number;    // Total agreed price (VND)
   deposit: number;   // Deposit already paid (VND)
+}
+
+export type VendorPaymentMethod = "cash" | "bank_transfer" | "card" | "other";
+
+export interface VendorPayment {
+  id: number;
+  vendorId: number;
+  amount: number;           // VND
+  date: string;             // YYYY-MM-DD
+  method: VendorPaymentMethod;
+  note: string;
 }
 
 export interface PhotoItem {

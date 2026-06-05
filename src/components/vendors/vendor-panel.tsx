@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Vendor, VendorStatus } from "@/types/wedding";
+import type { Vendor, VendorStatus, VendorPayment } from "@/types/wedding";
 import { t } from "@/lib/i18n";
+import { VendorPaymentTracker } from "./vendor-payment-tracker";
 
 const CATEGORIES = [
   "🏛️ Nhà hàng", "📸 Ảnh/Video", "🌸 Trang trí",
@@ -37,11 +38,15 @@ interface VendorPanelProps {
   onAddVendor: (vendor: Omit<Vendor, "id">) => void;
   onRemoveVendor: (id: number) => void;
   onUpdateVendor?: (id: number, updates: Partial<Vendor>) => void;
+  payments?: VendorPayment[];
+  onAddPayment?: (payment: Omit<VendorPayment, "id">) => void;
+  onRemovePayment?: (id: number) => void;
   lang?: string;
 }
 
-export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, lang = "vi" }: VendorPanelProps) {
+export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, lang = "vi" }: VendorPanelProps) {
   const en = lang === "en";
+  const [view, setView] = useState<"vendors" | "payments">("vendors");
   const [showAddForm, setShowAddForm] = useState(false);
   const [filterCat, setFilterCat] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<VendorStatus | null>(null);
@@ -142,11 +147,54 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
             {en ? `${vendors.length} vendors` : `${vendors.length} nhà cung cấp`}
           </p>
         </div>
-        <Button size="sm" className="h-8 px-3" onClick={() => { setShowAddForm(!showAddForm); resetAddForm(); }}>
-          + {t("Thêm nhà cung cấp", lang)}
-        </Button>
+        {view === "vendors" && (
+          <Button size="sm" className="h-8 px-3" onClick={() => { setShowAddForm(!showAddForm); resetAddForm(); }}>
+            + {t("Thêm nhà cung cấp", lang)}
+          </Button>
+        )}
       </div>
 
+      {/* View toggle */}
+      <div className="flex gap-1 border-b">
+        <button
+          onClick={() => setView("vendors")}
+          className={`px-3 py-1.5 text-xs font-medium border-b-2 transition-colors ${
+            view === "vendors"
+              ? "border-[var(--theme-primary)] text-[var(--theme-primary)]"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          🗺️ {en ? "Vendors" : "Vendor"}
+        </button>
+        <button
+          onClick={() => setView("payments")}
+          className={`px-3 py-1.5 text-xs font-medium border-b-2 transition-colors ${
+            view === "payments"
+              ? "border-[var(--theme-primary)] text-[var(--theme-primary)]"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          💳 {en ? "Payments" : "Thanh Toán"}
+          {payments.length > 0 && (
+            <span className="ml-1 text-[10px] bg-gray-200 rounded-full px-1.5">{payments.length}</span>
+          )}
+        </button>
+      </div>
+
+      {/* Payment tracker view */}
+      {view === "payments" && onAddPayment && onRemovePayment && (
+        <VendorPaymentTracker
+          vendors={vendors}
+          payments={payments}
+          onAddPayment={onAddPayment}
+          onRemovePayment={onRemovePayment}
+          lang={lang}
+        />
+      )}
+
+      {/* Vendor list view */}
+      {view === "vendors" && (
+      <>
       {/* Summary cards */}
       {vendors.length > 0 && totalBudget > 0 && (
         <div className="grid grid-cols-3 gap-2 text-center">
@@ -374,6 +422,8 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
               : (en ? "Try changing your filter" : "Thử thay đổi bộ lọc")}
           </p>
         </div>
+      )}
+      </>
       )}
     </div>
   );

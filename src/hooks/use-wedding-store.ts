@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -340,6 +340,34 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Vendor payment methods
+  const addVendorPayment = useCallback((payment: Omit<VendorPayment, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      vendorPaymentIdCounter: (prev.vendorPaymentIdCounter || 0) + 1,
+      vendorPayments: [
+        ...(prev.vendorPayments || []),
+        { ...payment, id: (prev.vendorPaymentIdCounter || 0) + 1 },
+      ],
+    }));
+  }, [setState]);
+
+  const updateVendorPayment = useCallback((id: number, updates: Partial<VendorPayment>) => {
+    setState((prev) => ({
+      ...prev,
+      vendorPayments: (prev.vendorPayments || []).map((p) =>
+        p.id === id ? { ...p, ...updates } : p
+      ),
+    }));
+  }, [setState]);
+
+  const removeVendorPayment = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      vendorPayments: (prev.vendorPayments || []).filter((p) => p.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -379,6 +407,7 @@ export function useWeddingStore() {
     addSeatingTable, updateSeatingTable, removeSeatingTable,
     assignGuestToTable, unassignGuest,
     addContact, updateContact, removeContact,
+    addVendorPayment, updateVendorPayment, removeVendorPayment,
     ...phase2,
   };
 }
