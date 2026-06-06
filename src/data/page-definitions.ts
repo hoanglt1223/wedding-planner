@@ -18,6 +18,7 @@ export const PAGES: PageDef[] = [
   { id: "website", label: "🌐 Website", icon: "🌐" },
   { id: "guests", label: "👥 Khách Mời", icon: "👥", shortLabel: "Khách mời" },
   { id: "checklist", label: "📋 Lịch Trình", icon: "📋", shortLabel: "Lịch trình" },
+  { id: "gifts", label: "🎁 Phong Bì", icon: "🎁", shortLabel: "Phong bì" },
 ];
 
 export const DEFAULT_PAGE = "home";

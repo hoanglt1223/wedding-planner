@@ -75,7 +75,7 @@ export function GuestsPage() {
       )}
       {activeTab === 4 && (
         <Suspense fallback={null}>
-          <GiftPage state={state} store={store} />
+          <GiftPage />
         </Suspense>
       )}
     </div>

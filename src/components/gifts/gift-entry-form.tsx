@@ -1,144 +1,207 @@
 import { useState } from "react";
-import { t } from "@/lib/i18n";
 import type { GiftEntry, Guest } from "@/types/wedding";
 
-interface Props {
-  initial?: GiftEntry | null;
+type EntryDraft = Omit<GiftEntry, "id">;
+
+interface GiftEntryFormProps {
+  initial: GiftEntry | null; // null = add new
   guests: Guest[];
   lang: string;
-  onSave: (data: Omit<GiftEntry, "id">) => void;
+  onSave: (data: EntryDraft) => void;
   onClose: () => void;
 }
 
-const SIDES = ["groom", "bride", "other"] as const;
+export function GiftEntryForm({ initial, guests, lang, onSave, onClose }: GiftEntryFormProps) {
+  const en = lang === "en";
 
-function sideLabel(side: string, lang: string) {
-  if (lang === "en") return side === "groom" ? "Groom" : side === "bride" ? "Bride" : "Other";
-  return side === "groom" ? "Nhà trai" : side === "bride" ? "Nhà gái" : t("Khác", lang);
-}
+  const [type, setType] = useState<"cash" | "gift">(initial?.type ?? "cash");
+  const [guestName, setGuestName] = useState(initial?.guestName ?? "");
+  const [amount, setAmount] = useState(initial?.amount?.toString() ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [side, setSide] = useState<string>(initial?.side ?? "other");
+  const [guestId, setGuestId] = useState<number | undefined>(initial?.guestId);
+  const [tableGroup, setTableGroup] = useState(initial?.tableGroup ?? "");
+  const [showGuestPicker, setShowGuestPicker] = useState(false);
 
-function fromInitial(initial?: GiftEntry | null): Omit<GiftEntry, "id"> {
-  if (initial) return { ...initial };
-  return { guestName: "", type: "cash", amount: undefined, description: "", side: "groom", tableGroup: "", thankYouSent: false };
-}
-
-export function GiftEntryForm({ initial, guests, lang, onSave, onClose }: Props) {
-  // Key the component on initial.id so React remounts for add vs edit
-  const [form, setForm] = useState<Omit<GiftEntry, "id">>(() => fromInitial(initial));
-  const [nameQuery, setNameQuery] = useState(initial?.guestName ?? "");
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [error, setError] = useState("");
-
-  const suggestions = nameQuery.length > 0
-    ? guests.filter((g) => g.name.toLowerCase().includes(nameQuery.toLowerCase())).slice(0, 6)
-    : [];
-
-  function pickGuest(g: Guest) {
-    setForm((f) => ({ ...f, guestName: g.name, guestId: g.id, side: g.side === "trai" ? "groom" : g.side === "gái" ? "bride" : f.side, tableGroup: g.tableGroup || f.tableGroup }));
-    setNameQuery(g.name);
-    setShowSuggestions(false);
+  function handleSelectGuest(guest: Guest) {
+    setGuestName(guest.name);
+    setGuestId(guest.id);
+    setSide(guest.side || "other");
+    setTableGroup(guest.tableGroup || "");
+    setShowGuestPicker(false);
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const name = nameQuery.trim();
-    if (!name) { setError(lang === "en" ? "Guest name required" : "Cần nhập tên khách"); return; }
-    if (form.type === "cash" && (!form.amount || form.amount <= 0)) {
-      setError(lang === "en" ? "Amount required for cash" : "Cần nhập số tiền"); return;
-    }
-    onSave({ ...form, guestName: name });
+    if (!guestName.trim()) return;
+
+    onSave({
+      guestName: guestName.trim(),
+      type,
+      amount: type === "cash" ? (parseFloat(amount) || 0) : undefined,
+      description: type === "gift" ? description.trim() : undefined,
+      side: side as "groom" | "bride" | "other",
+      guestId,
+      tableGroup: tableGroup || undefined,
+      thankYouSent: initial?.thankYouSent ?? false,
+    });
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-background rounded-xl shadow-xl w-full max-w-md p-5">
-        <h3 className="font-semibold mb-4">
-          {initial ? (lang === "en" ? "Edit Entry" : "Sửa phong bì") : (lang === "en" ? "Add Entry" : "Thêm phong bì")}
-        </h3>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40" onClick={onClose}>
+      <div
+        className="bg-background w-full max-w-md rounded-t-xl sm:rounded-xl p-4 space-y-3 max-h-[85vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-base">
+            {initial ? (en ? "Edit Gift" : "Sửa phong bì") : (en ? "Add Gift" : "Thêm phong bì")}
+          </h3>
+          <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-lg">✕</button>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-3">
-          {/* Guest name with autocomplete */}
-          <div className="relative">
-            <label className="text-xs text-muted-foreground block mb-1">{lang === "en" ? "Guest Name *" : "Tên khách *"}</label>
-            <input
-              className="w-full border rounded px-3 py-2 text-sm bg-background"
-              value={nameQuery}
-              onChange={(e) => { setNameQuery(e.target.value); setShowSuggestions(true); setForm((f) => ({ ...f, guestName: e.target.value, guestId: undefined })); }}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-              placeholder={lang === "en" ? "Guest name" : "Họ tên khách"}
-            />
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 z-10 bg-background border rounded shadow-lg mt-0.5 max-h-40 overflow-y-auto">
-                {suggestions.map((g) => (
-                  <div key={g.id} className="px-3 py-1.5 text-sm hover:bg-muted cursor-pointer" onMouseDown={() => pickGuest(g)}>
-                    {g.name} <span className="text-xs text-muted-foreground">· {g.tableGroup}</span>
-                  </div>
+          {/* Type toggle */}
+          <div className="flex gap-2">
+            {(["cash", "gift"] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setType(t)}
+                className={`flex-1 py-2 text-sm rounded-lg border transition-colors ${
+                  type === t
+                    ? "bg-[var(--theme-primary)] text-[var(--theme-primary-foreground)] border-[var(--theme-primary)]"
+                    : "bg-background border-muted-foreground/20"
+                }`}
+              >
+                {t === "cash" ? "💰 " + (en ? "Cash" : "Tiền mặt") : "🎁 " + (en ? "Gift" : "Quà tặng")}
+              </button>
+            ))}
+          </div>
+
+          {/* Guest name */}
+          <div>
+            <label className="text-xs text-muted-foreground mb-1 block">
+              {en ? "Guest name" : "Tên khách"} *
+            </label>
+            <div className="flex gap-1.5">
+              <input
+                type="text"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                placeholder={en ? "Enter name..." : "Nhập tên..."}
+                className="flex-1 border rounded px-3 py-2 text-sm bg-background"
+                required
+              />
+              {guests.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowGuestPicker(!showGuestPicker)}
+                  className="px-2.5 py-2 border rounded text-sm bg-muted hover:bg-muted/80"
+                  title={en ? "Pick from guest list" : "Chọn từ danh sách khách"}
+                >
+                  👥
+                </button>
+              )}
+            </div>
+            {showGuestPicker && guests.length > 0 && (
+              <div className="mt-1 max-h-32 overflow-y-auto border rounded bg-background">
+                {guests.map((g) => (
+                  <button
+                    key={g.id}
+                    type="button"
+                    onClick={() => handleSelectGuest(g)}
+                    className="w-full text-left px-3 py-1.5 text-sm hover:bg-muted transition-colors"
+                  >
+                    {g.name} {g.tableGroup && <span className="text-muted-foreground">({g.tableGroup})</span>}
+                  </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Type radio */}
+          {/* Cash amount */}
+          {type === "cash" && (
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                {en ? "Amount (VND)" : "Số tiền (VNĐ)"} *
+              </label>
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="0"
+                min="0"
+                className="w-full border rounded px-3 py-2 text-sm bg-background"
+                required
+              />
+            </div>
+          )}
+
+          {/* Gift description */}
+          {type === "gift" && (
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                {en ? "Gift description" : "Mô tả quà"}
+              </label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder={en ? "e.g. Flower vase, photo frame..." : "VD: Lọ hoa, khung ảnh..."}
+                className="w-full border rounded px-3 py-2 text-sm bg-background"
+              />
+            </div>
+          )}
+
+          {/* Side */}
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">{lang === "en" ? "Type" : "Loại"}</label>
-            <div className="flex gap-3">
-              {(["cash", "gift"] as const).map((tp) => (
-                <label key={tp} className="flex items-center gap-1.5 text-sm cursor-pointer">
-                  <input type="radio" checked={form.type === tp} onChange={() => setForm((f) => ({ ...f, type: tp }))} />
-                  {tp === "cash" ? t("Tiền mặt", lang) : t("Quà tặng", lang)}
-                </label>
+            <label className="text-xs text-muted-foreground mb-1 block">
+              {en ? "Side" : "Bên"}
+            </label>
+            <div className="flex gap-2">
+              {[
+                { key: "groom", vi: "Nhà trai", en: "Groom", icon: "🤵" },
+                { key: "bride", vi: "Nhà gái", en: "Bride", icon: "👰" },
+                { key: "other", vi: "Khác", en: "Other", icon: "👥" },
+              ].map((s) => (
+                <button
+                  key={s.key}
+                  type="button"
+                  onClick={() => setSide(s.key)}
+                  className={`flex-1 py-1.5 text-xs rounded border transition-colors ${
+                    side === s.key
+                      ? "bg-[var(--theme-primary)] text-[var(--theme-primary-foreground)] border-[var(--theme-primary)]"
+                      : "bg-background border-muted-foreground/20"
+                  }`}
+                >
+                  {s.icon} {en ? s.en : s.vi}
+                </button>
               ))}
             </div>
           </div>
 
-          {/* Amount */}
-          {form.type === "cash" && (
-            <div>
-              <label className="text-xs text-muted-foreground block mb-1">{t("Số tiền", lang)} (VND) *</label>
-              <input type="number" min={0} className="w-full border rounded px-3 py-2 text-sm bg-background"
-                value={form.amount ?? ""}
-                onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value ? Number(e.target.value) : undefined }))} />
-            </div>
-          )}
-
-          {/* Description */}
+          {/* Table group (optional) */}
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">{lang === "en" ? "Description" : "Mô tả"}</label>
-            <input className="w-full border rounded px-3 py-2 text-sm bg-background" value={form.description ?? ""}
-              onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
+            <label className="text-xs text-muted-foreground mb-1 block">
+              {en ? "Table group (optional)" : "Bàn (tùy chọn)"}
+            </label>
+            <input
+              type="text"
+              value={tableGroup}
+              onChange={(e) => setTableGroup(e.target.value)}
+              placeholder={en ? "e.g. Table 1, VIP..." : "VD: Bàn 1, VIP..."}
+              className="w-full border rounded px-3 py-2 text-sm bg-background"
+            />
           </div>
 
-          {/* Side + Table */}
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="text-xs text-muted-foreground block mb-1">{t("Bên", lang)}</label>
-              <select className="w-full border rounded px-2 py-2 text-sm bg-background" value={form.side}
-                onChange={(e) => setForm((f) => ({ ...f, side: e.target.value as GiftEntry["side"] }))}>
-                {SIDES.map((s) => <option key={s} value={s}>{sideLabel(s, lang)}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="text-xs text-muted-foreground block mb-1">{lang === "en" ? "Table / Group" : "Bàn / Nhóm"}</label>
-              <input className="w-full border rounded px-3 py-2 text-sm bg-background" value={form.tableGroup ?? ""}
-                onChange={(e) => setForm((f) => ({ ...f, tableGroup: e.target.value }))} />
-            </div>
-          </div>
-
-          {/* Thank-you */}
-          <label className="flex items-center gap-2 text-sm cursor-pointer">
-            <input type="checkbox" checked={form.thankYouSent}
-              onChange={(e) => setForm((f) => ({ ...f, thankYouSent: e.target.checked }))} />
-            {t("Đã cảm ơn", lang)}
-          </label>
-
-          {error && <p className="text-red-500 text-xs">{error}</p>}
-
-          <div className="flex gap-2 justify-end pt-1">
-            <button type="button" onClick={onClose}
-              className="px-4 py-2 text-sm border rounded hover:bg-muted">{t("Hủy", lang)}</button>
-            <button type="submit"
-              className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded hover:opacity-90">{t("Lưu", lang)}</button>
-          </div>
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full py-2.5 bg-[var(--theme-primary)] text-[var(--theme-primary-foreground)] rounded-lg font-medium text-sm hover:opacity-90 transition-opacity"
+          >
+            {initial ? (en ? "Save Changes" : "Lưu thay đổi") : (en ? "Add Gift" : "Thêm phong bì")}
+          </button>
         </form>
       </div>
     </div>

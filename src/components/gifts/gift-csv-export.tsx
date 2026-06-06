@@ -1,55 +1,36 @@
 import { t } from "@/lib/i18n";
 import type { GiftEntry } from "@/types/wedding";
 
-interface Props {
+interface GiftCsvExportProps {
   gifts: GiftEntry[];
   lang: string;
 }
 
-const INJECTION_CHARS = /^[=+\-@]/;
-
-function sanitizeCell(value: string): string {
-  if (INJECTION_CHARS.test(value)) return `'${value}`;
-  return value;
-}
-
-function escapeCell(value: string): string {
-  const safe = sanitizeCell(value);
-  if (safe.includes(",") || safe.includes('"') || safe.includes("\n")) {
-    return `"${safe.replace(/"/g, '""')}"`;
-  }
-  return safe;
-}
-
-function sideLabel(side: string, lang: string) {
-  if (lang === "en") return side === "groom" ? "Groom" : side === "bride" ? "Bride" : "Other";
-  return side === "groom" ? "Nhà trai" : side === "bride" ? "Nhà gái" : "Khác";
-}
-
-export function GiftCsvExport({ gifts, lang }: Props) {
+export function GiftCsvExport({ gifts, lang }: GiftCsvExportProps) {
   function handleExport() {
-    const BOM = "\uFEFF";
-    const headers = lang === "en"
-      ? ["Guest Name", "Type", "Amount", "Description", "Side", "Table", "Thank You Sent"]
-      : ["Tên khách", "Loại", "Số tiền", "Mô tả", "Bên", "Bàn/Nhóm", "Đã cảm ơn"];
+    if (gifts.length === 0) return;
+    const en = lang === "en";
 
-    const rows = gifts.map((g) => [
-      escapeCell(g.guestName),
-      escapeCell(g.type === "cash" ? t("Tiền mặt", lang) : t("Quà tặng", lang)),
-      g.amount != null ? String(g.amount) : "",
-      escapeCell(g.description ?? ""),
-      escapeCell(sideLabel(g.side, lang)),
-      escapeCell(g.tableGroup ?? ""),
-      g.thankYouSent ? (lang === "en" ? "Yes" : "Có") : (lang === "en" ? "No" : "Chưa"),
-    ]);
+    const header = en
+      ? "Guest Name,Type,Amount (VND),Description,Side,Thanked"
+      : "Tên khách,Loại,Số tiền (VNĐ),Mô tả,Bên,Đã cảm ơn";
 
-    const csv = BOM + [headers.join(","), ...rows.map((r) => r.join(","))].join("\r\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const rows = gifts.map((g) => {
+      const sideLabel =
+        g.side === "groom" ? (en ? "Groom" : "Nhà trai") :
+        g.side === "bride" ? (en ? "Bride" : "Nhà gái") : (en ? "Other" : "Khác");
+      const typeLabel = g.type === "cash" ? (en ? "Cash" : "Tiền mặt") : (en ? "Gift" : "Quà tặng");
+      const thanked = g.thankYouSent ? (en ? "Yes" : "Có") : (en ? "No" : "Không");
+      return `"${g.guestName}",${typeLabel},${g.amount ?? 0},"${g.description ?? ""}",${sideLabel},${thanked}`;
+    });
+
+    const csv = [header, ...rows].join("\n");
+    const BOM = "﻿"; // UTF-8 BOM for Excel
+    const blob = new Blob([BOM + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
-    const date = new Date().toISOString().slice(0, 10);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `phong-bi-${date}.csv`;
+    a.download = `wedding-gifts-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -58,9 +39,10 @@ export function GiftCsvExport({ gifts, lang }: Props) {
     <button
       onClick={handleExport}
       disabled={gifts.length === 0}
-      className="text-xs px-3 py-1.5 border rounded hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      className="text-xs px-2.5 py-1.5 border rounded hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+      title={t("Xuất CSV phong bì", lang)}
     >
-      ⬇️ {t("Xuất CSV phong bì", lang)}
+      📥 CSV
     </button>
   );
 }

@@ -116,7 +116,7 @@ export function PanelRouter({ state, store, userId }: PanelRouterProps) {
   if (tab === stepCount + 6) {
     return (
       <Suspense fallback={null}>
-        <GiftPage state={state} store={store} />
+        <GiftPage />
       </Suspense>
     );
   }

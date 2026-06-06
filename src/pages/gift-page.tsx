@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { t } from "@/lib/i18n";
-import type { WeddingState, GiftEntry } from "@/types/wedding";
-import type { WeddingStore } from "@/hooks/use-wedding-store";
+import type { GiftEntry } from "@/types/wedding";
+import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { GiftSummaryBar } from "@/components/gifts/gift-summary-bar";
 import { GiftEntryList } from "@/components/gifts/gift-entry-list";
 import { GiftEntryForm } from "@/components/gifts/gift-entry-form";
@@ -9,7 +9,9 @@ import { GiftCsvExport } from "@/components/gifts/gift-csv-export";
 
 type FilterKey = "all" | "cash" | "gift" | "notThanked";
 
-export default function GiftPage({ state, store }: { state: WeddingState; store: WeddingStore }) {
+export default function GiftPage() {
+  const store = useWeddingStoreContext();
+  const { state } = store;
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [editing, setEditing] = useState<GiftEntry | null | undefined>(undefined);

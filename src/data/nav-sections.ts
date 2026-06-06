@@ -27,10 +27,12 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   cards: "menu",
   handbook: "menu",
   website: "menu",
+  gifts: "menu",
 };
 
 export const MENU_ITEMS = [
   { pageId: "website", icon: "🌐", labelVi: "Website", labelEn: "Website" },
+  { pageId: "gifts", icon: "🎁", labelVi: "Phong Bì", labelEn: "Gifts" },
   { pageId: "cards", icon: "🖼️", labelVi: "Thiệp", labelEn: "Cards" },
   { pageId: "handbook", icon: "📖", labelVi: "Sổ Tay", labelEn: "Handbook" },
   { pageId: "astrology", icon: "🔮", labelVi: "Tử Vi", labelEn: "Fortune" },
