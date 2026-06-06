@@ -28,6 +28,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   handbook: "menu",
   website: "menu",
   gifts: "menu",
+  seating: "menu",
 };
 
 export const MENU_ITEMS = [
@@ -39,4 +40,5 @@ export const MENU_ITEMS = [
   { pageId: "numerology", icon: "🔢", labelVi: "Thần Số Học", labelEn: "Numerology" },
   { pageId: "lunar", icon: "🌙", labelVi: "Lịch Âm", labelEn: "Lunar Calendar" },
   { pageId: "tasks", icon: "📋", labelVi: "Công Việc", labelEn: "Tasks" },
+  { pageId: "seating", icon: "🪑", labelVi: "Sơ Đồ Chỗ Ngồi", labelEn: "Seating" },
 ];

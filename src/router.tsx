@@ -124,6 +124,12 @@ const giftRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/gift-page'), 'default'),
 })
 
+const seatingRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/seating',
+  component: lazyRouteComponent(() => import('./pages/seating-page'), 'default'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -186,6 +192,7 @@ const routeTree = rootRoute.addChildren([
     websiteRoute,
     checklistRoute,
     giftRoute,
+    seatingRoute,
   ]),
   rsvpRoute,
   sharedRoute,

@@ -19,6 +19,7 @@ export const PAGES: PageDef[] = [
   { id: "guests", label: "👥 Khách Mời", icon: "👥", shortLabel: "Khách mời" },
   { id: "checklist", label: "📋 Lịch Trình", icon: "📋", shortLabel: "Lịch trình" },
   { id: "gifts", label: "🎁 Phong Bì", icon: "🎁", shortLabel: "Phong bì" },
+  { id: "seating", label: "🪑 Sơ Đồ Chỗ Ngồi", icon: "🪑", shortLabel: "Chỗ ngồi" },
 ];
 
 export const DEFAULT_PAGE = "home";
