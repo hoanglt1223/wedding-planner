@@ -13,6 +13,7 @@ import { HeadcountSummary } from "./headcount-summary";
 import { SeatingChart } from "./seating-chart";
 import { RsvpDashboard } from "./rsvp-dashboard";
 import { TableAssignmentPanel } from "./table-assignment-panel";
+import { MealSummaryPanel } from "./meal-summary-panel";
 import { t } from "@/lib/i18n";
 
 interface GuestPanelProps {
@@ -48,8 +49,9 @@ export function GuestPanel({
   const [phone, setPhone] = useState("");
   const [side, setSide] = useState<"trai" | "gai">("trai");
   const [group, setGroup] = useState("");
+  const [dietary, setDietary] = useState("");
   const [search, setSearch] = useState("");
-  const [view, setView] = useState<"list" | "chart" | "assign" | "rsvp">("list");
+  const [view, setView] = useState<"list" | "chart" | "assign" | "rsvp" | "meals">("list");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const traiCount = guests.filter((g) => g.side === "trai").length;
@@ -58,11 +60,18 @@ export function GuestPanel({
 
   const handleAdd = () => {
     if (!name.trim()) return;
-    onAddGuest({ name: name.trim(), phone: phone.trim(), side: side, tableGroup: group.trim() });
+    onAddGuest({
+      name: name.trim(),
+      phone: phone.trim(),
+      side,
+      tableGroup: group.trim(),
+      dietary: dietary.trim() || undefined,
+    });
     setName("");
     setPhone("");
     setSide("trai");
     setGroup("");
+    setDietary("");
   };
 
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +134,15 @@ export function GuestPanel({
             onChange={(e) => setGroup(e.target.value)}
           />
           <Button size="sm" className="h-8 px-3" onClick={handleAdd}>+ {t("Thêm", lang)}</Button>
+        </div>
+        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[1fr_auto]">
+          <Input
+            className="h-8 text-sm"
+            placeholder={lang === "en" ? "🥬 Dietary (vegetarian, halal...)" : "🥬 Chế độ ăn (chay, halal...)"}
+            value={dietary}
+            onChange={(e) => setDietary(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+          />
         </div>
 
         <div className="flex gap-1 flex-wrap">
@@ -197,6 +215,16 @@ export function GuestPanel({
             >
               {t("📬 RSVP", lang)}
             </button>
+            <button
+              className={`px-3 py-1 text-xs rounded-lg font-semibold transition-colors ${
+                view === "meals"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+              onClick={() => setView("meals")}
+            >
+              {t("🍽️ Suất ăn", lang)}
+            </button>
           </div>
         )}
 
@@ -243,6 +271,9 @@ export function GuestPanel({
             themeId={themeId || "red"}
             lang={lang}
           />
+        )}
+        {view === "meals" && (
+          <MealSummaryPanel guests={guests} lang={lang} />
         )}
       </div>
     </div>
