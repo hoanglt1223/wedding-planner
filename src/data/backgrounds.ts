@@ -165,4 +165,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Vendor payments
   vendorPayments: [],
   vendorPaymentIdCounter: 0,
+
+  // Song list
+  songs: [],
+  songIdCounter: 0,
 };

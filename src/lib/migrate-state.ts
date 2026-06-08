@@ -63,8 +63,18 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest v16 — no-op
-  if (localStorage.getItem(V16_KEY)) return;
+  // Already on latest v16 — ensure new fields exist
+  const v16Raw = localStorage.getItem(V16_KEY);
+  if (v16Raw) {
+    try {
+      const v16 = JSON.parse(v16Raw);
+      let needsUpdate = false;
+      if (!("songs" in v16)) { v16.songs = []; needsUpdate = true; }
+      if (!("songIdCounter" in v16)) { v16.songIdCounter = 0; needsUpdate = true; }
+      if (needsUpdate) localStorage.setItem(V16_KEY, JSON.stringify(v16));
+    } catch { /* corrupt */ }
+    return;
+  }
 
   // v15→v16 migration: add expense tracking fields
   const v15Raw = localStorage.getItem(V15_KEY);

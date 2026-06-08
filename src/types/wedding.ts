@@ -257,6 +257,10 @@ export interface WeddingState {
   // Vendor payments
   vendorPayments: VendorPayment[];
   vendorPaymentIdCounter: number;
+
+  // Song list
+  songs: SongItem[];
+  songIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -312,4 +316,20 @@ export interface WeddingContact {
   phone: string;
   category: ContactCategory;
   note: string;
+}
+
+// --- Song list types ---
+
+export type SongSection = "ceremony" | "cocktail" | "reception" | "first-dance" | "party" | "other";
+export type SongPriority = "must-play" | "nice-to-have" | "do-not-play";
+
+export interface SongItem {
+  id: number;
+  title: string;
+  artist: string;
+  section: SongSection;
+  priority: SongPriority;
+  notes: string;
+  requestedBy: string;
+  confirmed: boolean;
 }

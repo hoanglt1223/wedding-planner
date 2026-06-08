@@ -444,4 +444,9 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Thêm liên hệ đầu tiên": { vi: "Thêm liên hệ đầu tiên", en: "Add your first contact" },
   "Không tìm thấy liên hệ": { vi: "Không tìm thấy liên hệ", en: "No contacts found" },
   "Lưu liên hệ quan trọng để truy cập nhanh trong ngày cưới": { vi: "Lưu liên hệ quan trọng để truy cập nhanh trong ngày cưới", en: "Save important contacts for quick access on your wedding day" },
+
+  // Song list
+  "🎵 Danh Sách Nhạc": { vi: "🎵 Danh Sách Nhạc", en: "🎵 Song List" },
+  "Quản lý nhạc đám cưới": { vi: "Quản lý nhạc đám cưới", en: "Manage wedding music playlist" },
+  "🔍 Tìm kiếm bài hát...": { vi: "🔍 Tìm kiếm bài hát...", en: "🔍 Search songs..." },
 };

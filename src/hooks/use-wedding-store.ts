@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -368,6 +368,29 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Song list methods
+  const addSong = useCallback((song: Omit<SongItem, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      songIdCounter: (prev.songIdCounter || 0) + 1,
+      songs: [...(prev.songs || []), { ...song, id: (prev.songIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const updateSong = useCallback((id: number, updates: Partial<SongItem>) => {
+    setState((prev) => ({
+      ...prev,
+      songs: (prev.songs || []).map((s) => s.id === id ? { ...s, ...updates } : s),
+    }));
+  }, [setState]);
+
+  const removeSong = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      songs: (prev.songs || []).filter((s) => s.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -408,6 +431,7 @@ export function useWeddingStore() {
     assignGuestToTable, unassignGuest,
     addContact, updateContact, removeContact,
     addVendorPayment, updateVendorPayment, removeVendorPayment,
+    addSong, updateSong, removeSong,
     ...phase2,
   };
 }

@@ -53,6 +53,7 @@ export function Navbar({
     tasks: "Công Việc",
     website: "Website",
     guests: "Khách Mời",
+    songs: "Danh Sách Nhạc",
   };
 
   return (
