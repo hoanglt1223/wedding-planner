@@ -30,10 +30,12 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   gifts: "menu",
   seating: "menu",
   songs: "menu",
+  vendors: "menu",
 };
 
 export const MENU_ITEMS = [
   { pageId: "website", icon: "🌐", labelVi: "Website", labelEn: "Website" },
+  { pageId: "vendors", icon: "🗺️", labelVi: "Nhà Cung Cấp", labelEn: "Vendors" },
   { pageId: "gifts", icon: "🎁", labelVi: "Phong Bì", labelEn: "Gifts" },
   { pageId: "cards", icon: "🖼️", labelVi: "Thiệp", labelEn: "Cards" },
   { pageId: "handbook", icon: "📖", labelVi: "Sổ Tay", labelEn: "Handbook" },
