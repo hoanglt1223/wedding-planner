@@ -169,4 +169,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Song list
   songs: [],
   songIdCounter: 0,
+
+  // Speeches & Vows
+  speeches: [],
+  speechIdCounter: 0,
 };

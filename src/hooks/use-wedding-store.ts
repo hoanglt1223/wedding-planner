@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -391,6 +391,29 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Speech / Vow methods
+  const addSpeech = useCallback((speech: Omit<SpeechEntry, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      speechIdCounter: (prev.speechIdCounter || 0) + 1,
+      speeches: [...(prev.speeches || []), { ...speech, id: (prev.speechIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const updateSpeech = useCallback((id: number, updates: Partial<SpeechEntry>) => {
+    setState((prev) => ({
+      ...prev,
+      speeches: (prev.speeches || []).map((s) => s.id === id ? { ...s, ...updates } : s),
+    }));
+  }, [setState]);
+
+  const removeSpeech = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      speeches: (prev.speeches || []).filter((s) => s.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -432,6 +455,7 @@ export function useWeddingStore() {
     addContact, updateContact, removeContact,
     addVendorPayment, updateVendorPayment, removeVendorPayment,
     addSong, updateSong, removeSong,
+    addSpeech, updateSpeech, removeSpeech,
     ...phase2,
   };
 }

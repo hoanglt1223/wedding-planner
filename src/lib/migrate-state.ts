@@ -71,6 +71,8 @@ export function migrateState(): void {
       let needsUpdate = false;
       if (!("songs" in v16)) { v16.songs = []; needsUpdate = true; }
       if (!("songIdCounter" in v16)) { v16.songIdCounter = 0; needsUpdate = true; }
+      if (!("speeches" in v16)) { v16.speeches = []; needsUpdate = true; }
+      if (!("speechIdCounter" in v16)) { v16.speechIdCounter = 0; needsUpdate = true; }
       if (needsUpdate) localStorage.setItem(V16_KEY, JSON.stringify(v16));
     } catch { /* corrupt */ }
     return;

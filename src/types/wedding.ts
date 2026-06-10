@@ -261,6 +261,10 @@ export interface WeddingState {
   // Song list
   songs: SongItem[];
   songIdCounter: number;
+
+  // Speeches & Vows
+  speeches: SpeechEntry[];
+  speechIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -332,4 +336,18 @@ export interface SongItem {
   notes: string;
   requestedBy: string;
   confirmed: boolean;
+}
+
+// --- Speech / Vow types ---
+
+export type SpeechCategory = "vow" | "toast" | "reading" | "prayer" | "other";
+
+export interface SpeechEntry {
+  id: number;
+  title: string;
+  content: string;
+  category: SpeechCategory;
+  speaker: string;         // e.g. "Chú rể", "Cô dâu", "Best man"
+  notes: string;
+  isFavorite: boolean;
 }

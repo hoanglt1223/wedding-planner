@@ -21,6 +21,7 @@ export const PAGES: PageDef[] = [
   { id: "gifts", label: "🎁 Phong Bì", icon: "🎁", shortLabel: "Phong bì" },
   { id: "seating", label: "🪑 Sơ Đồ Chỗ Ngồi", icon: "🪑", shortLabel: "Chỗ ngồi" },
   { id: "songs", label: "🎵 Danh Sách Nhạc", icon: "🎵", shortLabel: "Nhạc" },
+  { id: "speeches", label: "✍️ Lời Thề & Diễn Văn", icon: "✍️", shortLabel: "Lời thề" },
 ];
 
 export const DEFAULT_PAGE = "home";

@@ -31,6 +31,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   seating: "menu",
   songs: "menu",
   vendors: "menu",
+  speeches: "menu",
 };
 
 export const MENU_ITEMS = [
@@ -45,4 +46,5 @@ export const MENU_ITEMS = [
   { pageId: "tasks", icon: "📋", labelVi: "Công Việc", labelEn: "Tasks" },
   { pageId: "seating", icon: "🪑", labelVi: "Sơ Đồ Chỗ Ngồi", labelEn: "Seating" },
   { pageId: "songs", icon: "🎵", labelVi: "Danh Sách Nhạc", labelEn: "Songs" },
+  { pageId: "speeches", icon: "✍️", labelVi: "Lời Thề & Diễn Văn", labelEn: "Vows & Speeches" },
 ];
