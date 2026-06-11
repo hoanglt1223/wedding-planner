@@ -83,6 +83,8 @@ export default function TimelinePage({ state, store }: TimelinePageProps) {
         entryCount={sortedEntries.length}
         onAdd={handleAdd}
         onGenerate={handleGenerate}
+        info={state.info}
+        timelineEntries={sortedEntries}
       />
 
       <TimelineEntryList
