@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { t } from "@/lib/i18n";
-import { getExpenseCategories } from "@/data/resolve-data";
+import { getExpenseCategories, getBudgetCategories } from "@/data/resolve-data";
 import { BudgetOverview } from "./budget-overview";
 import { BudgetSummary } from "./budget-summary";
 import { CategoryBreakdown } from "./category-breakdown";
 import { ExpenseList } from "./expense-list";
 import { ExpenseForm } from "./expense-form";
 import { BudgetPanel } from "./budget-panel";
+import { BudgetDonutChart } from "./budget-donut-chart";
 import type { WeddingState, ExpenseEntry } from "@/types/wedding";
 import type { WeddingStore } from "@/hooks/use-wedding-store";
 
@@ -59,6 +60,13 @@ export function ExpenseTracker({ state, store }: ExpenseTrackerProps) {
   return (
     <div className="space-y-3">
       <BudgetOverview budget={state.budget} expenseLog={expenseLog} lang={lang} />
+      <BudgetDonutChart
+        budget={state.budget}
+        categories={getBudgetCategories(lang)}
+        budgetOverrides={state.budgetOverrides}
+        expenseLog={expenseLog}
+        lang={lang}
+      />
       <BudgetSummary expenseLog={expenseLog} budget={state.budget} lang={lang} />
       <CategoryBreakdown
         budget={state.budget}
