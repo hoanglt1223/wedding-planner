@@ -9,6 +9,7 @@ import { BadgeDisplay } from "@/components/progress/badge-display";
 import { SectionProgress } from "@/components/progress/section-progress";
 import { WeddingDayKit } from "@/components/home/wedding-day-kit";
 import { WeddingDaySchedule } from "@/components/home/wedding-day-schedule";
+import { ShareWeddingDetails } from "@/components/home/share-wedding-details";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -36,6 +37,11 @@ export function HomePage() {
       </div>
 
       <QuickActions lang={lang} />
+      <ShareWeddingDetails
+        info={state.info}
+        rsvpSettings={state.rsvpSettings}
+        lang={lang}
+      />
       <WeddingDaySchedule
         entries={state.timelineEntries ?? []}
         lang={lang}
