@@ -265,6 +265,10 @@ export interface WeddingState {
   // Speeches & Vows
   speeches: SpeechEntry[];
   speechIdCounter: number;
+
+  // Guest Book
+  guestBookEntries: GuestBookEntry[];
+  guestBookIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -349,5 +353,19 @@ export interface SpeechEntry {
   category: SpeechCategory;
   speaker: string;         // e.g. "Chú rể", "Cô dâu", "Best man"
   notes: string;
+  isFavorite: boolean;
+}
+
+// --- Guest Book types ---
+
+export type GuestBookMood = "love" | "joy" | "wisdom" | "funny" | "other";
+
+export interface GuestBookEntry {
+  id: number;
+  guestName: string;
+  message: string;
+  mood: GuestBookMood;
+  guestId?: number;        // Link to Guest if exists
+  createdAt: string;       // ISO timestamp
   isFavorite: boolean;
 }

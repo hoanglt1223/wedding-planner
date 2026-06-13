@@ -148,6 +148,12 @@ const vendorsRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/vendor-page'), 'VendorPage'),
 })
 
+const guestBookRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/guest-book',
+  component: lazyRouteComponent(() => import('./pages/guest-book-page'), 'default'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -214,6 +220,7 @@ const routeTree = rootRoute.addChildren([
     songsRoute,
     vendorsRoute,
     speechesRoute,
+    guestBookRoute,
   ]),
   rsvpRoute,
   sharedRoute,

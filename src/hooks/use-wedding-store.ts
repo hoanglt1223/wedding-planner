@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -414,6 +414,47 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Guest Book methods
+  const addGuestBookEntry = useCallback((entry: Omit<GuestBookEntry, "id" | "createdAt">) => {
+    setState((prev) => ({
+      ...prev,
+      guestBookIdCounter: (prev.guestBookIdCounter || 0) + 1,
+      guestBookEntries: [
+        ...(prev.guestBookEntries || []),
+        {
+          ...entry,
+          id: (prev.guestBookIdCounter || 0) + 1,
+          createdAt: new Date().toISOString(),
+        },
+      ],
+    }));
+  }, [setState]);
+
+  const updateGuestBookEntry = useCallback((id: number, updates: Partial<GuestBookEntry>) => {
+    setState((prev) => ({
+      ...prev,
+      guestBookEntries: (prev.guestBookEntries || []).map((e) =>
+        e.id === id ? { ...e, ...updates } : e
+      ),
+    }));
+  }, [setState]);
+
+  const removeGuestBookEntry = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      guestBookEntries: (prev.guestBookEntries || []).filter((e) => e.id !== id),
+    }));
+  }, [setState]);
+
+  const toggleGuestBookFavorite = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      guestBookEntries: (prev.guestBookEntries || []).map((e) =>
+        e.id === id ? { ...e, isFavorite: !e.isFavorite } : e
+      ),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -456,6 +497,7 @@ export function useWeddingStore() {
     addVendorPayment, updateVendorPayment, removeVendorPayment,
     addSong, updateSong, removeSong,
     addSpeech, updateSpeech, removeSpeech,
+    addGuestBookEntry, updateGuestBookEntry, removeGuestBookEntry, toggleGuestBookFavorite,
     ...phase2,
   };
 }

@@ -173,4 +173,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Speeches & Vows
   speeches: [],
   speechIdCounter: 0,
+
+  // Guest Book
+  guestBookEntries: [],
+  guestBookIdCounter: 0,
 };
