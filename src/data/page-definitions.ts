@@ -22,6 +22,7 @@ export const PAGES: PageDef[] = [
   { id: "seating", label: "🪑 Sơ Đồ Chỗ Ngồi", icon: "🪑", shortLabel: "Chỗ ngồi" },
   { id: "songs", label: "🎵 Danh Sách Nhạc", icon: "🎵", shortLabel: "Nhạc" },
   { id: "speeches", label: "✍️ Lời Thề & Diễn Văn", icon: "✍️", shortLabel: "Lời thề" },
+  { id: "photos", label: "📸 Ảnh Cưới", icon: "📸", shortLabel: "Ảnh cưới" },
 ];
 
 export const DEFAULT_PAGE = "home";
