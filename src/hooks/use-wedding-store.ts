@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -455,6 +455,34 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Wedding Party methods
+  const addPartyMember = useCallback((member: Omit<WeddingPartyMember, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      weddingPartyIdCounter: (prev.weddingPartyIdCounter || 0) + 1,
+      weddingParty: [
+        ...(prev.weddingParty || []),
+        { ...member, id: (prev.weddingPartyIdCounter || 0) + 1 },
+      ],
+    }));
+  }, [setState]);
+
+  const updatePartyMember = useCallback((id: number, updates: Partial<WeddingPartyMember>) => {
+    setState((prev) => ({
+      ...prev,
+      weddingParty: (prev.weddingParty || []).map((m) =>
+        m.id === id ? { ...m, ...updates } : m
+      ),
+    }));
+  }, [setState]);
+
+  const removePartyMember = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      weddingParty: (prev.weddingParty || []).filter((m) => m.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -498,6 +526,7 @@ export function useWeddingStore() {
     addSong, updateSong, removeSong,
     addSpeech, updateSpeech, removeSpeech,
     addGuestBookEntry, updateGuestBookEntry, removeGuestBookEntry, toggleGuestBookFavorite,
+    addPartyMember, updatePartyMember, removePartyMember,
     ...phase2,
   };
 }

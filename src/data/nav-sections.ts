@@ -31,12 +31,14 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   seating: "menu",
   songs: "menu",
   vendors: "menu",
+  "wedding-party": "menu",
   speeches: "menu",
   "guest-book": "menu",
 };
 
 export const MENU_ITEMS = [
   { pageId: "website", icon: "🌐", labelVi: "Website", labelEn: "Website" },
+  { pageId: "wedding-party", icon: "💐", labelVi: "Đội Ngũ Cưới", labelEn: "Wedding Party" },
   { pageId: "vendors", icon: "🗺️", labelVi: "Nhà Cung Cấp", labelEn: "Vendors" },
   { pageId: "gifts", icon: "🎁", labelVi: "Phong Bì", labelEn: "Gifts" },
   { pageId: "cards", icon: "🖼️", labelVi: "Thiệp", labelEn: "Cards" },

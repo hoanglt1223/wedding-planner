@@ -177,4 +177,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Guest Book
   guestBookEntries: [],
   guestBookIdCounter: 0,
+
+  // Wedding Party
+  weddingParty: [],
+  weddingPartyIdCounter: 0,
 };

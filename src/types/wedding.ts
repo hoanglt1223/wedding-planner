@@ -269,6 +269,10 @@ export interface WeddingState {
   // Guest Book
   guestBookEntries: GuestBookEntry[];
   guestBookIdCounter: number;
+
+  // Wedding Party
+  weddingParty: WeddingPartyMember[];
+  weddingPartyIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -368,4 +372,34 @@ export interface GuestBookEntry {
   guestId?: number;        // Link to Guest if exists
   createdAt: string;       // ISO timestamp
   isFavorite: boolean;
+}
+
+// --- Wedding Party types ---
+
+export type PartyRole =
+  | "maid-of-honor"
+  | "bridesmaid"
+  | "best-man"
+  | "groomsman"
+  | "flower-girl"
+  | "ring-bearer"
+  | "mother-of-bride"
+  | "mother-of-groom"
+  | "father-of-bride"
+  | "father-of-groom"
+  | "officiant"
+  | "mc"
+  | "other";
+
+export interface WeddingPartyMember {
+  id: number;
+  name: string;
+  role: PartyRole;
+  phone: string;
+  email: string;
+  outfitDetails: string;   // e.g. dress color, suit style
+  measurements: string;    // e.g. size notes
+  responsibilities: string; // assigned duties
+  notes: string;
+  guestId?: number;        // Link to Guest if exists
 }

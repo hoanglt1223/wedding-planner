@@ -154,6 +154,12 @@ const guestBookRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/guest-book-page'), 'default'),
 })
 
+const weddingPartyRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/wedding-party',
+  component: lazyRouteComponent(() => import('./pages/wedding-party-page'), 'WeddingPartyPage'),
+})
+
 const photoGalleryRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/photos',
@@ -227,6 +233,7 @@ const routeTree = rootRoute.addChildren([
     vendorsRoute,
     speechesRoute,
     guestBookRoute,
+    weddingPartyRoute,
     photoGalleryRoute,
   ]),
   rsvpRoute,
