@@ -10,6 +10,7 @@ import { SectionProgress } from "@/components/progress/section-progress";
 import { WeddingDayKit } from "@/components/home/wedding-day-kit";
 import { WeddingDaySchedule } from "@/components/home/wedding-day-schedule";
 import { ShareWeddingDetails } from "@/components/home/share-wedding-details";
+import { MultiEventCountdown } from "@/components/countdown/multi-event-countdown";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -26,6 +27,8 @@ export function HomePage() {
         onDismiss={store.dismissReminder}
         lang={lang}
       />
+
+      <MultiEventCountdown info={state.info} lang={lang} />
 
       {/* Progress ring + summary */}
       <div className="flex items-center gap-4 justify-center">
