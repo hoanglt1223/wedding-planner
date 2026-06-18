@@ -11,6 +11,7 @@ import { WeddingDayKit } from "@/components/home/wedding-day-kit";
 import { WeddingDaySchedule } from "@/components/home/wedding-day-schedule";
 import { ShareWeddingDetails } from "@/components/home/share-wedding-details";
 import { MultiEventCountdown } from "@/components/countdown/multi-event-countdown";
+import { CountdownShareCard } from "@/components/countdown/countdown-share-card";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -29,6 +30,8 @@ export function HomePage() {
       />
 
       <MultiEventCountdown info={state.info} lang={lang} />
+
+      <CountdownShareCard info={state.info} lang={lang} />
 
       {/* Progress ring + summary */}
       <div className="flex items-center gap-4 justify-center">
