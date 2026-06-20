@@ -4,6 +4,7 @@ import type { SpeechEntry, SpeechCategory } from "@/types/wedding";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { SpeechEntryList } from "./speech-entry-list";
 import { SpeechEntryForm } from "./speech-entry-form";
+import { VowBuilder } from "./vow-builder";
 
 type FilterCategory = "all" | SpeechCategory;
 
@@ -13,6 +14,7 @@ export function SpeechListPage() {
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState<FilterCategory>("all");
   const [editing, setEditing] = useState<SpeechEntry | null | undefined>(undefined);
+  const [showVowBuilder, setShowVowBuilder] = useState(false);
   const lang = state.lang;
 
   const speeches = state.speeches ?? [];
@@ -70,12 +72,21 @@ export function SpeechListPage() {
             {t("Quản lý lời thề, bài phát biểu, nâng ly", lang)}
           </p>
         </div>
-        <button
-          onClick={handleAdd}
-          className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity"
-        >
-          + {t("Thêm", lang)}
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setShowVowBuilder(true)}
+            className="text-xs px-3 py-1.5 rounded hover:opacity-90 transition-opacity border"
+            style={{ borderColor: "var(--theme-primary)", color: "var(--theme-primary)" }}
+          >
+            ✨ {lang === "en" ? "Vow Builder" : "Viết lời thề"}
+          </button>
+          <button
+            onClick={handleAdd}
+            className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity"
+          >
+            + {t("Thêm", lang)}
+          </button>
+        </div>
       </div>
 
       {/* Summary bar */}
@@ -119,6 +130,15 @@ export function SpeechListPage() {
           lang={lang}
           onSave={handleSave}
           onClose={handleClose}
+        />
+      )}
+
+      {/* Vow Builder */}
+      {showVowBuilder && (
+        <VowBuilder
+          lang={lang}
+          onSave={(data) => store.addSpeech(data)}
+          onClose={() => setShowVowBuilder(false)}
         />
       )}
     </div>
