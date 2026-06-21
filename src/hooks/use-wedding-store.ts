@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -483,6 +483,75 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Mood Board methods
+  const addMoodBoardItem = useCallback((item: Omit<MoodBoardItem, "id" | "createdAt">) => {
+    setState((prev) => ({
+      ...prev,
+      moodBoardIdCounter: (prev.moodBoardIdCounter || 0) + 1,
+      moodBoardItems: [
+        ...(prev.moodBoardItems || []),
+        {
+          ...item,
+          id: (prev.moodBoardIdCounter || 0) + 1,
+          createdAt: new Date().toISOString(),
+        },
+      ],
+    }));
+  }, [setState]);
+
+  const updateMoodBoardItem = useCallback((id: number, updates: Partial<MoodBoardItem>) => {
+    setState((prev) => ({
+      ...prev,
+      moodBoardItems: (prev.moodBoardItems || []).map((item) =>
+        item.id === id ? { ...item, ...updates } : item
+      ),
+    }));
+  }, [setState]);
+
+  const removeMoodBoardItem = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      moodBoardItems: (prev.moodBoardItems || []).filter((item) => item.id !== id),
+    }));
+  }, [setState]);
+
+  const toggleMoodBoardFavorite = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      moodBoardItems: (prev.moodBoardItems || []).map((item) =>
+        item.id === id ? { ...item, isFavorite: !item.isFavorite } : item
+      ),
+    }));
+  }, [setState]);
+
+  // Color Palette methods
+  const addColorPalette = useCallback((palette: Omit<ColorPalette, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      colorPaletteIdCounter: (prev.colorPaletteIdCounter || 0) + 1,
+      colorPalettes: [
+        ...(prev.colorPalettes || []),
+        { ...palette, id: (prev.colorPaletteIdCounter || 0) + 1 },
+      ],
+    }));
+  }, [setState]);
+
+  const updateColorPalette = useCallback((id: number, updates: Partial<ColorPalette>) => {
+    setState((prev) => ({
+      ...prev,
+      colorPalettes: (prev.colorPalettes || []).map((p) =>
+        p.id === id ? { ...p, ...updates } : p
+      ),
+    }));
+  }, [setState]);
+
+  const removeColorPalette = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      colorPalettes: (prev.colorPalettes || []).filter((p) => p.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -527,6 +596,8 @@ export function useWeddingStore() {
     addSpeech, updateSpeech, removeSpeech,
     addGuestBookEntry, updateGuestBookEntry, removeGuestBookEntry, toggleGuestBookFavorite,
     addPartyMember, updatePartyMember, removePartyMember,
+    addMoodBoardItem, updateMoodBoardItem, removeMoodBoardItem, toggleMoodBoardFavorite,
+    addColorPalette, updateColorPalette, removeColorPalette,
     ...phase2,
   };
 }

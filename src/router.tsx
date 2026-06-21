@@ -160,6 +160,12 @@ const weddingPartyRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/wedding-party-page'), 'WeddingPartyPage'),
 })
 
+const moodBoardRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/mood-board',
+  component: lazyRouteComponent(() => import('./pages/mood-board-page'), 'MoodBoardPage'),
+})
+
 const photoGalleryRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/photos',
@@ -234,6 +240,7 @@ const routeTree = rootRoute.addChildren([
     speechesRoute,
     guestBookRoute,
     weddingPartyRoute,
+    moodBoardRoute,
     photoGalleryRoute,
   ]),
   rsvpRoute,

@@ -273,6 +273,12 @@ export interface WeddingState {
   // Wedding Party
   weddingParty: WeddingPartyMember[];
   weddingPartyIdCounter: number;
+
+  // Mood Board
+  moodBoardItems: MoodBoardItem[];
+  moodBoardIdCounter: number;
+  colorPalettes: ColorPalette[];
+  colorPaletteIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -402,4 +408,34 @@ export interface WeddingPartyMember {
   responsibilities: string; // assigned duties
   notes: string;
   guestId?: number;        // Link to Guest if exists
+}
+
+// --- Mood Board types ---
+
+export type MoodBoardCategory =
+  | "decor"
+  | "flowers"
+  | "attire"
+  | "cake"
+  | "food"
+  | "venue"
+  | "photography"
+  | "other";
+
+export interface MoodBoardItem {
+  id: number;
+  imageUrl: string;
+  title: string;
+  category: MoodBoardCategory;
+  notes: string;
+  tags: string[];
+  isFavorite: boolean;
+  createdAt: string;
+}
+
+export interface ColorPalette {
+  id: number;
+  name: string;
+  colors: string[];      // hex color codes
+  notes: string;
 }

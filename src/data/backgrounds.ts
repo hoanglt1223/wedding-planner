@@ -181,4 +181,10 @@ export const DEFAULT_STATE: WeddingState = {
   // Wedding Party
   weddingParty: [],
   weddingPartyIdCounter: 0,
+
+  // Mood Board
+  moodBoardItems: [],
+  moodBoardIdCounter: 0,
+  colorPalettes: [],
+  colorPaletteIdCounter: 0,
 };
