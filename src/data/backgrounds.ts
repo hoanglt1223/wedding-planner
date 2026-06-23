@@ -187,4 +187,8 @@ export const DEFAULT_STATE: WeddingState = {
   moodBoardIdCounter: 0,
   colorPalettes: [],
   colorPaletteIdCounter: 0,
+
+  // Quick Notes
+  quickNotes: [],
+  quickNoteIdCounter: 0,
 };

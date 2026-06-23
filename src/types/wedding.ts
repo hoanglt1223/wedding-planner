@@ -279,6 +279,10 @@ export interface WeddingState {
   moodBoardIdCounter: number;
   colorPalettes: ColorPalette[];
   colorPaletteIdCounter: number;
+
+  // Quick Notes
+  quickNotes: QuickNote[];
+  quickNoteIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -438,4 +442,16 @@ export interface ColorPalette {
   name: string;
   colors: string[];      // hex color codes
   notes: string;
+}
+
+// --- Quick Notes types ---
+
+export type QuickNoteColor = "yellow" | "blue" | "green" | "pink" | "purple";
+
+export interface QuickNote {
+  id: number;
+  text: string;
+  color: QuickNoteColor;
+  done: boolean;
+  createdAt: string;       // ISO timestamp
 }

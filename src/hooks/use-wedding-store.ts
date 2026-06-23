@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -552,6 +552,40 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Quick Notes methods
+  const addQuickNote = useCallback((text: string, color: QuickNote["color"] = "yellow") => {
+    setState((prev) => ({
+      ...prev,
+      quickNoteIdCounter: (prev.quickNoteIdCounter || 0) + 1,
+      quickNotes: [
+        ...(prev.quickNotes || []),
+        {
+          id: (prev.quickNoteIdCounter || 0) + 1,
+          text,
+          color,
+          done: false,
+          createdAt: new Date().toISOString(),
+        },
+      ],
+    }));
+  }, [setState]);
+
+  const toggleQuickNote = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      quickNotes: (prev.quickNotes || []).map((n) =>
+        n.id === id ? { ...n, done: !n.done } : n
+      ),
+    }));
+  }, [setState]);
+
+  const removeQuickNote = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      quickNotes: (prev.quickNotes || []).filter((n) => n.id !== id),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -598,6 +632,7 @@ export function useWeddingStore() {
     addPartyMember, updatePartyMember, removePartyMember,
     addMoodBoardItem, updateMoodBoardItem, removeMoodBoardItem, toggleMoodBoardFavorite,
     addColorPalette, updateColorPalette, removeColorPalette,
+    addQuickNote, toggleQuickNote, removeQuickNote,
     ...phase2,
   };
 }

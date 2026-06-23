@@ -14,6 +14,7 @@ import { MultiEventCountdown } from "@/components/countdown/multi-event-countdow
 import { CountdownShareCard } from "@/components/countdown/countdown-share-card";
 import { WeatherWidget } from "@/components/home/weather-widget";
 import { EmergencyContactsWidget } from "@/components/home/emergency-contacts-widget";
+import { QuickNotesWidget } from "@/components/home/quick-notes-widget";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -54,6 +55,15 @@ export function HomePage() {
       </div>
 
       <QuickActions lang={lang} />
+
+      <QuickNotesWidget
+        notes={state.quickNotes || []}
+        onAdd={store.addQuickNote}
+        onToggle={store.toggleQuickNote}
+        onRemove={store.removeQuickNote}
+        lang={lang}
+      />
+
       <ShareWeddingDetails
         info={state.info}
         rsvpSettings={state.rsvpSettings}
