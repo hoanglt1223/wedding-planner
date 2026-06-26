@@ -16,6 +16,8 @@ export function VendorPage() {
         payments={state.vendorPayments || []}
         onAddPayment={store.addVendorPayment}
         onRemovePayment={store.removeVendorPayment}
+        onAddQuote={store.addVendorQuote}
+        onRemoveQuote={store.removeVendorQuote}
         lang={lang}
       />
     </div>

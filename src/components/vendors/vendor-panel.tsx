@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Vendor, VendorStatus, VendorPayment } from "@/types/wedding";
+import type { Vendor, VendorStatus, VendorPayment, VendorQuote } from "@/types/wedding";
 import { t } from "@/lib/i18n";
 import { VendorPaymentTracker } from "./vendor-payment-tracker";
+import { VendorQuoteComparison } from "./vendor-quote-comparison";
 
 const CATEGORIES = [
   "🏛️ Nhà hàng", "📸 Ảnh/Video", "🌸 Trang trí",
@@ -41,12 +42,14 @@ interface VendorPanelProps {
   payments?: VendorPayment[];
   onAddPayment?: (payment: Omit<VendorPayment, "id">) => void;
   onRemovePayment?: (id: number) => void;
+  onAddQuote?: (vendorId: number, quote: Omit<VendorQuote, "id" | "vendorId" | "createdAt">) => void;
+  onRemoveQuote?: (vendorId: number, quoteId: number) => void;
   lang?: string;
 }
 
-export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, lang = "vi" }: VendorPanelProps) {
+export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, onAddQuote, onRemoveQuote, lang = "vi" }: VendorPanelProps) {
   const en = lang === "en";
-  const [view, setView] = useState<"vendors" | "payments">("vendors");
+  const [view, setView] = useState<"vendors" | "payments" | "compare">("vendors");
   const [showAddForm, setShowAddForm] = useState(false);
   const [filterCat, setFilterCat] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<VendorStatus | null>(null);
@@ -86,6 +89,7 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
       status: "new",
       budget: parseVnd(budget),
       deposit: parseVnd(deposit),
+      quotes: [],
     });
     resetAddForm();
     setShowAddForm(false);
@@ -179,6 +183,16 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
             <span className="ml-1 text-[10px] bg-gray-200 rounded-full px-1.5">{payments.length}</span>
           )}
         </button>
+        <button
+          onClick={() => setView("compare")}
+          className={`px-3 py-1.5 text-xs font-medium border-b-2 transition-colors ${
+            view === "compare"
+              ? "border-[var(--theme-primary)] text-[var(--theme-primary)]"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          📊 {en ? "Compare" : "So Sánh"}
+        </button>
       </div>
 
       {/* Payment tracker view */}
@@ -188,6 +202,16 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
           payments={payments}
           onAddPayment={onAddPayment}
           onRemovePayment={onRemovePayment}
+          lang={lang}
+        />
+      )}
+
+      {/* Quote comparison view */}
+      {view === "compare" && onAddQuote && onRemoveQuote && (
+        <VendorQuoteComparison
+          vendors={vendors}
+          onAddQuote={onAddQuote}
+          onRemoveQuote={onRemoveQuote}
           lang={lang}
         />
       )}

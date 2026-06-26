@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -126,7 +126,7 @@ export function useWeddingStore() {
     setState((prev) => ({
       ...prev,
       vendorIdCounter: prev.vendorIdCounter + 1,
-      vendors: [...(prev.vendors || []), { ...vendor, id: prev.vendorIdCounter + 1 }],
+      vendors: [...(prev.vendors || []), { ...vendor, id: prev.vendorIdCounter + 1, quotes: vendor.quotes ?? [] }],
     }));
   }, [setState]);
 
@@ -141,6 +141,42 @@ export function useWeddingStore() {
     setState((prev) => ({
       ...prev,
       vendors: (prev.vendors || []).map((v) => v.id === id ? { ...v, ...updates } : v),
+    }));
+  }, [setState]);
+
+  const addVendorQuote = useCallback((vendorId: number, quote: Omit<VendorQuote, "id" | "vendorId" | "createdAt">) => {
+    setState((prev) => {
+      let quoteId = 0;
+      const vendors = (prev.vendors || []).map((v) => {
+        if (v.id !== vendorId) return v;
+        const maxId = v.quotes.reduce((m, q) => Math.max(m, q.id), 0);
+        quoteId = maxId + 1;
+        return {
+          ...v,
+          quotes: [...v.quotes, { ...quote, id: quoteId, vendorId, createdAt: new Date().toISOString() }],
+        };
+      });
+      return { ...prev, vendors };
+    });
+  }, [setState]);
+
+  const updateVendorQuote = useCallback((vendorId: number, quoteId: number, updates: Partial<VendorQuote>) => {
+    setState((prev) => ({
+      ...prev,
+      vendors: (prev.vendors || []).map((v) => {
+        if (v.id !== vendorId) return v;
+        return { ...v, quotes: v.quotes.map((q) => q.id === quoteId ? { ...q, ...updates } : q) };
+      }),
+    }));
+  }, [setState]);
+
+  const removeVendorQuote = useCallback((vendorId: number, quoteId: number) => {
+    setState((prev) => ({
+      ...prev,
+      vendors: (prev.vendors || []).map((v) => {
+        if (v.id !== vendorId) return v;
+        return { ...v, quotes: v.quotes.filter((q) => q.id !== quoteId) };
+      }),
     }));
   }, [setState]);
 
@@ -710,7 +746,7 @@ export function useWeddingStore() {
     setBudget, setCategoryPercent, setExpense,
     updateInfo, addGuest, removeGuest, updateGuest, clearGuests, importGuests,
     setApiKey, setAiResponse, setTheme, setNotes,
-    addVendor, removeVendor, updateVendor, addPhoto, removePhoto,
+    addVendor, removeVendor, updateVendor, addVendorQuote, updateVendorQuote, removeVendorQuote, addPhoto, removePhoto,
     setLang, setRegion, setPartyTime, setStepStartTime, setEnabledSteps,
     completeOnboarding, getProgress, setRsvpSettings, updateGuestRsvpToken,
     addExpense, updateExpense, removeExpense,

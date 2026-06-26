@@ -301,6 +301,19 @@ export interface WeddingEvent {
 
 export type VendorStatus = "new" | "contacted" | "quoted" | "booked" | "confirmed" | "paid";
 
+export interface VendorQuote {
+  id: number;
+  vendorId: number;
+  price: number;            // VND
+  packageName: string;      // e.g. "Gói A — Chụp ảnh cưới"
+  inclusions: string;       // what's included
+  exclusions: string;       // what's NOT included
+  validUntil: string;       // YYYY-MM-DD quote expiry
+  rating: number;           // 1-5 stars (user subjective)
+  notes: string;
+  createdAt: string;        // ISO timestamp
+}
+
 export interface Vendor {
   id: number;
   category: string;
@@ -311,6 +324,7 @@ export interface Vendor {
   status: VendorStatus;
   budget: number;    // Total agreed price (VND)
   deposit: number;   // Deposit already paid (VND)
+  quotes: VendorQuote[];
 }
 
 export type VendorPaymentMethod = "cash" | "bank_transfer" | "card" | "other";
