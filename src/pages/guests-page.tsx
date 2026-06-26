@@ -55,6 +55,8 @@ export function GuestsPage() {
           onSetRsvpSettings={store.setRsvpSettings}
           onUpdateGuestRsvpToken={store.updateGuestRsvpToken}
           onUpdateGuest={store.updateGuest}
+          venueCityId={state.info.venueCity}
+          onUpdateVenueCity={(cityId) => store.updateInfo("venueCity", cityId)}
           themeId={state.themeId}
         />
       )}

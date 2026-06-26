@@ -2,14 +2,17 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { t } from "@/lib/i18n";
 import type { RsvpSettings } from "@/types/wedding";
+import { VENUE_CITIES } from "@/data/venue-cities";
 
 interface RsvpSettingsFormProps {
   settings: RsvpSettings;
   onChange: (partial: Partial<RsvpSettings>) => void;
+  venueCityId?: string;
+  onUpdateVenueCity?: (cityId: string) => void;
   lang: string;
 }
 
-export function RsvpSettingsForm({ settings, onChange, lang }: RsvpSettingsFormProps) {
+export function RsvpSettingsForm({ settings, onChange, venueCityId, onUpdateVenueCity, lang }: RsvpSettingsFormProps) {
   const [open, setOpen] = useState(!settings.venue);
 
   return (
@@ -44,9 +47,27 @@ export function RsvpSettingsForm({ settings, onChange, lang }: RsvpSettingsFormP
               <Input className="h-8 text-sm" value={settings.venueAddress} onChange={(e) => onChange({ venueAddress: e.target.value })} />
             </div>
           </div>
-          <div>
-            <label className="block text-xs text-gray-500 mb-0.5">{t("Link bản đồ", lang)}</label>
-            <Input className="h-8 text-sm" value={settings.venueMapLink} onChange={(e) => onChange({ venueMapLink: e.target.value })} placeholder="https://maps.google.com/..." />
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-xs text-gray-500 mb-0.5">
+                {lang === "en" ? "Venue City" : "Thành phố địa điểm"}
+              </label>
+              <select
+                className="w-full h-8 text-sm border border-gray-200 rounded px-2 bg-background"
+                value={venueCityId ?? "hcmc"}
+                onChange={(e) => onUpdateVenueCity?.(e.target.value)}
+              >
+                {VENUE_CITIES.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {lang === "en" ? city.nameEn : city.nameVi}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-0.5">{t("Link bản đồ", lang)}</label>
+              <Input className="h-8 text-sm" value={settings.venueMapLink} onChange={(e) => onChange({ venueMapLink: e.target.value })} placeholder="https://maps.google.com/..." />
+            </div>
           </div>
           <div>
             <label className="block text-xs text-gray-500 mb-0.5">{t("Câu chuyện đôi mình", lang)}</label>

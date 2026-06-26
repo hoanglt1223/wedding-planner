@@ -73,6 +73,9 @@ export function migrateState(): void {
       if (!("songIdCounter" in v16)) { v16.songIdCounter = 0; needsUpdate = true; }
       if (!("speeches" in v16)) { v16.speeches = []; needsUpdate = true; }
       if (!("speechIdCounter" in v16)) { v16.speechIdCounter = 0; needsUpdate = true; }
+      if (!("transportationGroups" in v16)) { v16.transportationGroups = []; needsUpdate = true; }
+      if (!("transportationGroupIdCounter" in v16)) { v16.transportationGroupIdCounter = 0; needsUpdate = true; }
+      if (v16.info && !("venueCity" in v16.info)) { v16.info.venueCity = "hcmc"; needsUpdate = true; }
       if (needsUpdate) localStorage.setItem(V16_KEY, JSON.stringify(v16));
     } catch { /* corrupt */ }
     return;

@@ -1,6 +1,7 @@
 import { t } from "@/lib/i18n";
 import { DateInput } from "@/components/ui/date-input";
 import type { Region } from "@/types/wedding";
+import { VENUE_CITIES } from "@/data/venue-cities";
 
 const REGIONS: { id: Region; vi: string; en: string }[] = [
   { id: "north", vi: "Miền Bắc", en: "Northern" },
@@ -14,11 +15,13 @@ interface OnboardingDateRegionProps {
   engagementDate: string;
   region: Region;
   partyTime: "noon" | "afternoon";
+  venueCity: string;
   inputCls: string;
   onDate: (v: string) => void;
   onEngagementDate: (v: string) => void;
   onRegion: (v: Region) => void;
   onPartyTime: (v: "noon" | "afternoon") => void;
+  onVenueCity: (v: string) => void;
   onNext: () => void;
   onBack: () => void;
 }
@@ -85,6 +88,24 @@ export function OnboardingDateRegion(p: OnboardingDateRegionProps) {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Venue city */}
+      <div>
+        <label className="block text-xs font-medium text-[#5a3e2e] mb-1">
+          {en ? "Venue city" : "Thành phố tổ chức"} {opt}
+        </label>
+        <select
+          className="w-full h-9 text-sm rounded-lg border border-[var(--brand-border)] px-3 bg-white"
+          value={p.venueCity}
+          onChange={(e) => p.onVenueCity(e.target.value)}
+        >
+          {VENUE_CITIES.map((city) => (
+            <option key={city.id} value={city.id}>
+              {en ? city.nameEn : city.nameVi}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="flex gap-2">

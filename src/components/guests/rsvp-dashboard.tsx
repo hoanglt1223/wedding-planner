@@ -13,13 +13,15 @@ interface RsvpDashboardProps {
   rsvpSettings: RsvpSettings;
   onSetRsvpSettings: (partial: Partial<RsvpSettings>) => void;
   onUpdateGuestRsvpToken: (guestId: number, token: string) => void;
+  venueCityId?: string;
+  onUpdateVenueCity?: (cityId: string) => void;
   themeId: string;
   lang: string;
 }
 
 export function RsvpDashboard({
   guests, userId, rsvpSettings, onSetRsvpSettings,
-  onUpdateGuestRsvpToken, themeId, lang,
+  onUpdateGuestRsvpToken, venueCityId, onUpdateVenueCity, themeId, lang,
 }: RsvpDashboardProps) {
   const [invitations, setInvitations] = useState<RsvpInvitation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,7 @@ export function RsvpDashboard({
 
   return (
     <div className="space-y-3">
-      <RsvpSettingsForm settings={rsvpSettings} onChange={onSetRsvpSettings} lang={lang} />
+      <RsvpSettingsForm settings={rsvpSettings} onChange={onSetRsvpSettings} venueCityId={venueCityId} onUpdateVenueCity={onUpdateVenueCity} lang={lang} />
 
       <RsvpGenerateLinks
         guests={guests}

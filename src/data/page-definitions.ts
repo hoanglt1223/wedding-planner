@@ -23,6 +23,8 @@ export const PAGES: PageDef[] = [
   { id: "songs", label: "🎵 Danh Sách Nhạc", icon: "🎵", shortLabel: "Nhạc" },
   { id: "speeches", label: "✍️ Lời Thề & Diễn Văn", icon: "✍️", shortLabel: "Lời thề" },
   { id: "photos", label: "📸 Ảnh Cưới", icon: "📸", shortLabel: "Ảnh cưới" },
+  { id: "registry", label: "🎀 Quà Tặng", icon: "🎀", shortLabel: "Quà tặng" },
+  { id: "transportation", label: "🚐 Vận Chuyển", icon: "🚐", shortLabel: "Vận chuyển" },
 ];
 
 export const DEFAULT_PAGE = "home";

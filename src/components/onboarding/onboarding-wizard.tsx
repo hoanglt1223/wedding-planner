@@ -44,6 +44,7 @@ export function OnboardingWizard({ store, track }: Props) {
   const [engagementDate, setEngagementDate] = useState("");
   const [region, setRegion] = useState<Region>(store.state.region);
   const [partyTime, setPartyTime] = useState<"noon" | "afternoon">("noon");
+  const [venueCity, setVenueCity] = useState(store.state.info.venueCity || "hcmc");
   const [enabledSteps, setEnabledSteps] = useState<Record<string, boolean>>({});
 
   const handleToggleStep = useCallback((stepId: string) => {
@@ -73,6 +74,7 @@ export function OnboardingWizard({ store, track }: Props) {
     if (engagementDate) store.updateInfo("engagementDate", engagementDate);
     store.setRegion(region);
     store.setPartyTime(partyTime);
+    store.updateInfo("venueCity", venueCity);
     store.setEnabledSteps(enabledSteps);
     track("onboarding_complete", { hasDate: !!date, region, partyTime, lang });
     store.completeOnboarding();
@@ -110,9 +112,9 @@ export function OnboardingWizard({ store, track }: Props) {
           onBrideBirthDate={setBrideBirthDate} onGroomBirthDate={setGroomBirthDate}
           onNext={() => goStep(2)} onBack={() => goStep(0)} />}
         {step === 2 && <OnboardingDateRegion lang={lang} date={date} engagementDate={engagementDate}
-          region={region} partyTime={partyTime} inputCls={INPUT_CLS}
+          region={region} partyTime={partyTime} venueCity={venueCity} inputCls={INPUT_CLS}
           onDate={setDate} onEngagementDate={setEngagementDate}
-          onRegion={setRegion} onPartyTime={setPartyTime}
+          onRegion={setRegion} onPartyTime={setPartyTime} onVenueCity={setVenueCity}
           onNext={() => goStep(3)} onBack={() => goStep(1)} />}
         {step === 3 && (
           <div className="space-y-4">

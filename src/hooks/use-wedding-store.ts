@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -586,6 +586,100 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Gift Registry methods
+  const addRegistryItem = useCallback((item: Omit<RegistryItem, "id" | "createdAt">) => {
+    setState((prev) => ({
+      ...prev,
+      registryIdCounter: (prev.registryIdCounter || 0) + 1,
+      registryItems: [
+        ...(prev.registryItems || []),
+        {
+          ...item,
+          id: (prev.registryIdCounter || 0) + 1,
+          createdAt: new Date().toISOString(),
+        },
+      ],
+    }));
+  }, [setState]);
+
+  const updateRegistryItem = useCallback((id: number, updates: Partial<RegistryItem>) => {
+    setState((prev) => ({
+      ...prev,
+      registryItems: (prev.registryItems || []).map((item) =>
+        item.id === id ? { ...item, ...updates } : item
+      ),
+    }));
+  }, [setState]);
+
+  const removeRegistryItem = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      registryItems: (prev.registryItems || []).filter((item) => item.id !== id),
+    }));
+  }, [setState]);
+
+  const toggleRegistryFulfilled = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      registryItems: (prev.registryItems || []).map((item) =>
+        item.id === id ? { ...item, fulfilled: !item.fulfilled } : item
+      ),
+    }));
+  }, [setState]);
+
+  // Transportation methods
+  const addTransportationGroup = useCallback((group: Omit<TransportationGroup, "id" | "guestIds">) => {
+    setState((prev) => ({
+      ...prev,
+      transportationGroupIdCounter: (prev.transportationGroupIdCounter || 0) + 1,
+      transportationGroups: [
+        ...(prev.transportationGroups || []),
+        { ...group, id: (prev.transportationGroupIdCounter || 0) + 1, guestIds: [] },
+      ],
+    }));
+  }, [setState]);
+
+  const updateTransportationGroup = useCallback((id: number, updates: Partial<Omit<TransportationGroup, "id">>) => {
+    setState((prev) => ({
+      ...prev,
+      transportationGroups: (prev.transportationGroups || []).map((g) =>
+        g.id === id ? { ...g, ...updates } : g
+      ),
+    }));
+  }, [setState]);
+
+  const removeTransportationGroup = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      transportationGroups: (prev.transportationGroups || []).filter((g) => g.id !== id),
+    }));
+  }, [setState]);
+
+  const assignGuestToTransport = useCallback((guestId: number, groupId: number) => {
+    setState((prev) => {
+      const groups = (prev.transportationGroups || []).map((g) => ({
+        ...g,
+        guestIds: g.guestIds.filter((gid) => gid !== guestId),
+      }));
+      return {
+        ...prev,
+        transportationGroups: groups.map((g) =>
+          g.id === groupId ? { ...g, guestIds: [...g.guestIds, guestId] } : g
+        ),
+      };
+    });
+  }, [setState]);
+
+  const unassignGuestFromTransport = useCallback((guestId: number) => {
+    setState((prev) => ({
+      ...prev,
+      transportationGroups: (prev.transportationGroups || []).map((g) => ({
+        ...g,
+        guestIds: g.guestIds.filter((gid) => gid !== guestId),
+      })),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -633,6 +727,9 @@ export function useWeddingStore() {
     addMoodBoardItem, updateMoodBoardItem, removeMoodBoardItem, toggleMoodBoardFavorite,
     addColorPalette, updateColorPalette, removeColorPalette,
     addQuickNote, toggleQuickNote, removeQuickNote,
+    addRegistryItem, updateRegistryItem, removeRegistryItem, toggleRegistryFulfilled,
+    addTransportationGroup, updateTransportationGroup, removeTransportationGroup,
+    assignGuestToTransport, unassignGuestFromTransport,
     ...phase2,
   };
 }

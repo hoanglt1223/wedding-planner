@@ -28,6 +28,8 @@ interface GuestPanelProps {
   onSetRsvpSettings?: (partial: Partial<RsvpSettings>) => void;
   onUpdateGuestRsvpToken?: (guestId: number, token: string) => void;
   onUpdateGuest?: (id: number, updates: Partial<Guest>) => void;
+  venueCityId?: string;
+  onUpdateVenueCity?: (cityId: string) => void;
   themeId?: string;
 }
 
@@ -43,6 +45,8 @@ export function GuestPanel({
   onSetRsvpSettings,
   onUpdateGuestRsvpToken,
   onUpdateGuest,
+  venueCityId,
+  onUpdateVenueCity,
   themeId,
 }: GuestPanelProps) {
   const [name, setName] = useState("");
@@ -268,6 +272,8 @@ export function GuestPanel({
             rsvpSettings={rsvpSettings}
             onSetRsvpSettings={onSetRsvpSettings}
             onUpdateGuestRsvpToken={onUpdateGuestRsvpToken}
+            venueCityId={venueCityId}
+            onUpdateVenueCity={onUpdateVenueCity}
             themeId={themeId || "red"}
             lang={lang}
           />

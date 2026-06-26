@@ -172,6 +172,18 @@ const photoGalleryRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/photo-gallery-page'), 'default'),
 })
 
+const registryRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/registry',
+  component: lazyRouteComponent(() => import('./pages/registry-page'), 'default'),
+})
+
+const transportationRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/transportation',
+  component: lazyRouteComponent(() => import('./pages/transportation-page'), 'default'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -242,6 +254,8 @@ const routeTree = rootRoute.addChildren([
     weddingPartyRoute,
     moodBoardRoute,
     photoGalleryRoute,
+    registryRoute,
+    transportationRoute,
   ]),
   rsvpRoute,
   sharedRoute,

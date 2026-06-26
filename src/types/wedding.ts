@@ -110,6 +110,7 @@ export interface CoupleInfo {
   groomBirthDate: string;
   groomBirthHour: number | null;
   groomGender: string;
+  venueCity: string;           // city id from venue-cities.ts (default "hcmc")
 }
 
 export interface Guest {
@@ -283,6 +284,14 @@ export interface WeddingState {
   // Quick Notes
   quickNotes: QuickNote[];
   quickNoteIdCounter: number;
+
+  // Gift Registry
+  registryItems: RegistryItem[];
+  registryIdCounter: number;
+
+  // Transportation
+  transportationGroups: TransportationGroup[];
+  transportationGroupIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -454,4 +463,48 @@ export interface QuickNote {
   color: QuickNoteColor;
   done: boolean;
   createdAt: string;       // ISO timestamp
+}
+
+// --- Gift Registry types ---
+
+export type RegistryCategory = "home" | "kitchen" | "bedroom" | "experience" | "travel" | "electronics" | "other";
+
+export interface RegistryItem {
+  id: number;
+  name: string;
+  description: string;
+  category: RegistryCategory;
+  price: number;            // VND, 0 = flexible
+  link: string;             // optional URL to product page
+  priority: "must-have" | "nice-to-have" | "optional";
+  fulfilled: boolean;
+  fulfilledBy: string;      // who purchased it
+  notes: string;
+  createdAt: string;        // ISO timestamp
+}
+
+// --- Transportation types ---
+
+export type TransportType = "shuttle" | "bus" | "car" | "van" | "other";
+
+export interface TransportationGroup {
+  id: number;
+  name: string;                    // e.g. "Shuttle from Hotel ABC"
+  transportType: TransportType;
+  driverName: string;
+  driverPhone: string;
+  vehicleInfo: string;             // e.g. "16-seat van, white"
+  pickupLocation: string;
+  pickupTime: string;              // "HH:mm" format
+  dropoffLocation: string;
+  dropoffTime: string;             // "HH:mm" format
+  capacity: number;
+  guestIds: number[];              // assigned guest IDs
+  notes: string;
+  date: string;                    // "YYYY-MM-DD"
+}
+
+export interface TransportationAssignment {
+  guestId: number;
+  groupId: number;
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getVenueCityOrDefault, type VenueCity } from "@/data/venue-cities";
 
 interface WeatherData {
   date: string;
@@ -15,17 +16,16 @@ interface WeatherData {
 
 interface WeatherWidgetProps {
   weddingDate: string; // "YYYY-MM-DD" or ""
+  venueCityId?: string;
   lang?: string;
 }
 
-// Default location: Ho Chi Minh City
-const DEFAULT_LAT = 10.8231;
-const DEFAULT_LON = 106.6297;
-
-export function WeatherWidget({ weddingDate, lang = "vi" }: WeatherWidgetProps) {
+export function WeatherWidget({ weddingDate, venueCityId, lang = "vi" }: WeatherWidgetProps) {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const city: VenueCity = getVenueCityOrDefault(venueCityId ?? "hcmc");
 
   useEffect(() => {
     if (!weddingDate) return;
@@ -35,8 +35,8 @@ export function WeatherWidget({ weddingDate, lang = "vi" }: WeatherWidgetProps) 
       setError(null);
       try {
         const params = new URLSearchParams({
-          lat: DEFAULT_LAT.toString(),
-          lon: DEFAULT_LON.toString(),
+          lat: city.lat.toString(),
+          lon: city.lon.toString(),
           date: weddingDate,
           lang,
         });
@@ -60,7 +60,7 @@ export function WeatherWidget({ weddingDate, lang = "vi" }: WeatherWidgetProps) 
     };
 
     void fetchWeather();
-  }, [weddingDate, lang]);
+  }, [weddingDate, lang, city.lat, city.lon]);
 
   if (!weddingDate) return null;
 
@@ -125,6 +125,9 @@ export function WeatherWidget({ weddingDate, lang = "vi" }: WeatherWidgetProps) 
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-sm font-semibold" style={{ color: "var(--theme-primary)" }}>
           🌤️ {en ? "Wedding Day Weather" : "Thời Tiết Ngày Cưới"}
+          <span className="text-xs font-normal text-muted-foreground ml-1.5">
+            📍 {en ? city.nameEn : city.nameVi}
+          </span>
         </h3>
         <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: "var(--theme-primary-light)", color: "var(--theme-primary)" }}>
           {dateLabel}

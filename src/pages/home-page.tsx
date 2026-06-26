@@ -34,7 +34,7 @@ export function HomePage() {
 
       <MultiEventCountdown info={state.info} lang={lang} />
 
-      <WeatherWidget weddingDate={state.info.date} lang={lang} />
+      <WeatherWidget weddingDate={state.info.date} venueCityId={state.info.venueCity} lang={lang} />
 
       <EmergencyContactsWidget
         contacts={state.contacts || []}

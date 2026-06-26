@@ -97,6 +97,7 @@ export const DEFAULT_STATE: WeddingState = {
     groomBirthDate: "",
     groomBirthHour: null,
     groomGender: "male",
+    venueCity: "hcmc",
   },
   guests: [],
   guestIdCounter: 0,
@@ -191,4 +192,12 @@ export const DEFAULT_STATE: WeddingState = {
   // Quick Notes
   quickNotes: [],
   quickNoteIdCounter: 0,
+
+  // Gift Registry
+  registryItems: [],
+  registryIdCounter: 0,
+
+  // Transportation
+  transportationGroups: [],
+  transportationGroupIdCounter: 0,
 };
