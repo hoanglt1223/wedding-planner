@@ -200,4 +200,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Transportation
   transportationGroups: [],
   transportationGroupIdCounter: 0,
+
+  // Guest Gifts
+  guestGifts: [],
+  guestGiftIdCounter: 0,
 };

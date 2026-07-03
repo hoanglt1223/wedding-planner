@@ -9,7 +9,7 @@ import { usePhase2Methods } from "./use-wedding-store-phase2";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v16";
+const STORAGE_KEY = "wp_v17";
 
 /** A step is enabled if enabledSteps is empty/undefined (all enabled) or the step's value is not false */
 export function isStepEnabled(enabledSteps: Record<string, boolean> | undefined, stepId: string): boolean {
@@ -716,6 +716,79 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const addGuestGift = useCallback((
+    giftName: string,
+    category: string,
+    description: string,
+    costPerUnit: number,
+    totalQuantity: number,
+    recipientType: string,
+    notes: string
+  ) => {
+    setState((prev) => {
+      const newId = (prev.guestGiftIdCounter || 0) + 1;
+      return {
+        ...prev,
+        guestGifts: [
+          ...(prev.guestGifts || []),
+          {
+            id: newId,
+            giftName,
+            category: category as any,
+            description,
+            costPerUnit,
+            totalQuantity,
+            distributedQuantity: 0,
+            status: "pending",
+            recipientType: recipientType as any,
+            assignedGuestIds: [],
+            notes,
+            createdAt: new Date().toISOString(),
+          },
+        ],
+        guestGiftIdCounter: newId,
+      };
+    });
+  }, [setState]);
+
+  const updateGuestGift = useCallback((id: number, updates: Partial<{
+    giftName: string;
+    category: string;
+    description: string;
+    costPerUnit: number;
+    totalQuantity: number;
+    distributedQuantity: number;
+    status: string;
+    recipientType: string;
+    assignedGuestIds: number[];
+    notes: string;
+  }>) => {
+    setState((prev) => ({
+      ...prev,
+      guestGifts: (prev.guestGifts || []).map((g) =>
+        g.id === id ? { ...g, ...updates } as any : g
+      ),
+    }));
+  }, [setState]);
+
+  const removeGuestGift = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      guestGifts: (prev.guestGifts || []).filter((g) => g.id !== id),
+    }));
+  }, [setState]);
+
+  const markGiftDistributed = useCallback((id: number, quantity: number) => {
+    setState((prev) => ({
+      ...prev,
+      guestGifts: (prev.guestGifts || []).map((g) =>
+        g.id === id
+          ? { ...g, distributedQuantity: Math.min(g.totalQuantity, g.distributedQuantity + quantity), status: "distributed" as any }
+          : g
+      ),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -766,6 +839,7 @@ export function useWeddingStore() {
     addRegistryItem, updateRegistryItem, removeRegistryItem, toggleRegistryFulfilled,
     addTransportationGroup, updateTransportationGroup, removeTransportationGroup,
     assignGuestToTransport, unassignGuestFromTransport,
+    addGuestGift, updateGuestGift, removeGuestGift, markGiftDistributed,
     ...phase2,
   };
 }

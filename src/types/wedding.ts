@@ -292,6 +292,10 @@ export interface WeddingState {
   // Transportation
   transportationGroups: TransportationGroup[];
   transportationGroupIdCounter: number;
+
+  // Guest Gifts
+  guestGifts: GuestGift[];
+  guestGiftIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -521,4 +525,24 @@ export interface TransportationGroup {
 export interface TransportationAssignment {
   guestId: number;
   groupId: number;
+}
+
+// --- Guest Gift types ---
+
+export type GuestGiftCategory = "tea" | "cake" | "souvenir" | "home" | "food" | "other";
+export type GuestGiftStatus = "pending" | "prepared" | "distributed";
+
+export interface GuestGift {
+  id: number;
+  giftName: string;
+  category: GuestGiftCategory;
+  description: string;
+  costPerUnit: number;
+  totalQuantity: number;
+  distributedQuantity: number;
+  status: GuestGiftStatus;
+  recipientType: "all" | "family" | "vip" | "regular";
+  assignedGuestIds: number[];
+  notes: string;
+  createdAt: string;
 }

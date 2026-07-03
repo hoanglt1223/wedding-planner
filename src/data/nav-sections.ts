@@ -35,6 +35,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   speeches: "menu",
   "guest-book": "menu",
   "mood-board": "menu",
+  "guest-gifts": "menu",
 };
 
 export const MENU_ITEMS = [
@@ -53,4 +54,5 @@ export const MENU_ITEMS = [
   { pageId: "speeches", icon: "✍️", labelVi: "Lời Thề & Diễn Văn", labelEn: "Vows & Speeches" },
   { pageId: "guest-book", icon: "📝", labelVi: "Sổ Lưu Bút", labelEn: "Guest Book" },
   { pageId: "mood-board", icon: "🎨", labelVi: "Bảng Cảm Hứng", labelEn: "Mood Board" },
+  { pageId: "guest-gifts", icon: "🎀", labelVi: "Quà Tặng Cho Khách", labelEn: "Guest Gifts" },
 ];

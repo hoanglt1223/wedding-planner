@@ -166,6 +166,12 @@ const moodBoardRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/mood-board-page'), 'MoodBoardPage'),
 })
 
+const guestGiftsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/guest-gifts',
+  component: lazyRouteComponent(() => import('./pages/guest-gift-page'), 'default'),
+})
+
 const photoGalleryRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/photos',
@@ -253,6 +259,7 @@ const routeTree = rootRoute.addChildren([
     guestBookRoute,
     weddingPartyRoute,
     moodBoardRoute,
+    guestGiftsRoute,
     photoGalleryRoute,
     registryRoute,
     transportationRoute,
