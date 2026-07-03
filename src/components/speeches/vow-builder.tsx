@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { t } from "@/lib/i18n";
 import type { SpeechCategory } from "@/types/wedding";
 
 interface VowBuilderProps {
   lang: string;
-  onSave: (data: { title: string; content: string; category: SpeechCategory; speaker: string }) => void;
+  onSave: (data: { title: string; content: string; category: SpeechCategory; speaker: string; notes: string; isFavorite: boolean }) => void;
   onClose: () => void;
 }
 
@@ -203,6 +202,8 @@ export function VowBuilder({ lang, onSave, onClose }: VowBuilderProps) {
       content: draft,
       category: "vow",
       speaker,
+      notes: "",
+      isFavorite: false,
     });
   }
 
