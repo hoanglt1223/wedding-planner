@@ -190,6 +190,12 @@ const transportationRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/transportation-page'), 'default'),
 })
 
+const analyticsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/analytics',
+  component: lazyRouteComponent(() => import('./pages/analytics-page'), 'default'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -262,6 +268,7 @@ const routeTree = rootRoute.addChildren([
     guestGiftsRoute,
     photoGalleryRoute,
     registryRoute,
+    analyticsRoute,
     transportationRoute,
   ]),
   rsvpRoute,
