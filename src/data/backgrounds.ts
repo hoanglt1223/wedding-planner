@@ -204,4 +204,8 @@ export const DEFAULT_STATE: WeddingState = {
   // Guest Gifts
   guestGifts: [],
   guestGiftIdCounter: 0,
+
+  // Photo Shot List
+  photoShots: [],
+  photoShotIdCounter: 0,
 };

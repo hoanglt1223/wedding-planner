@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -9,7 +9,7 @@ import { usePhase2Methods } from "./use-wedding-store-phase2";
 // Run migration once on module load
 migrateState();
 
-const STORAGE_KEY = "wp_v17";
+const STORAGE_KEY = "wp_v18";
 
 /** A step is enabled if enabledSteps is empty/undefined (all enabled) or the step's value is not false */
 export function isStepEnabled(enabledSteps: Record<string, boolean> | undefined, stepId: string): boolean {
@@ -789,6 +789,28 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const addPhotoShot = useCallback((shot: Omit<PhotoShot, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      photoShotIdCounter: (prev.photoShotIdCounter || 0) + 1,
+      photoShots: [...(prev.photoShots || []), { ...shot, id: (prev.photoShotIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const removePhotoShot = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      photoShots: (prev.photoShots || []).filter((s) => s.id !== id),
+    }));
+  }, [setState]);
+
+  const updatePhotoShot = useCallback((id: number, updates: Partial<PhotoShot>) => {
+    setState((prev) => ({
+      ...prev,
+      photoShots: (prev.photoShots || []).map((s) => (s.id === id ? { ...s, ...updates } : s)),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -840,6 +862,7 @@ export function useWeddingStore() {
     addTransportationGroup, updateTransportationGroup, removeTransportationGroup,
     assignGuestToTransport, unassignGuestFromTransport,
     addGuestGift, updateGuestGift, removeGuestGift, markGiftDistributed,
+    addPhotoShot, removePhotoShot, updatePhotoShot,
     ...phase2,
   };
 }

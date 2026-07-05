@@ -296,6 +296,10 @@ export interface WeddingState {
   // Guest Gifts
   guestGifts: GuestGift[];
   guestGiftIdCounter: number;
+
+  // Photo Shot List
+  photoShots: PhotoShot[];
+  photoShotIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -347,6 +351,30 @@ export interface PhotoItem {
   url: string;
   tag: string;
   note: string;
+}
+
+// --- Photo Shot List types ---
+
+export type PhotoShotCategory =
+  | "prep"
+  | "first-look"
+  | "ceremony"
+  | "family"
+  | "portraits"
+  | "reception"
+  | "details"
+  | "exit";
+
+export interface PhotoShot {
+  id: number;
+  title: string;
+  category: PhotoShotCategory;
+  description: string;
+  priority: "must-have" | "nice-to-have";
+  shotBy: string; // e.g. "Chụp tại nhà cô dâu", "Tại sân khấu"
+  notes: string;
+  checked: boolean;
+  order: number; // for custom ordering within category
 }
 
 export interface SeatingTable {

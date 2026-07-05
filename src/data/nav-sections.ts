@@ -36,6 +36,11 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   "guest-book": "menu",
   "mood-board": "menu",
   "guest-gifts": "menu",
+  "photo-shots": "menu",
+  "photo-gallery": "menu",
+  registry: "menu",
+  transportation: "menu",
+  analytics: "menu",
 };
 
 export const MENU_ITEMS = [
@@ -55,4 +60,9 @@ export const MENU_ITEMS = [
   { pageId: "guest-book", icon: "📝", labelVi: "Sổ Lưu Bút", labelEn: "Guest Book" },
   { pageId: "mood-board", icon: "🎨", labelVi: "Bảng Cảm Hứng", labelEn: "Mood Board" },
   { pageId: "guest-gifts", icon: "🎀", labelVi: "Quà Tặng Cho Khách", labelEn: "Guest Gifts" },
+  { pageId: "photo-shots", icon: "📸", labelVi: "Danh Sách Chụp Hình", labelEn: "Photo Shot List" },
+  { pageId: "photo-gallery", icon: "🖼️", labelVi: "Thư Viện Ảnh", labelEn: "Photo Gallery" },
+  { pageId: "registry", icon: "🎁", labelVi: "Danh Sách Quà Tặng", labelEn: "Registry" },
+  { pageId: "transportation", icon: "🚗", labelVi: "Vận Chuyển", labelEn: "Transportation" },
+  { pageId: "analytics", icon: "📊", labelVi: "Phân Tích", labelEn: "Analytics" },
 ];
