@@ -25,6 +25,7 @@ export const PAGES: PageDef[] = [
   { id: "photos", label: "📸 Ảnh Cưới", icon: "📸", shortLabel: "Ảnh cưới" },
   { id: "registry", label: "🎀 Quà Tặng", icon: "🎀", shortLabel: "Quà tặng" },
   { id: "transportation", label: "🚐 Vận Chuyển", icon: "🚐", shortLabel: "Vận chuyển" },
+  { id: "welcome-bags", label: "🎒 Túi Chào Mời", icon: "🎒", shortLabel: "Túi chào" },
 ];
 
 export const DEFAULT_PAGE = "home";

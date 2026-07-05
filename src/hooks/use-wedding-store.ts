@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -811,6 +811,58 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Welcome Bag methods
+  const addWelcomeBagItem = useCallback((item: Omit<WelcomeBagItem, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagItemIdCounter: (prev.welcomeBagItemIdCounter || 0) + 1,
+      welcomeBagItems: [...(prev.welcomeBagItems || []), { ...item, id: (prev.welcomeBagItemIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const removeWelcomeBagItem = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagItems: (prev.welcomeBagItems || []).filter((i) => i.id !== id),
+    }));
+  }, [setState]);
+
+  const updateWelcomeBagItem = useCallback((id: number, updates: Partial<WelcomeBagItem>) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagItems: (prev.welcomeBagItems || []).map((i) => (i.id === id ? { ...i, ...updates } : i)),
+    }));
+  }, [setState]);
+
+  const toggleWelcomeBagItemChecked = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagItems: (prev.welcomeBagItems || []).map((i) => (i.id === id ? { ...i, checked: !i.checked } : i)),
+    }));
+  }, [setState]);
+
+  const addWelcomeBagDistribution = useCallback((distribution: Omit<WelcomeBagDistribution, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagDistributionIdCounter: (prev.welcomeBagDistributionIdCounter || 0) + 1,
+      welcomeBagDistributions: [...(prev.welcomeBagDistributions || []), { ...distribution, id: (prev.welcomeBagDistributionIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const removeWelcomeBagDistribution = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagDistributions: (prev.welcomeBagDistributions || []).filter((d) => d.id !== id),
+    }));
+  }, [setState]);
+
+  const updateWelcomeBagDistribution = useCallback((id: number, updates: Partial<WelcomeBagDistribution>) => {
+    setState((prev) => ({
+      ...prev,
+      welcomeBagDistributions: (prev.welcomeBagDistributions || []).map((d) => (d.id === id ? { ...d, ...updates } : d)),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -863,6 +915,8 @@ export function useWeddingStore() {
     assignGuestToTransport, unassignGuestFromTransport,
     addGuestGift, updateGuestGift, removeGuestGift, markGiftDistributed,
     addPhotoShot, removePhotoShot, updatePhotoShot,
+    addWelcomeBagItem, removeWelcomeBagItem, updateWelcomeBagItem, toggleWelcomeBagItemChecked,
+    addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
     ...phase2,
   };
 }

@@ -202,6 +202,12 @@ const photoShotsRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/photo-shots-page'), 'PhotoShotsPage'),
 })
 
+const welcomeBagsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/welcome-bags',
+  component: lazyRouteComponent(() => import('./pages/welcome-bag-page'), 'WelcomeBagPage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -277,6 +283,7 @@ const routeTree = rootRoute.addChildren([
     analyticsRoute,
     photoShotsRoute,
     transportationRoute,
+    welcomeBagsRoute,
   ]),
   rsvpRoute,
   sharedRoute,

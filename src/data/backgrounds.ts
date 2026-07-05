@@ -208,4 +208,10 @@ export const DEFAULT_STATE: WeddingState = {
   // Photo Shot List
   photoShots: [],
   photoShotIdCounter: 0,
+
+  // Welcome Bags
+  welcomeBagItems: [],
+  welcomeBagItemIdCounter: 0,
+  welcomeBagDistributions: [],
+  welcomeBagDistributionIdCounter: 0,
 };

@@ -300,6 +300,12 @@ export interface WeddingState {
   // Photo Shot List
   photoShots: PhotoShot[];
   photoShotIdCounter: number;
+
+  // Welcome Bags
+  welcomeBagItems: WelcomeBagItem[];
+  welcomeBagItemIdCounter: number;
+  welcomeBagDistributions: WelcomeBagDistribution[];
+  welcomeBagDistributionIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -573,4 +579,32 @@ export interface GuestGift {
   assignedGuestIds: number[];
   notes: string;
   createdAt: string;
+}
+
+// --- Welcome Bag types ---
+
+export type WelcomeBagCategory = "essentials" | "snacks" | "info" | "personal" | "local" | "other";
+export type WelcomeBagStatus = "pending" | "in-progress" | "complete";
+
+export interface WelcomeBagItem {
+  id: number;
+  name: string;
+  category: WelcomeBagCategory;
+  description: string;
+  quantityPerBag: number;
+  estimatedCost: number;
+  totalQuantity: number;
+  notes: string;
+  checked: boolean;
+  custom: boolean;
+}
+
+export interface WelcomeBagDistribution {
+  id: number;
+  guestId?: number;
+  guestName: string;
+  bagStatus: WelcomeBagStatus;
+  distributedDate: string;
+  distributedBy: string;
+  notes: string;
 }
