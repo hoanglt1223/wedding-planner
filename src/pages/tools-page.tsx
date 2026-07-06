@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from "react";
 import { AiPanel } from "@/components/ai/ai-panel";
 import { AstrologyPage } from "./astrology-page";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
+import { ExportPanel } from "@/components/export/export-panel";
 
 const TaskBoardDashboard = lazy(() => import("@/components/tasks/task-board-dashboard"));
 
@@ -9,6 +10,7 @@ const TABS = [
   { labelVi: "🤖 AI", labelEn: "🤖 AI" },
   { labelVi: "🔮 Tử Vi", labelEn: "🔮 Fortune" },
   { labelVi: "📋 Công Việc", labelEn: "📋 Tasks" },
+  { labelVi: "📦 Xuất Dữ Liệu", labelEn: "📦 Export" },
 ];
 
 export function ToolsPage() {
@@ -44,6 +46,7 @@ export function ToolsPage() {
           <TaskBoardDashboard />
         </Suspense>
       )}
+      {activeTab === 3 && <ExportPanel />}
     </div>
   );
 }
