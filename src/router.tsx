@@ -196,6 +196,12 @@ const analyticsRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/analytics-page'), 'default'),
 })
 
+const budgetRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/budget',
+  component: lazyRouteComponent(() => import('./pages/budget-page'), 'BudgetPage'),
+})
+
 const photoShotsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/photo-shots',
@@ -206,6 +212,12 @@ const welcomeBagsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/welcome-bags',
   component: lazyRouteComponent(() => import('./pages/welcome-bag-page'), 'WelcomeBagPage'),
+})
+
+const weatherRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/weather',
+  component: lazyRouteComponent(() => import('./pages/weather-page'), 'default'),
 })
 
 // Standalone routes
@@ -281,9 +293,11 @@ const routeTree = rootRoute.addChildren([
     photoGalleryRoute,
     registryRoute,
     analyticsRoute,
+    budgetRoute,
     photoShotsRoute,
     transportationRoute,
     welcomeBagsRoute,
+    weatherRoute,
   ]),
   rsvpRoute,
   sharedRoute,

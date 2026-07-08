@@ -24,8 +24,10 @@ export const PAGES: PageDef[] = [
   { id: "speeches", label: "✍️ Lời Thề & Diễn Văn", icon: "✍️", shortLabel: "Lời thề" },
   { id: "photos", label: "📸 Ảnh Cưới", icon: "📸", shortLabel: "Ảnh cưới" },
   { id: "registry", label: "🎀 Quà Tặng", icon: "🎀", shortLabel: "Quà tặng" },
+  { id: "budget", label: "💰 Ngân Sách", icon: "💰", shortLabel: "Ngân sách" },
   { id: "transportation", label: "🚐 Vận Chuyển", icon: "🚐", shortLabel: "Vận chuyển" },
   { id: "welcome-bags", label: "🎒 Túi Chào Mời", icon: "🎒", shortLabel: "Túi chào" },
+  { id: "weather", label: "🌤️ Thời Tiết", icon: "🌤️", shortLabel: "Thời tiết" },
 ];
 
 export const DEFAULT_PAGE = "home";
