@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { GuestPanel } from "@/components/guests/guest-panel";
+import { GuestAnalyticsDashboard } from "@/components/guests/guest-analytics-dashboard";
 import { PhotoGalleryDashboard } from "@/components/photo-wall/photo-gallery-dashboard";
 import { SeatingChartPanel } from "@/components/guests/seating-chart-panel";
 import { ContactsPanel } from "@/components/contacts/contacts-panel";
@@ -8,6 +9,7 @@ import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 const GiftPage = lazy(() => import("./gift-page"));
 
 const TABS = [
+  { labelVi: "📊 Thống kê", labelEn: "📊 Analytics" },
   { labelVi: "👥 Khách mời", labelEn: "👥 Guests" },
   { labelVi: "🪑 Chỗ ngồi", labelEn: "🪑 Seating" },
   { labelVi: "📞 Danh bạ", labelEn: "📞 Contacts" },
@@ -43,6 +45,9 @@ export function GuestsPage() {
 
       {/* Tab content */}
       {activeTab === 0 && (
+        <GuestAnalyticsDashboard guests={state.guests} lang={lang === "en" ? "en" : "vi"} />
+      )}
+      {activeTab === 1 && (
         <GuestPanel
           guests={state.guests}
           onAddGuest={store.addGuest}
@@ -60,10 +65,10 @@ export function GuestsPage() {
           themeId={state.themeId}
         />
       )}
-      {activeTab === 1 && (
+      {activeTab === 2 && (
         <SeatingChartPanel state={state} store={store} />
       )}
-      {activeTab === 2 && (
+      {activeTab === 3 && (
         <ContactsPanel
           contacts={state.contacts || []}
           onAdd={store.addContact}
@@ -72,10 +77,10 @@ export function GuestsPage() {
           lang={lang}
         />
       )}
-      {activeTab === 3 && userId && (
+      {activeTab === 4 && userId && (
         <PhotoGalleryDashboard userId={userId} state={state} store={store} />
       )}
-      {activeTab === 4 && (
+      {activeTab === 5 && (
         <Suspense fallback={null}>
           <GiftPage />
         </Suspense>
