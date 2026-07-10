@@ -306,6 +306,10 @@ export interface WeddingState {
   welcomeBagItemIdCounter: number;
   welcomeBagDistributions: WelcomeBagDistribution[];
   welcomeBagDistributionIdCounter: number;
+
+  // Menu Planner
+  menuItems: MenuItem[];
+  menuIdCounter: number;
 }
 
 export interface WeddingEvent {
@@ -607,4 +611,46 @@ export interface WelcomeBagDistribution {
   distributedDate: string;
   distributedBy: string;
   notes: string;
+}
+
+// --- Menu Planner types ---
+
+export type MenuCourseType =
+  | "appetizer"
+  | "soup"
+  | "main"
+  | "side"
+  | "dessert"
+  | "drink"
+  | "other";
+
+export type DietaryRestriction = "vegetarian" | "vegan" | "halal" | "gluten-free" | "nut-free" | "none";
+
+export interface MenuItem {
+  id: number;
+  name: string;
+  nameEn?: string;
+  courseType: MenuCourseType;
+  dietary: DietaryRestriction[];
+  description: string;
+  descriptionEn?: string;
+  costPerServing: number;
+  serves: number;
+  vendorName: string;
+  notes: string;
+  order: number;
+  isFavorite: boolean;
+  checked: boolean;
+  custom: boolean;
+}
+
+export interface MenuTemplate {
+  id: string;
+  name: string;
+  nameEn?: string;
+  description: string;
+  descriptionEn?: string;
+  budgetLevel: "economy" | "standard" | "premium";
+  estimatedCostPerTable: number;
+  items: MenuItem[];
 }

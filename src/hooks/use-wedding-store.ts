@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem } from "@/types/wedding";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -863,6 +863,43 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Menu Planner methods
+  const addMenuItem = useCallback((item: Omit<MenuItem, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      menuIdCounter: (prev.menuIdCounter || 0) + 1,
+      menuItems: [...(prev.menuItems || []), { ...item, id: (prev.menuIdCounter || 0) + 1 }],
+    }));
+  }, [setState]);
+
+  const removeMenuItem = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      menuItems: (prev.menuItems || []).filter((i) => i.id !== id),
+    }));
+  }, [setState]);
+
+  const updateMenuItem = useCallback((id: number, updates: Partial<MenuItem>) => {
+    setState((prev) => ({
+      ...prev,
+      menuItems: (prev.menuItems || []).map((i) => (i.id === id ? { ...i, ...updates } : i)),
+    }));
+  }, [setState]);
+
+  const toggleMenuItemFavorite = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      menuItems: (prev.menuItems || []).map((i) => (i.id === id ? { ...i, isFavorite: !i.isFavorite } : i)),
+    }));
+  }, [setState]);
+
+  const toggleMenuItemChecked = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      menuItems: (prev.menuItems || []).map((i) => (i.id === id ? { ...i, checked: !i.checked } : i)),
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -917,6 +954,7 @@ export function useWeddingStore() {
     addPhotoShot, removePhotoShot, updatePhotoShot,
     addWelcomeBagItem, removeWelcomeBagItem, updateWelcomeBagItem, toggleWelcomeBagItemChecked,
     addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
+    addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked,
     ...phase2,
   };
 }

@@ -214,4 +214,6 @@ export const DEFAULT_STATE: WeddingState = {
   welcomeBagItemIdCounter: 0,
   welcomeBagDistributions: [],
   welcomeBagDistributionIdCounter: 0,
+  menuItems: [],
+  menuIdCounter: 0,
 };
