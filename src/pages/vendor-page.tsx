@@ -18,6 +18,9 @@ export function VendorPage() {
         onRemovePayment={store.removeVendorPayment}
         onAddQuote={store.addVendorQuote}
         onRemoveQuote={store.removeVendorQuote}
+        contractChecklist={state.contractChecklist || {}}
+        onToggleContractItem={store.toggleContractCheckItem}
+        onClearContractChecklist={store.clearContractChecklist}
         lang={lang}
       />
     </div>

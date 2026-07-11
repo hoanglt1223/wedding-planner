@@ -900,6 +900,21 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Contract Checklist methods
+  const toggleContractCheckItem = useCallback((itemId: string) => {
+    setState((prev) => ({
+      ...prev,
+      contractChecklist: {
+        ...(prev.contractChecklist || {}),
+        [itemId]: !((prev.contractChecklist || {})[itemId]),
+      },
+    }));
+  }, [setState]);
+
+  const clearContractChecklist = useCallback(() => {
+    setState((prev) => ({ ...prev, contractChecklist: {} }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -955,6 +970,7 @@ export function useWeddingStore() {
     addWelcomeBagItem, removeWelcomeBagItem, updateWelcomeBagItem, toggleWelcomeBagItemChecked,
     addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
     addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked,
+    toggleContractCheckItem, clearContractChecklist,
     ...phase2,
   };
 }

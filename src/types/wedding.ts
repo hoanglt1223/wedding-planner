@@ -310,6 +310,9 @@ export interface WeddingState {
   // Menu Planner
   menuItems: MenuItem[];
   menuIdCounter: number;
+
+  // Contract Checklist
+  contractChecklist: Record<string, boolean>; // itemId -> checked state
 }
 
 export interface WeddingEvent {

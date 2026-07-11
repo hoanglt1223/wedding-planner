@@ -5,6 +5,7 @@ import type { Vendor, VendorStatus, VendorPayment, VendorQuote } from "@/types/w
 import { t } from "@/lib/i18n";
 import { VendorPaymentTracker } from "./vendor-payment-tracker";
 import { VendorQuoteComparison } from "./vendor-quote-comparison";
+import { VendorContractChecklist } from "./vendor-contract-checklist";
 
 const CATEGORIES = [
   "🏛️ Nhà hàng", "📸 Ảnh/Video", "🌸 Trang trí",
@@ -44,12 +45,15 @@ interface VendorPanelProps {
   onRemovePayment?: (id: number) => void;
   onAddQuote?: (vendorId: number, quote: Omit<VendorQuote, "id" | "vendorId" | "createdAt">) => void;
   onRemoveQuote?: (vendorId: number, quoteId: number) => void;
+  contractChecklist?: Record<string, boolean>;
+  onToggleContractItem?: (itemId: string) => void;
+  onClearContractChecklist?: () => void;
   lang?: string;
 }
 
-export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, onAddQuote, onRemoveQuote, lang = "vi" }: VendorPanelProps) {
+export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, onAddQuote, onRemoveQuote, contractChecklist = {}, onToggleContractItem, onClearContractChecklist, lang = "vi" }: VendorPanelProps) {
   const en = lang === "en";
-  const [view, setView] = useState<"vendors" | "payments" | "compare">("vendors");
+  const [view, setView] = useState<"vendors" | "payments" | "compare" | "contract">("vendors");
   const [showAddForm, setShowAddForm] = useState(false);
   const [filterCat, setFilterCat] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<VendorStatus | null>(null);
@@ -193,6 +197,16 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
         >
           📊 {en ? "Compare" : "So Sánh"}
         </button>
+        <button
+          onClick={() => setView("contract")}
+          className={`px-3 py-1.5 text-xs font-medium border-b-2 transition-colors ${
+            view === "contract"
+              ? "border-[var(--theme-primary)] text-[var(--theme-primary)]"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          📋 {en ? "Contract Checklist" : "Checklist Hợp Đồng"}
+        </button>
       </div>
 
       {/* Payment tracker view */}
@@ -212,6 +226,16 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
           vendors={vendors}
           onAddQuote={onAddQuote}
           onRemoveQuote={onRemoveQuote}
+          lang={lang}
+        />
+      )}
+
+      {/* Contract checklist view */}
+      {view === "contract" && onToggleContractItem && onClearContractChecklist && (
+        <VendorContractChecklist
+          checkedItems={contractChecklist}
+          onToggle={onToggleContractItem}
+          onClear={onClearContractChecklist}
           lang={lang}
         />
       )}

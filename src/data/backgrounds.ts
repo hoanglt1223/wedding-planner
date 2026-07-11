@@ -216,4 +216,7 @@ export const DEFAULT_STATE: WeddingState = {
   welcomeBagDistributionIdCounter: 0,
   menuItems: [],
   menuIdCounter: 0,
+
+  // Contract Checklist
+  contractChecklist: {},
 };
