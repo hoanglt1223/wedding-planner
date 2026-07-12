@@ -3,6 +3,10 @@ import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { BudgetTracker } from "@/components/budget/budget-tracker";
 import { ExpenseForm } from "@/components/budget/expense-form";
 import { CategoryBreakdown } from "@/components/budget/category-breakdown";
+import { BudgetVsActualChart } from "@/components/budget/budget-vs-actual-chart";
+import { SpendingTrendChart } from "@/components/budget/spending-trend-chart";
+import { BudgetHealthCard } from "@/components/budget/budget-health-card";
+import { getBudgetCategories } from "@/data/resolve-data";
 import { Button } from "@/components/ui/button";
 import { Plus, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
 
@@ -29,6 +33,8 @@ export function BudgetPage() {
     });
     return totals;
   }, [expenses]);
+
+  const budgetCategories = useMemo(() => getBudgetCategories(lang), [lang]);
 
   const handleEditExpense = (expense: import("@/types/wedding").ExpenseEntry) => {
     if (editingExpense !== null) {
@@ -122,6 +128,32 @@ export function BudgetPage() {
         />
       )}
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {expenses.length > 0 && (
+          <SpendingTrendChart expenses={expenses} lang={lang} />
+        )}
+        {totalBudget > 0 && (
+          <BudgetHealthCard
+            categories={budgetCategories}
+            budgetOverrides={state.budgetOverrides || {}}
+            categoryExpenses={categoryTotals}
+            totalBudget={totalBudget}
+            totalSpent={totalSpent}
+            lang={lang}
+          />
+        )}
+      </div>
+
+      {totalBudget > 0 && budgetCategories.length > 0 && (
+        <BudgetVsActualChart
+          categories={budgetCategories}
+          budgetOverrides={state.budgetOverrides || {}}
+          categoryExpenses={categoryTotals}
+          totalBudget={totalBudget}
+          lang={lang}
+        />
+      )}
+
       <BudgetTracker
         expenses={expenses}
         onEdit={(id) => setEditingExpense(id)}
@@ -144,5 +176,3 @@ export function BudgetPage() {
     </div>
   );
 }
-
-export { BudgetPage };
