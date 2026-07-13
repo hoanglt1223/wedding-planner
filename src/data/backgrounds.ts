@@ -219,4 +219,8 @@ export const DEFAULT_STATE: WeddingState = {
 
   // Contract Checklist
   contractChecklist: {},
+
+  // Hashtag Generator
+  generatedHashtags: [],
+  favoriteHashtags: [],
 };

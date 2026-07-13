@@ -76,6 +76,8 @@ export function migrateState(): void {
       if (!("transportationGroups" in v16)) { v16.transportationGroups = []; needsUpdate = true; }
       if (!("transportationGroupIdCounter" in v16)) { v16.transportationGroupIdCounter = 0; needsUpdate = true; }
       if (v16.info && !("venueCity" in v16.info)) { v16.info.venueCity = "hcmc"; needsUpdate = true; }
+      if (!("generatedHashtags" in v16)) { v16.generatedHashtags = []; needsUpdate = true; }
+      if (!("favoriteHashtags" in v16)) { v16.favoriteHashtags = []; needsUpdate = true; }
       if (needsUpdate) localStorage.setItem(V16_KEY, JSON.stringify(v16));
     } catch { /* corrupt */ }
     return;

@@ -3,6 +3,7 @@ import { AiPanel } from "@/components/ai/ai-panel";
 import { AstrologyPage } from "./astrology-page";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { ExportPanel } from "@/components/export/export-panel";
+import { HashtagGenerator } from "@/components/hashtags/hashtag-generator";
 
 const TaskBoardDashboard = lazy(() => import("@/components/tasks/task-board-dashboard"));
 
@@ -10,11 +11,13 @@ const TABS = [
   { labelVi: "🤖 AI", labelEn: "🤖 AI" },
   { labelVi: "🔮 Tử Vi", labelEn: "🔮 Fortune" },
   { labelVi: "📋 Công Việc", labelEn: "📋 Tasks" },
+  { labelVi: "#️⃣ Hashtag", labelEn: "#️⃣ Hashtag" },
   { labelVi: "📦 Xuất Dữ Liệu", labelEn: "📦 Export" },
 ];
 
 export function ToolsPage() {
-  const { state } = useWeddingStoreContext();
+  const store = useWeddingStoreContext();
+  const { state } = store;
   const [activeTab, setActiveTab] = useState(0);
   const lang = state.lang;
   const en = lang === "en";
@@ -46,7 +49,20 @@ export function ToolsPage() {
           <TaskBoardDashboard />
         </Suspense>
       )}
-      {activeTab === 3 && <ExportPanel />}
+      {activeTab === 3 && (
+        <HashtagGenerator
+          brideName={state.info.bride}
+          groomName={state.info.groom}
+          weddingDate={state.info.date}
+          generatedHashtags={state.generatedHashtags || []}
+          favoriteHashtags={state.favoriteHashtags || []}
+          onGenerateHashtags={store.setGeneratedHashtags}
+          onToggleFavorite={store.toggleFavoriteHashtag}
+          onClearGenerated={store.clearGeneratedHashtags}
+          lang={state.lang === "en" ? "en" : "vi"}
+        />
+      )}
+      {activeTab === 4 && <ExportPanel />}
     </div>
   );
 }

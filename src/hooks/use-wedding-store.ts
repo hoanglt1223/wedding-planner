@@ -915,6 +915,27 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, contractChecklist: {} }));
   }, [setState]);
 
+  // Hashtag Generator methods
+  const setGeneratedHashtags = useCallback((hashtags: string[]) => {
+    setState((prev) => ({ ...prev, generatedHashtags: hashtags }));
+  }, [setState]);
+
+  const toggleFavoriteHashtag = useCallback((tag: string) => {
+    setState((prev) => {
+      const favorites = prev.favoriteHashtags || [];
+      const index = favorites.indexOf(tag);
+      if (index > -1) {
+        return { ...prev, favoriteHashtags: favorites.filter(t => t !== tag) };
+      } else {
+        return { ...prev, favoriteHashtags: [...favorites, tag] };
+      }
+    });
+  }, [setState]);
+
+  const clearGeneratedHashtags = useCallback(() => {
+    setState((prev) => ({ ...prev, generatedHashtags: [] }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -971,6 +992,7 @@ export function useWeddingStore() {
     addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
     addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked,
     toggleContractCheckItem, clearContractChecklist,
+    setGeneratedHashtags, toggleFavoriteHashtag, clearGeneratedHashtags,
     ...phase2,
   };
 }

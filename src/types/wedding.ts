@@ -313,6 +313,10 @@ export interface WeddingState {
 
   // Contract Checklist
   contractChecklist: Record<string, boolean>; // itemId -> checked state
+
+  // Hashtag Generator
+  generatedHashtags: string[];
+  favoriteHashtags: string[];
 }
 
 export interface WeddingEvent {
