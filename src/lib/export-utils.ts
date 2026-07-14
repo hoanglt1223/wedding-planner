@@ -250,7 +250,7 @@ export function downloadPdfBlob(blob: Blob, filename: string): void {
 /**
  * Extract theme colors from WeddingState for PDF generation
  */
-function extractThemeFromState(state: WeddingState): {
+function extractThemeFromState(_state: WeddingState): {
   primary: string;
   surface: string;
   surfaceMuted: string;

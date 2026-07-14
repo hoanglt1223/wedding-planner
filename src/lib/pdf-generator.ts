@@ -138,7 +138,7 @@ export function addPdfSection(
 
   // Section title
   pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
-  pdf.roundedRect(12, y, 4, 8, [1, 0, 0, 1], "F");
+  pdf.roundedRect(12, y, 4, 8, 1, "F");
 
   pdf.setTextColor(255, 255, 255);
   pdf.setFontSize(10);
@@ -165,7 +165,6 @@ export function addPdfTable(
   const pageWidth = pdf.internal.pageSize.getWidth();
   const primaryRgb = hexToRgb(theme.primary);
   const mutedRgb = hexToRgb(theme.surfaceMuted);
-  const borderRgb = hexToRgb(theme.border);
 
   const tableWidth = pageWidth - 24;
   const colWidth = columnWidths ||

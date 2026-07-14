@@ -1,5 +1,5 @@
-import type { WeddingState, Vendor, TimelineEntry } from "@/types/wedding";
-import { createPdf, addPdfHeader, addPdfFooter, addPdfSection, addPdfTable, addWrappedText, type PdfTheme, type PdfOptions } from "./pdf-generator";
+import type { WeddingState, TimelineEntry } from "@/types/wedding";
+import { createPdf, addPdfHeader, addPdfFooter, addPdfSection, addPdfTable, type PdfTheme } from "./pdf-generator";
 
 /**
  * Generate Vendor Summary PDF
@@ -91,7 +91,6 @@ export async function generateTimelineSchedulePdf(state: WeddingState, theme: Pd
   const pdf = createPdf({ theme, lang: state.lang as "vi" | "en" });
   const en = state.lang === "en";
   const entries = state.timelineEntries || [];
-  const pageWidth = pdf.internal.pageSize.getWidth();
 
   // Page 1: Header
   addPdfHeader(pdf, en ? "Wedding Timeline" : "Lịch Trình Đám Cưới", en ? "Schedule & Events" : "Lịch Trình & Sự Kiện");
@@ -99,15 +98,15 @@ export async function generateTimelineSchedulePdf(state: WeddingState, theme: Pd
   let y = 35;
 
   // Wedding info
-  if (state.groom && state.bride && state.weddingDate) {
+  if (state.info.groom && state.info.bride && state.info.date) {
     y = addPdfSection(pdf, en ? "Wedding Information" : "Thông Tin Đám Cưới", y, (pdf, startY) => {
       pdf.setFontSize(10);
       pdf.setFont("helvetica", "normal");
 
       const info = [
-        [en ? "Groom:" : "Chú rể:", state.groom],
-        [en ? "Bride:" : "Cô dâu:", state.bride],
-        [en ? "Date:" : "Ngày:", state.weddingDate]
+        [en ? "Groom:" : "Chú rể:", state.info.groom],
+        [en ? "Bride:" : "Cô dâu:", state.info.bride],
+        [en ? "Date:" : "Ngày:", state.info.date]
       ];
 
       let currentY = startY;
@@ -140,7 +139,7 @@ export async function generateTimelineSchedulePdf(state: WeddingState, theme: Pd
           en ? "Responsible" : "Người phụ trách"
         ];
 
-        const rows = categoryEntries.map(e => [
+        const rows = (categoryEntries as TimelineEntry[]).map(e => [
           e.time,
           e.title,
           e.location || "-",
@@ -178,15 +177,15 @@ export async function generateWeddingOverviewPdf(state: WeddingState, theme: Pdf
   let y = 40;
 
   // Couple information
-  if (state.groom && state.bride) {
+  if (state.info.groom && state.info.bride) {
     y = addPdfSection(pdf, en ? "Couple Information" : "Thông Tin Cặp Đôi", y, (pdf, startY) => {
       pdf.setFontSize(10);
       pdf.setFont("helvetica", "normal");
 
       const info = [
-        [en ? "Groom:" : "Chú rể:", state.groom],
-        [en ? "Bride:" : "Cô dâu:", state.bride],
-        state.weddingDate ? [en ? "Wedding Date:" : "Ngày cưới:", state.weddingDate] : null,
+        [en ? "Groom:" : "Chú rể:", state.info.groom],
+        [en ? "Bride:" : "Cô dâu:", state.info.bride],
+        state.info.date ? [en ? "Wedding Date:" : "Ngày cưới:", state.info.date] : null,
         state.venue ? [en ? "Venue:" : "Địa điểm:", state.venue] : null
       ].filter(Boolean) as [string, string][];
 
@@ -203,7 +202,6 @@ export async function generateWeddingOverviewPdf(state: WeddingState, theme: Pdf
 
   // Guest summary
   const guests = state.guests || [];
-  const confirmedGuests = guests.filter(g => g.confirmed).length;
   const totalPlusOnes = guests.reduce((sum, g) => sum + (g.plusOneName ? 1 : 0), 0);
 
   y = addPdfSection(pdf, en ? "Guest Summary" : "Tổng Kết Khách Mời", y, (pdf, startY) => {
@@ -212,7 +210,6 @@ export async function generateWeddingOverviewPdf(state: WeddingState, theme: Pdf
 
     const guestStats = [
       [en ? "Total Invited:" : "Tổng khách mời:", String(guests.length)],
-      [en ? "Confirmed:" : "Đã xác nhận:", String(confirmedGuests)],
       [en ? "Plus Ones:" : "Người đi cùng:", String(totalPlusOnes)]
     ];
 
@@ -273,34 +270,6 @@ export async function generateWeddingOverviewPdf(state: WeddingState, theme: Pdf
       Object.entries(categoryCount).forEach(([cat, count]) => {
         pdf.text(`${cat}:`, 15, currentY);
         pdf.text(String(count), 60, currentY);
-        currentY += 7;
-      });
-
-      return currentY + 5;
-    });
-  }
-
-  // Tasks summary
-  const tasks = state.tasks || [];
-  if (tasks.length > 0) {
-    const completed = tasks.filter(t => t.status === "completed").length;
-    const inProgress = tasks.filter(t => t.status === "in-progress").length;
-
-    y = addPdfSection(pdf, en ? "Task Progress" : "Tiến Độ Công Việc", y, (pdf, startY) => {
-      pdf.setFontSize(10);
-      pdf.setFont("helvetica", "normal");
-
-      const taskStats = [
-        [en ? "Total Tasks:" : "Tổng công việc:", String(tasks.length)],
-        [en ? "Completed:" : "Hoàn thành:", String(completed)],
-        [en ? "In Progress:" : "Đang thực hiện:", String(inProgress)],
-        [en ? "Pending:" : "Chưa bắt đầu:", String(tasks.length - completed - inProgress)]
-      ];
-
-      let currentY = startY;
-      taskStats.forEach(([label, value]) => {
-        pdf.text(label, 15, currentY);
-        pdf.text(value, 60, currentY);
         currentY += 7;
       });
 
