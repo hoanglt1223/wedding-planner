@@ -1,7 +1,8 @@
 import type { WeddingState, Vendor, TimelineEntry, GiftEntry, ExpenseEntry } from "@/types/wedding";
+import { generateVendorSummaryPdf, generateTimelineSchedulePdf, generateWeddingOverviewPdf } from "./pdf-templates";
 
 export interface ExportOptions {
-  format: "json" | "csv";
+  format: "json" | "csv" | "pdf";
   lang: string;
 }
 
@@ -206,4 +207,65 @@ export function downloadFile(content: string, filename: string, mimeType: string
 export function getTimestamp(): string {
   const now = new Date();
   return now.toISOString().split("T")[0].replace(/-/g, "");
+}
+
+/**
+ * Export vendor summary as PDF
+ */
+export async function exportVendorsAsPdf(state: WeddingState): Promise<Blob> {
+  const theme = extractThemeFromState(state);
+  return generateVendorSummaryPdf(state, theme);
+}
+
+/**
+ * Export timeline schedule as PDF
+ */
+export async function exportTimelineAsPdf(state: WeddingState): Promise<Blob> {
+  const theme = extractThemeFromState(state);
+  return generateTimelineSchedulePdf(state, theme);
+}
+
+/**
+ * Export wedding overview as PDF
+ */
+export async function exportWeddingOverviewAsPdf(state: WeddingState): Promise<Blob> {
+  const theme = extractThemeFromState(state);
+  return generateWeddingOverviewPdf(state, theme);
+}
+
+/**
+ * Download PDF blob
+ */
+export function downloadPdfBlob(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Extract theme colors from WeddingState for PDF generation
+ */
+function extractThemeFromState(state: WeddingState): {
+  primary: string;
+  surface: string;
+  surfaceMuted: string;
+  border: string;
+  text: string;
+  textMuted: string;
+} {
+  // In a real implementation, you'd extract these from state.theme or use CSS variables
+  // For now, we'll return a default theme that matches the Traditional Red theme
+  return {
+    primary: "#e11d48",
+    surface: "#ffffff",
+    surfaceMuted: "#f9fafb",
+    border: "#e5e7eb",
+    text: "#111827",
+    textMuted: "#6b7280"
+  };
 }

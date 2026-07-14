@@ -4,6 +4,7 @@ import {
   Download,
   FileJson,
   FileSpreadsheet,
+  FileText,
   Users,
   Building2,
   Calendar,
@@ -19,6 +20,10 @@ import {
   exportTimelineAsCsv,
   exportBudgetAsCsv,
   exportGiftsAsCsv,
+  exportVendorsAsPdf,
+  exportTimelineAsPdf,
+  exportWeddingOverviewAsPdf,
+  downloadPdfBlob,
   downloadFile,
   getTimestamp
 } from "@/lib/export-utils";
@@ -85,6 +90,36 @@ export function ExportPanel() {
     } catch (error) {
       console.error("Export failed:", error);
       alert(en ? "Export failed" : "Xuất dữ liệu thất bại");
+    }
+  };
+
+  const handleExportVendorPdf = async () => {
+    try {
+      const pdf = await exportVendorsAsPdf(state);
+      downloadPdfBlob(pdf, `vendors-${getTimestamp()}.pdf`);
+    } catch (error) {
+      console.error("PDF export failed:", error);
+      alert(en ? "PDF export failed" : "Xuất PDF thất bại");
+    }
+  };
+
+  const handleExportTimelinePdf = async () => {
+    try {
+      const pdf = await exportTimelineAsPdf(state);
+      downloadPdfBlob(pdf, `timeline-${getTimestamp()}.pdf`);
+    } catch (error) {
+      console.error("PDF export failed:", error);
+      alert(en ? "PDF export failed" : "Xuất PDF thất bại");
+    }
+  };
+
+  const handleExportOverviewPdf = async () => {
+    try {
+      const pdf = await exportWeddingOverviewAsPdf(state);
+      downloadPdfBlob(pdf, `wedding-overview-${getTimestamp()}.pdf`);
+    } catch (error) {
+      console.error("PDF export failed:", error);
+      alert(en ? "PDF export failed" : "Xuất PDF thất bại");
     }
   };
 
@@ -195,6 +230,36 @@ export function ExportPanel() {
     }
   ];
 
+  const pdfCards = [
+    {
+      title: en ? "Vendor Summary (PDF)" : "Tổng Kết Vendor (PDF)",
+      description: en ? "Professional vendor report" : "Báo cáo vendor chuyên nghiệp",
+      icon: Building2,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+      action: handleExportVendorPdf,
+      count: state.vendors?.length || 0
+    },
+    {
+      title: en ? "Timeline Schedule (PDF)" : "Lịch Trình (PDF)",
+      description: en ? "Print-ready timeline" : "Lịch trình sẵn in",
+      icon: Calendar,
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
+      action: handleExportTimelinePdf,
+      count: state.timelineEntries?.length || 0
+    },
+    {
+      title: en ? "Wedding Overview (PDF)" : "Tổng Quan Đám Cưới (PDF)",
+      description: en ? "Complete wedding summary" : "Tóm tắt đám cưới hoàn chỉnh",
+      icon: FileText,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+      action: handleExportOverviewPdf,
+      count: 1
+    }
+  ];
+
   return (
     <div className="space-y-4">
       <div>
@@ -252,6 +317,45 @@ export function ExportPanel() {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* PDF Export Section */}
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-3">
+          {en ? "PDF Export" : "Xuất PDF"}
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {pdfCards.map((card) => (
+            <Card key={card.title} className="hover:shadow-md transition-shadow border-2 border-dashed">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className={`p-2 rounded-lg ${card.bgColor}`}>
+                    <card.icon className={`h-5 w-5 ${card.color}`} />
+                  </div>
+                  {card.count > 0 && (
+                    <span className="text-xs font-medium bg-muted px-2 py-1 rounded-full">
+                      {card.count}
+                    </span>
+                  )}
+                </div>
+                <CardTitle className="text-base mt-2">{card.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-muted-foreground">{card.description}</p>
+                  <Button
+                    size="sm"
+                    onClick={card.action}
+                    className="ml-2 shrink-0"
+                  >
+                    <FileText className="h-4 w-4 mr-1" />
+                    {en ? "PDF" : "PDF"}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
       {/* Info Card */}
