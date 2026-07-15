@@ -15,6 +15,7 @@ import { CountdownShareCard } from "@/components/countdown/countdown-share-card"
 import { WeatherWidget } from "@/components/home/weather-widget";
 import { EmergencyContactsWidget } from "@/components/home/emergency-contacts-widget";
 import { QuickNotesWidget } from "@/components/home/quick-notes-widget";
+import { GlobalSearch } from "@/components/search/global-search";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -24,6 +25,9 @@ export function HomePage() {
 
   return (
     <div className="space-y-4 py-2">
+      {/* Global Search */}
+      <GlobalSearch state={state} lang={lang} />
+
       <CountdownWidget
         weddingDate={state.info.date}
         progress={progress}
