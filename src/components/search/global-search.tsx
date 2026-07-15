@@ -12,7 +12,7 @@ interface SearchResult {
   subtitle?: string;
   category?: string;
   route: string;
-  data?: any;
+  data?: unknown;
 }
 
 interface GlobalSearchProps {
