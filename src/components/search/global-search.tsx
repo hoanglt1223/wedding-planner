@@ -1,6 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Search, X, ChevronRight } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
@@ -194,7 +193,8 @@ export function GlobalSearch({ state, lang = "vi" }: GlobalSearchProps) {
       (state.contracts || []).forEach((contract) => {
         const match =
           contract.vendorName?.toLowerCase().includes(q) ||
-          contract.type?.toLowerCase().includes(q) ||
+          contract.contractType?.toLowerCase().includes(q) ||
+          contract.vendorCategory?.toLowerCase().includes(q) ||
           contract.notes?.toLowerCase().includes(q);
 
         if (match) {
@@ -202,8 +202,8 @@ export function GlobalSearch({ state, lang = "vi" }: GlobalSearchProps) {
             id: `contract-${contract.id}`,
             type: "contract",
             title: contract.vendorName || "Unknown Vendor",
-            subtitle: contract.type,
-            category: "contract",
+            subtitle: contract.contractType,
+            category: contract.vendorCategory,
             route: "/contracts",
             data: contract,
           });
