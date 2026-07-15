@@ -220,6 +220,10 @@ export const DEFAULT_STATE: WeddingState = {
   // Contract Checklist
   contractChecklist: {},
 
+  // Wedding Contracts
+  contracts: [],
+  contractIdCounter: 0,
+
   // Hashtag Generator
   generatedHashtags: [],
   favoriteHashtags: [],

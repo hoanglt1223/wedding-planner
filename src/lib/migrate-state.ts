@@ -10,6 +10,8 @@ const V13_KEY = "wp_v13";
 const V14_KEY = "wp_v14";
 const V15_KEY = "wp_v15";
 const V16_KEY = "wp_v16";
+const V17_KEY = "wp_v17";
+const V18_KEY = "wp_v18";
 
 const PAGE_MAP: Record<string, string> = {
   kehoach: "planning",
@@ -63,7 +65,35 @@ function remapBudgetKeys(obj: Record<string, unknown>): Record<string, unknown> 
  * Safe to call multiple times — no-ops if already migrated.
  */
 export function migrateState(): void {
-  // Already on latest v16 — ensure new fields exist
+  // Already on latest v18 — ensure new fields exist
+  const v18Raw = localStorage.getItem(V18_KEY);
+  if (v18Raw) {
+    try {
+      const v18 = JSON.parse(v18Raw);
+      let needsUpdate = false;
+      if (!("contracts" in v18)) { v18.contracts = []; needsUpdate = true; }
+      if (!("contractIdCounter" in v18)) { v18.contractIdCounter = 0; needsUpdate = true; }
+      if (needsUpdate) localStorage.setItem(V18_KEY, JSON.stringify(v18));
+    } catch { /* corrupt */ }
+    return;
+  }
+
+  // v17→v18 migration: add contract management fields
+  const v17Raw = localStorage.getItem(V17_KEY);
+  if (v17Raw) {
+    try {
+      const v17 = JSON.parse(v17Raw);
+      const v18 = {
+        ...v17,
+        contracts: v17.contracts ?? [],
+        contractIdCounter: v17.contractIdCounter ?? 0,
+      };
+      localStorage.setItem(V18_KEY, JSON.stringify(v18));
+    } catch { /* corrupt */ }
+    return;
+  }
+
+  // Already on v16 — ensure new fields exist and migrate to v17
   const v16Raw = localStorage.getItem(V16_KEY);
   if (v16Raw) {
     try {
@@ -78,7 +108,17 @@ export function migrateState(): void {
       if (v16.info && !("venueCity" in v16.info)) { v16.info.venueCity = "hcmc"; needsUpdate = true; }
       if (!("generatedHashtags" in v16)) { v16.generatedHashtags = []; needsUpdate = true; }
       if (!("favoriteHashtags" in v16)) { v16.favoriteHashtags = []; needsUpdate = true; }
+      if (!("contracts" in v16)) { v16.contracts = []; needsUpdate = true; }
+      if (!("contractIdCounter" in v16)) { v16.contractIdCounter = 0; needsUpdate = true; }
       if (needsUpdate) localStorage.setItem(V16_KEY, JSON.stringify(v16));
+
+      // Migrate to v18
+      const v18 = {
+        ...v16,
+        contracts: v16.contracts ?? [],
+        contractIdCounter: v16.contractIdCounter ?? 0,
+      };
+      localStorage.setItem(V18_KEY, JSON.stringify(v18));
     } catch { /* corrupt */ }
     return;
   }

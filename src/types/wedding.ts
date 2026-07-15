@@ -1,6 +1,7 @@
 // All TypeScript interfaces for the Wedding Planner app
 
 import type { Region, RegionalContent } from "../data/regions";
+import type { WeddingContract } from "./contracts";
 
 export type { Region, RegionalContent };
 
@@ -313,6 +314,10 @@ export interface WeddingState {
 
   // Contract Checklist
   contractChecklist: Record<string, boolean>; // itemId -> checked state
+
+  // Wedding Contracts
+  contracts: WeddingContract[];
+  contractIdCounter: number;
 
   // Hashtag Generator
   generatedHashtags: string[];

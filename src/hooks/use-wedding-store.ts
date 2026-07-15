@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
 import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem } from "@/types/wedding";
+import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -915,6 +916,128 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, contractChecklist: {} }));
   }, [setState]);
 
+  // Wedding Contracts management
+  const addContract = useCallback((contract: Omit<WeddingContract, "id" | "createdAt" | "updatedAt">) => {
+    setState((prev) => {
+      const newContract: WeddingContract = {
+        ...contract,
+        id: prev.contractIdCounter,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      return {
+        ...prev,
+        contracts: [...(prev.contracts || []), newContract],
+        contractIdCounter: prev.contractIdCounter + 1,
+      };
+    });
+  }, [setState]);
+
+  const updateContract = useCallback((id: number, updates: Partial<WeddingContract>) => {
+    setState((prev) => ({
+      ...prev,
+      contracts: (prev.contracts || []).map((c) =>
+        c.id === id ? { ...c, ...updates, updatedAt: new Date().toISOString() } : c
+      ),
+    }));
+  }, [setState]);
+
+  const removeContract = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      contracts: (prev.contracts || []).filter((c) => c.id !== id),
+    }));
+  }, [setState]);
+
+  const addPaymentMilestone = useCallback((contractId: number, milestone: Omit<PaymentMilestone, "id">) => {
+    setState((prev) => {
+      const contracts = prev.contracts || [];
+      const contract = contracts.find((c) => c.id === contractId);
+      if (!contract) return prev;
+
+      const newMilestone: PaymentMilestone = {
+        ...milestone,
+        id: contract.paymentMilestones.length > 0
+          ? Math.max(...contract.paymentMilestones.map((m) => m.id)) + 1
+          : 1,
+      };
+
+      return {
+        ...prev,
+        contracts: contracts.map((c) =>
+          c.id === contractId
+            ? { ...c, paymentMilestones: [...c.paymentMilestones, newMilestone], updatedAt: new Date().toISOString() }
+            : c
+        ),
+      };
+    });
+  }, [setState]);
+
+  const updatePaymentMilestone = useCallback((contractId: number, milestoneId: number, updates: Partial<PaymentMilestone>) => {
+    setState((prev) => ({
+      ...prev,
+      contracts: (prev.contracts || []).map((c) =>
+        c.id === contractId
+          ? {
+              ...c,
+              paymentMilestones: c.paymentMilestones.map((m) =>
+                m.id === milestoneId ? { ...m, ...updates } : m
+              ),
+              updatedAt: new Date().toISOString(),
+            }
+          : c
+      ),
+    }));
+  }, [setState]);
+
+  const removePaymentMilestone = useCallback((contractId: number, milestoneId: number) => {
+    setState((prev) => ({
+      ...prev,
+      contracts: (prev.contracts || []).map((c) =>
+        c.id === contractId
+          ? {
+              ...c,
+              paymentMilestones: c.paymentMilestones.filter((m) => m.id !== milestoneId),
+              updatedAt: new Date().toISOString(),
+            }
+          : c
+      ),
+    }));
+  }, [setState]);
+
+  const markPaymentMilestonePaid = useCallback((contractId: number, milestoneId: number) => {
+    const now = new Date().toISOString();
+    setState((prev) => {
+      const contracts = prev.contracts || [];
+      const contract = contracts.find((c) => c.id === contractId);
+      if (!contract) return prev;
+
+      const milestone = contract.paymentMilestones.find((m) => m.id === milestoneId);
+      if (!milestone) return prev;
+
+      const updatedMilestone = { ...milestone, status: "paid" as const, paidDate: now };
+      const totalPaid = contract.paymentMilestones
+        .filter((m) => m.id === milestoneId ? true : m.status === "paid")
+        .reduce((sum, m) => sum + (m.id === milestoneId ? updatedMilestone.amount : m.amount), 0);
+
+      return {
+        ...prev,
+        contracts: contracts.map((c) =>
+          c.id === contractId
+            ? {
+                ...c,
+                paymentMilestones: c.paymentMilestones.map((m) =>
+                  m.id === milestoneId ? updatedMilestone : m
+                ),
+                totalPaid,
+                updatedAt: now,
+              }
+            : c
+        ),
+      };
+    });
+  }, [setState]);
+
   // Hashtag Generator methods
   const setGeneratedHashtags = useCallback((hashtags: string[]) => {
     setState((prev) => ({ ...prev, generatedHashtags: hashtags }));
@@ -992,6 +1115,8 @@ export function useWeddingStore() {
     addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
     addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked,
     toggleContractCheckItem, clearContractChecklist,
+    addContract, updateContract, removeContract,
+    addPaymentMilestone, updatePaymentMilestone, removePaymentMilestone, markPaymentMilestonePaid,
     setGeneratedHashtags, toggleFavoriteHashtag, clearGeneratedHashtags,
     ...phase2,
   };
