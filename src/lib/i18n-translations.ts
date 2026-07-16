@@ -469,7 +469,7 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Thử thay đổi bộ lọc tìm kiếm": { vi: "Thử thay đổi bộ lọc tìm kiếm", en: "Try changing search filters" },
   "Thêm hợp đồng đầu tiên của bạn": { vi: "Thêm hợp đồng đầu tiên của bạn", en: "Add your first contract" },
   "Giá trị": { vi: "Giá trị", en: "Value" },
-  "Thời gian": { vi: "Thời gian", en: "Period" },
+  "Khoảng thời gian": { vi: "Thời gian", en: "Period" },
   "Tên nhà cung cấp": { vi: "Tên nhà cung cấp", en: "Vendor name" },
   "Chọn danh mục": { vi: "Chọn danh mục", en: "Select category" },
   "Tổng giá trị (VND)": { vi: "Tổng giá trị (VND)", en: "Total value (VND)" },

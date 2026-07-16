@@ -12,13 +12,6 @@ const STATUS_LABELS: Record<VendorStatus, { vi: string; en: string }> = {
   paid: { vi: "Đã trả", en: "Paid" },
 };
 
-function formatVnd(n: number): string {
-  if (n === 0) return "0";
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1)}tr`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}k`;
-  return String(n);
-}
-
 // Prevent Excel formula injection
 function sanitizeCellValue(value: string): string {
   if (!value) return "";

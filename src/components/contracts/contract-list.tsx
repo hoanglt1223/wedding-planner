@@ -139,7 +139,7 @@ export function ContractList({
                 <p className="font-medium text-green-600">{formatMoney(contract.totalPaid, lang)}₫</p>
               </div>
               <div>
-                <p className="text-muted-foreground">{en ? "Thời gian" : "Thời gian"}</p>
+                <p className="text-muted-foreground">{t("Khoảng thời gian", lang)}</p>
                 <p className="font-medium">
                   {formatDate(contract.startDate, lang)} - {formatDate(contract.endDate, lang)}
                 </p>
