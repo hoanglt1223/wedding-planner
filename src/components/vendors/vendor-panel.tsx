@@ -6,6 +6,7 @@ import { t } from "@/lib/i18n";
 import { VendorPaymentTracker } from "./vendor-payment-tracker";
 import { VendorQuoteComparison } from "./vendor-quote-comparison";
 import { VendorContractChecklist } from "./vendor-contract-checklist";
+import { VendorExportActions } from "./vendor-export-actions";
 
 const CATEGORIES = [
   "🏛️ Nhà hàng", "📸 Ảnh/Video", "🌸 Trang trí",
@@ -156,9 +157,12 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
           </p>
         </div>
         {view === "vendors" && (
-          <Button size="sm" className="h-8 px-3" onClick={() => { setShowAddForm(!showAddForm); resetAddForm(); }}>
-            + {t("Thêm nhà cung cấp", lang)}
-          </Button>
+          <div className="flex gap-2">
+            <Button size="sm" className="h-8 px-3" onClick={() => { setShowAddForm(!showAddForm); resetAddForm(); }}>
+              + {t("Thêm nhà cung cấp", lang)}
+            </Button>
+            <VendorExportActions vendors={vendors} filteredVendors={filtered} lang={lang} />
+          </div>
         )}
       </div>
 

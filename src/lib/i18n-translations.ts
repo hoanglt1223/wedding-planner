@@ -482,4 +482,5 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Hạn chốt hủy": { vi: "Hạn chốt hủy", en: "Cancellation deadline" },
   "Phí hủy (VND)": { vi: "Phí hủy (VND)", en: "Cancellation fee (VND)" },
   "Link hợp đồng": { vi: "Link hợp đồng", en: "Contract link" },
+  "Xuất tất cả": { vi: "Xuất tất cả", en: "Export All" },
 };
