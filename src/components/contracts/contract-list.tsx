@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { formatMoney } from "@/lib/format";
+import { t } from "@/lib/i18n";
 import type { WeddingContract, ContractStatus } from "@/types/contracts";
 
 // Simple date formatter
