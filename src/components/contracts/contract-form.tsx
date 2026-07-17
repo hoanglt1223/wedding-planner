@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { formatMoney } from "@/lib/format";
 import type { WeddingContract, ContractStatus, PaymentMilestone } from "@/types/contracts";
+import { getContractRequirements } from "@/data/contract-requirements";
 
 interface ContractFormProps {
   contract?: WeddingContract | null;
@@ -14,7 +15,7 @@ interface ContractFormProps {
   lang?: string;
 }
 
-export function ContractForm({ contract, vendors = [], onSave, onCancel, lang = "vi" }: ContractFormProps) {
+export function ContractForm({ contract, onSave, onCancel, lang = "vi" }: ContractFormProps) {
   const en = lang === "en";
   const isEdit = contract && contract.id > 0;
 
@@ -30,6 +31,18 @@ export function ContractForm({ contract, vendors = [], onSave, onCancel, lang = 
   const [signedDate, setSignedDate] = useState(contract?.signedDate || "");
   const [cancellationDeadline, setCancellationDeadline] = useState(contract?.cancellationDeadline || "");
   const [cancellationFee, setCancellationFee] = useState(contract?.cancellationFee || 0);
+
+  // Requirements state
+  const [selectedRequirementIds, setSelectedRequirementIds] = useState<string[]>(
+    contract?.requirementIds || []
+  );
+
+  // Reset requirements when category changes
+  useEffect(() => {
+    if (vendorCategory && (!contract || contract.vendorCategory !== vendorCategory)) {
+      setSelectedRequirementIds([]);
+    }
+  }, [vendorCategory, contract]);
 
   // Payment milestones state
   const [paymentMilestones, setPaymentMilestones] = useState<PaymentMilestone[]>(
@@ -83,7 +96,7 @@ export function ContractForm({ contract, vendors = [], onSave, onCancel, lang = 
       paymentMilestones,
       depositPaid: totalPaid,
       totalPaid,
-      requirementIds: [],
+      requirementIds: selectedRequirementIds,
       customRequirements: [],
       signedDate: signedDate || undefined,
       cancellationDeadline: cancellationDeadline || undefined,
@@ -123,6 +136,31 @@ export function ContractForm({ contract, vendors = [], onSave, onCancel, lang = 
     { value: "cancelled", labelVi: "Đã hủy", labelEn: "Cancelled" },
   ];
 
+  // Get requirements for current category
+  const categoryRequirements = vendorCategory ? getContractRequirements(vendorCategory) : [];
+
+  // Handle requirement toggle
+  const toggleRequirement = (requirementId: string) => {
+    setSelectedRequirementIds(prev =>
+      prev.includes(requirementId)
+        ? prev.filter(id => id !== requirementId)
+        : [...prev, requirementment]
+    );
+  };
+
+  // Handle category change
+  const handleCategoryChange = (newCategory: string) => {
+    setVendorCategory(newCategory);
+    setSelectedRequirementIds([]); // Reset requirements when category changes
+  };
+
+  // Priority group labels
+  const priorityLabels = {
+    required: { vi: "Bắt buộc", en: "Required", color: "text-red-600 font-semibold" },
+    recommended: { vi: "Khuyến nghị", en: "Recommended", color: "text-amber-600 font-semibold" },
+    optional: { vi: "Tùy chọn", en: "Optional", color: "text-gray-600 font-semibold" }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Card className="p-4">
@@ -149,7 +187,7 @@ export function ContractForm({ contract, vendors = [], onSave, onCancel, lang = 
               <select
                 id="vendorCategory"
                 value={vendorCategory}
-                onChange={(e) => setVendorCategory(e.target.value)}
+                onChange={(e) => handleCategoryChange(e.target.value)}
                 className="w-full border rounded px-3 py-2 text-sm bg-background mt-1"
                 required
               >
@@ -305,6 +343,54 @@ export function ContractForm({ contract, vendors = [], onSave, onCancel, lang = 
           )}
         </div>
       </Card>
+
+      {/* Requirements Checklist */}
+      {vendorCategory && categoryRequirements.length > 0 && (
+        <Card className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold text-sm">
+              {en ? "Kiểm tra hợp đồng" : "Kiểm tra hợp đồng"}
+            </h3>
+            <span className="text-xs text-muted-foreground">
+              {selectedRequirementIds.length} / {categoryRequirements.length} {en ? "đã chọn" : "đã chọn"}
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            {["required", "recommended", "optional"].map((priority) => {
+              const requirements = categoryRequirements.filter(req => req.priority === priority);
+              if (requirements.length === 0) return null;
+
+              return (
+                <div key={priority} className="space-y-2">
+                  <div className={`text-xs ${priorityLabels[priority as keyof typeof priorityLabels].color}`}>
+                    {priorityLabels[priority as keyof typeof priorityLabels][lang === "en" ? "en" : "vi"]}
+                  </div>
+                  {requirements.map((req) => (
+                    <label key={req.id} className="flex items-start gap-2 cursor-pointer hover:bg-muted/50 p-2 rounded">
+                      <input
+                        type="checkbox"
+                        checked={selectedRequirementIds.includes(req.id)}
+                        onChange={() => toggleRequirement(req.id)}
+                        className="mt-0.5"
+                      />
+                      <span className="text-sm flex-1">
+                        {en ? req.textEn : req.textVi}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+
+          {selectedRequirementIds.length > 0 && (
+            <div className="mt-3 pt-3 border-t text-xs text-muted-foreground">
+              {en ? "Đã chọn" : "Đã chọn"}: {selectedRequirementIds.length} {en ? "yêu cầu" : "yêu cầu"}
+            </div>
+          )}
+        </Card>
+      )}
 
       {/* Additional Options */}
       <Card className="p-4">

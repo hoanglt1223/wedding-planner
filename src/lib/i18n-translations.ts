@@ -483,4 +483,13 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Phí hủy (VND)": { vi: "Phí hủy (VND)", en: "Cancellation fee (VND)" },
   "Link hợp đồng": { vi: "Link hợp đồng", en: "Contract link" },
   "Xuất tất cả": { vi: "Xuất tất cả", en: "Export All" },
+  "Kiểm tra hợp đồng": { vi: "Kiểm tra hợp đồng", en: "Contract Checklist" },
+  "yêu cầu": { vi: "yêu cầu", en: "requirements" },
+  "đã chọn": { vi: "đã chọn", en: "selected" },
+  "thêm": { vi: "thêm", en: "more" },
+  "Bắt buộc": { vi: "Bắt buộc", en: "Required" },
+  "Khuyến nghị": { vi: "Khuyến nghị", en: "Recommended" },
+  "Tùy chọn": { vi: "Tùy chọn", en: "Optional" },
+  "Đã chọn": { vi: "Đã chọn", en: "Selected" },
+  "Yêu cầu": { vi: "Yêu cầu", en: "Requirements" },
 };

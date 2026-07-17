@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { formatMoney } from "@/lib/format";
 import { t } from "@/lib/i18n";
 import type { WeddingContract, ContractStatus } from "@/types/contracts";
+import { getContractRequirementById } from "@/data/contract-requirements";
 
 // Simple date formatter
 function formatDate(dateStr: string, lang: string): string {
@@ -160,6 +161,36 @@ export function ContractList({
                 />
               </div>
             </div>
+
+            {/* Requirements checklist summary */}
+            {contract.requirementIds && contract.requirementIds.length > 0 && (
+              <div className="mb-3 p-2 bg-muted/50 rounded text-xs">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-medium">
+                    {en ? "✓ Yêu cầu" : "✓ Yêu cầu"}
+                  </span>
+                  <span className="text-muted-foreground">
+                    {contract.requirementIds.length} {en ? "đã chọn" : "đã chọn"}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {contract.requirementIds.slice(0, 3).map((reqId) => {
+                    const req = getContractRequirementById(reqId);
+                    if (!req) return null;
+                    return (
+                      <span key={req.id} className="inline-block px-1.5 py-0.5 bg-background rounded text-[10px]">
+                        {en ? req.textEn.slice(0, 20) + "..." : req.textVi.slice(0, 15) + "..."}
+                      </span>
+                    );
+                  })}
+                  {contract.requirementIds.length > 3 && (
+                    <span className="inline-block px-1.5 py-0.5 bg-background rounded text-[10px]">
+                      +{contract.requirementIds.length - 3} {en ? "thêm" : "thêm"}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Upcoming payment warning */}
             {upcomingPayment && daysUntilDue !== null && (
