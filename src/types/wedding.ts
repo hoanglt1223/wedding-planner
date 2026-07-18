@@ -322,6 +322,9 @@ export interface WeddingState {
   // Hashtag Generator
   generatedHashtags: string[];
   favoriteHashtags: string[];
+
+  // Emergency Kit Checklist
+  emergencyKitChecked?: Record<string, boolean>; // itemId -> checked state
 }
 
 export interface WeddingEvent {

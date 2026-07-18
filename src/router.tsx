@@ -172,6 +172,12 @@ const moodBoardRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/mood-board-page'), 'MoodBoardPage'),
 })
 
+const emergencyKitRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/emergency-kit',
+  component: lazyRouteComponent(() => import('./pages/emergency-kit-page'), 'EmergencyKitPage'),
+})
+
 const guestGiftsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/guest-gifts',
@@ -296,6 +302,7 @@ const routeTree = rootRoute.addChildren([
     guestBookRoute,
     weddingPartyRoute,
     moodBoardRoute,
+    emergencyKitRoute,
     guestGiftsRoute,
     photoGalleryRoute,
     registryRoute,

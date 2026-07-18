@@ -916,6 +916,21 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, contractChecklist: {} }));
   }, [setState]);
 
+  // Emergency Kit management
+  const toggleEmergencyKitItem = useCallback((itemId: string) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyKitChecked: {
+        ...(prev.emergencyKitChecked || {}),
+        [itemId]: !((prev.emergencyKitChecked || {})[itemId]),
+      },
+    }));
+  }, [setState]);
+
+  const clearEmergencyKitChecklist = useCallback(() => {
+    setState((prev) => ({ ...prev, emergencyKitChecked: {} }));
+  }, [setState]);
+
   // Wedding Contracts management
   const addContract = useCallback((contract: Omit<WeddingContract, "id" | "createdAt" | "updatedAt">) => {
     setState((prev) => {
@@ -1118,6 +1133,7 @@ export function useWeddingStore() {
     addContract, updateContract, removeContract,
     addPaymentMilestone, updatePaymentMilestone, removePaymentMilestone, markPaymentMilestonePaid,
     setGeneratedHashtags, toggleFavoriteHashtag, clearGeneratedHashtags,
+    toggleEmergencyKitItem, clearEmergencyKitChecklist,
     ...phase2,
   };
 }
