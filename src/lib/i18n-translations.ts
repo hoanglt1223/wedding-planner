@@ -67,6 +67,11 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "🪑 Sơ Đồ Chỗ Ngồi": { vi: "🪑 Sơ Đồ Chỗ Ngồi", en: "🪑 Seating Chart" },
   "Thêm bàn": { vi: "Thêm bàn", en: "Add Table" },
   "Tạo bàn": { vi: "Tạo bàn", en: "Create Table" },
+  "🖨️ In thẻ bàn": { vi: "🖨️ In thẻ bàn", en: "🖨️ Print Table Cards" },
+  "Xem trước bàn in": { vi: "Xem trước bàn in", en: "Print Preview" },
+  "Quay lại": { vi: "Quay lại", en: "Go Back" },
+  "In": { vi: "In", en: "Print" },
+  "bàn sẵn sàng in": { vi: "bàn sẵn sàng in", en: "tables ready to print" },
 
   // AI panel
   "🤖 AI Hỗ Trợ": { vi: "🤖 AI Hỗ Trợ", en: "🤖 AI Assistant" },

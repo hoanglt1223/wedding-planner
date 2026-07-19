@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Guest, SeatingTable } from "@/types/wedding";
 import { t } from "@/lib/i18n";
+import { TableCardGenerator } from "./table-card-generator";
+import type { AppTheme } from "@/data/themes";
 
 const TABLE_COLORS = [
   "#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6",
@@ -23,6 +25,7 @@ interface SeatingChartPanelProps {
   onAssignGuest: (guestId: number, tableId: number) => void;
   onUnassignGuest: (guestId: number) => void;
   lang?: string;
+  theme?: AppTheme;
 }
 
 export function SeatingChartPanel({
@@ -34,6 +37,7 @@ export function SeatingChartPanel({
   onAssignGuest,
   onUnassignGuest,
   lang = "vi",
+  theme,
 }: SeatingChartPanelProps) {
   const en = lang === "en";
   const [showAddForm, setShowAddForm] = useState(false);
@@ -162,6 +166,21 @@ export function SeatingChartPanel({
             <p className="text-xs text-muted-foreground">{t("Đã xếp", lang)}</p>
           </div>
         </div>
+      )}
+
+      {/* Table card generator */}
+      {theme && (
+        <TableCardGenerator
+          tables={tables}
+          guests={guests}
+          lang={(lang === "en" ? "en" : "vi") as "vi" | "en"}
+          themeColors={{
+            primary: theme.primary,
+            accent: theme.accent,
+            surface: theme.surface,
+            themeBorder: theme.themeBorder,
+          }}
+        />
       )}
 
       {/* Add table form */}
