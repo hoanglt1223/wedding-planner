@@ -103,7 +103,6 @@ export function MenuPage() {
     { value: "halal", labelVi: "Halal", labelEn: "Halal" },
     { value: "gluten-free", labelVi: "Không gluten", labelEn: "Gluten-free" },
     { value: "nut-free", labelVi: "Không hạt", labelEn: "Nut-free" },
-    { value: "low-sugar", labelVi: "Ít đường", labelEn: "Low-sugar" },
   ];
 
   if (editing !== undefined) {

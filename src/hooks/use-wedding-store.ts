@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
@@ -901,6 +901,13 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const updateMenuSettings = useCallback((settings: MenuSettings) => {
+    setState((prev) => ({
+      ...prev,
+      menuSettings: settings,
+    }));
+  }, [setState]);
+
   // Contract Checklist methods
   const toggleContractCheckItem = useCallback((itemId: string) => {
     setState((prev) => ({
@@ -1128,7 +1135,7 @@ export function useWeddingStore() {
     addPhotoShot, removePhotoShot, updatePhotoShot,
     addWelcomeBagItem, removeWelcomeBagItem, updateWelcomeBagItem, toggleWelcomeBagItemChecked,
     addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
-    addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked,
+    addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked, updateMenuSettings,
     toggleContractCheckItem, clearContractChecklist,
     addContract, updateContract, removeContract,
     addPaymentMilestone, updatePaymentMilestone, removePaymentMilestone, markPaymentMilestonePaid,

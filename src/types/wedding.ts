@@ -311,6 +311,7 @@ export interface WeddingState {
   // Menu Planner
   menuItems: MenuItem[];
   menuIdCounter: number;
+  menuSettings?: MenuSettings;
 
   // Contract Checklist
   contractChecklist: Record<string, boolean>; // itemId -> checked state
@@ -641,6 +642,9 @@ export type MenuCourseType =
 
 export type DietaryRestriction = "vegetarian" | "vegan" | "halal" | "gluten-free" | "nut-free" | "none";
 
+// Alias for single dietary restriction (used in filters)
+export type DietaryType = DietaryRestriction;
+
 export interface MenuItem {
   id: number;
   name: string;
@@ -668,4 +672,15 @@ export interface MenuTemplate {
   budgetLevel: "economy" | "standard" | "premium";
   estimatedCostPerTable: number;
   items: MenuItem[];
+}
+
+export interface MenuSettings {
+  enabled: boolean;
+  budgetPerTable: number;
+  guestCount: number;
+  specialRequests: string;
+  servingStyle: "banquet" | "buffet" | "family-style" | "plated";
+  includeCutlery: boolean;
+  includeDrinks: boolean;
+  notes: string;
 }

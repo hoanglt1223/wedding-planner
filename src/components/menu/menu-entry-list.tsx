@@ -33,7 +33,6 @@ const DIETARY_LABELS: Record<DietaryType | "all", { vi: string; en: string }> = 
   "halal": { vi: "Halal", en: "Halal" },
   "gluten-free": { vi: "Không gluten", en: "Gluten-free" },
   "nut-free": { vi: "Không hạt", en: "Nut-free" },
-  "low-sugar": { vi: "Ít đường", en: "Low-sugar" },
 };
 
 const DIETARY_ICONS: Record<DietaryType, string> = {
@@ -43,7 +42,6 @@ const DIETARY_ICONS: Record<DietaryType, string> = {
   "halal": "🕌",
   "gluten-free": "🌾",
   "nut-free": "🥜",
-  "low-sugar": "🍬",
 };
 
 export function MenuEntryList({

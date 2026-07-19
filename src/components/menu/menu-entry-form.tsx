@@ -30,7 +30,6 @@ const DIETARY_OPTIONS: Array<{ value: DietaryType; labelVi: string; labelEn: str
   { value: "halal", labelVi: "Halal", labelEn: "Halal", icon: "🕌" },
   { value: "gluten-free", labelVi: "Không gluten", labelEn: "Gluten-free", icon: "🌾" },
   { value: "nut-free", labelVi: "Không hạt", labelEn: "Nut-free", icon: "🥜" },
-  { value: "low-sugar", labelVi: "Ít đường", labelEn: "Low-sugar", icon: "🍬" },
 ];
 
 export function MenuEntryForm({ item, onSave, onCancel, lang }: MenuEntryFormProps) {
@@ -45,6 +44,8 @@ export function MenuEntryForm({ item, onSave, onCancel, lang }: MenuEntryFormPro
     notes: "",
     order: 0,
     isFavorite: false,
+    checked: false,
+    custom: false,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -62,6 +63,8 @@ export function MenuEntryForm({ item, onSave, onCancel, lang }: MenuEntryFormPro
         notes: item.notes,
         order: item.order,
         isFavorite: item.isFavorite,
+        checked: item.checked,
+        custom: item.custom,
       });
     }
   }, [item]);
