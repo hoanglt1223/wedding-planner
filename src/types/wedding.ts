@@ -2,6 +2,7 @@
 
 import type { Region, RegionalContent } from "../data/regions";
 import type { WeddingContract } from "./contracts";
+import type { ItineraryItem } from "../data/wedding-itinerary";
 
 export type { Region, RegionalContent };
 
@@ -251,6 +252,9 @@ export interface WeddingState {
   // Seating chart
   seatingTables: SeatingTable[];
   seatingTableIdCounter: number;
+
+  // Wedding day itinerary
+  itineraryItems: ItineraryItem[];
 
   // Wedding contacts
   contacts: WeddingContact[];

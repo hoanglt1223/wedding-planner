@@ -159,6 +159,9 @@ export const DEFAULT_STATE: WeddingState = {
   seatingTables: [],
   seatingTableIdCounter: 0,
 
+  // Wedding day itinerary
+  itineraryItems: [],
+
   // Wedding contacts
   contacts: [],
   contactIdCounter: 0,

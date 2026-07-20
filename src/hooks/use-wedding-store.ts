@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
 import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
+import type { ItineraryItem } from "@/data/wedding-itinerary";
 import { DEFAULT_STATE } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
@@ -351,6 +352,34 @@ export function useWeddingStore() {
         ...t,
         guestIds: t.guestIds.filter((gid) => gid !== guestId),
       })),
+    }));
+  }, [setState]);
+
+  // Itinerary methods
+  const setItineraryItems = useCallback((items: ItineraryItem[]) => {
+    setState((prev) => ({ ...prev, itineraryItems: items }));
+  }, [setState]);
+
+  const addItineraryItem = useCallback((item: ItineraryItem) => {
+    setState((prev) => ({
+      ...prev,
+      itineraryItems: [...(prev.itineraryItems || []), item],
+    }));
+  }, [setState]);
+
+  const updateItineraryItem = useCallback((id: string, updates: Partial<ItineraryItem>) => {
+    setState((prev) => ({
+      ...prev,
+      itineraryItems: (prev.itineraryItems || []).map((i) =>
+        i.id === id ? { ...i, ...updates } : i
+      ),
+    }));
+  }, [setState]);
+
+  const removeItineraryItem = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      itineraryItems: (prev.itineraryItems || []).filter((i) => i.id !== id),
     }));
   }, [setState]);
 
@@ -1119,6 +1148,7 @@ export function useWeddingStore() {
     toggleKitItem, addCustomKitItem, removeCustomKitItem,
     addSeatingTable, updateSeatingTable, removeSeatingTable,
     assignGuestToTable, unassignGuest,
+    setItineraryItems, addItineraryItem, updateItineraryItem, removeItineraryItem,
     addContact, updateContact, removeContact,
     addVendorPayment, updateVendorPayment, removeVendorPayment,
     addSong, updateSong, removeSong,

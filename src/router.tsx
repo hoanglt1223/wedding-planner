@@ -130,6 +130,12 @@ const seatingRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/seating-page'), 'default'),
 })
 
+const itineraryRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/itinerary',
+  component: lazyRouteComponent(() => import('./pages/itinerary-page'), 'default'),
+})
+
 const songsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/songs',
@@ -301,6 +307,7 @@ const routeTree = rootRoute.addChildren([
     checklistRoute,
     giftRoute,
     seatingRoute,
+    itineraryRoute,
     songsRoute,
     vendorsRoute,
     contractsRoute,
