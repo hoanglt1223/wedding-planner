@@ -2,16 +2,30 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { WEDDING_TYPES, generateItineraryItems } from "@/data/wedding-itinerary";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
+import type { AppTheme } from "@/data/themes";
+import { ExportButtons } from "./export-buttons";
 
 interface ItineraryControlsProps {
   lang?: string;
   onGenerate: (items: ItineraryItem[]) => void;
   onClear: () => void;
-  onExport?: () => void;
   existingItems: ItineraryItem[];
+  brideName: string;
+  groomName: string;
+  weddingDate: string;
+  theme: AppTheme;
 }
 
-export function ItineraryControls({ lang = "vi", onGenerate, onClear, onExport, existingItems }: ItineraryControlsProps) {
+export function ItineraryControls({
+  lang = "vi",
+  onGenerate,
+  onClear,
+  existingItems,
+  brideName,
+  groomName,
+  weddingDate,
+  theme,
+}: ItineraryControlsProps) {
   const en = lang === "en";
   const [selectedType, setSelectedType] = useState<string>("standard");
   const [startTime, setStartTime] = useState("06:00");
@@ -55,11 +69,14 @@ export function ItineraryControls({ lang = "vi", onGenerate, onClear, onExport, 
 
         {existingItems.length > 0 && (
           <>
-            {onExport && (
-              <Button size="sm" variant="outline" className="h-8" onClick={onExport}>
-                📄 {en ? "Export" : "Xuất"}
-              </Button>
-            )}
+            <ExportButtons
+              items={existingItems}
+              brideName={brideName}
+              groomName={groomName}
+              weddingDate={weddingDate}
+              lang={lang as "vi" | "en"}
+              theme={theme}
+            />
             <Button size="sm" variant="outline" className="h-8 text-red-500" onClick={onClear}>
               🗑️ {en ? "Clear" : "Xóa"}
             </Button>

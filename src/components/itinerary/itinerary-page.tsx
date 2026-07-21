@@ -1,15 +1,27 @@
-import { useState } from "react";
 import { ItineraryControls } from "./itinerary-controls";
 import { ItineraryTimeline } from "./itinerary-timeline";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
+import type { AppTheme } from "@/data/themes";
 
 interface ItineraryPageProps {
   items: ItineraryItem[];
   lang?: string;
+  brideName: string;
+  groomName: string;
+  weddingDate: string;
+  theme: AppTheme;
   onUpdateItems: (items: ItineraryItem[]) => void;
 }
 
-export function ItineraryPage({ items, lang = "vi", onUpdateItems }: ItineraryPageProps) {
+export function ItineraryPage({
+  items,
+  lang = "vi",
+  brideName,
+  groomName,
+  weddingDate,
+  theme,
+  onUpdateItems,
+}: ItineraryPageProps) {
   // Reserved for future edit functionality
   // const [editingItem, setEditingItem] = useState<ItineraryItem | null>(null);
 
@@ -21,34 +33,6 @@ export function ItineraryPage({ items, lang = "vi", onUpdateItems }: ItineraryPa
     if (window.confirm(lang === "en" ? "Clear all itinerary items?" : "Xóa toàn bộ lịch trình?")) {
       onUpdateItems([]);
     }
-  };
-
-  const handleExport = () => {
-    const en = lang === "en";
-    const sortedItems = [...items].sort((a, b) => a.startTime.localeCompare(b.startTime));
-
-    let text = `${en ? "WEDDING DAY ITINERARY" : "LỊCH TRÌNH NGÀY CƯỚI"}\n`;
-    text += `${"=".repeat(40)}\n\n`;
-
-    sortedItems.forEach((item) => {
-      const activity = en ? item.activityEn : item.activity;
-      const location = en ? item.locationEn : item.location;
-      const notes = en ? item.notesEn : item.notes;
-
-      text += `${item.startTime} - ${activity}\n`;
-      if (location) text += `📍 ${location}\n`;
-      if (item.responsible?.length) text += `👥 ${item.responsible.join(", ")}\n`;
-      if (notes) text += `📝 ${notes}\n`;
-      text += "\n";
-    });
-
-    const blob = new Blob([text], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `wedding-itinerary-${lang === "en" ? "en" : "vi"}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   const handleEdit = (item: ItineraryItem) => {
@@ -91,8 +75,11 @@ export function ItineraryPage({ items, lang = "vi", onUpdateItems }: ItineraryPa
         lang={lang}
         onGenerate={handleGenerate}
         onClear={handleClear}
-        onExport={handleExport}
         existingItems={items}
+        brideName={brideName}
+        groomName={groomName}
+        weddingDate={weddingDate}
+        theme={theme}
       />
 
       <ItineraryTimeline
