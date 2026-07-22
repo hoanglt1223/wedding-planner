@@ -309,13 +309,60 @@ export function generateItineraryItems(
   customStart?: string
 ): ItineraryItem[] {
   const template = getItineraryTemplate(weddingType);
-  // customStart parameter is reserved for future use in time offset calculation
-  void customStart;
 
-  return template.map((item, index) => ({
-    ...item,
-    id: `iti-${Date.now()}-${index}`,
-  }));
+  // Calculate time offset if custom start time is provided
+  let offsetMinutes = 0;
+  if (customStart && template.length > 0) {
+    const firstItemStart = template[0].startTime;
+    offsetMinutes = calculateTimeOffset(firstItemStart, customStart);
+  }
+
+  return template.map((item, index) => {
+    let adjustedStartTime = item.startTime;
+    if (offsetMinutes !== 0) {
+      adjustedStartTime = applyTimeOffset(item.startTime, offsetMinutes);
+    }
+
+    return {
+      ...item,
+      id: `iti-${Date.now()}-${index}`,
+      startTime: adjustedStartTime,
+    };
+  });
+}
+
+/**
+ * Calculate the offset in minutes between two times
+ * @param baseTime - The base time in HH:MM format
+ * @param targetTime - The target time in HH:MM format
+ * @returns The offset in minutes (positive to move forward, negative to move backward)
+ */
+function calculateTimeOffset(baseTime: string, targetTime: string): number {
+  const [baseHours, baseMinutes] = baseTime.split(":").map(Number);
+  const [targetHours, targetMinutes] = targetTime.split(":").map(Number);
+
+  const baseTotalMinutes = baseHours * 60 + baseMinutes;
+  const targetTotalMinutes = targetHours * 60 + targetMinutes;
+
+  return targetTotalMinutes - baseTotalMinutes;
+}
+
+/**
+ * Apply a time offset to a given time
+ * @param time - The original time in HH:MM format
+ * @param offsetMinutes - The offset in minutes (can be positive or negative)
+ * @returns The adjusted time in HH:MM format, wrapped around 24 hours if needed
+ */
+function applyTimeOffset(time: string, offsetMinutes: number): string {
+  const [hours, minutes] = time.split(":").map(Number);
+  const totalMinutes = hours * 60 + minutes + offsetMinutes;
+
+  // Handle wrapping (can be negative or past 24 hours)
+  const wrappedMinutes = ((totalMinutes % 1440) + 1440) % 1440;
+  const newHours = Math.floor(wrappedMinutes / 60);
+  const newMinutes = wrappedMinutes % 60;
+
+  return `${newHours.toString().padStart(2, "0")}:${newMinutes.toString().padStart(2, "0")}`;
 }
 
 export function calculateEndTime(startTime: string, durationMinutes: number): string {
