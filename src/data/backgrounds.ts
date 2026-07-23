@@ -230,4 +230,7 @@ export const DEFAULT_STATE: WeddingState = {
   // Hashtag Generator
   generatedHashtags: [],
   favoriteHashtags: [],
+
+  // Guest Meal Assignments
+  guestMealAssignments: {},
 };

@@ -302,6 +302,9 @@ export interface WeddingState {
   guestGifts: GuestGift[];
   guestGiftIdCounter: number;
 
+  // Guest Meal Assignments
+  guestMealAssignments: Record<number, number>;
+
   // Photo Shot List
   photoShots: PhotoShot[];
   photoShotIdCounter: number;

@@ -937,6 +937,13 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  const setGuestMealAssignments = useCallback((assignments: Record<number, number>) => {
+    setState((prev) => ({
+      ...prev,
+      guestMealAssignments: assignments,
+    }));
+  }, [setState]);
+
   // Contract Checklist methods
   const toggleContractCheckItem = useCallback((itemId: string) => {
     setState((prev) => ({
@@ -1165,7 +1172,7 @@ export function useWeddingStore() {
     addPhotoShot, removePhotoShot, updatePhotoShot,
     addWelcomeBagItem, removeWelcomeBagItem, updateWelcomeBagItem, toggleWelcomeBagItemChecked,
     addWelcomeBagDistribution, removeWelcomeBagDistribution, updateWelcomeBagDistribution,
-    addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked, updateMenuSettings,
+    addMenuItem, removeMenuItem, updateMenuItem, toggleMenuItemFavorite, toggleMenuItemChecked, updateMenuSettings, setGuestMealAssignments,
     toggleContractCheckItem, clearContractChecklist,
     addContract, updateContract, removeContract,
     addPaymentMilestone, updatePaymentMilestone, removePaymentMilestone, markPaymentMilestonePaid,

@@ -244,6 +244,12 @@ const menuRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/menu-page'), 'default'),
 })
 
+const guestMealsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/guest-meals',
+  component: lazyRouteComponent(() => import('./components/meals/guest-meal-assignment-page'), 'GuestMealAssignmentPage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -326,6 +332,7 @@ const routeTree = rootRoute.addChildren([
     welcomeBagsRoute,
     weatherRoute,
     menuRoute,
+    guestMealsRoute,
   ]),
   rsvpRoute,
   sharedRoute,

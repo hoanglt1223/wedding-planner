@@ -27,6 +27,8 @@ export const PAGES: PageDef[] = [
   { id: "budget", label: "💰 Ngân Sách", icon: "💰", shortLabel: "Ngân sách" },
   { id: "transportation", label: "🚐 Vận Chuyển", icon: "🚐", shortLabel: "Vận chuyển" },
   { id: "welcome-bags", label: "🎒 Túi Chào Mời", icon: "🎒", shortLabel: "Túi chào" },
+  { id: "menu", label: "🍽️ Thực Đơn", icon: "🍽️", shortLabel: "Thực đơn" },
+  { id: "guest-meals", label: "🍽️ Phân Cơm Khách", icon: "🍽️", shortLabel: "Phân cơm" },
   { id: "weather", label: "🌤️ Thời Tiết", icon: "🌤️", shortLabel: "Thời tiết" },
 ];
 
