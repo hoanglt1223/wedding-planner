@@ -214,6 +214,12 @@ const analyticsRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/analytics-page'), 'default'),
 })
 
+const anniversaryRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/anniversary',
+  component: lazyRouteComponent(() => import('./pages/anniversary-page'), 'AnniversaryPage'),
+})
+
 const budgetRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/budget',
@@ -331,6 +337,7 @@ const routeTree = rootRoute.addChildren([
     transportationRoute,
     welcomeBagsRoute,
     weatherRoute,
+    anniversaryRoute,
     menuRoute,
     guestMealsRoute,
   ]),

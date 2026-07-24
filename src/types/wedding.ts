@@ -337,6 +337,20 @@ export interface WeddingState {
 
   // Emergency Kit Checklist
   emergencyKitChecked?: Record<string, boolean>; // itemId -> checked state
+
+  // Anniversary & Important Dates
+  anniversaryDates: ImportantDate[];
+  anniversaryIdCounter: number;
+}
+
+export interface ImportantDate {
+  id: number;
+  date: string;              // "YYYY-MM-DD" format
+  title: string;             // e.g., "First Date", "Engagement Day", "First Kiss"
+  type: "milestone" | "anniversary" | "custom";
+  notes?: string;            // Optional notes about the date
+  recurring: boolean;        // Whether this repeats annually (for anniversaries)
+  reminderDays?: number;     // Days before to remind (optional)
 }
 
 export interface WeddingEvent {

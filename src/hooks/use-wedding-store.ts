@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
 import { DEFAULT_STATE } from "@/data/backgrounds";
@@ -1001,6 +1001,29 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, emergencyKitChecked: {} }));
   }, [setState]);
 
+  // Anniversary & Important Dates management
+  const addAnniversaryDate = useCallback((date: Omit<ImportantDate, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      anniversaryIdCounter: prev.anniversaryIdCounter + 1,
+      anniversaryDates: [...(prev.anniversaryDates || []), { ...date, id: prev.anniversaryIdCounter + 1 }],
+    }));
+  }, [setState]);
+
+  const updateAnniversaryDate = useCallback((id: number, updates: Partial<ImportantDate>) => {
+    setState((prev) => ({
+      ...prev,
+      anniversaryDates: (prev.anniversaryDates || []).map((d) => d.id === id ? { ...d, ...updates } : d),
+    }));
+  }, [setState]);
+
+  const removeAnniversaryDate = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      anniversaryDates: (prev.anniversaryDates || []).filter((d) => d.id !== id),
+    }));
+  }, [setState]);
+
   // Wedding Contracts management
   const addContract = useCallback((contract: Omit<WeddingContract, "id" | "createdAt" | "updatedAt">) => {
     setState((prev) => {
@@ -1206,6 +1229,7 @@ export function useWeddingStore() {
     addPaymentMilestone, updatePaymentMilestone, removePaymentMilestone, markPaymentMilestonePaid,
     setGeneratedHashtags, toggleFavoriteHashtag, clearGeneratedHashtags,
     toggleEmergencyKitItem, clearEmergencyKitChecklist,
+    addAnniversaryDate, updateAnniversaryDate, removeAnniversaryDate,
     ...phase2,
   };
 }

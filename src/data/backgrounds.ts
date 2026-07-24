@@ -237,4 +237,8 @@ export const DEFAULT_STATE: WeddingState = {
 
   // Guest Meal Assignments
   guestMealAssignments: {},
+
+  // Anniversary & Important Dates
+  anniversaryDates: [],
+  anniversaryIdCounter: 0,
 };
