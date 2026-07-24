@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
 import { DEFAULT_STATE } from "@/data/backgrounds";
@@ -431,6 +431,33 @@ export function useWeddingStore() {
     setState((prev) => ({
       ...prev,
       vendorPayments: (prev.vendorPayments || []).filter((p) => p.id !== id),
+    }));
+  }, [setState]);
+
+  const addVendorCommunication = useCallback((communication: Omit<VendorCommunication, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      vendorCommunicationIdCounter: (prev.vendorCommunicationIdCounter || 0) + 1,
+      vendorCommunications: [
+        ...(prev.vendorCommunications || []),
+        { ...communication, id: (prev.vendorCommunicationIdCounter || 0) + 1 },
+      ],
+    }));
+  }, [setState]);
+
+  const updateVendorCommunication = useCallback((id: number, updates: Partial<VendorCommunication>) => {
+    setState((prev) => ({
+      ...prev,
+      vendorCommunications: (prev.vendorCommunications || []).map((c) =>
+        c.id === id ? { ...c, ...updates } : c
+      ),
+    }));
+  }, [setState]);
+
+  const removeVendorCommunication = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      vendorCommunications: (prev.vendorCommunications || []).filter((c) => c.id !== id),
     }));
   }, [setState]);
 
@@ -1158,6 +1185,7 @@ export function useWeddingStore() {
     setItineraryItems, addItineraryItem, updateItineraryItem, removeItineraryItem,
     addContact, updateContact, removeContact,
     addVendorPayment, updateVendorPayment, removeVendorPayment,
+    addVendorCommunication, updateVendorCommunication, removeVendorCommunication,
     addSong, updateSong, removeSong,
     addSpeech, updateSpeech, removeSpeech,
     addGuestBookEntry, updateGuestBookEntry, removeGuestBookEntry, toggleGuestBookFavorite,

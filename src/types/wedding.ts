@@ -264,6 +264,10 @@ export interface WeddingState {
   vendorPayments: VendorPayment[];
   vendorPaymentIdCounter: number;
 
+  // Vendor communications
+  vendorCommunications: VendorCommunication[];
+  vendorCommunicationIdCounter: number;
+
   // Song list
   songs: SongItem[];
   songIdCounter: number;
@@ -377,6 +381,19 @@ export interface VendorPayment {
   date: string;             // YYYY-MM-DD
   method: VendorPaymentMethod;
   note: string;
+}
+
+export type VendorCommunicationType = "email" | "call" | "meeting" | "text" | "other";
+
+export interface VendorCommunication {
+  id: number;
+  vendorId: number;
+  type: VendorCommunicationType;
+  subject: string;
+  content: string;
+  date: string;             // YYYY-MM-DD
+  followUpDate?: string;    // YYYY-MM-DD
+  completed: boolean;
 }
 
 export interface PhotoItem {

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { Vendor, VendorStatus, VendorPayment, VendorQuote } from "@/types/wedding";
+import type { Vendor, VendorStatus, VendorPayment, VendorQuote, VendorCommunication } from "@/types/wedding";
 import { t } from "@/lib/i18n";
 import { VendorPaymentTracker } from "./vendor-payment-tracker";
 import { VendorQuoteComparison } from "./vendor-quote-comparison";
 import { VendorContractChecklist } from "./vendor-contract-checklist";
 import { VendorExportActions } from "./vendor-export-actions";
+import { VendorCommunicationLog } from "./vendor-communication-log";
 
 const CATEGORIES = [
   "🏛️ Nhà hàng", "📸 Ảnh/Video", "🌸 Trang trí",
@@ -49,12 +50,16 @@ interface VendorPanelProps {
   contractChecklist?: Record<string, boolean>;
   onToggleContractItem?: (itemId: string) => void;
   onClearContractChecklist?: () => void;
+  communications?: VendorCommunication[];
+  onAddCommunication?: (communication: Omit<VendorCommunication, "id">) => void;
+  onUpdateCommunication?: (id: number, updates: Partial<VendorCommunication>) => void;
+  onRemoveCommunication?: (id: number) => void;
   lang?: string;
 }
 
-export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, onAddQuote, onRemoveQuote, contractChecklist = {}, onToggleContractItem, onClearContractChecklist, lang = "vi" }: VendorPanelProps) {
+export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVendor, payments = [], onAddPayment, onRemovePayment, onAddQuote, onRemoveQuote, contractChecklist = {}, onToggleContractItem, onClearContractChecklist, communications = [], onAddCommunication, onUpdateCommunication, onRemoveCommunication, lang = "vi" }: VendorPanelProps) {
   const en = lang === "en";
-  const [view, setView] = useState<"vendors" | "payments" | "compare" | "contract">("vendors");
+  const [view, setView] = useState<"vendors" | "payments" | "compare" | "contract" | "communications">("vendors");
   const [showAddForm, setShowAddForm] = useState(false);
   const [filterCat, setFilterCat] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<VendorStatus | null>(null);
@@ -211,6 +216,19 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
         >
           📋 {en ? "Contract Checklist" : "Checklist Hợp Đồng"}
         </button>
+        <button
+          onClick={() => setView("communications")}
+          className={`px-3 py-1.5 text-xs font-medium border-b-2 transition-colors ${
+            view === "communications"
+              ? "border-[var(--theme-primary)] text-[var(--theme-primary)]"
+              : "border-transparent text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          💬 {en ? "Communications" : "Liên Lạc"}
+          {communications.length > 0 && (
+            <span className="ml-1 text-[10px] bg-gray-200 rounded-full px-1.5">{communications.length}</span>
+          )}
+        </button>
       </div>
 
       {/* Payment tracker view */}
@@ -240,6 +258,18 @@ export function VendorPanel({ vendors, onAddVendor, onRemoveVendor, onUpdateVend
           checkedItems={contractChecklist}
           onToggle={onToggleContractItem}
           onClear={onClearContractChecklist}
+          lang={lang}
+        />
+      )}
+
+      {/* Communications log view */}
+      {view === "communications" && onAddCommunication && onUpdateCommunication && onRemoveCommunication && (
+        <VendorCommunicationLog
+          vendors={vendors}
+          communications={communications}
+          onAdd={onAddCommunication}
+          onUpdate={onUpdateCommunication}
+          onRemove={onRemoveCommunication}
           lang={lang}
         />
       )}

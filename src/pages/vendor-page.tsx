@@ -21,6 +21,10 @@ export function VendorPage() {
         contractChecklist={state.contractChecklist || {}}
         onToggleContractItem={store.toggleContractCheckItem}
         onClearContractChecklist={store.clearContractChecklist}
+        communications={state.vendorCommunications || []}
+        onAddCommunication={store.addVendorCommunication}
+        onUpdateCommunication={store.updateVendorCommunication}
+        onRemoveCommunication={store.removeVendorCommunication}
         lang={lang}
       />
     </div>
