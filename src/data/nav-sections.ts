@@ -45,6 +45,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   registry: "menu",
   transportation: "menu",
   analytics: "menu",
+  "wedding-day": "menu",
   anniversary: "menu",
 };
 
@@ -74,5 +75,6 @@ export const MENU_ITEMS = [
   { pageId: "registry", icon: "🎁", labelVi: "Danh Sách Quà Tặng", labelEn: "Registry" },
   { pageId: "transportation", icon: "🚗", labelVi: "Vận Chuyển", labelEn: "Transportation" },
   { pageId: "analytics", icon: "📊", labelVi: "Phân Tích", labelEn: "Analytics" },
+  { pageId: "wedding-day", icon: "📱", labelVi: "Ngày Cưới", labelEn: "Wedding Day" },
   { pageId: "anniversary", icon: "💕", labelVi: "Kỷ Niệm", labelEn: "Anniversary" },
 ];

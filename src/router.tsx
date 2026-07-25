@@ -244,6 +244,12 @@ const weatherRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/weather-page'), 'default'),
 })
 
+const weddingDayRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/wedding-day',
+  component: lazyRouteComponent(() => import('./pages/wedding-day-page'), 'default'),
+})
+
 const menuRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/menu',
@@ -337,6 +343,7 @@ const routeTree = rootRoute.addChildren([
     transportationRoute,
     welcomeBagsRoute,
     weatherRoute,
+    weddingDayRoute,
     anniversaryRoute,
     menuRoute,
     guestMealsRoute,
