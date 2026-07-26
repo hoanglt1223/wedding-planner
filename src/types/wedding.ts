@@ -341,6 +341,9 @@ export interface WeddingState {
   // Anniversary & Important Dates
   anniversaryDates: ImportantDate[];
   anniversaryIdCounter: number;
+
+  // Honeymoon Planner
+  honeymoon: HoneymoonState;
 }
 
 export interface ImportantDate {
@@ -351,6 +354,29 @@ export interface ImportantDate {
   notes?: string;            // Optional notes about the date
   recurring: boolean;        // Whether this repeats annually (for anniversaries)
   reminderDays?: number;     // Days before to remind (optional)
+}
+
+// Honeymoon Planner
+export type HoneymoonTaskCategory = "booking" | "document" | "prep" | "activity" | "other";
+export type HoneymoonTaskStatus = "todo" | "in-progress" | "done";
+
+export interface HoneymoonTask {
+  id: number;
+  title: string;
+  category: HoneymoonTaskCategory;
+  status: HoneymoonTaskStatus;
+  dueDate?: string;          // "YYYY-MM-DD" format
+  notes?: string;
+}
+
+export interface HoneymoonState {
+  destination: string;
+  startDate: string;         // "YYYY-MM-DD" format
+  endDate: string;           // "YYYY-MM-DD" format
+  budget: number;            // planned honeymoon budget
+  packingChecked: Record<string, boolean>;  // packing item id -> checked
+  tasks: HoneymoonTask[];
+  taskIdCounter: number;
 }
 
 export interface WeddingEvent {

@@ -1,4 +1,5 @@
 import { DEFAULT_PAGE } from "@/data/page-definitions";
+import { DEFAULT_HONEYMOON } from "@/data/backgrounds";
 
 const V7_KEY = "wp_v7";
 const V8_KEY = "wp_v8";
@@ -73,6 +74,7 @@ export function migrateState(): void {
       let needsUpdate = false;
       if (!("contracts" in v18)) { v18.contracts = []; needsUpdate = true; }
       if (!("contractIdCounter" in v18)) { v18.contractIdCounter = 0; needsUpdate = true; }
+      if (!("honeymoon" in v18)) { v18.honeymoon = { ...DEFAULT_HONEYMOON }; needsUpdate = true; }
       if (needsUpdate) localStorage.setItem(V18_KEY, JSON.stringify(v18));
     } catch { /* corrupt */ }
     return;
@@ -87,6 +89,7 @@ export function migrateState(): void {
         ...v17,
         contracts: v17.contracts ?? [],
         contractIdCounter: v17.contractIdCounter ?? 0,
+        honeymoon: v17.honeymoon ?? { ...DEFAULT_HONEYMOON },
       };
       localStorage.setItem(V18_KEY, JSON.stringify(v18));
     } catch { /* corrupt */ }
@@ -117,6 +120,7 @@ export function migrateState(): void {
         ...v16,
         contracts: v16.contracts ?? [],
         contractIdCounter: v16.contractIdCounter ?? 0,
+        honeymoon: v16.honeymoon ?? { ...DEFAULT_HONEYMOON },
       };
       localStorage.setItem(V18_KEY, JSON.stringify(v18));
     } catch { /* corrupt */ }

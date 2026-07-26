@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate, HoneymoonState, HoneymoonTask } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
-import { DEFAULT_STATE } from "@/data/backgrounds";
+import { DEFAULT_STATE, DEFAULT_HONEYMOON } from "@/data/backgrounds";
 import { getWeddingSteps } from "@/data/resolve-data";
 import { migrateState } from "@/lib/migrate-state";
 import { usePhase2Methods } from "./use-wedding-store-phase2";
@@ -1024,6 +1024,62 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Honeymoon Planner management
+  const updateHoneymoon = useCallback((patch: Partial<HoneymoonState>) => {
+    setState((prev) => ({
+      ...prev,
+      honeymoon: { ...(prev.honeymoon ?? DEFAULT_HONEYMOON), ...patch },
+    }));
+  }, [setState]);
+
+  const toggleHoneymoonPacking = useCallback((itemId: string) => {
+    setState((prev) => {
+      const base = prev.honeymoon ?? DEFAULT_HONEYMOON;
+      const checked = { ...(base.packingChecked || {}) };
+      checked[itemId] = !checked[itemId];
+      if (!checked[itemId]) delete checked[itemId];
+      return { ...prev, honeymoon: { ...base, packingChecked: checked } };
+    });
+  }, [setState]);
+
+  const clearHoneymoonPacking = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      honeymoon: { ...(prev.honeymoon ?? DEFAULT_HONEYMOON), packingChecked: {} },
+    }));
+  }, [setState]);
+
+  const addHoneymoonTask = useCallback((task: Omit<HoneymoonTask, "id">) => {
+    setState((prev) => {
+      const base = prev.honeymoon ?? DEFAULT_HONEYMOON;
+      const newTask: HoneymoonTask = { ...task, id: base.taskIdCounter + 1 };
+      return {
+        ...prev,
+        honeymoon: { ...base, tasks: [...(base.tasks || []), newTask], taskIdCounter: base.taskIdCounter + 1 },
+      };
+    });
+  }, [setState]);
+
+  const updateHoneymoonTask = useCallback((id: number, updates: Partial<HoneymoonTask>) => {
+    setState((prev) => {
+      const base = prev.honeymoon ?? DEFAULT_HONEYMOON;
+      return {
+        ...prev,
+        honeymoon: { ...base, tasks: (base.tasks || []).map((t) => t.id === id ? { ...t, ...updates } : t) },
+      };
+    });
+  }, [setState]);
+
+  const removeHoneymoonTask = useCallback((id: number) => {
+    setState((prev) => {
+      const base = prev.honeymoon ?? DEFAULT_HONEYMOON;
+      return {
+        ...prev,
+        honeymoon: { ...base, tasks: (base.tasks || []).filter((t) => t.id !== id) },
+      };
+    });
+  }, [setState]);
+
   // Wedding Contracts management
   const addContract = useCallback((contract: Omit<WeddingContract, "id" | "createdAt" | "updatedAt">) => {
     setState((prev) => {
@@ -1230,6 +1286,8 @@ export function useWeddingStore() {
     setGeneratedHashtags, toggleFavoriteHashtag, clearGeneratedHashtags,
     toggleEmergencyKitItem, clearEmergencyKitChecklist,
     addAnniversaryDate, updateAnniversaryDate, removeAnniversaryDate,
+    updateHoneymoon, toggleHoneymoonPacking, clearHoneymoonPacking,
+    addHoneymoonTask, updateHoneymoonTask, removeHoneymoonTask,
     ...phase2,
   };
 }

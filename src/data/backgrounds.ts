@@ -1,4 +1,4 @@
-import type { BackgroundStyle, WeddingState } from "@/types/wedding";
+import type { BackgroundStyle, WeddingState, HoneymoonState } from "@/types/wedding";
 
 export const BACKGROUNDS: BackgroundStyle[] = [
   {
@@ -72,6 +72,16 @@ export const EXTRA_TABS = [
   "⏱️ Lịch Trình",
   "🎁 Phong Bì",
 ] as const;
+
+export const DEFAULT_HONEYMOON: HoneymoonState = {
+  destination: "",
+  startDate: "",
+  endDate: "",
+  budget: 0,
+  packingChecked: {},
+  tasks: [],
+  taskIdCounter: 0,
+};
 
 export const DEFAULT_STATE: WeddingState = {
   tab: 0,
@@ -241,4 +251,7 @@ export const DEFAULT_STATE: WeddingState = {
   // Anniversary & Important Dates
   anniversaryDates: [],
   anniversaryIdCounter: 0,
+
+  // Honeymoon Planner
+  honeymoon: DEFAULT_HONEYMOON,
 };

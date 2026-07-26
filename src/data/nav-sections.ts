@@ -47,6 +47,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   analytics: "menu",
   "wedding-day": "menu",
   anniversary: "menu",
+  honeymoon: "menu",
 };
 
 export const MENU_ITEMS = [
@@ -77,4 +78,5 @@ export const MENU_ITEMS = [
   { pageId: "analytics", icon: "📊", labelVi: "Phân Tích", labelEn: "Analytics" },
   { pageId: "wedding-day", icon: "📱", labelVi: "Ngày Cưới", labelEn: "Wedding Day" },
   { pageId: "anniversary", icon: "💕", labelVi: "Kỷ Niệm", labelEn: "Anniversary" },
+  { pageId: "honeymoon", icon: "✈️", labelVi: "Tuần Trăng Mật", labelEn: "Honeymoon" },
 ];
