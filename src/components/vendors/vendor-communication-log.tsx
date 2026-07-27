@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import type { Vendor, VendorCommunication, VendorCommunicationType } from "@/types/wedding";
-import { t } from "@/lib/i18n-translations";
+import { t } from "@/lib/i18n";
 
 const COMM_TYPES: { id: VendorCommunicationType; icon: string; labelVi: string; labelEn: string }[] = [
   { id: "email", icon: "📧", labelVi: "Email", labelEn: "Email" },

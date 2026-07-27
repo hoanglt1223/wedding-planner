@@ -300,7 +300,6 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Nội dung": { vi: "Nội dung", en: "Content" },
   "Tiêu đề email/cuộc gọi...": { vi: "Tiêu đề email/cuộc gọi...", en: "Email/call subject..." },
   "Chi tiết về cuộc trò chuyện...": { vi: "Chi tiết về cuộc trò chuyện...", en: "Details about the conversation..." },
-  "Đã hoàn thành": { vi: "Đã hoàn thành", en: "Completed" },
   "Tất cả nhà cung cấp": { vi: "Tất cả nhà cung cấp", en: "All Vendors" },
   "Chọn nhà cung cấp...": { vi: "Chọn nhà cung cấp...", en: "Select vendor..." },
   "Tất cả loại": { vi: "Tất cả loại", en: "All Types" },
@@ -516,9 +515,7 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "yêu cầu": { vi: "yêu cầu", en: "requirements" },
   "đã chọn": { vi: "đã chọn", en: "selected" },
   "thêm": { vi: "thêm", en: "more" },
-  "Bắt buộc": { vi: "Bắt buộc", en: "Required" },
   "Khuyến nghị": { vi: "Khuyến nghị", en: "Recommended" },
-  "Tùy chọn": { vi: "Tùy chọn", en: "Optional" },
   "Đã chọn": { vi: "Đã chọn", en: "Selected" },
   "Yêu cầu": { vi: "Yêu cầu", en: "Requirements" },
 };

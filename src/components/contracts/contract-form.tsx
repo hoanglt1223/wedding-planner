@@ -144,7 +144,7 @@ export function ContractForm({ contract, onSave, onCancel, lang = "vi" }: Contra
     setSelectedRequirementIds(prev =>
       prev.includes(requirementId)
         ? prev.filter(id => id !== requirementId)
-        : [...prev, requirementment]
+        : [...prev, requirementId]
     );
   };
 

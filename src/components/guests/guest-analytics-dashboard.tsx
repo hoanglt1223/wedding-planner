@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import type { Guest } from "@/types/wedding";
-import { Users, Utensils, Divide, Table, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Users, Utensils, Divide, Table, CheckCircle } from "lucide-react";
 
 interface GuestAnalyticsDashboardProps {
   guests: Guest[];

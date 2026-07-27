@@ -4,7 +4,7 @@
  */
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Cloud, CloudSun, Sun, CloudRain, CloudDrizzle, Wind } from "lucide-react";
+import { Cloud, CloudSun, Sun, CloudRain, CloudDrizzle, Wind, Snow } from "lucide-react";
 
 interface WeatherSummaryProps {
   weddingDate: string;
