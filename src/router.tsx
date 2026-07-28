@@ -160,6 +160,12 @@ const contractsRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/contracts-page'), 'ContractsPage'),
 })
 
+const contactsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/contacts',
+  component: lazyRouteComponent(() => import('./pages/contacts-page'), 'ContactsPage'),
+})
+
 const guestBookRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/guest-book',
@@ -335,6 +341,7 @@ const routeTree = rootRoute.addChildren([
     songsRoute,
     vendorsRoute,
     contractsRoute,
+    contactsRoute,
     speechesRoute,
     guestBookRoute,
     weddingPartyRoute,
