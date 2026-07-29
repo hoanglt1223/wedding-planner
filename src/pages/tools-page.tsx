@@ -4,6 +4,7 @@ import { AstrologyPage } from "./astrology-page";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { ExportPanel } from "@/components/export/export-panel";
 import { HashtagGenerator } from "@/components/hashtags/hashtag-generator";
+import { WeddingDataImportPanel } from "@/components/import/wedding-data-import-panel";
 
 const TaskBoardDashboard = lazy(() => import("@/components/tasks/task-board-dashboard"));
 
@@ -12,6 +13,7 @@ const TABS = [
   { labelVi: "🔮 Tử Vi", labelEn: "🔮 Fortune" },
   { labelVi: "📋 Công Việc", labelEn: "📋 Tasks" },
   { labelVi: "#️⃣ Hashtag", labelEn: "#️⃣ Hashtag" },
+  { labelVi: "📥 Nhập Dữ Liệu", labelEn: "📥 Import" },
   { labelVi: "📦 Xuất Dữ Liệu", labelEn: "📦 Export" },
 ];
 
@@ -62,7 +64,8 @@ export function ToolsPage() {
           lang={state.lang === "en" ? "en" : "vi"}
         />
       )}
-      {activeTab === 4 && <ExportPanel />}
+      {activeTab === 4 && <WeddingDataImportPanel />}
+      {activeTab === 5 && <ExportPanel />}
     </div>
   );
 }
