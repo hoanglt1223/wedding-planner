@@ -268,6 +268,12 @@ const menuRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/menu-page'), 'default'),
 })
 
+const menuCardsRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/menu-cards',
+  component: lazyRouteComponent(() => import('./pages/menu-cards-page'), 'default'),
+})
+
 const guestMealsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/guest-meals',
@@ -360,6 +366,7 @@ const routeTree = rootRoute.addChildren([
     anniversaryRoute,
     honeymoonRoute,
     menuRoute,
+    menuCardsRoute,
     guestMealsRoute,
   ]),
   rsvpRoute,
