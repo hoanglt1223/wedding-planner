@@ -49,6 +49,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   "wedding-day": "menu",
   anniversary: "menu",
   honeymoon: "menu",
+  "hashtag-generator": "menu",
 };
 
 export const MENU_ITEMS = [
@@ -81,4 +82,5 @@ export const MENU_ITEMS = [
   { pageId: "wedding-day", icon: "📱", labelVi: "Ngày Cưới", labelEn: "Wedding Day" },
   { pageId: "anniversary", icon: "💕", labelVi: "Kỷ Niệm", labelEn: "Anniversary" },
   { pageId: "honeymoon", icon: "✈️", labelVi: "Tuần Trăng Mật", labelEn: "Honeymoon" },
+  { pageId: "hashtag-generator", icon: "📱", labelVi: "Hashtag Đám Cưới", labelEn: "Wedding Hashtag" },
 ];

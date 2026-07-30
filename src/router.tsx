@@ -280,6 +280,12 @@ const guestMealsRoute = createRoute({
   component: lazyRouteComponent(() => import('./components/meals/guest-meal-assignment-page'), 'GuestMealAssignmentPage'),
 })
 
+const hashtagGeneratorRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/hashtag-generator',
+  component: lazyRouteComponent(() => import('./pages/hashtag-generator-page'), 'default'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -368,6 +374,7 @@ const routeTree = rootRoute.addChildren([
     menuRoute,
     menuCardsRoute,
     guestMealsRoute,
+    hashtagGeneratorRoute,
   ]),
   rsvpRoute,
   sharedRoute,
