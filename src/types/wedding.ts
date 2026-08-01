@@ -268,6 +268,10 @@ export interface WeddingState {
   vendorCommunications: VendorCommunication[];
   vendorCommunicationIdCounter: number;
 
+  // Vendor gratitude/tip tracking
+  vendorGratitude: VendorGratitude[];
+  vendorGratitudeIdCounter: number;
+
   // Song list
   songs: SongItem[];
   songIdCounter: number;
@@ -434,6 +438,19 @@ export interface VendorCommunication {
   date: string;             // YYYY-MM-DD
   followUpDate?: string;    // YYYY-MM-DD
   completed: boolean;
+}
+
+export type VendorGratitudeStatus = "planned" | "given" | "pending";
+
+export interface VendorGratitude {
+  id: number;
+  vendorId: number;
+  amount: number;           // VND - tip amount
+  status: VendorGratitudeStatus;
+  plannedDate?: string;     // YYYY-MM-DD - when planning to give
+  givenDate?: string;       // YYYY-MM-DD - when actually given
+  notes?: string;           // Optional notes about the tip
+  createdAt: string;        // ISO timestamp
 }
 
 export interface PhotoItem {

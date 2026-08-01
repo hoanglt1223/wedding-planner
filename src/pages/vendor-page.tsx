@@ -1,32 +1,83 @@
+import { useState } from "react";
 import { VendorPanel } from "@/components/vendors/vendor-panel";
+import { VendorGratitudeTracker } from "@/components/vendors/vendor-gratitude-tracker";
+import { VendorGratitudeGuide } from "@/components/vendors/vendor-gratitude-guide";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
+import { t } from "@/lib/i18n";
+
+type VendorTab = "vendors" | "gratitude" | "guide";
 
 export function VendorPage() {
   const store = useWeddingStoreContext();
   const { state } = store;
   const lang = state.lang;
+  const [activeTab, setActiveTab] = useState<VendorTab>("vendors");
+
+  const tabs: Array<{ id: VendorTab; labelVi: string; labelEn: string }> = [
+    { id: "vendors", labelVi: "Nhà Cung Cấp", labelEn: "Vendors" },
+    { id: "gratitude", labelVi: "Theo Dõi Tip", labelEn: "Tip Tracker" },
+    { id: "guide", labelVi: "Hướng Dẫn", labelEn: "Guide" },
+  ];
 
   return (
     <div className="space-y-4 py-2">
-      <VendorPanel
-        vendors={state.vendors || []}
-        onAddVendor={store.addVendor}
-        onRemoveVendor={store.removeVendor}
-        onUpdateVendor={store.updateVendor}
-        payments={state.vendorPayments || []}
-        onAddPayment={store.addVendorPayment}
-        onRemovePayment={store.removeVendorPayment}
-        onAddQuote={store.addVendorQuote}
-        onRemoveQuote={store.removeVendorQuote}
-        contractChecklist={state.contractChecklist || {}}
-        onToggleContractItem={store.toggleContractCheckItem}
-        onClearContractChecklist={store.clearContractChecklist}
-        communications={state.vendorCommunications || []}
-        onAddCommunication={store.addVendorCommunication}
-        onUpdateCommunication={store.updateVendorCommunication}
-        onRemoveCommunication={store.removeVendorCommunication}
-        lang={lang}
-      />
+      {/* Tab Navigation */}
+      <div className="flex gap-2 border-b">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`px-3 py-2 text-sm font-medium transition-colors relative ${
+              activeTab === tab.id
+                ? "text-primary border-b-2 border-primary"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {lang === "vi" ? tab.labelVi : tab.labelEn}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === "vendors" && (
+        <VendorPanel
+          vendors={state.vendors || []}
+          onAddVendor={store.addVendor}
+          onRemoveVendor={store.removeVendor}
+          onUpdateVendor={store.updateVendor}
+          payments={state.vendorPayments || []}
+          onAddPayment={store.addVendorPayment}
+          onRemovePayment={store.removeVendorPayment}
+          onAddQuote={store.addVendorQuote}
+          onRemoveQuote={store.removeVendorQuote}
+          contractChecklist={state.contractChecklist || {}}
+          onToggleContractItem={store.toggleContractCheckItem}
+          onClearContractChecklist={store.clearContractChecklist}
+          communications={state.vendorCommunications || []}
+          onAddCommunication={store.addVendorCommunication}
+          onUpdateCommunication={store.updateVendorCommunication}
+          onRemoveCommunication={store.removeVendorCommunication}
+          lang={lang}
+        />
+      )}
+
+      {activeTab === "gratitude" && (
+        <VendorGratitudeTracker
+          vendors={state.vendors || []}
+          gratitudeList={state.vendorGratitude || []}
+          onAdd={store.addVendorGratitude}
+          onUpdate={store.updateVendorGratitude}
+          onRemove={store.removeVendorGratitude}
+          lang={lang === "en" ? "en" : "vi"}
+        />
+      )}
+
+      {activeTab === "guide" && (
+        <VendorGratitudeGuide
+          vendors={state.vendors || []}
+          lang={lang === "en" ? "en" : "vi"}
+        />
+      )}
     </div>
   );
 }

@@ -461,6 +461,29 @@ export function useWeddingStore() {
     }));
   }, [setState]);
 
+  // Vendor gratitude/tip tracking methods
+  const addVendorGratitude = useCallback((gratitude: Omit<VendorGratitude, "id" | "createdAt">) => {
+    setState((prev) => ({
+      ...prev,
+      vendorGratitudeIdCounter: (prev.vendorGratitudeIdCounter || 0) + 1,
+      vendorGratitude: [...(prev.vendorGratitude || []), { ...gratitude, id: (prev.vendorGratitudeIdCounter || 0) + 1, createdAt: new Date().toISOString() }],
+    }));
+  }, [setState]);
+
+  const updateVendorGratitude = useCallback((id: number, updates: Partial<VendorGratitude>) => {
+    setState((prev) => ({
+      ...prev,
+      vendorGratitude: (prev.vendorGratitude || []).map((g) => g.id === id ? { ...g, ...updates } : g),
+    }));
+  }, [setState]);
+
+  const removeVendorGratitude = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      vendorGratitude: (prev.vendorGratitude || []).filter((g) => g.id !== id),
+    }));
+  }, [setState]);
+
   // Song list methods
   const addSong = useCallback((song: Omit<SongItem, "id">) => {
     setState((prev) => ({
@@ -1265,6 +1288,7 @@ export function useWeddingStore() {
     addContact, updateContact, removeContact,
     addVendorPayment, updateVendorPayment, removeVendorPayment,
     addVendorCommunication, updateVendorCommunication, removeVendorCommunication,
+    addVendorGratitude, updateVendorGratitude, removeVendorGratitude,
     addSong, updateSong, removeSong,
     addSpeech, updateSpeech, removeSpeech,
     addGuestBookEntry, updateGuestBookEntry, removeGuestBookEntry, toggleGuestBookFavorite,

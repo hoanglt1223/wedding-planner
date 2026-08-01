@@ -50,6 +50,8 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   anniversary: "menu",
   honeymoon: "menu",
   "hashtag-generator": "menu",
+  "welcome-bags": "menu",
+  weather: "menu",
 };
 
 export const MENU_ITEMS = [
@@ -74,10 +76,12 @@ export const MENU_ITEMS = [
   { pageId: "guest-book", icon: "📝", labelVi: "Sổ Lưu Bút", labelEn: "Guest Book" },
   { pageId: "mood-board", icon: "🎨", labelVi: "Bảng Cảm Hứng", labelEn: "Mood Board" },
   { pageId: "guest-gifts", icon: "🎀", labelVi: "Quà Tặng Cho Khách", labelEn: "Guest Gifts" },
+  { pageId: "welcome-bags", icon: "🎒", labelVi: "Túi Chào Mời", labelEn: "Welcome Bags" },
   { pageId: "photo-shots", icon: "📸", labelVi: "Danh Sách Chụp Hình", labelEn: "Photo Shot List" },
   { pageId: "photo-gallery", icon: "🖼️", labelVi: "Thư Viện Ảnh", labelEn: "Photo Gallery" },
   { pageId: "registry", icon: "🎁", labelVi: "Danh Sách Quà Tặng", labelEn: "Registry" },
   { pageId: "transportation", icon: "🚗", labelVi: "Vận Chuyển", labelEn: "Transportation" },
+  { pageId: "weather", icon: "🌤️", labelVi: "Thời Tiết", labelEn: "Weather" },
   { pageId: "analytics", icon: "📊", labelVi: "Phân Tích", labelEn: "Analytics" },
   { pageId: "wedding-day", icon: "📱", labelVi: "Ngày Cưới", labelEn: "Wedding Day" },
   { pageId: "anniversary", icon: "💕", labelVi: "Kỷ Niệm", labelEn: "Anniversary" },
