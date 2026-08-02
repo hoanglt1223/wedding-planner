@@ -1,11 +1,11 @@
 import type { Guest } from "@/types/wedding";
 
-const CSV_HEADER = "Họ tên,SĐT,Bên,Nhóm,Chế độ ăn,Người đi kèm";
+const CSV_HEADER = "Họ tên,SĐT,Bên,Phân loại,Nhóm bàn,Chế độ ăn,Người đi kèm";
 const BOM = "﻿";
 
 /** Download a sample CSV template */
 export function downloadSampleCsv(): void {
-  const csv = `${CSV_HEADER}\nNguyễn A,0901234567,trai,Bàn 1,,\nTrần B,0912345678,gai,Họ hàng,chay,Nguyễn C`;
+  const csv = `${CSV_HEADER}\nNguyễn A,0901234567,trai,family-bride,Bàn 1,,\nTrần B,0912345678,gai,friends-groom,Bàn 2,chay,Nguyễn C`;
   downloadBlob(BOM + csv, "khach_moi_mau.csv");
 }
 
@@ -13,7 +13,7 @@ export function downloadSampleCsv(): void {
 export function exportGuestsCsv(guests: Guest[]): void {
   let csv = CSV_HEADER + "\n";
   guests.forEach((guest) => {
-    csv += `${guest.name},${guest.phone || ""},${guest.side},${guest.tableGroup || ""},${guest.dietary || ""},${guest.plusOneName || ""}\n`;
+    csv += `${guest.name},${guest.phone || ""},${guest.side},${guest.group || ""},${guest.tableGroup || ""},${guest.dietary || ""},${guest.plusOneName || ""}\n`;
   });
   downloadBlob(BOM + csv, "khach_moi.csv");
 }
@@ -30,9 +30,10 @@ export function parseCsvToGuests(text: string): Omit<Guest, "id">[] {
         name: parts[0] || "",
         phone: parts[1] || "",
         side: parts[2] || "trai",
-        tableGroup: parts[3] || "",
-        dietary: parts[4] || undefined,
-        plusOneName: parts[5] || undefined,
+        group: parts[3] || undefined,
+        tableGroup: parts[4] || "",
+        dietary: parts[5] || undefined,
+        plusOneName: parts[6] || undefined,
       };
     })
     .filter((guest) => guest.name);

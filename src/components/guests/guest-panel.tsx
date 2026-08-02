@@ -14,7 +14,9 @@ import { SeatingChart } from "./seating-chart";
 import { RsvpDashboard } from "./rsvp-dashboard";
 import { TableAssignmentPanel } from "./table-assignment-panel";
 import { MealSummaryPanel } from "./meal-summary-panel";
+import { GroupStatistics } from "./group-statistics";
 import { t } from "@/lib/i18n";
+import { guestGroups } from "@/data/guest-groups";
 
 interface GuestPanelProps {
   guests: Guest[];
@@ -53,8 +55,10 @@ export function GuestPanel({
   const [phone, setPhone] = useState("");
   const [side, setSide] = useState<"trai" | "gai">("trai");
   const [group, setGroup] = useState("");
+  const [guestCategory, setGuestCategory] = useState("");
   const [dietary, setDietary] = useState("");
   const [search, setSearch] = useState("");
+  const [groupFilter, setGroupFilter] = useState("");
   const [view, setView] = useState<"list" | "chart" | "assign" | "rsvp" | "meals">("list");
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -69,12 +73,14 @@ export function GuestPanel({
       phone: phone.trim(),
       side,
       tableGroup: group.trim(),
+      group: guestCategory || undefined,
       dietary: dietary.trim() || undefined,
     });
     setName("");
     setPhone("");
     setSide("trai");
     setGroup("");
+    setGuestCategory("");
     setDietary("");
   };
 
@@ -91,9 +97,18 @@ export function GuestPanel({
     if (window.confirm(t("Xóa tất cả?", lang))) onClearGuests();
   };
 
-  const filteredGuests = search
-    ? guests.filter((g) => g.name.toLowerCase().includes(search.toLowerCase()))
-    : guests;
+  const filteredGuests = (() => {
+    let result = guests;
+    if (search) {
+      result = result.filter((g) =>
+        g.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    if (groupFilter) {
+      result = result.filter((g) => g.group === groupFilter);
+    }
+    return result;
+  })();
 
   return (
     <div className="bg-[var(--theme-surface)] rounded-xl shadow-sm border border-[var(--theme-border)] p-4">
@@ -109,7 +124,9 @@ export function GuestPanel({
 
         <HeadcountSummary guests={guests} lang={lang} />
 
-        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr_auto_1fr_auto]">
+        <GroupStatistics guests={guests} lang={lang} />
+
+        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_1fr_auto_auto_auto_auto]">
           <Input
             className="h-8 text-sm"
             placeholder={t("Họ tên", lang)}
@@ -131,9 +148,21 @@ export function GuestPanel({
             <option value="trai">{lang === "en" ? "Groom" : "Trai"}</option>
             <option value="gai">{lang === "en" ? "Bride" : "Gái"}</option>
           </select>
+          <select
+            className="h-8 text-sm border border-gray-300 rounded px-1"
+            value={guestCategory}
+            onChange={(e) => setGuestCategory(e.target.value)}
+          >
+            <option value="">{lang === "en" ? "👥 Group" : "👥 Nhóm"}</option>
+            {guestGroups.map((g) => (
+              <option key={g.key} value={g.key}>
+                {g.icon} {lang === "en" ? g.labelEn : g.label}
+              </option>
+            ))}
+          </select>
           <Input
             className="h-8 text-sm"
-            placeholder={t("Nhóm/Bàn", lang)}
+            placeholder={t("Bàn", lang)}
             value={group}
             onChange={(e) => setGroup(e.target.value)}
           />
@@ -246,12 +275,33 @@ export function GuestPanel({
 
         {guests.length > 0 && view === "list" && (
           <>
-            <Input
-              className="h-8 text-sm"
-              placeholder={t("🔍 Tìm kiếm...", lang)}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[2fr_auto]">
+              <Input
+                className="h-8 text-sm"
+                placeholder={t("🔍 Tìm kiếm...", lang)}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <select
+                className="h-8 text-sm border border-gray-300 rounded px-2"
+                value={groupFilter}
+                onChange={(e) => setGroupFilter(e.target.value)}
+              >
+                <option value="">
+                  {lang === "en" ? "👥 All Groups" : "👥 Tất cả nhóm"}
+                </option>
+                {guestGroups.map((g) => (
+                  <option key={g.key} value={g.key}>
+                    {g.icon} {lang === "en" ? g.labelEn : g.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
+
+        {guests.length > 0 && view === "list" && (
+          <>
             <GuestTable guests={filteredGuests} onDelete={onRemoveGuest} onEditGuest={onUpdateGuest} lang={lang} />
           </>
         )}

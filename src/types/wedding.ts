@@ -121,6 +121,7 @@ export interface Guest {
   side: string;
   tableGroup: string;
   id: number;
+  group?: string;          // Guest group category (family-bride, family-groom, friends-bride, etc.)
   rsvpToken?: string;
   dietary?: string;        // e.g. "chay" (vegetarian), "halal", allergy note
   plusOneName?: string;    // Name of accompanying guest (+1)
