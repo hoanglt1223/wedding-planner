@@ -23,6 +23,7 @@ import {
   exportVendorsAsPdf,
   exportTimelineAsPdf,
   exportWeddingOverviewAsPdf,
+  exportCompleteWeddingPlanAsPdf,
   downloadPdfBlob,
   downloadFile,
   getTimestamp
@@ -117,6 +118,26 @@ export function ExportPanel() {
     try {
       const pdf = await exportWeddingOverviewAsPdf(state);
       downloadPdfBlob(pdf, `wedding-overview-${getTimestamp()}.pdf`);
+    } catch (error) {
+      console.error("PDF export failed:", error);
+      alert(en ? "PDF export failed" : "Xuất PDF thất bại");
+    }
+  };
+
+  const handleExportCompletePlanPdf = async () => {
+    try {
+      const pdf = await exportCompleteWeddingPlanAsPdf(state, (msg) => {
+        console.log("PDF progress:", msg);
+      });
+
+      // Generate filename based on couple names
+      const groom = state.info.groom?.toLowerCase().replace(/\s+/g, "-") || "groom";
+      const bride = state.info.bride?.toLowerCase().replace(/\s+/g, "-") || "bride";
+      const date = state.info.date || "wedding";
+      const sanitizedDate = date.replace(/\s+/g, "-");
+      const filename = `wedding-plan-${groom}-${bride}-${sanitizedDate}.pdf`;
+
+      downloadPdfBlob(pdf, filename);
     } catch (error) {
       console.error("PDF export failed:", error);
       alert(en ? "PDF export failed" : "Xuất PDF thất bại");
@@ -232,6 +253,16 @@ export function ExportPanel() {
 
   const pdfCards = [
     {
+      title: en ? "Complete Wedding Plan (PDF)" : "Kế Hoạch Đám Cưới Hoàn Chỉnh (PDF)",
+      description: en ? "All-in-one wedding guide (6 pages)" : "Hướng dẫn đám cưới tất cả trong một (6 trang)",
+      icon: FileText,
+      color: "text-rose-600",
+      bgColor: "bg-rose-50",
+      action: handleExportCompletePlanPdf,
+      count: 1,
+      featured: true
+    },
+    {
       title: en ? "Vendor Summary (PDF)" : "Tổng Kết Vendor (PDF)",
       description: en ? "Professional vendor report" : "Báo cáo vendor chuyên nghiệp",
       icon: Building2,
@@ -324,8 +355,50 @@ export function ExportPanel() {
         <h3 className="text-lg font-semibold mb-3">
           {en ? "PDF Export" : "Xuất PDF"}
         </h3>
+
+        {/* Featured Complete Plan Export */}
+        <Card className="mb-4 border-2 border-[var(--theme-primary)] bg-gradient-to-br from-[var(--theme-surface)] to-[var(--theme-surface-muted)] hover:shadow-lg transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-start justify-between">
+              <div className="p-3 rounded-lg bg-rose-100">
+                <FileText className="h-6 w-6 text-rose-600" />
+              </div>
+              <span className="text-xs font-bold bg-[var(--theme-primary)] text-white px-3 py-1 rounded-full">
+                {en ? "Featured" : "Nổi bật"}
+              </span>
+            </div>
+            <CardTitle className="text-lg mt-2">
+              {en ? "Complete Wedding Plan (PDF)" : "Kế Hoạch Đám Cưới Hoàn Chỉnh (PDF)"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                {en ? "All-in-one wedding guide with timeline, guests, budget, vendors & tasks" : "Hướng dẫn đám cưới tất cả trong một với lịch trình, khách mời, ngân sách, nhà cung cấp & công việc"}
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs">
+                <span className="px-2 py-1 bg-white rounded border">6 pages</span>
+                <span className="px-2 py-1 bg-white rounded border">{en ? "Timeline" : "Lịch trình"}</span>
+                <span className="px-2 py-1 bg-white rounded border">{en ? "Guests" : "Khách mời"}</span>
+                <span className="px-2 py-1 bg-white rounded border">{en ? "Budget" : "Ngân sách"}</span>
+                <span className="px-2 py-1 bg-white rounded border">{en ? "Vendors" : "Vendor"}</span>
+                <span className="px-2 py-1 bg-white rounded border">{en ? "Tasks" : "Công việc"}</span>
+              </div>
+              <Button
+                onClick={handleExportCompletePlanPdf}
+                className="w-full bg-[var(--theme-primary)] hover:bg-[var(--theme-primary-dark)] text-white"
+                size="lg"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                {en ? "Download Complete Plan" : "Tải Kế Hoạch Hoàn Chỉnh"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Other PDF Exports */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {pdfCards.map((card) => (
+          {pdfCards.filter(card => !card.featured).map((card) => (
             <Card key={card.title} className="hover:shadow-md transition-shadow border-2 border-dashed">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">

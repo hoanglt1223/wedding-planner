@@ -1,5 +1,6 @@
 import type { WeddingState, Vendor, TimelineEntry, GiftEntry, ExpenseEntry } from "@/types/wedding";
 import { generateVendorSummaryPdf, generateTimelineSchedulePdf, generateWeddingOverviewPdf } from "./pdf-templates";
+import { generateCompleteWeddingPlanPdf } from "./pdf-complete-wedding-plan";
 
 export interface ExportOptions {
   format: "json" | "csv" | "pdf";
@@ -231,6 +232,15 @@ export async function exportTimelineAsPdf(state: WeddingState): Promise<Blob> {
 export async function exportWeddingOverviewAsPdf(state: WeddingState): Promise<Blob> {
   const theme = extractThemeFromState(state);
   return generateWeddingOverviewPdf(state, theme);
+}
+
+/**
+ * Export complete wedding plan as PDF
+ * Includes all wedding information in one comprehensive document
+ */
+export async function exportCompleteWeddingPlanAsPdf(state: WeddingState, onProgress?: (message: string) => void): Promise<Blob> {
+  const theme = extractThemeFromState(state);
+  return generateCompleteWeddingPlanPdf(state, theme, onProgress);
 }
 
 /**
