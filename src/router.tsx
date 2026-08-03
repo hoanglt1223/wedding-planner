@@ -286,6 +286,12 @@ const hashtagGeneratorRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/hashtag-generator-page'), 'default'),
 })
 
+const vendorComparisonRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/vendor-comparison',
+  component: lazyRouteComponent(() => import('./pages/vendor-comparison-page'), 'VendorComparisonPage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -375,6 +381,7 @@ const routeTree = rootRoute.addChildren([
     menuCardsRoute,
     guestMealsRoute,
     hashtagGeneratorRoute,
+    vendorComparisonRoute,
   ]),
   rsvpRoute,
   sharedRoute,
