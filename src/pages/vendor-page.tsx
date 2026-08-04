@@ -3,9 +3,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { VendorPanel } from "@/components/vendors/vendor-panel";
 import { VendorGratitudeTracker } from "@/components/vendors/vendor-gratitude-tracker";
 import { VendorGratitudeGuide } from "@/components/vendors/vendor-gratitude-guide";
+import { VendorDiscovery } from "@/components/vendors/vendor-discovery";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 
-type VendorTab = "vendors" | "gratitude" | "guide" | "compare";
+type VendorTab = "discover" | "vendors" | "gratitude" | "guide" | "compare";
 
 export function VendorPage() {
   const store = useWeddingStoreContext();
@@ -15,6 +16,7 @@ export function VendorPage() {
   const [activeTab, setActiveTab] = useState<VendorTab>("vendors");
 
   const tabs: Array<{ id: VendorTab; labelVi: string; labelEn: string }> = [
+    { id: "discover", labelVi: "Khám Phá", labelEn: "Discover" },
     { id: "vendors", labelVi: "Nhà Cung Cấp", labelEn: "Vendors" },
     { id: "gratitude", labelVi: "Theo Dõi Tip", labelEn: "Tip Tracker" },
     { id: "guide", labelVi: "Hướng Dẫn", labelEn: "Guide" },
@@ -50,6 +52,13 @@ export function VendorPage() {
       </div>
 
       {/* Tab Content */}
+      {activeTab === "discover" && (
+        <VendorDiscovery
+          onAddVendor={store.addVendor}
+          lang={lang === "en" ? "en" : "vi"}
+        />
+      )}
+
       {activeTab === "vendors" && (
         <VendorPanel
           vendors={state.vendors || []}
