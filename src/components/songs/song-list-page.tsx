@@ -5,9 +5,11 @@ import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { SongSummaryBar } from "./song-summary-bar";
 import { SongEntryList } from "./song-entry-list";
 import { SongEntryForm } from "./song-entry-form";
+import { MusicDiscovery } from "./music-discovery";
 
 type FilterSection = "all" | SongSection;
 type FilterPriority = "all" | SongPriority;
+type SongTab = "playlist" | "discover";
 
 export function SongListPage() {
   const store = useWeddingStoreContext();
@@ -17,6 +19,7 @@ export function SongListPage() {
   const [filterPriority, setFilterPriority] = useState<FilterPriority>("all");
   const [editing, setEditing] = useState<SongItem | null | undefined>(undefined);
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [activeTab, setActiveTab] = useState<SongTab>("playlist");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const lang = state.lang;
 
