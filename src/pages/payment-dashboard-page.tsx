@@ -4,8 +4,7 @@ import { PaymentSummaryCards } from "@/components/payments/payment-summary-cards
 import { UpcomingPaymentsList } from "@/components/payments/upcoming-payments-list";
 import { PaymentTimeline } from "@/components/payments/payment-timeline";
 import { CashFlowChart } from "@/components/payments/cash-flow-chart";
-import { t } from "@/lib/i18n";
-import type { PaymentMilestone, WeddingContract } from "@/types/contracts";
+import type { PaymentMilestone } from "@/types/contracts";
 
 type ViewMode = "summary" | "list" | "timeline" | "cashflow";
 
