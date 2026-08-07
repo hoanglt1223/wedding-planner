@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
-import type { MenuItem, AppTheme } from "@/types/wedding";
+import type { MenuItem } from "@/types/wedding";
+import type { AppTheme } from "@/data/themes";
 import { t } from "@/lib/i18n";
 import { MenuCardPreview } from "./menu-card-preview";
 import { Button } from "@/components/ui/button";

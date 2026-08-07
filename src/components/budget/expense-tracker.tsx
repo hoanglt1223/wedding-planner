@@ -69,9 +69,13 @@ export function ExpenseTracker({ state, store }: ExpenseTrackerProps) {
       />
       <BudgetSummary expenseLog={expenseLog} budget={state.budget} lang={lang} />
       <CategoryBreakdown
-        budget={state.budget}
-        budgetOverrides={state.budgetOverrides}
-        expenseLog={expenseLog}
+        categoryTotals={Object.fromEntries(
+          getBudgetCategories(lang).map(cat => [
+            cat.key,
+            expenseLog.filter(e => e.category === cat.key).reduce((sum, e) => sum + e.amount, 0)
+          ])
+        )}
+        totalBudget={state.budget}
         lang={lang}
       />
 
@@ -97,12 +101,11 @@ export function ExpenseTracker({ state, store }: ExpenseTrackerProps) {
       {/* Form toggle / form */}
       {showForm ? (
         <ExpenseForm
-          key={editing?.id ?? "new"}
-          lang={lang}
-          editing={editing}
-          onSubmit={store.addExpense}
-          onUpdate={store.updateExpense}
+          expense={editing ?? undefined}
+          onSave={editing ? (expense) => store.updateExpense(editing.id, expense) : () => {}}
+          onSaveNew={store.addExpense}
           onCancel={() => { setShowForm(false); setEditing(null); }}
+          lang={lang}
         />
       ) : (
         <div className="flex gap-2">

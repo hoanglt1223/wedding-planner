@@ -386,7 +386,7 @@ export function GuestAnalyticsDashboard({ guests, lang }: GuestAnalyticsDashboar
               {tableAssignmentRate < 50 && totalGuests > 20 && (
                 <li>• {en ? "Start assigning guests to tables for better venue planning" : "Bắt đầu phân khách vào bàn để lên kế hoạch địa điểm tốt hơn"}</li>
               )}
-              {dietaryStats.filter((s) => s.count > 0 && s.type !== en ? "Regular" : "Bình thường").length > 0 && (
+              {dietaryStats.filter((s) => s.count > 0 && s.type !== (en ? "Regular" : "Bình thường")).length > 0 && (
                 <li>• {en ? "Inform caterer about dietary restrictions" : "Thông báo cho nhà cung cấp về các yêu cầu ăn uống"}</li>
               )}
               {confirmedGuests.length > 0 && (

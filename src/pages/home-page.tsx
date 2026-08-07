@@ -16,6 +16,7 @@ import { WeatherWidget } from "@/components/home/weather-widget";
 import { EmergencyContactsWidget } from "@/components/home/emergency-contacts-widget";
 import { QuickNotesWidget } from "@/components/home/quick-notes-widget";
 import { GlobalSearch } from "@/components/search/global-search";
+import { BudgetHealthDashboard } from "@/components/budget/budget-health-dashboard";
 
 export function HomePage() {
   const store = useWeddingStoreContext();
@@ -39,6 +40,12 @@ export function HomePage() {
       <MultiEventCountdown info={state.info} lang={lang} />
 
       <WeatherWidget weddingDate={state.info.date} venueCityId={state.info.venueCity} lang={lang} />
+
+      <BudgetHealthDashboard
+        budget={state.budget || 0}
+        expenses={state.expenseLog || []}
+        lang={lang}
+      />
 
       <EmergencyContactsWidget
         contacts={state.contacts || []}

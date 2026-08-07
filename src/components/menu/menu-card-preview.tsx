@@ -1,5 +1,5 @@
-import type { MenuItem, AppTheme } from "@/types/wedding";
-import { t } from "@/lib/i18n";
+import type { MenuItem } from "@/types/wedding";
+import type { AppTheme } from "@/data/themes";
 
 interface MenuCardPreviewProps {
   items: MenuItem[];

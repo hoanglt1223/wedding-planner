@@ -1,9 +1,7 @@
 import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Upload,
   FileJson,
@@ -21,12 +19,11 @@ import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import {
   importWeddingStateFromJson,
   mergeWeddingStates,
-  validateWeddingState,
   checkVersionCompatibility,
   getImportSummary,
   type ValidationResult,
 } from "@/lib/wedding-state-import";
-import { createBackupTimestamp, exportStateAsJson, downloadFile } from "@/lib/export-utils";
+import { getTimestamp, exportStateAsJson, downloadFile } from "@/lib/export-utils";
 
 type ImportMode = "replace" | "merge";
 
@@ -117,14 +114,14 @@ export function ImportPanel() {
 
       if (!result.success) {
         setError(result.error || "Failed to import file");
-        setValidation(result.validation);
+        setValidation(result.validation ?? null);
         setImportedData(null);
       } else {
         setImportedData(result.data);
-        setValidation(result.validation);
+        setValidation(result.validation ?? null);
 
         // Check version compatibility
-        const compatibility = checkVersionCompatibility(result.data);
+        const compatibility = checkVersionCompatibility(result.data!);
         if (!compatibility.compatible) {
           setError(compatibility.message || "Incompatible data version");
         }
@@ -147,7 +144,7 @@ export function ImportPanel() {
       // Create backup if requested
       if (importMode === "replace") {
         const backup = exportStateAsJson(state);
-        const timestamp = createBackupTimestamp();
+        const timestamp = getTimestamp();
         downloadFile(backup, `wedding-backup-${timestamp}.json`, "application/json");
       }
 
@@ -206,21 +203,29 @@ export function ImportPanel() {
 
       {/* Success Message */}
       {success && (
-        <Alert className="bg-green-50 border-green-200">
-          <CheckCircle className="h-4 w-4 text-green-600" />
-          <AlertDescription className="text-green-800">
-            <div className="font-medium">{labels.importSuccess}</div>
-            <div className="text-sm">{labels.importSuccessDesc}</div>
-          </AlertDescription>
-        </Alert>
+        <Card className="bg-green-50 border-green-200">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
+              <div className="text-green-800">
+                <div className="font-medium">{labels.importSuccess}</div>
+                <div className="text-sm">{labels.importSuccessDesc}</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Error Message */}
       {error && !validation && (
-        <Alert className="bg-red-50 border-red-200">
-          <AlertCircle className="h-4 w-4 text-red-600" />
-          <AlertDescription className="text-red-800">{error}</AlertDescription>
-        </Alert>
+        <Card className="bg-red-50 border-red-200">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-4 w-4 text-red-600 mt-0.5" />
+              <div className="text-red-800">{error}</div>
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* File Upload */}
@@ -281,19 +286,27 @@ export function ImportPanel() {
       {validation && (
         <>
           {validation.isValid ? (
-            <Alert className="bg-green-50 border-green-200">
-              <CheckCircle className="h-4 w-4 text-green-600" />
-              <AlertDescription className="text-green-800">
-                {labels.validFile}
-              </AlertDescription>
-            </Alert>
+            <Card className="bg-green-50 border-green-200">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
+                  <div className="text-green-800">
+                    {labels.validFile}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           ) : (
-            <Alert className="bg-red-50 border-red-200">
-              <AlertCircle className="h-4 w-4 text-red-600" />
-              <AlertDescription className="text-red-800">
-                {labels.invalidFile}
-              </AlertDescription>
-            </Alert>
+            <Card className="bg-red-50 border-red-200">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="h-4 w-4 text-red-600 mt-0.5" />
+                  <div className="text-red-800">
+                    {labels.invalidFile}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           )}
 
           {/* Validation Errors */}
@@ -433,14 +446,18 @@ export function ImportPanel() {
               </div>
 
               {importMode === "replace" && (
-                <Alert className="bg-yellow-50 border-yellow-200">
-                  <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                  <AlertDescription className="text-yellow-800 text-sm">
-                    {en
-                      ? "⚠️ Your current data will be completely replaced. A backup will be downloaded automatically."
-                      : "⚠️ Dữ liệu hiện tại của bạn sẽ bị thay thế hoàn toàn. Bản sao lưu sẽ được tải xuống tự động."}
-                  </AlertDescription>
-                </Alert>
+                <Card className="bg-yellow-50 border-yellow-200">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <AlertTriangle className="h-4 w-4 text-yellow-600 mt-0.5" />
+                      <div className="text-yellow-800 text-sm">
+                        {en
+                          ? "⚠️ Your current data will be completely replaced. A backup will be downloaded automatically."
+                          : "⚠️ Dữ liệu hiện tại của bạn sẽ bị thay thế hoàn toàn. Bản sao lưu sẽ được tải xuống tự động."}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               )}
             </CardContent>
           </Card>

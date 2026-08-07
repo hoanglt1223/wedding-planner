@@ -4,14 +4,14 @@
  */
 
 import { useState } from "react";
-import { emergencyKitItems, categoryInfo, priorityInfo, getEmergencyKitItemsByCategory } from "@/data/emergency-kit";
+import { emergencyKitItems, categoryInfo, priorityInfo } from "@/data/emergency-kit";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Package, AlertCircle } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 
 interface EmergencyKitPanelProps {
   checkedItems: Record<string, boolean>;
@@ -39,9 +39,6 @@ export function EmergencyKitPanel({ checkedItems, onToggleItem, onClearChecklist
     .filter(item => checkedItems[item.id]).length;
 
   const essentialTotal = emergencyKitItems.filter(item => item.priority === "essential").length;
-
-  const getCategoryInfo = (category: string) => categoryInfo[category as keyof typeof categoryInfo] || categoryInfo.misc;
-  const getPriorityInfo = (priority: string) => priorityInfo[priority as keyof typeof priorityInfo] || priorityInfo.optional;
 
   const handleReset = () => {
     if (confirm(lang === "vi" ? "Bạn có chắc muốn xóa hết checklist?" : "Are you sure you want to clear the checklist?")) {
@@ -121,33 +118,31 @@ export function EmergencyKitPanel({ checkedItems, onToggleItem, onClearChecklist
 
       {/* Filters */}
       <div className="flex gap-3">
-        <Select value={filterCategory} onValueChange={setFilterCategory}>
-          <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder={lang === "vi" ? "Tất cả danh mục" : "All Categories"} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{lang === "vi" ? "Tất cả danh mục" : "All Categories"}</SelectItem>
-            {Object.entries(categoryInfo).map(([key, info]) => (
-              <SelectItem key={key} value={key}>
-                {info.icon} {lang === "vi" ? info.name : info.nameEn}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <select
+          value={filterCategory}
+          onChange={(e) => setFilterCategory(e.target.value)}
+          className="w-full sm:w-[180px] rounded-md border border-input bg-background px-3 py-2 text-sm"
+        >
+          <option value="all">{lang === "vi" ? "Tất cả danh mục" : "All Categories"}</option>
+          {Object.entries(categoryInfo).map(([key, info]) => (
+            <option key={key} value={key}>
+              {info.icon} {lang === "vi" ? info.name : info.nameEn}
+            </option>
+          ))}
+        </select>
 
-        <Select value={filterPriority} onValueChange={setFilterPriority}>
-          <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder={lang === "vi" ? "Tất cả mức độ" : "All Priorities"} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{lang === "vi" ? "Tất cả mức độ" : "All Priorities"}</SelectItem>
-            {Object.entries(priorityInfo).map(([key, info]) => (
-              <SelectItem key={key} value={key}>
-                {info.icon} {lang === "vi" ? info.name : info.nameEn}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <select
+          value={filterPriority}
+          onChange={(e) => setFilterPriority(e.target.value)}
+          className="w-full sm:w-[180px] rounded-md border border-input bg-background px-3 py-2 text-sm"
+        >
+          <option value="all">{lang === "vi" ? "Tất cả mức độ" : "All Priorities"}</option>
+          {Object.entries(priorityInfo).map(([key, info]) => (
+            <option key={key} value={key}>
+              {info.icon} {lang === "vi" ? info.name : info.nameEn}
+            </option>
+          ))}
+        </select>
 
         <Button variant="outline" size="icon" onClick={handleReset} title={lang === "vi" ? "Xóa hết" : "Clear all"}>
           <Package className="h-4 w-4" />
@@ -189,7 +184,7 @@ export function EmergencyKitPanel({ checkedItems, onToggleItem, onClearChecklist
                         <div className="flex items-start gap-3">
                           <Checkbox
                             checked={isChecked}
-                            onCheckedChange={() => onToggleItem(item.id)}
+                            onChange={() => onToggleItem(item.id)}
                             className="mt-1"
                           />
                           <div className="flex-1 min-w-0">

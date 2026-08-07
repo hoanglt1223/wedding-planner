@@ -4,20 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Copy,
   Star,
   StarOff,
   Share2,
-  Download,
   RefreshCw,
   Search,
   X,
@@ -224,19 +217,18 @@ export function HashtagGenerator({
                   className="pl-9"
                 />
               </div>
-              <Select value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as HashtagCategory | "all")}>
-                <SelectTrigger className="w-full sm:w-[180px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t.all}</SelectItem>
-                  {Object.entries(categoryLabels).map(([key, value]) => (
-                    <SelectItem key={key} value={key}>
-                      {value[lang]}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value as HashtagCategory | "all")}
+                className="w-full sm:w-[180px] rounded-md border border-input bg-background px-3 py-2 text-sm"
+              >
+                <option value="all">{t.all}</option>
+                {Object.entries(categoryLabels).map(([key, value]) => (
+                  <option key={key} value={key}>
+                    {value[lang]}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
 
@@ -261,7 +253,7 @@ export function HashtagGenerator({
         <Tabs defaultValue="generated" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="generated">
-              {text.en.generated} ({displayedHashtags.length})
+              {text.en.generate} ({displayedHashtags.length})
             </TabsTrigger>
             <TabsTrigger value="favorites">
               {t.favorites} ({favoriteHashtags.length})
@@ -343,7 +335,7 @@ export function HashtagGenerator({
                           onClick={() => handleCopy(tag)}
                           title={t.copy}
                         >
-                          {Copy.className}
+                          <Copy className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
