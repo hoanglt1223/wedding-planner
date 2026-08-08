@@ -1,12 +1,8 @@
 import { useState } from "react";
 import {
   MUSIC_CATEGORIES,
-  SONG_RECOMMENDATIONS,
-  getMusicCategory,
   getSongsByCategory,
   getPopularSongs,
-  getSongsByLanguage,
-  getSongsByMood,
   DJ_BAND_TIPS,
   REGIONAL_MUSIC_NOTES,
   type MusicCategory,
@@ -21,17 +17,19 @@ export function MusicDiscovery({
   onAddSong,
   lang,
 }: {
-  onAddSong: (song: Omit<Song, "id">) => void;
+  onAddSong: (song: Omit<SongItem, "id">) => void;
   lang: "vi" | "en";
 }) {
   const store = useWeddingStoreContext();
   const { state } = store;
   const [selectedCategory, setSelectedCategory] = useState<MusicCategory | null>(
-    MUSIC_CATEGORIES[0] || null
+    MUSIC_CATEGORIES.length > 0 ? MUSIC_CATEGORIES[0]! : null
   );
   const [activeTab, setActiveTab] = useState<MusicDiscoveryTab>("categories");
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedSong, setSelectedSong] = useState<SongRecommendation | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [selectedMood, setSelectedMood] = useState<string>("");
 
   const region = state.region || "north";
 
@@ -231,11 +229,9 @@ export function MusicDiscovery({
                 {lang === "vi" ? "Ngôn ngữ:" : "Language:"}
               </label>
               <select
+                value={selectedLanguage}
                 onChange={(e) => {
-                  const songs = getSongsByLanguage(
-                    e.target.value as "vi" | "en" | "instrumental"
-                  );
-                  // Could filter by language here
+                  setSelectedLanguage(e.target.value);
                 }}
                 className="border rounded px-3 py-1.5 text-sm bg-background ml-2"
               >
@@ -252,9 +248,9 @@ export function MusicDiscovery({
                 {lang === "vi" ? "Tâm trạng:" : "Mood:"}
               </label>
               <select
+                value={selectedMood}
                 onChange={(e) => {
-                  const songs = getSongsByMood(e.target.value);
-                  // Could filter by mood here
+                  setSelectedMood(e.target.value);
                 }}
                 className="border rounded px-3 py-1.5 text-sm bg-background ml-2"
               >
@@ -268,52 +264,61 @@ export function MusicDiscovery({
             </div>
           </div>
 
-          {/* Popular Songs List */}
+          {/* Filtered Songs List */}
           <div className="space-y-2">
-            {getPopularSongs(20).map((song) => (
-              <div
-                key={song.id}
-                className="p-3 border rounded flex items-start justify-between gap-2"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <div className="text-sm font-medium">{song.title}</div>
-                    {song.popular && (
-                      <span className="text-xs px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">
-                        {lang === "vi" ? "Phổ biến" : "Popular"}
+            {(() => {
+              let songs = getPopularSongs(50);
+              if (selectedLanguage) {
+                songs = songs.filter((s) => s.language === selectedLanguage);
+              }
+              if (selectedMood) {
+                songs = songs.filter((s) => s.mood === selectedMood);
+              }
+              return songs.slice(0, 20).map((song) => (
+                <div
+                  key={song.id}
+                  className="p-3 border rounded flex items-start justify-between gap-2"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm font-medium">{song.title}</div>
+                      {song.popular && (
+                        <span className="text-xs px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">
+                          {lang === "vi" ? "Phổ biến" : "Popular"}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-xs text-muted-foreground">{song.artist}</div>
+                    <div className="flex gap-2 mt-1">
+                      <span className="text-xs px-2 py-0.5 bg-muted rounded">
+                        {song.duration}
                       </span>
+                      <span className="text-xs px-2 py-0.5 bg-muted rounded">
+                        {song.language === "vi"
+                          ? "Việt"
+                          : song.language === "en"
+                          ? "Anh"
+                          : "Không lời"}
+                      </span>
+                      <span className="text-xs px-2 py-0.5 bg-muted rounded capitalize">
+                        {song.mood}
+                      </span>
+                    </div>
+                    {(lang === "vi" ? song.notesVi : song.notesEn) && (
+                      <div className="text-xs text-muted-foreground mt-1 italic">
+                        {lang === "vi" ? song.notesVi : song.notesEn}
+                      </div>
                     )}
                   </div>
-                  <div className="text-xs text-muted-foreground">{song.artist}</div>
-                  <div className="flex gap-2 mt-1">
-                    <span className="text-xs px-2 py-0.5 bg-muted rounded">
-                      {song.duration}
-                    </span>
-                    <span className="text-xs px-2 py-0.5 bg-muted rounded">
-                      {song.language === "vi"
-                        ? "Việt"
-                        : song.language === "en"
-                        ? "Anh"
-                        : "Không lời"}
-                    </span>
-                    <span className="text-xs px-2 py-0.5 bg-muted rounded capitalize">
-                      {song.mood}
-                    </span>
-                  </div>
-                  {(lang === "vi" ? song.notesVi : song.notesEn) && (
-                    <div className="text-xs text-muted-foreground mt-1 italic">
-                      {lang === "vi" ? song.notesVi : song.notesEn}
-                    </div>
-                  )}
+                  <button
+                    onClick={() => handleQuickAdd(song)}
+                    className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity"
+                  >
+                    {lang === "vi" ? "Thêm" : "Add"}
+                  </button>
                 </div>
-                <button
-                  onClick={() => handleQuickAdd(song)}
-                  className="text-xs px-2 py-1 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity"
-                >
-                  {lang === "vi" ? "Thêm" : "Add"}
-                </button>
-              </div>
-            ))}
+              ));
+            })()}
           </div>
         </div>
       )}
