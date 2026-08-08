@@ -139,7 +139,7 @@ const itineraryRoute = createRoute({
 const songsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/songs',
-  component: lazyRouteComponent(() => import('./components/songs/song-list-page'), 'SongListPage'),
+  component: lazyRouteComponent(() => import('./pages/songs-page'), 'SongsPage'),
 })
 
 const speechesRoute = createRoute({
