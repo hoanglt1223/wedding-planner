@@ -1,5 +1,6 @@
 import { ItineraryControls } from "./itinerary-controls";
 import { ItineraryTimeline } from "./itinerary-timeline";
+import { CalendarExportButton } from "./calendar-export-button";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
 import type { AppTheme } from "@/data/themes";
 
@@ -81,6 +82,16 @@ export function ItineraryPage({
         weddingDate={weddingDate}
         theme={theme}
       />
+
+      {items.length > 0 && (
+        <CalendarExportButton
+          items={items}
+          brideName={brideName}
+          groomName={groomName}
+          weddingDate={weddingDate}
+          lang={lang as "en" | "vi"}
+        />
+      )}
 
       <ItineraryTimeline
         items={items}
