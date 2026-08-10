@@ -15,6 +15,7 @@ import { RsvpDashboard } from "./rsvp-dashboard";
 import { TableAssignmentPanel } from "./table-assignment-panel";
 import { MealSummaryPanel } from "./meal-summary-panel";
 import { GroupStatistics } from "./group-statistics";
+import { BulkGuestAddModal } from "./bulk-guest-add-modal";
 import { t } from "@/lib/i18n";
 import { guestGroups } from "@/data/guest-groups";
 
@@ -60,6 +61,7 @@ export function GuestPanel({
   const [search, setSearch] = useState("");
   const [groupFilter, setGroupFilter] = useState("");
   const [view, setView] = useState<"list" | "chart" | "assign" | "rsvp" | "meals">("list");
+  const [bulkAddModalOpen, setBulkAddModalOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const traiCount = guests.filter((g) => g.side === "trai").length;
@@ -95,6 +97,18 @@ export function GuestPanel({
 
   const handleClear = () => {
     if (window.confirm(t("Xóa tất cả?", lang))) onClearGuests();
+  };
+
+  const handleBulkAdd = (guestsToAdd: Array<{ name: string; phone?: string; side: "trai" | "gai"; group?: string; tableGroup?: string }>) => {
+    guestsToAdd.forEach((guest) => {
+      onAddGuest({
+        name: guest.name,
+        phone: guest.phone || "",
+        side: guest.side,
+        tableGroup: guest.tableGroup || "",
+        group: guest.group,
+      });
+    });
   };
 
   const filteredGuests = (() => {
@@ -194,6 +208,14 @@ export function GuestPanel({
               onChange={handleImport}
             />
           </label>
+          <Button
+            size="sm"
+            variant="secondary"
+            className="h-7 text-xs bg-purple-50 text-purple-700 hover:bg-purple-100 border-purple-200"
+            onClick={() => setBulkAddModalOpen(true)}
+          >
+            {lang === "en" ? "✚ Bulk Add" : "✚ Thêm Nhiều"}
+          </Button>
           {guests.length > 0 && (
             <>
               <Button size="sm" variant="secondary" className="h-7 text-xs" onClick={() => exportGuestsCsv(guests)}>
@@ -332,6 +354,13 @@ export function GuestPanel({
           <MealSummaryPanel guests={guests} lang={lang} />
         )}
       </div>
+
+      <BulkGuestAddModal
+        isOpen={bulkAddModalOpen}
+        onClose={() => setBulkAddModalOpen(false)}
+        onAdd={handleBulkAdd}
+        lang={lang}
+      />
     </div>
   );
 }
