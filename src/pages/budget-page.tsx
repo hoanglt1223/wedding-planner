@@ -6,6 +6,8 @@ import { CategoryBreakdown } from "@/components/budget/category-breakdown";
 import { BudgetVsActualChart } from "@/components/budget/budget-vs-actual-chart";
 import { SpendingTrendChart } from "@/components/budget/spending-trend-chart";
 import { BudgetHealthCard } from "@/components/budget/budget-health-card";
+import { BudgetHealthAlerts } from "@/components/budget/budget-health-alerts";
+import { calculateBudgetHealth } from "@/lib/budget-health";
 import { getBudgetCategories } from "@/data/resolve-data";
 import { Button } from "@/components/ui/button";
 import { Plus, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
@@ -35,6 +37,26 @@ export function BudgetPage() {
   }, [expenses]);
 
   const budgetCategories = useMemo(() => getBudgetCategories(lang), [lang]);
+
+  // Calculate budget health alerts
+  const budgetHealth = useMemo(() =>
+    calculateBudgetHealth(totalBudget, expenses, lang as "vi" | "en"),
+    [totalBudget, expenses, lang]
+  );
+
+  // Collect all active alerts
+  const activeAlerts = useMemo(() => {
+    const alerts: Array<typeof budgetHealth.overall> = [];
+    if (budgetHealth.overall) {
+      alerts.push(budgetHealth.overall);
+    }
+    budgetHealth.categories.forEach(cat => {
+      if (cat.alert) {
+        alerts.push(cat.alert);
+      }
+    });
+    return alerts.filter(Boolean) as Array<typeof budgetHealth.overall>;
+  }, [budgetHealth]);
 
   const handleEditExpense = (expense: import("@/types/wedding").ExpenseEntry) => {
     if (editingExpense !== null) {
@@ -100,6 +122,14 @@ export function BudgetPage() {
           </div>
         </div>
       </div>
+
+      {/* Budget Health Alerts */}
+      {activeAlerts.length > 0 && (
+        <BudgetHealthAlerts
+          alerts={activeAlerts}
+          lang={lang}
+        />
+      )}
 
       {totalBudget > 0 && (
         <div className="bg-[var(--theme-surface)] rounded-lg border border-[var(--theme-border)] p-4">
