@@ -18,12 +18,13 @@ interface SpeechEntryListProps {
   onEdit: (speech: SpeechEntry) => void;
   onDelete: (id: number) => void;
   onToggleFavorite: (id: number) => void;
+  onEnhanceWithAi?: (speech: SpeechEntry) => void;
   lang: string;
 }
 
 export function SpeechEntryList({
   speeches, search, filterCategory, onFilterCategoryChange,
-  onEdit, onDelete, onToggleFavorite, lang,
+  onEdit, onDelete, onToggleFavorite, onEnhanceWithAi, lang,
 }: SpeechEntryListProps) {
   const en = lang === "en";
 
@@ -108,6 +109,15 @@ export function SpeechEntryList({
                     >
                       {speech.isFavorite ? "⭐" : "☆"}
                     </button>
+                    {onEnhanceWithAi && (
+                      <button
+                        onClick={() => onEnhanceWithAi(speech)}
+                        className="text-xs text-muted-foreground hover:text-foreground px-1.5 py-1"
+                        title={en ? "Enhance with AI" : "Cải thiện với AI"}
+                      >
+                        ✨
+                      </button>
+                    )}
                     <button
                       onClick={() => onEdit(speech)}
                       className="text-xs text-muted-foreground hover:text-foreground px-1.5 py-1"

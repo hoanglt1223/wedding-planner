@@ -7,6 +7,7 @@ import { buildAstrologyPrompt } from "../src/lib/astrology-prompt.js";
 import type { ReadingInput } from "../src/lib/astrology-prompt.js";
 import { buildNumerologyPrompt } from "../src/lib/numerology-prompt.js";
 import type { NumerologyReadingInput } from "../src/lib/numerology-prompt.js";
+import { buildSpeechEnhancementPrompt, type SpeechEnhancementOptions } from "../src/lib/speech-ai-prompts.js";
 
 const ZHIPU_URL = "https://api.z.ai/api/paas/v4/chat/completions";
 const ZHIPU_MODEL = "glm-4.7-flash";
@@ -216,6 +217,61 @@ async function handleNumerology(req: VercelRequest, res: VercelResponse) {
   return res.status(200).json({ text, cached: false });
 }
 
+// action=speech-enhance — AI-powered speech enhancement
+async function handleSpeechEnhance(req: VercelRequest, res: VercelResponse) {
+  const body = req.body as {
+    speech?: { id: number; title: string; content: string; category: string; speaker: string; notes: string };
+    options?: SpeechEnhancementOptions;
+    lang?: "vi" | "en";
+  };
+  const lang = body?.lang || "vi";
+
+  // Rate limit: 10/day per IP
+  let redis: ReturnType<typeof createRedis> | null = null;
+  try { redis = createRedis(); } catch { /* unavailable */ }
+  if (redis) {
+    const rl = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(10, "1 d"), prefix: "speech_rl" });
+    const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ?? "anonymous";
+    const { success } = await rl.limit(ip);
+    if (!success) return res.status(429).json({
+      error: "rate_limited",
+      message: lang === "en"
+        ? "You've reached the enhancement limit for today. Please try again tomorrow."
+        : "Bạn đã hết lượt cải thiện hôm nay. Vui lòng thử lại ngày mai.",
+    });
+  }
+
+  if (!body?.speech || !body?.options) return res.status(400).json({ error: "missing_fields" });
+  const { speech, options } = body;
+
+  // Cache key: hash speech content to avoid PII in Redis
+  function simpleHash(str: string): string {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+    return Math.abs(h).toString(36);
+  }
+  const modeKey = `${options.mode}${options.tone ? `_${options.tone}` : ""}${options.targetLanguage ? `_${options.targetLanguage}` : ""}`;
+  const cacheKey = `speech:enhance:${simpleHash(speech.content)}:${modeKey}:${lang}`;
+  if (redis) {
+    const cached = await redis.get<string>(cacheKey);
+    if (cached) return res.status(200).json({ text: cached, cached: true });
+  }
+
+  const prompt = buildSpeechEnhancementPrompt(speech as any, options, lang);
+  const aiRes = await callWithFallback([
+    { role: "system", content: prompt.systemPrompt },
+    { role: "user", content: prompt.userPrompt },
+  ], 1200, 0.8);
+
+  if (!aiRes.ok) return handleAiError(aiRes, await aiRes.text(), lang, res);
+  const data = (await aiRes.json()) as { choices?: { message?: { content?: string } }[] };
+  const text = data.choices?.[0]?.message?.content ?? "";
+  if (!text) return res.status(500).json({ error: "empty_response" });
+
+  if (redis) await redis.set(cacheKey, text, { ex: 86400 * 300 });
+  return res.status(200).json({ text, cached: false });
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   setCors(res);
   if (req.method === "OPTIONS") return res.status(204).end();
@@ -226,6 +282,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (action === "chat") return await handleChat(req, res);
     if (action === "astrology") return await handleAstrology(req, res);
     if (action === "numerology") return await handleNumerology(req, res);
+    if (action === "speech-enhance") return await handleSpeechEnhance(req, res);
     return res.status(400).json({ error: "invalid_action" });
   } catch (err: unknown) {
     const status = (err as { status?: number })?.status;

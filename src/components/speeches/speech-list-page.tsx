@@ -5,6 +5,7 @@ import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { SpeechEntryList } from "./speech-entry-list";
 import { SpeechEntryForm } from "./speech-entry-form";
 import { VowBuilder } from "./vow-builder";
+import { AiEnhancementCard } from "./ai-enhancement-card";
 
 type FilterCategory = "all" | SpeechCategory;
 
@@ -15,6 +16,7 @@ export function SpeechListPage() {
   const [filterCategory, setFilterCategory] = useState<FilterCategory>("all");
   const [editing, setEditing] = useState<SpeechEntry | null | undefined>(undefined);
   const [showVowBuilder, setShowVowBuilder] = useState(false);
+  const [enhancingSpeech, setEnhancingSpeech] = useState<SpeechEntry | null>(null);
   const lang = state.lang;
 
   const speeches = state.speeches ?? [];
@@ -49,6 +51,16 @@ export function SpeechListPage() {
   function handleToggleFavorite(id: number) {
     const speech = speeches.find((s) => s.id === id);
     if (speech) store.updateSpeech(id, { isFavorite: !speech.isFavorite });
+  }
+
+  function handleEnhanceWithAi(speech: SpeechEntry) {
+    setEnhancingSpeech(speech);
+  }
+
+  function handleApplyEnhancement(enhancedText: string) {
+    if (enhancingSpeech) {
+      store.updateSpeech(enhancingSpeech.id, { content: enhancedText });
+    }
   }
 
   // Summary counts
@@ -120,6 +132,7 @@ export function SpeechListPage() {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onToggleFavorite={handleToggleFavorite}
+        onEnhanceWithAi={handleEnhanceWithAi}
         lang={lang}
       />
 
@@ -139,6 +152,16 @@ export function SpeechListPage() {
           lang={lang}
           onSave={(data) => store.addSpeech(data)}
           onClose={() => setShowVowBuilder(false)}
+        />
+      )}
+
+      {/* AI Enhancement */}
+      {enhancingSpeech && (
+        <AiEnhancementCard
+          speech={enhancingSpeech}
+          lang={lang as "vi" | "en"}
+          onApplyEnhancement={handleApplyEnhancement}
+          onClose={() => setEnhancingSpeech(null)}
         />
       )}
     </div>
