@@ -304,6 +304,12 @@ const paymentScheduleRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/payment-schedule-page'), 'PaymentSchedulePage'),
 })
 
+const emergencyAssistantRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/emergency-assistant',
+  component: lazyRouteComponent(() => import('./pages/emergency-assistant-page'), 'EmergencyAssistantPage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -396,6 +402,7 @@ const routeTree = rootRoute.addChildren([
     hashtagGeneratorRoute,
     vendorComparisonRoute,
     paymentScheduleRoute,
+    emergencyAssistantRoute,
   ]),
   rsvpRoute,
   sharedRoute,

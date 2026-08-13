@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate, HoneymoonState, HoneymoonTask } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate, HoneymoonState, HoneymoonTask, EmergencyContact, TimelineAlert, BackupPlan, EmergencySupply } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
 import { DEFAULT_STATE, DEFAULT_HONEYMOON } from "@/data/backgrounds";
@@ -1024,6 +1024,96 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, emergencyKitChecked: {} }));
   }, [setState]);
 
+  // Emergency Assistant management (exported for use in components)
+  const addEmergencyContact = useCallback((contact: Omit<EmergencyContact, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        emergencyContacts: [...prev.emergencyAssistant.emergencyContacts, { ...contact, id: crypto.randomUUID() }],
+      },
+    }));
+  }, [setState]);
+
+  const removeEmergencyContact = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        emergencyContacts: prev.emergencyAssistant.emergencyContacts.filter(c => c.id !== id),
+      },
+    }));
+  }, [setState]);
+
+  const addTimelineAlert = useCallback((alert: Omit<TimelineAlert, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        timelineAlerts: [...prev.emergencyAssistant.timelineAlerts, { ...alert, id: crypto.randomUUID() }],
+      },
+    }));
+  }, [setState]);
+
+  const acknowledgeTimelineAlert = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        timelineAlerts: prev.emergencyAssistant.timelineAlerts.map(a => a.id === id ? { ...a, acknowledged: true } : a),
+      },
+    }));
+  }, [setState]);
+
+  const addBackupPlan = useCallback((plan: Omit<BackupPlan, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        backupPlans: [...prev.emergencyAssistant.backupPlans, { ...plan, id: crypto.randomUUID() }],
+      },
+    }));
+  }, [setState]);
+
+  const activateBackupPlan = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        backupPlans: prev.emergencyAssistant.backupPlans.map(p => p.id === id ? { ...p, activated: true } : p),
+      },
+    }));
+  }, [setState]);
+
+  const addEmergencySupply = useCallback((supply: Omit<EmergencySupply, "id">) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        emergencySupplies: [...prev.emergencyAssistant.emergencySupplies, { ...supply, id: crypto.randomUUID() }],
+      },
+    }));
+  }, [setState]);
+
+  const toggleEmergencySupplyPacked = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: {
+        ...prev.emergencyAssistant,
+        emergencySupplies: prev.emergencyAssistant.emergencySupplies.map(s =>
+          s.id === id ? { ...s, packed: !s.packed } : s
+        ),
+      },
+    }));
+  }, [setState]);
+
+  const updateEmergencyAssistant = useCallback((updates: Partial<WeddingState["emergencyAssistant"]>) => {
+    setState((prev) => ({
+      ...prev,
+      emergencyAssistant: { ...prev.emergencyAssistant, ...updates },
+    }));
+  }, [setState]);
+
   // Anniversary & Important Dates management
   const addAnniversaryDate = useCallback((date: Omit<ImportantDate, "id">) => {
     setState((prev) => ({
@@ -1312,6 +1402,9 @@ export function useWeddingStore() {
     addAnniversaryDate, updateAnniversaryDate, removeAnniversaryDate,
     updateHoneymoon, toggleHoneymoonPacking, clearHoneymoonPacking,
     addHoneymoonTask, updateHoneymoonTask, removeHoneymoonTask,
+    // Emergency Assistant methods
+    addEmergencyContact, removeEmergencyContact, addTimelineAlert, acknowledgeTimelineAlert,
+    addBackupPlan, activateBackupPlan, addEmergencySupply, toggleEmergencySupplyPacked, updateEmergencyAssistant,
     ...phase2,
   };
 }

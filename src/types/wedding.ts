@@ -348,6 +348,9 @@ export interface WeddingState {
   // Emergency Kit Checklist
   emergencyKitChecked?: Record<string, boolean>; // itemId -> checked state
 
+  // Emergency Assistant System
+  emergencyAssistant: EmergencyAssistantSettings;
+
   // Anniversary & Important Dates
   anniversaryDates: ImportantDate[];
   anniversaryIdCounter: number;
@@ -774,4 +777,53 @@ export interface MenuSettings {
   includeCutlery: boolean;
   includeDrinks: boolean;
   notes: string;
+}
+
+// Emergency Assistant System Types
+export interface EmergencyContact {
+  id: string;
+  name: string;
+  role: string;
+  phone: string;
+  email?: string;
+  address?: string;
+  priority: "critical" | "high" | "normal";
+}
+
+export interface TimelineAlert {
+  id: string;
+  time: string;
+  title: string;
+  description: string;
+  type: "info" | "warning" | "critical";
+  acknowledged?: boolean;
+}
+
+export interface BackupPlan {
+  id: string;
+  condition: string;
+  originalPlan: string;
+  backupOption: string;
+  location?: string;
+  contact?: string;
+  estimatedCost?: number;
+  priority: "essential" | "recommended" | "optional";
+}
+
+export interface EmergencySupply {
+  id: string;
+  name: string;
+  category: "medical" | "clothing" | "documents" | "misc";
+  quantity: number;
+  packed?: boolean;
+  notes?: string;
+}
+
+export interface EmergencyAssistantSettings {
+  enabled: boolean;
+  emergencyContacts: EmergencyContact[];
+  timelineAlerts: TimelineAlert[];
+  backupPlans: BackupPlan[];
+  emergencySupplies: EmergencySupply[];
+  currentWeather?: "sunny" | "cloudy" | "rainy" | "storm";
 }

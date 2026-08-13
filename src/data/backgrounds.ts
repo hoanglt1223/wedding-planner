@@ -188,6 +188,10 @@ export const DEFAULT_STATE: WeddingState = {
   vendorCommunications: [],
   vendorCommunicationIdCounter: 0,
 
+  // Vendor gratitude/tip tracking
+  vendorGratitude: [],
+  vendorGratitudeIdCounter: 0,
+
   // Song list
   songs: [],
   songIdCounter: 0,
@@ -255,6 +259,16 @@ export const DEFAULT_STATE: WeddingState = {
   // Anniversary & Important Dates
   anniversaryDates: [],
   anniversaryIdCounter: 0,
+
+  // Emergency Assistant System
+  emergencyAssistant: {
+    enabled: false,
+    emergencyContacts: [],
+    timelineAlerts: [],
+    backupPlans: [],
+    emergencySupplies: [],
+    currentWeather: "sunny",
+  },
 
   // Honeymoon Planner
   honeymoon: DEFAULT_HONEYMOON,
