@@ -53,6 +53,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   "hashtag-generator": "menu",
   "welcome-bags": "menu",
   weather: "menu",
+  "payment-schedule": "menu",
 };
 
 export const MENU_ITEMS = [
@@ -89,4 +90,5 @@ export const MENU_ITEMS = [
   { pageId: "anniversary", icon: "💕", labelVi: "Kỷ Niệm", labelEn: "Anniversary" },
   { pageId: "honeymoon", icon: "✈️", labelVi: "Tuần Trăng Mật", labelEn: "Honeymoon" },
   { pageId: "hashtag-generator", icon: "📱", labelVi: "Hashtag Đám Cưới", labelEn: "Wedding Hashtag" },
+  { pageId: "payment-schedule", icon: "💳", labelVi: "Lịch Thanh Toán", labelEn: "Payment Schedule" },
 ];

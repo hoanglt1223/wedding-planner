@@ -19,17 +19,17 @@ interface SpeechEnhancementOptions {
 interface AiEnhancementCardProps {
   speech: SpeechEntry;
   lang: "vi" | "en";
-  onApplyEnhancement: (enhancedText: string) =( void;
-  onClose: () =( void;
+  onApplyEnhancement: (enhancedText: string) => void;
+  onClose: () => void;
 }
 
 export function AiEnhancementCard({ speech, lang, onApplyEnhancement, onClose }: AiEnhancementCardProps) {
-  const [mode, setMode] = useState<SpeechEnhancementMode(("improve-grammar");
-  const [tone, setTone] = useState<"formal" | "casual" | "romantic" | "humorous"(("formal");
-  const [targetLanguage, setTargetLanguage] = useState<"vi" | "en"(("vi");
+  const [mode, setMode] = useState<SpeechEnhancementMode>("improve-grammar");
+  const [tone, setTone] = useState<"formal" | "casual" | "romantic" | "humorous">("formal");
+  const [targetLanguage, setTargetLanguage] = useState<"vi" | "en">("vi");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null((null);
-  const [result, setResult] = useState<string | null((null);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<string | null>(null);
   const [showComparison, setShowComparison] = useState(false);
 
   async function handleEnhance() {
@@ -73,188 +73,131 @@ export function AiEnhancementCard({ speech, lang, onApplyEnhancement, onClose }:
   const isVi = lang === "vi";
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"(
-      <div className="bg-background rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"(
-        {/* Header */}
-        <div className="sticky top-0 bg-background border-b p-4 flex items-center justify-between"(
-          <div(
-            <h3 className="font-semibold text-base"(
-              ✨ {isVi ? "AI Cải Thiện Lời Thề & Diễn Văn" : "AI Speech Enhancement"}
-            </h3(
-            <p className="text-xs text-muted-foreground"(
-              {isVi ? "Sử dụng AI để cải thiện bài phát biểu của bạn" : "Enhance your speech with AI"}
-            </p(
-          </div(
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground text-xl"(
-            ×
-          </button(
-        </div(
+    <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg border border-purple-200 dark:border-purple-700 p-4 space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-100">
+          ✨ AI Enhancement
+        </h3>
+        <button
+          onClick={onClose}
+          className="text-sm text-purple-700 dark:text-purple-300 hover:underline"
+        >
+          {isVi ? "Đóng" : "Close"}
+        </button>
+      </div>
 
-        <div className="p-4 space-y-4"(
-          {/* Original content preview */}
-          {!showComparison && (
-            <div className="bg-muted/50 rounded p-3 text-sm max-h-40 overflow-y-auto"(
-              <div className="font-medium text-xs mb-1"(
-                {isVi ? "📝 Bài gốc:" : "📝 Original:"}
-              </div(
-              <p className="whitespace-pre-wrap text-muted-foreground"({speech.content}</p(
-            </div(
-          )}
+      {!showComparison ? (
+        <>
+          <div className="space-y-3">
+            <div>
+              <label className="text-sm font-medium text-purple-900 dark:text-purple-100 mb-1 block">
+                {isVi ? "Chế độ cải thiện:" : "Enhancement mode:"}
+              </label>
+              <select
+                value={mode}
+                onChange={(e) => setMode(e.target.value as SpeechEnhancementMode)}
+                className="w-full px-3 py-2 border border-purple-300 dark:border-purple-600 rounded-md bg-white dark:bg-purple-900/20 text-purple-900 dark:text-purple-100"
+              >
+                <option value="improve-grammar">{isVi ? "Sửa ngữ pháp" : "Improve grammar"}</option>
+                <option value="enhance-vocabulary">{isVi ? "Làm từ phong phú" : "Enhance vocabulary"}</option>
+                <option value="adjust-tone">{isVi ? "Điều chỉnh giọng điệu" : "Adjust tone"}</option>
+                <option value="translate">{isVi ? "Dịch ngôn ngữ" : "Translate"}</option>
+                <option value="expand">{isVi ? "Mở rộng nội dung" : "Expand content"}</option>
+              </select>
+            </div>
 
-          {/* Enhancement options */}
-          {!showComparison && (
-            <div className="space-y-3"(
-              {/* Mode selection */}
-              <div(
-                <label className="text-sm font-medium mb-2 block"(
-                  {isVi ? "Chế độ cải thiện:" : "Enhancement mode:"}
-                </label(
-                <div className="grid grid-cols-2 gap-2"(
-                  {(["improve-grammar", "enhance-emotion", "adjust-tone", "shorten", "lengthen", "translate"] as SpeechEnhancementMode[]).map((m) =( (
-                    <button
-                      key={m}
-                      onClick={() =( setMode(m)}
-                      className={`p-2 rounded text-sm text-left transition-colors ${
-                        mode === m
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted hover:bg-muted/80"
-                      }`}
-                    (
-                      {getModeLabel(m, lang)}
-                    </button(
-                  ))}
-                </div(
-              </div(
+            {mode === "adjust-tone" && (
+              <div>
+                <label className="text-sm font-medium text-purple-900 dark:text-purple-100 mb-1 block">
+                  {isVi ? "Giọng điệu:" : "Tone:"}
+                </label>
+                <select
+                  value={tone}
+                  onChange={(e) => setTone(e.target.value as typeof tone)}
+                  className="w-full px-3 py-2 border border-purple-300 dark:border-purple-600 rounded-md bg-white dark:bg-purple-900/20 text-purple-900 dark:text-purple-100"
+                >
+                  <option value="formal">{getToneLabel("formal", lang)}</option>
+                  <option value="casual">{getToneLabel("casual", lang)}</option>
+                  <option value="romantic">{getToneLabel("romantic", lang)}</option>
+                  <option value="humorous">{getToneLabel("humorous", lang)}</option>
+                </select>
+              </div>
+            )}
 
-              {/* Tone selection (only for adjust-tone) */}
-              {mode === "adjust-tone" && (
-                <div(
-                  <label className="text-sm font-medium mb-2 block"(
-                    {isVi ? "Văn phong:" : "Tone:"}
-                  </label(
-                  <div className="flex gap-2 flex-wrap"(
-                    {(["formal", "casual", "romantic", "humorous"] as const).map((t) =( (
-                      <button
-                        key={t}
-                        onClick={() =( setTone(t)}
-                        className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
-                          tone === t
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-muted hover:bg-muted/80"
-                        }`}
-                      (
-                        {getToneLabel(t, lang)}
-                      </button(
-                    ))}
-                  </div(
-                </div(
-              )}
+            {mode === "translate" && (
+              <div>
+                <label className="text-sm font-medium text-purple-900 dark:text-purple-100 mb-1 block">
+                  {isVi ? "Ngôn ngữ đích:" : "Target language:"}
+                </label>
+                <select
+                  value={targetLanguage}
+                  onChange={(e) => setTargetLanguage(e.target.value as typeof targetLanguage)}
+                  className="w-full px-3 py-2 border border-purple-300 dark:border-purple-600 rounded-md bg-white dark:bg-purple-900/20 text-purple-900 dark:text-purple-100"
+                >
+                  <option value="vi">Tiếng Việt</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+            )}
+          </div>
 
-              {/* Language selection (only for translate) */}
-              {mode === "translate" && (
-                <div(
-                  <label className="text-sm font-medium mb-2 block"(
-                    {isVi ? "Dịch sang:" : "Translate to:"}
-                  </label(
-                  <div className="flex gap-2"(
-                    <button
-                      onClick={() =( setTargetLanguage("vi")}
-                      className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
-                        targetLanguage === "vi"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted hover:bg-muted/80"
-                      }`}
-                    (
-                      {isVi ? "Tiếng Việt" : "Vietnamese"}
-                    </button(
-                    <button
-                      onClick={() =( setTargetLanguage("en")}
-                      className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
-                        targetLanguage === "en"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted hover:bg-muted/80"
-                      }`}
-                    (
-                      English
-                    </button(
-                  </div(
-                </div(
-              )}
-            </div(
-          )}
+          <button
+            onClick={handleEnhance}
+            disabled={loading}
+            className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (isVi ? "Đang cải thiện..." : "Enhancing...") : (isVi ? "Cải thiện" : "Enhance")}
+          </button>
 
-          {/* Result display */}
-          {showComparison && result && (
-            <div className="space-y-3"(
-              <div className="bg-muted/50 rounded p-3 text-sm max-h-60 overflow-y-auto"(
-                <div className="font-medium text-xs mb-1"(
-                  {isVi ? "📝 Bài gốc:" : "📝 Original:"}
-                </div(
-                <p className="whitespace-pre-wrap text-muted-foreground"({speech.content}</p(
-              </div(
-
-              <div className="bg-primary/5 rounded p-3 text-sm max-h-60 overflow-y-auto border border-primary/20"(
-                <div className="font-medium text-xs mb-1 text-primary"(
-                  {isVi ? "✨ Bài đã cải thiện:" : "✨ Enhanced:"}
-                </div(
-                <p className="whitespace-pre-wrap"({result}</p(
-              </div(
-            </div(
-          )}
-
-          {/* Error display */}
           {error && (
-            <div className="bg-destructive/10 text-destructive text-sm p-3 rounded"(
-              {error === "rate_limited" && (
-                isVi
-                  ? "Bạn đã hết lượt cải thiện hôm nay. Vui lòng thử lại vào ngày mai."
-                  : "You've reached the enhancement limit for today. Please try again tomorrow."
-              )}
-              {error === "enhancement_failed" && (
-                isVi
-                  ? "Không thể cải thiện bài phát biểu. Vui lòng thử lại."
-                  : "Failed to enhance speech. Please try again."
-              )}
-              {!["rate_limited", "enhancement_failed"].includes(error) && (
-                isVi ? "Có lỗi xảy ra. Vui lòng thử lại." : "An error occurred. Please try again."
-              )}
-            </div(
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 text-red-800 dark:text-red-200 px-3 py-2 rounded-md text-sm">
+              {error === "enhancement_failed"
+                ? (isVi ? "Không thể cải thiện văn bản. Vui lòng thử lại." : "Failed to enhance text. Please try again.")
+                : error}
+            </div>
           )}
+        </>
+      ) : (
+        <>
+          <div className="space-y-3">
+            <div>
+              <label className="text-sm font-medium text-purple-700 dark:text-purple-300 mb-1 block">
+                {isVi ? "Gốc:" : "Original:"}
+              </label>
+              <div className="bg-white dark:bg-purple-900/10 p-3 rounded border border-purple-200 dark:border-purple-700 text-sm whitespace-pre-wrap">
+                {speech.content}
+              </div>
+            </div>
 
-          {/* Action buttons */}
-          {!showComparison ? (
+            <div>
+              <label className="text-sm font-medium text-purple-700 dark:text-purple-300 mb-1 block">
+                {isVi ? "Đã cải thiện:" : "Enhanced:"}
+              </label>
+              <div className="bg-white dark:bg-purple-900/10 p-3 rounded border border-purple-200 dark:border-purple-700 text-sm whitespace-pre-wrap">
+                {result}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-2">
             <button
-              onClick={handleEnhance}
-              disabled={loading}
-              className="w-full py-2.5 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium"
-            (
-              {loading
-                ? isVi
-                  ? "⏳ Đang cải thiện..."
-                  : "⏳ Enhancing..."
-                : isVi
-                  ? "✨ Cải thiện với AI"
-                  : "✨ Enhance with AI"
-              }
-            </button(
-          ) : (
-            <div className="flex gap-2"(
-              <button
-                onClick={() =( setShowComparison(false)}
-                className="flex-1 py-2.5 border border-border rounded hover:bg-muted transition-colors text-sm font-medium"
-              (
-                {isVi ? "← Thử lại" : "← Try again"}
-              </button(
-              <button
-                onClick={handleApply}
-                className="flex-1 py-2.5 bg-primary text-primary-foreground rounded hover:opacity-90 transition-opacity text-sm font-medium"
-              (
-                {isVi ? "✓ Áp dụng" : "✓ Apply"}
-              </button(
-            </div(
-          )}
-        </div(
-      </div(
-    </div(
+              onClick={handleApply}
+              className="flex-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-md transition-colors"
+            >
+              {isVi ? "Áp dụng" : "Apply"}
+            </button>
+            <button
+              onClick={() => {
+                setShowComparison(false);
+                setResult(null);
+              }}
+              className="flex-1 py-2 px-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded-md transition-colors"
+            >
+              {isVi ? "Thử lại" : "Try again"}
+            </button>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

@@ -200,6 +200,7 @@ export interface ExpenseEntry {
   amount: number;          // VND amount
   vendorName?: string;
   date: string;            // YYYY-MM-DD
+  dueDate?: string;        // YYYY-MM-DD (optional due date for payment scheduling)
   paid: boolean;
 }
 
@@ -264,6 +265,10 @@ export interface WeddingState {
   // Vendor payments
   vendorPayments: VendorPayment[];
   vendorPaymentIdCounter: number;
+
+  // All payments (unified view for payment schedule)
+  payments: VendorPayment[];
+  paymentIdCounter: number;
 
   // Vendor communications
   vendorCommunications: VendorCommunication[];
@@ -422,10 +427,14 @@ export type VendorPaymentMethod = "cash" | "bank_transfer" | "card" | "other";
 export interface VendorPayment {
   id: number;
   vendorId: number;
+  vendorName?: string;       // Denormalized for convenience
   amount: number;           // VND
   date: string;             // YYYY-MM-DD
+  dueDate: string;          // YYYY-MM-DD (when payment is due)
   method: VendorPaymentMethod;
   note: string;
+  paid: boolean;            // Payment completion status
+  description?: string;     // Optional description of what the payment is for
 }
 
 export type VendorCommunicationType = "email" | "call" | "meeting" | "text" | "other";

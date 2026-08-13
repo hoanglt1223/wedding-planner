@@ -180,6 +180,10 @@ export const DEFAULT_STATE: WeddingState = {
   vendorPayments: [],
   vendorPaymentIdCounter: 0,
 
+  // All payments (unified view for payment schedule)
+  payments: [],
+  paymentIdCounter: 0,
+
   // Vendor communications
   vendorCommunications: [],
   vendorCommunicationIdCounter: 0,

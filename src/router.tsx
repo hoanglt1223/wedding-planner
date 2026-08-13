@@ -298,6 +298,12 @@ const vendorComparisonRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/vendor-comparison-page'), 'VendorComparisonPage'),
 })
 
+const paymentScheduleRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/payment-schedule',
+  component: lazyRouteComponent(() => import('./pages/payment-schedule-page'), 'PaymentSchedulePage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -389,6 +395,7 @@ const routeTree = rootRoute.addChildren([
     guestMealsRoute,
     hashtagGeneratorRoute,
     vendorComparisonRoute,
+    paymentScheduleRoute,
   ]),
   rsvpRoute,
   sharedRoute,
