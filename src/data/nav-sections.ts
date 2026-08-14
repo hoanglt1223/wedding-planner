@@ -55,6 +55,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   weather: "menu",
   "payment-schedule": "menu",
   "emergency-assistant": "menu",
+  "wedding-day-timeline": "menu",
 };
 
 export const MENU_ITEMS = [
@@ -93,4 +94,5 @@ export const MENU_ITEMS = [
   { pageId: "hashtag-generator", icon: "📱", labelVi: "Hashtag Đám Cưới", labelEn: "Wedding Hashtag" },
   { pageId: "payment-schedule", icon: "💳", labelVi: "Lịch Thanh Toán", labelEn: "Payment Schedule" },
   { pageId: "emergency-assistant", icon: "🚨", labelVi: "Trợ Lý Khẩn Cấp", labelEn: "Emergency Assistant" },
+  { pageId: "wedding-day-timeline", icon: "📅", labelVi: "Lịch Trình Ngày Cưới", labelEn: "Wedding Day Timeline" },
 ];
