@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
 import { t } from "@/lib/i18n";
+import { VendorReviewSummary } from "@/components/vendor-reviews/vendor-review-summary";
 import type { Vendor } from "@/types/wedding";
 
 export function VendorComparisonPage() {
@@ -8,6 +9,7 @@ export function VendorComparisonPage() {
   const { state } = store;
   const lang = state.lang;
   const vendors = state.vendors || [];
+  const vendorReviews = state.vendorReviews || [];
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
@@ -265,6 +267,13 @@ export function VendorComparisonPage() {
                       </div>
                     </div>
                   )}
+
+                  {/* Vendor Reviews */}
+                  <VendorReviewSummary
+                    reviews={vendorReviews.filter(r => r.vendorId === vendor.id)}
+                    vendorName={vendor.name}
+                    lang={lang === "en" ? "en" : "vi"}
+                  />
 
                   {/* Services */}
                   {services.length > 0 && (

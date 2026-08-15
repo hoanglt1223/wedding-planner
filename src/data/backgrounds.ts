@@ -192,6 +192,10 @@ export const DEFAULT_STATE: WeddingState = {
   vendorGratitude: [],
   vendorGratitudeIdCounter: 0,
 
+  // Vendor reviews and ratings
+  vendorReviews: [],
+  vendorReviewIdCounter: 0,
+
   // Song list
   songs: [],
   songIdCounter: 0,

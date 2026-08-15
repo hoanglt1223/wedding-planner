@@ -278,6 +278,10 @@ export interface WeddingState {
   vendorGratitude: VendorGratitude[];
   vendorGratitudeIdCounter: number;
 
+  // Vendor reviews and ratings
+  vendorReviews: VendorReview[];
+  vendorReviewIdCounter: number;
+
   // Song list
   songs: SongItem[];
   songIdCounter: number;
@@ -463,6 +467,22 @@ export interface VendorGratitude {
   plannedDate?: string;     // YYYY-MM-DD - when planning to give
   givenDate?: string;       // YYYY-MM-DD - when actually given
   notes?: string;           // Optional notes about the tip
+  createdAt: string;        // ISO timestamp
+}
+
+export interface VendorReview {
+  id: number;
+  vendorId: number;
+  vendorName: string;       // Denormalized for convenience
+  overallRating: number;     // 1-5 stars
+  ratings: {
+    quality: number;        // Service quality (1-5)
+    professionalism: number; // Professional conduct (1-5)
+    value: number;          // Value for money (1-5)
+    communication: number;  // Responsiveness (1-5)
+  };
+  notes: string;
+  reviewDate: string;       // YYYY-MM-DD
   createdAt: string;        // ISO timestamp
 }
 

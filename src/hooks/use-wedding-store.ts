@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useLocalStorage } from "./use-local-storage";
-import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate, HoneymoonState, HoneymoonTask, EmergencyContact, TimelineAlert, BackupPlan, EmergencySupply } from "@/types/wedding";
+import type { WeddingState, Guest, Vendor, VendorQuote, PhotoItem, WeddingStep, Region, RsvpSettings, ExpenseEntry, SeatingTable, WeddingContact, VendorPayment, VendorCommunication, SongItem, SpeechEntry, GuestBookEntry, WeddingPartyMember, MoodBoardItem, ColorPalette, QuickNote, RegistryItem, TransportationGroup, PhotoShot, WelcomeBagItem, WelcomeBagDistribution, MenuItem, MenuSettings, ImportantDate, HoneymoonState, HoneymoonTask, EmergencyContact, TimelineAlert, BackupPlan, EmergencySupply, VendorGratitude, VendorReview } from "@/types/wedding";
 import type { WeddingContract, PaymentMilestone } from "@/types/contracts";
 import type { ItineraryItem } from "@/data/wedding-itinerary";
 import { DEFAULT_STATE, DEFAULT_HONEYMOON } from "@/data/backgrounds";
@@ -483,6 +483,33 @@ export function useWeddingStore() {
       vendorGratitude: (prev.vendorGratitude || []).filter((g) => g.id !== id),
     }));
   }, [setState]);
+
+  // Vendor review methods
+  const addReview = useCallback((review: Omit<VendorReview, "id" | "createdAt">) => {
+    setState((prev) => ({
+      ...prev,
+      vendorReviewIdCounter: (prev.vendorReviewIdCounter || 0) + 1,
+      vendorReviews: [...(prev.vendorReviews || []), { ...review, id: (prev.vendorReviewIdCounter || 0) + 1, createdAt: new Date().toISOString() }],
+    }));
+  }, [setState]);
+
+  const updateReview = useCallback((id: number, updates: Partial<VendorReview>) => {
+    setState((prev) => ({
+      ...prev,
+      vendorReviews: (prev.vendorReviews || []).map((r) => r.id === id ? { ...r, ...updates } : r),
+    }));
+  }, [setState]);
+
+  const deleteReview = useCallback((id: number) => {
+    setState((prev) => ({
+      ...prev,
+      vendorReviews: (prev.vendorReviews || []).filter((r) => r.id !== id),
+    }));
+  }, [setState]);
+
+  const getVendorReviews = useCallback((vendorId: number): VendorReview[] => {
+    return (state.vendorReviews || []).filter((r) => r.vendorId === vendorId);
+  }, [state.vendorReviews]);
 
   // Song list methods
   const addSong = useCallback((song: Omit<SongItem, "id">) => {
@@ -1379,6 +1406,7 @@ export function useWeddingStore() {
     addVendorPayment, updateVendorPayment, removeVendorPayment,
     addVendorCommunication, updateVendorCommunication, removeVendorCommunication,
     addVendorGratitude, updateVendorGratitude, removeVendorGratitude,
+    addReview, updateReview, deleteReview, getVendorReviews,
     addSong, updateSong, removeSong,
     addSpeech, updateSpeech, removeSpeech,
     addGuestBookEntry, updateGuestBookEntry, removeGuestBookEntry, toggleGuestBookFavorite,
