@@ -30,6 +30,7 @@ export const PAGES: PageDef[] = [
   { id: "menu", label: "🍽️ Thực Đơn", icon: "🍽️", shortLabel: "Thực đơn" },
   { id: "guest-meals", label: "🍽️ Phân Cơm Khách", icon: "🍽️", shortLabel: "Phân cơm" },
   { id: "weather", label: "🌤️ Thời Tiết", icon: "🌤️", shortLabel: "Thời tiết" },
+  { id: "contract-templates", label: "📄 Mẫu Hợp Đồng", icon: "📄", shortLabel: "Mẫu hợp đồng" },
 ];
 
 export const DEFAULT_PAGE = "home";

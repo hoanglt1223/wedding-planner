@@ -56,6 +56,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   "payment-schedule": "menu",
   "emergency-assistant": "menu",
   "wedding-day-timeline": "menu",
+  "contract-templates": "menu",
 };
 
 export const MENU_ITEMS = [
@@ -63,6 +64,7 @@ export const MENU_ITEMS = [
   { pageId: "wedding-party", icon: "💐", labelVi: "Đội Ngũ Cưới", labelEn: "Wedding Party" },
   { pageId: "vendors", icon: "🗺️", labelVi: "Nhà Cung Cấp", labelEn: "Vendors" },
   { pageId: "contracts", icon: "📄", labelVi: "Hợp Đồng", labelEn: "Contracts" },
+  { pageId: "contract-templates", icon: "📋", labelVi: "Mẫu Hợp Đồng", labelEn: "Contract Templates" },
   { pageId: "payments", icon: "💳", labelVi: "Theo Dõi Thanh Toán", labelEn: "Payments" },
   { pageId: "contacts", icon: "📞", labelVi: "Danh Bạ", labelEn: "Contacts" },
   { pageId: "emergency-kit", icon: "🚨", labelVi: "Bộ Khẩn Cấp", labelEn: "Emergency Kit" },
