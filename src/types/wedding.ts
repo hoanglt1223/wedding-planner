@@ -361,6 +361,9 @@ export interface WeddingState {
 
   // Honeymoon Planner
   honeymoon: HoneymoonState;
+
+  // Schedule Share Settings
+  scheduleShareSettings?: any;
 }
 
 export interface ImportantDate {

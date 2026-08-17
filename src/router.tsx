@@ -322,6 +322,12 @@ const weddingDayTimelineRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/wedding-day-timeline-page'), 'WeddingDayTimelinePage'),
 })
 
+const scheduleShareRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/schedule-share',
+  component: lazyRouteComponent(() => import('./pages/schedule-share-page'), 'ScheduleSharePage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -351,6 +357,12 @@ const taskLandingRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/tasks/$token',
   component: lazyRouteComponent(() => import('./pages/task-landing-page'), 'default'),
+})
+
+const scheduleShareLandingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/schedule/$token',
+  component: lazyRouteComponent(() => import('./pages/schedule-share-landing-page'), 'ScheduleShareLandingPage'),
 })
 
 const adminRoute = createRoute({
@@ -417,12 +429,14 @@ const routeTree = rootRoute.addChildren([
     paymentScheduleRoute,
     emergencyAssistantRoute,
     weddingDayTimelineRoute,
+    scheduleShareRoute,
   ]),
   rsvpRoute,
   sharedRoute,
   weddingWebsiteRoute,
   photosRoute,
   taskLandingRoute,
+  scheduleShareLandingRoute,
   adminRoute.addChildren([adminCatchAllRoute]),
 ])
 

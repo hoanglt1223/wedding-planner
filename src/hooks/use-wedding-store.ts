@@ -1363,6 +1363,14 @@ export function useWeddingStore() {
     setState((prev) => ({ ...prev, generatedHashtags: [] }));
   }, [setState]);
 
+  // Schedule Share methods
+  const updateScheduleShareSettings = useCallback((settings: any) => {
+    setState((prev) => ({
+      ...prev,
+      scheduleShareSettings: settings,
+    }));
+  }, [setState]);
+
   const phase2 = usePhase2Methods(setState);
 
   const getProgress = useCallback(() => {
@@ -1433,6 +1441,8 @@ export function useWeddingStore() {
     // Emergency Assistant methods
     addEmergencyContact, removeEmergencyContact, addTimelineAlert, acknowledgeTimelineAlert,
     addBackupPlan, activateBackupPlan, addEmergencySupply, toggleEmergencySupplyPacked, updateEmergencyAssistant,
+    // Schedule Share methods
+    updateScheduleShareSettings,
     ...phase2,
   };
 }

@@ -91,3 +91,20 @@ export const rsvpInvitations = pgTable("rsvp_invitations", {
 }, (table) => [
   index("rsvp_invitations_user_id_idx").on(table.userId),
 ]);
+
+export const scheduleShares = pgTable("schedule_shares", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  sessionId: text("session_id").notNull(),
+  shareToken: text("share_token").notNull().unique(),
+  password: text("password"),
+  expiryDate: timestamp("expiry_date"),
+  showContactInfo: boolean("show_contact_info").default(true).notNull(),
+  showVendorNotes: boolean("show_vendor_notes").default(true).notNull(),
+  allowDownload: boolean("allow_download").default(true).notNull(),
+  customMessage: text("custom_message"),
+  lastUpdated: timestamp("last_updated").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("schedule_shares_session_id_idx").on(table.sessionId),
+  index("schedule_shares_token_idx").on(table.shareToken),
+]);
