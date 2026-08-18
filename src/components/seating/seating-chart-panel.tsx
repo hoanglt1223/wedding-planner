@@ -1,9 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Guest, SeatingTable } from "@/types/wedding";
 import { t } from "@/lib/i18n";
 import { TableCardGenerator } from "./table-card-generator";
+import { SmartSeatingModal } from "./smart-seating-modal";
 import type { AppTheme } from "@/data/themes";
 
 const TABLE_COLORS = [
@@ -44,6 +45,7 @@ export function SeatingChartPanel({
   const [editingId, setEditingId] = useState<number | null>(null);
   const [selectedTableId, setSelectedTableId] = useState<number | null>(null);
   const [searchGuest, setSearchGuest] = useState("");
+  const [showSmartSeating, setShowSmartSeating] = useState(false);
 
   // Add form state
   const [newName, setNewName] = useState("");
@@ -116,6 +118,63 @@ export function SeatingChartPanel({
     onAssignGuest(guestId, selectedTableId);
   }
 
+  // Smart seating assignment algorithm
+  const handleSmartAssign = useCallback(() => {
+    // Clear all existing assignments first
+    tables.forEach((table) => {
+      table.guestIds.forEach((guestId) => {
+        onUnassignGuest(guestId);
+      });
+    });
+
+    // Get unassigned guests
+    const unassignedGuests = guests.filter((g) =>
+      !tables.some((t) => t.guestIds.includes(g.id))
+    );
+
+    // Group guests by their group field (family/friends categories)
+    const groupedGuests = new Map<string, Guest[]>();
+    unassignedGuests.forEach((guest) => {
+      const group = guest.group || "other";
+      if (!groupedGuests.has(group)) {
+        groupedGuests.set(group, []);
+      }
+      groupedGuests.get(group)!.push(guest);
+    });
+
+    // Sort groups by size (largest first) to optimize table usage
+    const sortedGroups = Array.from(groupedGuests.entries()).sort(
+      ([, a], [, b]) => b.length - a.length
+    );
+
+    // Assign groups to tables, keeping similar groups together
+    let currentTableIndex = 0;
+    sortedGroups.forEach(([group, groupGuests]) => {
+      let guestIndex = 0;
+
+      while (guestIndex < groupGuests.length && currentTableIndex < tables.length) {
+        const table = tables[currentTableIndex];
+        const availableSeats = table.capacity - table.guestIds.length;
+
+        if (availableSeats > 0) {
+          // Assign as many guests from this group as possible
+          const toAssign = Math.min(availableSeats, groupGuests.length - guestIndex);
+          for (let i = 0; i < toAssign; i++) {
+            onAssignGuest(groupGuests[guestIndex + i].id, table.id);
+          }
+          guestIndex += toAssign;
+        }
+
+        // Move to next table if current one is full
+        if (table.guestIds.length >= table.capacity) {
+          currentTableIndex++;
+        }
+      }
+    });
+
+    setShowSmartSeating(false);
+  }, [guests, tables, onAssignGuest, onUnassignGuest]);
+
   // Stats
   const totalSeats = tables.reduce((s, t) => s + t.capacity, 0);
   const totalAssigned = assignedGuestIds.size;
@@ -133,17 +192,29 @@ export function SeatingChartPanel({
               : `${tables.length} bàn · ${totalAssigned}/${totalGuests} khách đã xếp`}
           </p>
         </div>
-        <Button
-          size="sm"
-          className="h-8 px-3"
-          onClick={() => {
-            setShowAddForm(!showAddForm);
-            setNewName("");
-            setNewCapacity("10");
-          }}
-        >
-          + {t("Thêm bàn", lang)}
-        </Button>
+        <div className="flex gap-2">
+          {tables.length > 0 && unassignedGuests.length > 0 && (
+            <Button
+              size="sm"
+              variant="outline"
+              className="h-8 px-3"
+              onClick={() => setShowSmartSeating(true)}
+            >
+              🤖 {t("Xếp thông minh", lang)}
+            </Button>
+          )}
+          <Button
+            size="sm"
+            className="h-8 px-3"
+            onClick={() => {
+              setShowAddForm(!showAddForm);
+              setNewName("");
+              setNewCapacity("10");
+            }}
+          >
+            + {t("Thêm bàn", lang)}
+          </Button>
+        </div>
       </div>
 
       {/* Summary cards */}
@@ -450,6 +521,16 @@ export function SeatingChartPanel({
           <span>{en ? "All guests have been assigned seats!" : "Tất cả khách đã được xếp chỗ!"}</span>
         </div>
       )}
+
+      {/* Smart seating modal */}
+      <SmartSeatingModal
+        isOpen={showSmartSeating}
+        onClose={() => setShowSmartSeating(false)}
+        onConfirm={handleSmartAssign}
+        tables={tables}
+        guests={guests}
+        lang={lang}
+      />
     </div>
   );
 }
