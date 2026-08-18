@@ -1,5 +1,5 @@
 import { useWeddingStoreContext } from "@/contexts/wedding-store-context";
-import { SeatingChartPanel } from "@/components/seating/seating-chart-panel";
+import { SeatingMealPlanner } from "@/components/seating/seating-meal-planner";
 import { THEMES, DEFAULT_THEME_ID } from "@/data/themes";
 
 export default function SeatingPage() {
@@ -8,7 +8,7 @@ export default function SeatingPage() {
   const theme = THEMES.find((t) => t.id === (state.themeId || DEFAULT_THEME_ID)) || THEMES[0];
 
   return (
-    <SeatingChartPanel
+    <SeatingMealPlanner
       tables={state.seatingTables ?? []}
       guests={state.guests ?? []}
       onAddTable={store.addSeatingTable}
