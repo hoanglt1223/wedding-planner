@@ -328,6 +328,12 @@ const scheduleShareRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/schedule-share-page'), 'ScheduleSharePage'),
 })
 
+const calendarExportRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/calendar-export',
+  component: lazyRouteComponent(() => import('./pages/calendar-export-page'), 'CalendarExportPage'),
+})
+
 // Standalone routes
 const rsvpRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -430,6 +436,7 @@ const routeTree = rootRoute.addChildren([
     emergencyAssistantRoute,
     weddingDayTimelineRoute,
     scheduleShareRoute,
+    calendarExportRoute,
   ]),
   rsvpRoute,
   sharedRoute,

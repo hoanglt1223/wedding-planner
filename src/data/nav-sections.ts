@@ -57,6 +57,7 @@ export const PAGE_TO_SECTION: Record<string, string> = {
   "emergency-assistant": "menu",
   "wedding-day-timeline": "menu",
   "contract-templates": "menu",
+  "calendar-export": "menu",
 };
 
 export const MENU_ITEMS = [
@@ -97,4 +98,5 @@ export const MENU_ITEMS = [
   { pageId: "payment-schedule", icon: "💳", labelVi: "Lịch Thanh Toán", labelEn: "Payment Schedule" },
   { pageId: "emergency-assistant", icon: "🚨", labelVi: "Trợ Lý Khẩn Cấp", labelEn: "Emergency Assistant" },
   { pageId: "wedding-day-timeline", icon: "📅", labelVi: "Lịch Trình Ngày Cưới", labelEn: "Wedding Day Timeline" },
+  { pageId: "calendar-export", icon: "📆", labelVi: "Xuất Lịch", labelEn: "Calendar Export" },
 ];
