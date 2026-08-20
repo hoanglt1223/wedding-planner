@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MapPin, Cloud, RefreshCw, AlertCircle } from "lucide-react";
 import { WeatherCard } from "./weather-card";
+import { WeatherPlanningAssistant } from "./weather-planning-assistant";
 
 interface WeatherDashboardProps {
   weddingDate?: string;
@@ -251,6 +252,29 @@ export function WeatherDashboard({ weddingDate, engagementDate, betrothalDate, l
           />
         ))}
       </div>
+
+      {/* Planning Assistant for Wedding Day */}
+      {weddingDate && weatherData[weddingDate] && !weatherData[weddingDate].error && (
+        <Card className="border-2 border-primary/20">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Cloud className="h-5 w-5 text-primary" />
+              {en ? "Wedding Day Planning Assistant" : "Trợ Lý Lập Kế Hoạch Ngày Cưới"}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              {en
+                ? "Personalized recommendations based on wedding weather forecast"
+                : "Đề xuất được cá nhân hóa dựa trên dự báo thời tiết ngày cưới"}
+            </p>
+          </CardHeader>
+          <CardContent>
+            <WeatherPlanningAssistant
+              weather={weatherData[weddingDate]}
+              lang={lang}
+            />
+          </CardContent>
+        </Card>
+      )}
 
       {/* Info card */}
       {datesToCheck.length === 0 && (
