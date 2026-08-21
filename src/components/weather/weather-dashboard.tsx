@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { MapPin, Cloud, RefreshCw, AlertCircle } from "lucide-react";
 import { WeatherCard } from "./weather-card";
 import { WeatherPlanningAssistant } from "./weather-planning-assistant";
+import { WeeklyForecast } from "./weekly-forecast";
+import { WeatherRiskDashboard } from "./weather-risk-dashboard";
 
 interface WeatherDashboardProps {
   weddingDate?: string;
@@ -292,6 +294,27 @@ export function WeatherDashboard({ weddingDate, engagementDate, betrothalDate, l
         </Card>
       )}
 
+      {/* Weekly Forecast for Wedding Date */}
+      {weddingDate && (
+        <WeeklyForecast
+          lat={location.lat}
+          lon={location.lon}
+          startDate={weddingDate}
+          lang={lang}
+        />
+      )}
+
+      {/* Weather Risk Dashboard */}
+      {weddingDate && (
+        <WeatherRiskDashboard
+          lat={location.lat}
+          lon={location.lon}
+          weddingMonth={parseInt(weddingDate.split("-")[1], 10)}
+          currentForecast={weatherData[weddingDate]}
+          lang={lang}
+        />
+      )}
+
       {/* Tips card */}
       {datesToCheck.length > 0 && (
         <Card className="bg-muted">
@@ -305,6 +328,7 @@ export function WeatherDashboard({ weddingDate, engagementDate, betrothalDate, l
                 <li>• {en ? "Historical data available for past 7 days" : "Dữ liệu lịch sử có sẵn cho 7 ngày qua"}</li>
                 <li>• {en ? "Plan indoor backup for high precipitation" : "Lên kế hoạch dự phòng trong nhà khi mưa nhiều"}</li>
                 <li>• {en ? "Consider wind for outdoor decorations" : "Cân nhắc gió cho trang trí ngoài trời"}</li>
+                <li>• {en ? "Use weekly forecast to plan rehearsal dinners" : "Sử dụng dự báo 7 ngày để lên kế hoạch tiệc tập dượt"}</li>
               </ul>
             </div>
           </CardContent>
