@@ -8,6 +8,7 @@ export interface PageDef {
 export const PAGES: PageDef[] = [
   { id: "home", label: "🏠 Trang Chủ", icon: "🏠", shortLabel: "Trang chủ" },
   { id: "planning", label: "💒 Kế Hoạch", icon: "💒", shortLabel: "Kế hoạch" },
+  { id: "engagement", label: "💍 Lễ Đính Hôn", icon: "💍", shortLabel: "Đính hôn" },
   { id: "astrology", label: "🔮 Tử Vi", icon: "🔮" },
   { id: "numerology", label: "🔢 Thần Số Học", icon: "🔢" },
   { id: "lunar", label: "🌙 Lịch Âm", icon: "🌙" },

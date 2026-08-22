@@ -58,6 +58,12 @@ const planningRoute = createRoute({
   component: PlanningPage,
 })
 
+const engagementRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/engagement',
+  component: lazyRouteComponent(() => import('./pages/engagement-ceremony-page'), 'EngagementCeremonyPage'),
+})
+
 const guestsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/guests',
@@ -397,6 +403,7 @@ const routeTree = rootRoute.addChildren([
     appIndexRoute,
     homeRoute,
     planningRoute,
+    engagementRoute,
     guestsRoute,
     astrologyRoute,
     numerologyRoute,
