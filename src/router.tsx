@@ -286,6 +286,12 @@ const menuCardsRoute = createRoute({
   component: lazyRouteComponent(() => import('./pages/menu-cards-page'), 'default'),
 })
 
+const menuDietaryRoute = createRoute({
+  getParentRoute: () => appRoute,
+  path: '/menu-dietary',
+  component: lazyRouteComponent(() => import('./pages/menu-dietary-page'), 'default'),
+})
+
 const guestMealsRoute = createRoute({
   getParentRoute: () => appRoute,
   path: '/guest-meals',
@@ -429,6 +435,7 @@ const routeTree = rootRoute.addChildren([
     honeymoonRoute,
     menuRoute,
     menuCardsRoute,
+    menuDietaryRoute,
     guestMealsRoute,
     hashtagGeneratorRoute,
     vendorComparisonRoute,
