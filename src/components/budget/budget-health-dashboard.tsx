@@ -3,12 +3,12 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 import { AlertTriangle, TrendingUp, Wallet, CheckCircle2 } from "lucide-react"
-import { WeddingState } from "@/types/wedding"
+import type { WeddingState } from "@/types/wedding"
 
 interface BudgetHealthDashboardProps {
   budget: number
   expenses: WeddingState["expenseLog"]
-  lang?: string
+  lang?: "vi" | "en"
 }
 
 interface CategoryHealth {
@@ -74,15 +74,6 @@ function calculateCategoryHealth(
     remaining,
     percentage,
     status,
-  }
-}
-
-function getStatusColor(status: CategoryHealth["status"]): string {
-  switch (status) {
-    case "healthy": return "text-green-600"
-    case "warning": return "text-amber-600"
-    case "over": return "text-red-600"
-    case "empty": return "text-slate-500"
   }
 }
 

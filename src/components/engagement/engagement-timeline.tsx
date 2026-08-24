@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, MapPin, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
-import { vi } from "date-fns/locale";
 
 interface TimelineEvent {
   id: string;

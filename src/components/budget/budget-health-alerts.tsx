@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { BudgetHealthAlert, getAlertColor, getAlertIcon } from "@/lib/budget-health";
+import { getAlertColor, getAlertIcon } from "@/lib/budget-health";
+import type { BudgetHealthAlert } from "@/lib/budget-health";
 import { X } from "lucide-react";
 
 interface BudgetHealthAlertsProps {

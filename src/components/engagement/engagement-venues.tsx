@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Calendar, Home, Building } from "lucide-react";
+import { MapPin, Calendar, Home, Building } from "lucide-react";
 import { useState } from "react";
 
 interface EngagementVenuesProps {

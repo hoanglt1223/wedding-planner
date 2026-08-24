@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Package, AlertCircle } from "lucide-react";
-import { Select } from "@/components/ui/select";
 
 interface EmergencyKitPanelProps {
   checkedItems: Record<string, boolean>;
@@ -171,7 +170,7 @@ export function EmergencyKitPanel({ checkedItems, onToggleItem, onClearChecklist
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {categoryItems.map(item => {
-                  const priority = getPriorityInfo(item.priority);
+                  const priority = priorityInfo[item.priority as keyof typeof priorityInfo];
                   const isChecked = checkedItems[item.id];
 
                   return (

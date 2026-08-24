@@ -103,7 +103,7 @@ export function EngagementGiftChecklist({ items, onToggleItem, lang }: Engagemen
               <div className="flex items-start gap-3">
                 <Checkbox
                   checked={item.prepared}
-                  onCheckedChange={() => onToggleItem(item.id)}
+                  onChange={() => onToggleItem(item.id)}
                   className="mt-1"
                 />
                 <div className="flex-1">

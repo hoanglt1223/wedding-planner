@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import guestGroups from "@/data/guest-groups";
+import { guestGroups } from "@/data/guest-groups";
 
 interface BulkGuestAddModalProps {
   isOpen: boolean;

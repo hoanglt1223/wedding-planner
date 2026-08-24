@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { DollarSign, TrendingUp, TrendingDown, AlertCircle, Target } from "lucide-react";
+import { DollarSign, TrendingUp, AlertCircle, Target } from "lucide-react";
 import { useState } from "react";
 
 interface EngagementGiftItem {
