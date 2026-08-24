@@ -164,7 +164,7 @@ export function PaymentSchedulePage() {
               <span className="hidden sm:inline">{en ? "Overview" : "Tổng Quan"}</span>
             </TabsTrigger>
             <TabsTrigger value="timeline" className="flex items-center gap-2">
-              <Timeline className="w-4 h-4" />
+              <Clock className="w-4 h-4" />
               <span className="hidden sm:inline">{en ? "Timeline" : "Dòng Thời Gian"}</span>
             </TabsTrigger>
             <TabsTrigger value="calendar" className="flex items-center gap-2">

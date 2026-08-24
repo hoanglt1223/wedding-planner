@@ -274,7 +274,7 @@ export function ScheduleShareLandingPage() {
         {/* Wedding Header */}
         <div className="text-center py-8 space-y-3">
           <div className="text-4xl mb-3">💒</div>
-          <h1 className="text-3xl font-bold" style={{ color: `var(--${theme.colors.primary})` }}>
+          <h1 className="text-3xl font-bold" style={{ color: `var(--${theme.colors?.primary || theme.primary})` }}>
             {scheduleData.coupleNames}
           </h1>
           <p className="text-xl text-muted-foreground">
@@ -302,7 +302,7 @@ export function ScheduleShareLandingPage() {
                 <div
                   key={entry.id}
                   className="border-l-4 pl-4 py-3 space-y-1 bg-card"
-                  style={{ borderColor: `var(--${theme.colors.primary})` }}
+                  style={{ borderColor: `var(--${theme.colors?.primary || theme.primary})` }}
                 >
                   <div className="flex items-start gap-3">
                     <span className="font-semibold text-sm min-w-[60px]">

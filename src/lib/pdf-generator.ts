@@ -138,7 +138,7 @@ export function addPdfSection(
 
   // Section title
   pdf.setFillColor(primaryRgb.r, primaryRgb.g, primaryRgb.b);
-  pdf.roundedRect(12, y, 4, 8, 1, "F");
+  pdf.roundedRect(12, y, 4, 8, 1, 1, "F");
 
   pdf.setTextColor(255, 255, 255);
   pdf.setFontSize(10);

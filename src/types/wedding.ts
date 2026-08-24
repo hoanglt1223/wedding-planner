@@ -3,8 +3,9 @@
 import type { Region, RegionalContent } from "../data/regions";
 import type { WeddingContract } from "./contracts";
 import type { ItineraryItem } from "../data/wedding-itinerary";
+import type { AppTheme } from "../data/themes";
 
-export type { Region, RegionalContent };
+export type { Region, RegionalContent, AppTheme };
 
 export interface CeremonyStep {
   text: string;
@@ -444,7 +445,7 @@ export type VendorPaymentMethod = "cash" | "bank_transfer" | "card" | "other";
 
 export interface VendorPayment {
   id: number;
-  vendorId: number;
+  vendorId?: number;         // Optional for expense-based payments
   vendorName?: string;       // Denormalized for convenience
   amount: number;           // VND
   date: string;             // YYYY-MM-DD

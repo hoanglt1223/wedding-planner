@@ -141,7 +141,7 @@ export function SchedulePreview({ state, settings, onClose, lang }: SchedulePrev
           {/* Wedding Header */}
           <div className="text-center py-6 space-y-2">
             <div className="text-3xl mb-2">💒</div>
-            <h1 className="text-2xl font-bold" style={{ color: `var(--${theme.colors.primary})` }}>
+            <h1 className="text-2xl font-bold" style={{ color: `var(--${theme.colors?.primary || theme.primary})` }}>
               {coupleName}
             </h1>
             <p className="text-lg text-muted-foreground">
@@ -169,7 +169,7 @@ export function SchedulePreview({ state, settings, onClose, lang }: SchedulePrev
                   <div
                     key={entry.id}
                     className="border-l-4 pl-4 py-2 space-y-1"
-                    style={{ borderColor: `var(--${theme.colors.primary})` }}
+                    style={{ borderColor: `var(--${theme.colors?.primary || theme.primary})` }}
                   >
                     <div className="flex items-start gap-2">
                       <span className="font-semibold text-sm">

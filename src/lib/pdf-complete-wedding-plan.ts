@@ -61,8 +61,9 @@ export async function generateCompleteWeddingPlanPdf(
   y = addPdfSection(pdf, en ? "Quick Stats" : "Thống Kê Nhanh", y, (pdf, startY) => {
     const guests = state.guests || [];
     const vendors = state.vendors || [];
-    const tasks = state.tasks || [];
-    const completedTasks = tasks.filter(t => t.status === "completed").length;
+    const checkedChecklist = state.checkedChecklistItems || {};
+    const totalTasks = Object.keys(checkedChecklist).length;
+    const completedTasks = Object.values(checkedChecklist).filter(v => v).length;
     const expenses = state.expenseLog || [];
     const totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
 
@@ -273,9 +274,9 @@ export async function generateCompleteWeddingPlanPdf(
       const rows = displayGuests.map(g => [
         g.name,
         g.side === "groom" ? (en ? "Groom" : "Chú rể") : (en ? "Bride" : "Cô dâu"),
-        g.tableNumber || "-",
-        g.rsvpStatus || "-",
-        g.plusOneName || "-"
+        g.tableNumber ? String(g.tableNumber) : "-",
+        g.rsvpStatus ?? "-",
+        g.plusOneName ?? "-"
       ]);
 
       return addPdfTable(pdf, headers, rows, startY, [35, 25, 20, 20, 35]);
@@ -373,15 +374,16 @@ export async function generateCompleteWeddingPlanPdf(
   y = 35;
 
   // Tasks
-  const tasks = state.tasks || [];
-  const pendingTasks = tasks.filter(t => t.status !== "completed");
-  const completedTasksCount = tasks.filter(t => t.status === "completed").length;
+  const checkedChecklist = state.checkedChecklistItems || {};
+  const totalTaskCount = Object.keys(checkedChecklist).length;
+  const completedTaskCount = Object.values(checkedChecklist).filter(v => v).length;
+  const pendingTaskCount = totalTaskCount - completedTaskCount;
 
   y = addPdfSection(pdf, en ? "Task Progress" : "Tiến Độ Công Việc", y, (pdf, startY) => {
     const taskStats = [
-      [en ? "Total Tasks:" : "Tổng công việc:", String(tasks.length)],
-      [en ? "Completed:" : "Hoàn thành:", String(completedTasksCount)],
-      [en ? "Pending:" : "Còn lại:", String(pendingTasks.length)]
+      [en ? "Total Tasks:" : "Tổng công việc:", String(totalTaskCount)],
+      [en ? "Completed:" : "Hoàn thành:", String(completedTaskCount)],
+      [en ? "Pending:" : "Còn lại:", String(pendingTaskCount)]
     ];
 
     let currentY = startY;
