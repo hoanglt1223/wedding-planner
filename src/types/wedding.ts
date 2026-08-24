@@ -126,6 +126,8 @@ export interface Guest {
   dietary?: string;        // e.g. "chay" (vegetarian), "halal", allergy note
   plusOneName?: string;    // Name of accompanying guest (+1)
   guestNotes?: string;     // General notes about this guest
+  tableNumber?: number;    // For PDF compatibility
+  rsvpStatus?: string;     // For PDF compatibility
 }
 
 export interface RsvpSettings {
@@ -364,6 +366,12 @@ export interface WeddingState {
 
   // Schedule Share Settings
   scheduleShareSettings?: any;
+
+  // Additional properties for compatibility
+  timeline?: TimelineEntry[]; // alias for timelineEntries
+  venue?: string; // venue information for PDFs
+  tasks?: Record<string, boolean>; // task tracking for PDFs
+  theme?: AppTheme; // current theme object (not just ID)
 }
 
 export interface ImportantDate {
@@ -536,6 +544,7 @@ export interface WeddingContact {
   phone: string;
   category: ContactCategory;
   note: string;
+  email?: string; // optional email address
 }
 
 // --- Song list types ---

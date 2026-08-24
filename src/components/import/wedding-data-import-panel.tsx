@@ -503,3 +503,6 @@ export function ImportPanel() {
     </div>
   );
 }
+
+// Alias export for backward compatibility
+export { ImportPanel as WeddingDataImportPanel };

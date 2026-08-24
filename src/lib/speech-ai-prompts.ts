@@ -1,4 +1,4 @@
-import type { SpeechEntry } from "@/types/wedding";
+import type { SpeechEntry } from "../types/wedding";
 
 export type SpeechEnhancementMode =
   | "improve-grammar"

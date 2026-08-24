@@ -15,6 +15,8 @@ export interface AppTheme {
   noteBg: string;                 // notes callout bg hex
   noteBorder: string;             // notes callout border hex
   noteText: string;               // notes callout text hex
+  fontFamily?: string;            // optional font family for schedule previews
+  colors?: Record<string, string>; // additional color mappings for schedule previews
 }
 
 export const THEMES: AppTheme[] = [
