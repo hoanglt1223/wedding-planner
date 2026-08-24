@@ -269,7 +269,7 @@ export function EngagementCeremonyPage() {
                     <div key={item.id} className="flex items-center gap-2">
                       <Checkbox
                         checked={item.checked}
-                        onCheckedChange={() => toggleChecklistItem(item.id)}
+                        onChange={() => toggleChecklistItem(item.id)}
                       />
                       <span className={`text-sm ${item.checked ? "line-through text-muted-foreground" : ""}`}>
                         {en ? item.textEn : item.textVi}

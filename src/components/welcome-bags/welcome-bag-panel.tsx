@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { WELCOME_BAG_CATEGORIES, WELCOME_BAG_TEMPLATES } from "@/data/welcome-bag-items";
 import type { WelcomeBagItem, WelcomeBagDistribution, Guest } from "@/types/wedding";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -144,18 +144,13 @@ export function WelcomeBagPanel({
         <TabsContent value="items" className="space-y-4">
           {/* Category Filter & Add Button */}
           <div className="flex items-center gap-2">
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={en ? "All categories" : "Tất cả danh mục"} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{en ? "All Categories" : "Tất cả"}</SelectItem>
-                {WELCOME_BAG_CATEGORIES.map((cat) => (
-                  <SelectItem key={cat.id} value={cat.id}>
-                    {cat.icon} {en ? cat.labelEn : cat.labelVi}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+            <Select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+              <option value="all">{en ? "All Categories" : "Tất cả"}</option>
+              {WELCOME_BAG_CATEGORIES.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.icon} {en ? cat.labelEn : cat.labelVi}
+                </option>
+              ))}
             </Select>
             <Button
               size="sm"
@@ -179,16 +174,11 @@ export function WelcomeBagPanel({
                     id="wb-custom-name"
                   />
                   <Select defaultValue="essentials">
-                    <SelectTrigger id="wb-custom-category">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {WELCOME_BAG_CATEGORIES.map((cat) => (
-                        <SelectItem key={cat.id} value={cat.id}>
-                          {cat.icon} {en ? cat.labelEn : cat.labelVi}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                    {WELCOME_BAG_CATEGORIES.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.icon} {en ? cat.labelEn : cat.labelVi}
+                      </option>
+                    ))}
                   </Select>
                   <Textarea
                     placeholder={en ? "Description" : "Mô tả"}
@@ -265,7 +255,7 @@ export function WelcomeBagPanel({
                   <div className="flex items-start gap-3">
                     <Checkbox
                       checked={item.checked}
-                      onCheckedChange={() => onToggleItemChecked(item.id)}
+                      onChange={() => onToggleItemChecked(item.id)}
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
@@ -323,32 +313,22 @@ export function WelcomeBagPanel({
               </CardHeader>
               <CardContent>
                 <div className="grid gap-3">
-                  <Select>
-                    <SelectTrigger id="wb-dist-guest">
-                      <SelectValue placeholder={en ? "Select guest (optional)" : "Chọn khách (tùy chọn)"} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="">{en ? "General distribution" : "Phát chung"}</SelectItem>
-                      {guests.map((guest) => (
-                        <SelectItem key={guest.id} value={guest.id.toString()}>
-                          {guest.name} ({guest.side})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                  <Select id="wb-dist-guest">
+                    <option value="">{en ? "General distribution" : "Phát chung"}</option>
+                    {guests.map((guest) => (
+                      <option key={guest.id} value={guest.id.toString()}>
+                        {guest.name} ({guest.side})
+                      </option>
+                    ))}
                   </Select>
                   <Input
                     placeholder={en ? "Guest name" : "Tên khách"}
                     id="wb-dist-name"
                   />
-                  <Select defaultValue="pending">
-                    <SelectTrigger id="wb-dist-status">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pending">{en ? "Pending" : "Chưa phát"}</SelectItem>
-                      <SelectItem value="in-progress">{en ? "In Progress" : "Đang phát"}</SelectItem>
-                      <SelectItem value="complete">{en ? "Complete" : "Đã phát xong"}</SelectItem>
-                    </SelectContent>
+                  <Select defaultValue="pending" id="wb-dist-status">
+                    <option value="pending">{en ? "Pending" : "Chưa phát"}</option>
+                    <option value="in-progress">{en ? "In Progress" : "Đang phát"}</option>
+                    <option value="complete">{en ? "Complete" : "Đã phát xong"}</option>
                   </Select>
                   <Input
                     type="date"

@@ -74,7 +74,7 @@ export function WeddingDayDashboard() {
               <Checkbox
                 id={`widget-${widget.id}`}
                 checked={widget.enabled}
-                onCheckedChange={() => toggleWidget(widget.id)}
+                onChange={() => toggleWidget(widget.id)}
               />
               <label
                 htmlFor={`widget-${widget.id}`}
