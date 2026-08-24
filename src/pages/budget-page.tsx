@@ -55,7 +55,7 @@ export function BudgetPage() {
         alerts.push(cat.alert);
       }
     });
-    return alerts.filter(Boolean) as Array<typeof budgetHealth.overall>;
+    return alerts.filter(alert => alert !== null);
   }, [budgetHealth]);
 
   const handleEditExpense = (expense: import("@/types/wedding").ExpenseEntry) => {

@@ -58,8 +58,10 @@ export function VendorPaymentTracker({
       vendorId,
       amount: parseVnd(amount),
       date,
+      dueDate: date, // Default due date to payment date
       method,
       note: note.trim(),
+      paid: false,
     });
     resetForm();
     setShowForm(false);

@@ -23,9 +23,13 @@ export function PaymentSchedulePage() {
   // Combine vendor payments with expense log payments
   const combinedPayments: Array<{
     id: number;
-    vendorName: string;
+    vendorId?: number;
+    vendorName?: string;
     amount: number;
+    date: string;
     dueDate: string;
+    method: "cash" | "bank_transfer" | "card" | "other";
+    note: string;
     paid: boolean;
     description?: string;
   }> = [];
@@ -34,9 +38,13 @@ export function PaymentSchedulePage() {
   allPayments.forEach(payment => {
     combinedPayments.push({
       id: payment.id,
-      vendorName: payment.vendorName || en ? "Vendor" : "Nhà cung cấp",
+      vendorId: payment.vendorId,
+      vendorName: payment.vendorName || (en ? "Vendor" : "Nhà cung cấp"),
       amount: payment.amount,
+      date: payment.date,
       dueDate: payment.dueDate,
+      method: payment.method,
+      note: payment.note,
       paid: payment.paid || false,
       description: payment.description
     });
@@ -50,7 +58,10 @@ export function PaymentSchedulePage() {
         id: 100000 + index, // Unique ID for expense payments
         vendorName: expense.description || expense.category,
         amount: expense.amount,
+        date: expense.date,
         dueDate: expense.dueDate,
+        method: "other",
+        note: expense.description || "",
         paid: expense.paid || false,
         description: expense.vendorName
       });
