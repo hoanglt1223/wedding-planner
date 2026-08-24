@@ -52,7 +52,7 @@ interface EngagementRole {
 export function EngagementCeremonyPage() {
   const store = useWeddingStoreContext();
   const { state } = store;
-  const lang = state.lang || "vi";
+  const lang: "en" | "vi" = (state.lang || "vi") as "en" | "vi";
   const en = lang === "en";
 
   const [activeTab, setActiveTab] = useState<EngagementTab>("overview");

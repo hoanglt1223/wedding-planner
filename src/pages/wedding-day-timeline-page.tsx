@@ -258,7 +258,7 @@ export function WeddingDayTimelinePage() {
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{contact.name}</p>
                   <p className="text-xs text-muted-foreground truncate">
-                    {"phone" in contact ? contact.role : contact.category}
+                    {"phone" in contact && "role" in contact ? contact.role : "category" in contact ? contact.category : ""}
                   </p>
                 </div>
                 <div className="flex gap-1">

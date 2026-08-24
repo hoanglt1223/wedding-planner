@@ -22,7 +22,7 @@ export function HomePage() {
   const store = useWeddingStoreContext();
   const { state } = store;
   const progress = store.getProgress();
-  const lang = state.lang;
+  const lang = (state.lang || "vi") as "en" | "vi";
 
   return (
     <div className="space-y-4 py-2">

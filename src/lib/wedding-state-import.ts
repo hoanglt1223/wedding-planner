@@ -204,16 +204,16 @@ export function mergeWeddingStates(current: WeddingState, imported: WeddingState
 }
 
 // Helper function to merge arrays and deduplicate by ID field
-function mergeArrays<T extends Record<string, unknown>>(
+function mergeArrays<T>(
   current: T[],
   imported: T[],
   idField: string
 ): T[] {
   const merged = [...current];
-  const currentIds = new Set(current.map((item) => String(item[idField])));
+  const currentIds = new Set(current.map((item) => String((item as any)[idField])));
 
   for (const item of imported) {
-    const id = String(item[idField]);
+    const id = String((item as any)[idField]);
     if (!currentIds.has(id)) {
       merged.push(item);
       currentIds.add(id);

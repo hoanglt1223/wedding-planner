@@ -45,7 +45,7 @@ export function MusicDiscovery({
       artist: selectedSong.artist,
       section: "party",
       priority: "nice-to-have",
-      notes: lang === "vi" ? selectedSong.notesVi : selectedSong.notesEn || "",
+      notes: (lang === "vi" ? selectedSong.notesVi : selectedSong.notesEn) || "",
       requestedBy: "",
       confirmed: false,
     };

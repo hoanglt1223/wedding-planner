@@ -102,12 +102,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Build array of daily forecasts
-    const forecasts = daily.time.map((date: string, i: number) => {
+    const forecasts = (daily.time || []).map((date: string | number | null, i: number) => {
+      const dateString = typeof date === 'number' ? new Date(date * 1000).toISOString().slice(0, 10) : String(date);
       const weatherCode = daily.weathercode?.[i] ?? 0;
       const weatherInfo = getWeatherInfo(weatherCode, lang);
 
       return {
-        date,
+        date: dateString,
         tempMax: daily.temperature_2m_max?.[i] ?? null,
         tempMin: daily.temperature_2m_min?.[i] ?? null,
         precipitationSum: daily.precipitation_sum?.[i] ?? 0,

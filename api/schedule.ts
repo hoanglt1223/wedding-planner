@@ -108,7 +108,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       contacts: contacts,
       venues: weddingData.venues || [],
       notes: weddingData.notes,
-      lang: weddingData.lang || 'vi',
+      lang: (weddingData.lang ?? 'vi') as string | undefined,
       customMessage: share.customMessage,
       theme: weddingData.themeId || 'traditional-red'
     };
