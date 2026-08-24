@@ -4,7 +4,7 @@
  */
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Cloud, CloudSun, Sun, CloudRain, CloudDrizzle, Wind, Snow } from "lucide-react";
+import { Cloud, CloudSun, Sun, CloudRain, CloudDrizzle, Wind, Snowflake } from "lucide-react";
 
 interface WeatherSummaryProps {
   weddingDate: string;
@@ -45,7 +45,7 @@ export function WeatherSummary({ weddingDate, venueCity, lang }: WeatherSummaryP
       case "drizzle":
         return <CloudDrizzle className="w-8 h-8 text-blue-400" />;
       case "snow":
-        return <Snow className="w-8 h-8 text-blue-200" />;
+        return <Snowflake className="w-8 h-8 text-blue-200" />;
       default:
         return <Sun className="w-8 h-8 text-yellow-500" />;
     }

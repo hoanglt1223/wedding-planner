@@ -153,7 +153,6 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Ngân sách": { vi: "Ngân sách", en: "Budget" },
   "Đã đặt cọc": { vi: "Đã đặt cọc", en: "Deposit paid" },
   "Tổng cộng": { vi: "Tổng cộng", en: "Total" },
-  "Sửa": { vi: "Sửa", en: "Edit" },
   "Thêm nhà cung cấp": { vi: "Thêm nhà cung cấp", en: "Add Vendor" },
   "Không tìm thấy vendor": { vi: "Không tìm thấy vendor", en: "No vendors found" },
   "Thêm vendor đầu tiên": { vi: "Thêm vendor đầu tiên", en: "Add your first vendor" },
@@ -354,9 +353,6 @@ export const TRANSLATIONS: Record<string, Record<Lang, string>> = {
   "Thành tựu": { vi: "Thành tựu", en: "Achievements" },
 
   // Misc
-  "Lưu": { vi: "Lưu", en: "Save" },
-  "Hủy": { vi: "Hủy", en: "Cancel" },
-  "Đóng": { vi: "Đóng", en: "Close" },
   "Sao chép": { vi: "Sao chép", en: "Copy" },
   "Đã sao chép!": { vi: "Đã sao chép!", en: "Copied!" },
   "Chia sẻ": { vi: "Chia sẻ", en: "Share" },
